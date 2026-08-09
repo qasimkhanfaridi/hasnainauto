@@ -30,7 +30,7 @@
   --color-grey-light: var(--grey-light);
   --color-grey-mid: var(--grey-mid);
   --color-grey-text: var(--grey-text);
-  --font-sans: var(--font-jakarta);
+  --font-sans: var(--font-body);
 }
 
 * { box-sizing: border-box; }
@@ -39,8 +39,12 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--white);
   color: var(--navy);
-  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display), Impact, Haettenschweiler, sans-serif;
 }
 
 ::selection { background: var(--brand); color: white; }
