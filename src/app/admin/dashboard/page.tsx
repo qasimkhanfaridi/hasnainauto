@@ -61,6 +61,9 @@ export default async function AdminDashboardPage() {
         <div className="card-premium p-6">
           <h3 className="font-bold text-navy mb-4">Quick Actions</h3>
           <div className="space-y-3">
+            <Link href="/admin/media" className="block w-full text-center py-3 border border-navy rounded-lg font-semibold text-navy">
+              Upload Product Images
+            </Link>
             <Link href="/admin/import" className="block w-full text-center py-3 btn-gold">Bulk Import Excel (Overwrite)</Link>
             <a href="/api/admin/import?template=1" className="block w-full text-center py-3 btn-navy">Download Client Excel Template</a>
             <a href="/api/admin/import" className="block w-full text-center py-3 border border-navy rounded-lg font-semibold text-navy">Export Current Inventory</a>
