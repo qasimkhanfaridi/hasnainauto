@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BRAND } from "@/lib/constants";
 import { getCategories } from "@/data/categories";
+import BrandLogo from "@/components/ui/BrandLogo";
 
 export default function Footer() {
   const categories = getCategories();
@@ -9,10 +10,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
-            <h3 className="text-xl font-extrabold mb-1">
-              HASNAIN <span className="text-brand">AUTO</span>
-            </h3>
-            <p className="text-gold text-xs font-bold tracking-widest uppercase mb-4">Decoration Accessories</p>
+            <div className="mb-4">
+              <BrandLogo variant="dark" />
+            </div>
             <p className="text-white/70 text-sm leading-relaxed">
               Premium car accessories with custom fitting and nationwide COD delivery.
             </p>

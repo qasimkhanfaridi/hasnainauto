@@ -104,3 +104,12 @@ body {
 .badge-limited { background: var(--navy); color: white; }
 
 .price-red { color: var(--brand); font-weight: 800; }
+
+/* Hide scrollbar but keep horizontal scroll for nav */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
