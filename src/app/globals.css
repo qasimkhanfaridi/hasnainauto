@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+:root {
+  --navy: #0a1628;
+  --navy-light: #1a2d4a;
+  --gold: #c9a227;
+  --gold-light: #e8c84a;
+  --gold-dark: #a8861f;
+  --grey-light: #f5f6f8;
+  --grey-mid: #e8eaed;
+  --grey-text: #5f6368;
+  --white: #ffffff;
+  --shadow: 0 4px 24px rgba(10, 22, 40, 0.08);
+  --shadow-lg: 0 12px 40px rgba(10, 22, 40, 0.12);
+}
+
+@theme inline {
+  --color-navy: var(--navy);
+  --color-navy-light: var(--navy-light);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
+  --color-grey-light: var(--grey-light);
+  --color-grey-mid: var(--grey-mid);
+  --color-grey-text: var(--grey-text);
+  --font-sans: var(--font-jakarta);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--white);
+  color: var(--navy);
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--gold); color: var(--navy); }
+
+.card-premium {
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card-premium:hover { box-shadow: var(--shadow-lg); }
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+  color: var(--navy);
+  font-weight: 600;
+  border-radius: 8px;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+.btn-gold:hover { opacity: 0.92; transform: translateY(-1px); }
+
+.btn-navy {
+  background: var(--navy);
+  color: var(--white);
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+.btn-navy:hover { background: var(--navy-light); }
+
+.section-padding { padding: 4rem 1.25rem; }
+@media (min-width: 768px) { .section-padding { padding: 5rem 2rem; } }
+@media (min-width: 1024px) { .section-padding { padding: 6rem 2rem; } }
+
+.badge-hot { background: #ef4444; color: white; }
+.badge-bestseller { background: var(--gold); color: var(--navy); }
+.badge-limited { background: var(--navy); color: var(--gold); }
