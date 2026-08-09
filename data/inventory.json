@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "updatedAt": "2026-07-14T05:27:12.799Z",
+  "version": 1,
+  "updatedAt": "2026-08-09T08:58:36.168Z",
   "products": [
     {
       "id": "1",
@@ -11,9 +11,9 @@
       "category": "seat-covers",
       "basePrice": 15000,
       "images": [
-        "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80",
-        "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80",
-        "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80"
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784014812/Gemini_Generated_Image_pomccnpomccnpomc_ibpbyv.png",
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784021855/WhatsApp_Image_2026-07-14_at_10.14.38_AM_oimfiq.jpg",
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784031474/Gemini_Generated_Image_ed7rzeed7rzeed7r_iakpdh.png"
       ],
       "badge": "Hot",
       "isSeatCover": true,
@@ -34,8 +34,9 @@
       "category": "floor-mats",
       "basePrice": 4500,
       "images": [
-        "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80",
-        "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80"
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784031474/Gemini_Generated_Image_ed7rzeed7rzeed7r_iakpdh.png",
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784038352/Gemini_Generated_Image_2u39pp2u39pp2u39_enpae7.png",
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784038350/Gemini_Generated_Image_6jx68r6jx68r6jx6_qczvwl.png"
       ],
       "badge": "Best Seller",
       "isSeatCover": false,
@@ -55,8 +56,9 @@
       "category": "led-lights",
       "basePrice": 8500,
       "images": [
-        "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80",
-        "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80"
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784706962/Gemini_Generated_Image_s1is2ds1is2ds1is_fwmubz.png",
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784706575/Gemini_Generated_Image_e63s4ae63s4ae63s_1_klpr9i.png",
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784712275/Gemini_Generated_Image_o8r0zo8r0zo8r0zo_wpiuak.png"
       ],
       "badge": "Hot",
       "isSeatCover": false,
@@ -76,7 +78,9 @@
       "category": "floor-mats",
       "basePrice": 6200,
       "images": [
-        "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&q=80"
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784718479/WhatsApp_Image_2026-07-14_at_10.14.13_AM_1_yrpmjy.jpg",
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784718480/WhatsApp_Image_2026-07-14_at_10.14.12_AM_1_w1c6le.jpg",
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784718480/WhatsApp_Image_2026-07-14_at_10.14.12_AM_2_oe956a.jpg"
       ],
       "badge": "Limited Stock",
       "isSeatCover": false,
@@ -95,7 +99,9 @@
       "category": "led-lights",
       "basePrice": 3200,
       "images": [
-        "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80"
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784724315/ChatGPT_Image_Jul_22_2026_05_20_32_PM_m7h6s3.png",
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784724315/ChatGPT_Image_Jul_22_2026_05_16_45_PM_cwnyn0.png",
+        "https://res.cloudinary.com/bnhgwryb/image/upload/v1784724315/ChatGPT_Image_Jul_22_2026_05_23_15_PM_hiseil.png"
       ],
       "badge": "Best Seller",
       "isSeatCover": false,
