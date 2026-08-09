@@ -1,6 +1,6 @@
 export const BRAND = {
   name: "Hasnain Auto",
-  tagline: "Premium Car Accessories Store",
+  tagline: "Decoration Accessories",
   domain: "hasnainauto.com",
   whatsapp: "923040200070",
   phone: "+92 304 0200070",

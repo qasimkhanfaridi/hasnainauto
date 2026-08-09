@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu, X, ShoppingBag } from "lucide-react";
-import { BRAND } from "@/lib/constants";
+import { Menu, X, ShoppingBag, Phone, Search } from "lucide-react";
+import { BRAND, whatsappOrderLink } from "@/lib/constants";
 import { useCart } from "@/context/CartContext";
 
 type NavLink = { href: string; label: string };
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
   const { itemCount } = useCart();
   const [navLinks, setNavLinks] = useState<NavLink[]>([
     { href: "/", label: "Home" },
@@ -35,56 +36,116 @@ export default function Header() {
       .catch(() => undefined);
   }, []);
 
+  const onSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+    window.location.href = `/category/seat-covers?q=${encodeURIComponent(query.trim())}`;
+  };
+
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-grey-mid/60">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex flex-col leading-tight">
-            <span className="text-xl font-bold text-navy tracking-tight">{BRAND.name}</span>
-            <span className="text-[10px] sm:text-xs text-gold font-medium tracking-widest uppercase">
-              {BRAND.tagline}
-            </span>
-          </Link>
-
-          <nav className="hidden xl:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="px-3 py-2 text-sm text-navy/80 hover:text-navy font-medium transition-colors rounded-lg hover:bg-grey-light"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <Link href="/cart" className="relative p-2.5 rounded-lg hover:bg-grey-light" aria-label="Cart">
-              <ShoppingBag className="w-5 h-5 text-navy" />
-              {itemCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-gold text-navy text-xs font-bold rounded-full flex items-center justify-center">
-                  {itemCount}
-                </span>
-              )}
-            </Link>
-            <button className="xl:hidden p-2.5 rounded-lg hover:bg-grey-light" onClick={() => setOpen(!open)} aria-label="Menu">
-              {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+    <header className="sticky top-0 z-50 bg-white border-b border-grey-mid">
+      {/* Top utility bar */}
+      <div className="hidden md:block bg-grey-light border-b border-grey-mid">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-10 flex items-center justify-between text-xs text-grey-text">
+          <p>Premium car accessories · Nationwide COD delivery</p>
+          <div className="flex items-center gap-4">
+            <a href={`tel:${BRAND.phone.replace(/\s/g, "")}`} className="inline-flex items-center gap-1 hover:text-brand font-medium">
+              <Phone className="w-3.5 h-3.5" /> {BRAND.phone}
+            </a>
+            <a href={whatsappOrderLink("Hi Hasnain Auto, I need help.")} target="_blank" rel="noopener noreferrer" className="hover:text-brand font-medium">
+              WhatsApp
+            </a>
           </div>
         </div>
       </div>
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center gap-3 sm:gap-4 h-16 lg:h-[72px]">
+          <button className="xl:hidden p-2 rounded-lg hover:bg-grey-light" onClick={() => setOpen(!open)} aria-label="Menu">
+            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+
+          <Link href="/" className="flex flex-col leading-none flex-shrink-0">
+            <span className="text-xl sm:text-2xl font-extrabold tracking-tight">
+              <span className="text-navy">HASNAIN</span>{" "}
+              <span className="text-brand">AUTO</span>
+            </span>
+            <span className="text-[9px] sm:text-[10px] text-grey-text font-semibold tracking-[0.14em] uppercase">
+              Decoration Accessories
+            </span>
+          </Link>
+
+          <form onSubmit={onSearch} className="hidden md:flex flex-1 max-w-xl mx-auto">
+            <div className="flex w-full rounded-lg overflow-hidden border border-grey-mid">
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search seat covers, lights, mats..."
+                className="flex-1 px-4 py-2.5 text-sm outline-none"
+              />
+              <button type="submit" className="px-4 bg-brand text-white hover:bg-brand-dark">
+                <Search className="w-4 h-4" />
+              </button>
+            </div>
+          </form>
+
+          <div className="ml-auto flex items-center gap-2 sm:gap-3">
+            <a
+              href={whatsappOrderLink("Hi Hasnain Auto, I want a quote.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden lg:inline-flex px-4 py-2 btn-gold text-sm"
+            >
+              Get a Quote
+            </a>
+            <Link href="/cart" className="relative p-2.5 rounded-lg hover:bg-grey-light" aria-label="Cart">
+              <ShoppingBag className="w-5 h-5 text-navy" />
+              {itemCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-brand text-white text-xs font-bold rounded-full flex items-center justify-center">
+                  {itemCount}
+                </span>
+              )}
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Dark category nav */}
+      <div className="hidden xl:block bg-navy">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-1 overflow-x-auto">
+          {navLinks.map((link, i) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`px-4 py-3 text-sm font-semibold whitespace-nowrap transition-colors ${
+                i === 0 ? "bg-brand text-white" : "text-white/85 hover:bg-white/10"
+              }`}
+            >
+              {link.label.toUpperCase()}
+            </Link>
+          ))}
+        </nav>
+      </div>
+
       {open && (
         <div className="xl:hidden border-t border-grey-mid bg-white">
-          <nav className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
+          <form onSubmit={onSearch} className="px-4 pt-3">
+            <div className="flex rounded-lg overflow-hidden border border-grey-mid">
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search products..."
+                className="flex-1 px-3 py-2.5 text-sm outline-none"
+              />
+              <button type="submit" className="px-3 bg-brand text-white"><Search className="w-4 h-4" /></button>
+            </div>
+          </form>
+          <nav className="px-4 py-3 flex flex-col gap-1">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="px-4 py-3 text-sm font-medium text-navy rounded-lg hover:bg-grey-light">
+              <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="px-4 py-3 text-sm font-semibold text-navy rounded-lg hover:bg-brand-soft hover:text-brand">
                 {link.label}
               </Link>
             ))}
-            <Link href="/admin" onClick={() => setOpen(false)} className="px-4 py-3 text-sm font-medium text-gold rounded-lg hover:bg-grey-light">
-              Admin
-            </Link>
           </nav>
         </div>
       )}

@@ -42,23 +42,26 @@ export default function ProductCard({ product }: { product: Product }) {
             className="object-cover group-hover:scale-105 transition-transform duration-300"
           />
           {product.badge && (
-            <span className={`absolute top-3 left-3 px-2.5 py-1 text-xs font-bold rounded-md ${BADGE_STYLES[product.badge]}`}>
-              {product.badge}
+            <span className={`absolute top-3 left-3 px-2.5 py-1 text-[10px] font-extrabold uppercase rounded ${BADGE_STYLES[product.badge]}`}>
+              {product.badge === "Hot" ? "New" : product.badge}
             </span>
           )}
+          <button
+            onClick={handleQuickAdd}
+            className="absolute bottom-3 right-3 w-10 h-10 rounded-full bg-brand text-white flex items-center justify-center shadow-lg hover:bg-brand-dark"
+            aria-label="Add to cart"
+          >
+            <ShoppingCart className="w-4 h-4" />
+          </button>
         </div>
-        <div className="p-4 sm:p-5 flex flex-col flex-1">
-          <h3 className="font-semibold text-navy text-sm sm:text-base leading-snug mb-2 group-hover:text-gold-dark transition-colors">
+        <div className="p-4 flex flex-col flex-1">
+          <h3 className="font-bold text-navy text-sm leading-snug mb-2 group-hover:text-brand transition-colors line-clamp-2">
             {product.name}
           </h3>
-          <p className="text-lg font-bold text-navy mb-4">
+          <p className="mt-auto price-red text-lg">
             {formatPrice(product.basePrice)}
             {product.isSeatCover && <span className="text-xs font-normal text-grey-text ml-1">from</span>}
           </p>
-          <button onClick={handleQuickAdd} className="mt-auto w-full flex items-center justify-center gap-2 py-2.5 btn-gold text-sm">
-            <ShoppingCart className="w-4 h-4" />
-            Quick Add
-          </button>
         </div>
       </article>
     </Link>
