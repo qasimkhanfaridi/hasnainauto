@@ -1,107 +1,138 @@
 "use client";
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import type { CartItem } from "@/types";
-import { ADVANCE_DISCOUNT_PERCENT, DELIVERY_CHARGE, FREE_DELIVERY_THRESHOLD } from "@/lib/constants";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { Product } from "@/data/products";
 
-interface CartContextValue {
-  items: CartItem[];
-  itemCount: number;
-  subtotal: number;
-  deliveryCharge: number;
-  discount: number;
-  total: number;
-  addItem: (item: Omit<CartItem, "id">) => void;
-  removeItem: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
-  clearCart: () => void;
+export interface CartItem {
+  product: Product;
+  quantity: number;
+  selectedVariant?: string;
 }
 
-const CartContext = createContext<CartContextValue | null>(null);
-const STORAGE_KEY = "hasnainauto-cart";
+interface CartContextType {
+  items: CartItem[];
+  addToCart: (product: Product, quantity?: number, selectedVariant?: string) => void;
+  removeFromCart: (productId: string, selectedVariant?: string) => void;
+  updateQuantity: (productId: string, quantity: number, selectedVariant?: string) => void;
+  clearCart: () => void;
+  cartCount: number;
+  cartSubtotal: number;
+  isCartOpen: boolean;
+  setIsCartOpen: (open: boolean) => void;
+  openCart: () => void;
+  closeCart: () => void;
+}
+
+const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
-  const [hydrated, setHydrated] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
+  // Load from localStorage on mount
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) setItems(JSON.parse(stored));
-    } catch { /* ignore */ }
-    setHydrated(true);
+      const saved = localStorage.getItem("hasnain_cart_items");
+      if (saved) {
+        setItems(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error("Failed to load cart from localStorage", e);
+    } finally {
+      setIsLoaded(true);
+    }
   }, []);
 
+  // Save to localStorage
   useEffect(() => {
-    if (hydrated) localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  }, [items, hydrated]);
+    if (!isLoaded) return;
+    try {
+      localStorage.setItem("hasnain_cart_items", JSON.stringify(items));
+    } catch (e) {
+      console.error("Failed to save cart to localStorage", e);
+    }
+  }, [items, isLoaded]);
 
-  const addItem = useCallback((item: Omit<CartItem, "id">) => {
-    const id = `${item.productId}-${JSON.stringify(item.configuration ?? {})}-${item.paymentMethod}`;
+  const addToCart = (product: Product, quantity = 1, selectedVariant?: string) => {
     setItems((prev) => {
-      const existing = prev.find((i) => i.id === id);
-      if (existing) {
-        return prev.map((i) =>
-          i.id === id ? { ...i, quantity: i.quantity + item.quantity } : i
-        );
+      const existingIndex = prev.findIndex(
+        (item) => item.product.id === product.id && item.selectedVariant === selectedVariant
+      );
+
+      if (existingIndex > -1) {
+        const updated = [...prev];
+        updated[existingIndex].quantity += quantity;
+        return updated;
+      } else {
+        return [...prev, { product, quantity, selectedVariant }];
       }
-      return [...prev, { ...item, id }];
     });
-  }, []);
+    setIsCartOpen(true);
+  };
 
-  const removeItem = useCallback((id: string) => {
-    setItems((prev) => prev.filter((i) => i.id !== id));
-  }, []);
+  const removeFromCart = (productId: string, selectedVariant?: string) => {
+    setItems((prev) =>
+      prev.filter(
+        (item) => !(item.product.id === productId && item.selectedVariant === selectedVariant)
+      )
+    );
+  };
 
-  const updateQuantity = useCallback((id: string, quantity: number) => {
-    if (quantity < 1) return;
-    setItems((prev) => prev.map((i) => (i.id === id ? { ...i, quantity } : i)));
-  }, []);
+  const updateQuantity = (productId: string, quantity: number, selectedVariant?: string) => {
+    if (quantity <= 0) {
+      removeFromCart(productId, selectedVariant);
+      return;
+    }
+    setItems((prev) =>
+      prev.map((item) => {
+        if (item.product.id === productId && item.selectedVariant === selectedVariant) {
+          return { ...item, quantity };
+        }
+        return item;
+      })
+    );
+  };
 
-  const clearCart = useCallback(() => setItems([]), []);
+  const clearCart = () => {
+    setItems([]);
+  };
 
-  const subtotal = useMemo(
-    () => items.reduce((sum, i) => sum + i.price * i.quantity, 0),
-    [items]
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
+
+  const cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
+
+  const cartSubtotal = items.reduce((sum, item) => {
+    const itemPrice = item.product.salePrice || item.product.price;
+    return sum + itemPrice * item.quantity;
+  }, 0);
+
+  return (
+    <CartContext.Provider
+      value={{
+        items,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+        cartCount,
+        cartSubtotal,
+        isCartOpen,
+        setIsCartOpen,
+        openCart,
+        closeCart,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
   );
-
-  const discount = useMemo(() => {
-    return items.reduce((sum, i) => {
-      if (i.paymentMethod === "advance") {
-        return sum + Math.round(i.price * i.quantity * (ADVANCE_DISCOUNT_PERCENT / 100));
-      }
-      return sum;
-    }, 0);
-  }, [items]);
-
-  const deliveryCharge = useMemo(() => {
-    if (subtotal - discount >= FREE_DELIVERY_THRESHOLD) return 0;
-    return items.length > 0 ? DELIVERY_CHARGE : 0;
-  }, [subtotal, discount, items.length]);
-
-  const total = subtotal - discount + deliveryCharge;
-  const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
-
-  const value = useMemo(
-    () => ({
-      items, itemCount, subtotal, deliveryCharge, discount, total,
-      addItem, removeItem, updateQuantity, clearCart,
-    }),
-    [items, itemCount, subtotal, deliveryCharge, discount, total, addItem, removeItem, updateQuantity, clearCart]
-  );
-
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
 export function useCart() {
-  const ctx = useContext(CartContext);
-  if (!ctx) throw new Error("useCart must be used within CartProvider");
-  return ctx;
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
 }
