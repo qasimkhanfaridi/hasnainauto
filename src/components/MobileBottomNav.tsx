@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Compass, Layers, MessageCircle, ShoppingBag } from "lucide-react";
+import { Home, Compass, MessageCircle, ShoppingBag, Car } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { BUSINESS_CONFIG } from "@/config/business";
 
@@ -57,16 +57,16 @@ export const MobileBottomNav: React.FC = () => {
           </span>
         </a>
 
-        {/* 4. Categories */}
+        {/* 4. Shop By Car */}
         <Link
-          href="/categories"
+          href="/shop-by-car"
           className={`flex flex-col items-center justify-center h-full min-h-[44px] transition-colors ${
-            pathname === "/categories" ? "text-red-accent font-bold" : "text-silver-400 hover:text-white"
+            pathname === "/shop-by-car" ? "text-red-accent font-bold" : "text-silver-400 hover:text-white"
           }`}
-          aria-label="Categories"
+          aria-label="Shop By Car"
         >
-          <Layers className="w-5 h-5 mb-0.5" />
-          <span className="text-[10px] tracking-wider uppercase">Categories</span>
+          <Car className="w-5 h-5 mb-0.5" />
+          <span className="text-[10px] tracking-wider uppercase">By Car</span>
         </Link>
 
         {/* 5. Cart */}

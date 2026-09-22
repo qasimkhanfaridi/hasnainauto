@@ -48,6 +48,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch, onOpenQuickOrder }
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "All Products", href: "/shop" },
+    { name: "Shop by Car", href: "/shop-by-car" },
     { name: "Seat Covers", href: "/shop?category=seat-covers" },
     { name: "LED Lights", href: "/shop?category=led-lights" },
     { name: "7D & TP Mats", href: "/shop?category=floor-mats" },

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { 
   Star, 
   MessageCircle, 
@@ -17,7 +17,10 @@ import {
   Flame,
   Sparkles,
   Layers,
-  Palette
+  Palette,
+  Phone,
+  Zap,
+  CreditCard
 } from "lucide-react";
 import { 
   PRODUCTS_DATA, 
@@ -47,6 +50,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  const router = useRouter();
   const { addToCart } = useCart();
   const { selectedVehicle, getCompatibilityBadge } = useVehicle();
 
@@ -55,6 +59,14 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   const [selectedVariant, setSelectedVariant] = useState<string>(
     product.variants?.[0]?.options?.[0] || ""
   );
+
+  const handleBuyNow = () => {
+    const variantStr = product.isSeatCover
+      ? `${selectedQuality.label} | ${selectedColor.color}`
+      : selectedVariant;
+    addToCart(product, quantity, variantStr);
+    router.push("/checkout");
+  };
 
   // Seat Cover specific configurator state
   const [selectedQuality, setSelectedQuality] = useState<SeatCoverQuality>(
@@ -441,41 +453,67 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 </div>
               </div>
 
-              {/* Direct WhatsApp & Add To Cart CTAs */}
-              <div className="space-y-3 pt-2">
+              {/* 4-Tiered Action Button Hierarchy */}
+              <div className="space-y-2.5 pt-2">
+                {/* 1. Add to Cart & 2. Buy Now Side-by-Side on Desktop */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => addToCart(product, quantity, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant)}
+                    className="w-full py-3.5 px-4 rounded-2xl bg-carbon-900 hover:bg-carbon-850 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-white/10 hover:border-white/25 transition-all shadow-sm"
+                  >
+                    <ShoppingBag className="w-4 h-4 text-red-brand" />
+                    <span>Add To Cart</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleBuyNow}
+                    className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-red-glow transition-all"
+                  >
+                    <Zap className="w-4 h-4 fill-white" />
+                    <span>BUY NOW (CHECKOUT)</span>
+                  </button>
+                </div>
+
+                {/* 3. Direct WhatsApp Order Button */}
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-4 px-6 rounded-2xl bg-whatsapp hover:bg-whatsapp-hover text-carbon-950 font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-whatsapp-glow transition-all"
+                  className="w-full py-3.5 px-6 rounded-2xl bg-whatsapp hover:bg-whatsapp-hover text-carbon-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-whatsapp-glow transition-all"
                 >
-                  <MessageCircle className="w-5 h-5 fill-carbon-950" />
-                  <span>ORDER ON WHATSAPP NOW</span>
+                  <MessageCircle className="w-4 h-4 fill-carbon-950" />
+                  <span>ORDER ON WHATSAPP</span>
                 </a>
 
-                <button
-                  type="button"
-                  onClick={() => addToCart(product, quantity, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant)}
-                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-md shadow-red-950/30 transition-all"
+                {/* 4. Call Showroom Button */}
+                <a
+                  href={`tel:${BUSINESS_CONFIG.phoneRaw}`}
+                  className="w-full py-2.5 px-4 rounded-xl bg-carbon-950 hover:bg-carbon-900 text-silver-300 hover:text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-white/5 transition-colors"
                 >
-                  <ShoppingBag className="w-4 h-4 text-white" />
-                  <span>Add To Shopping Cart</span>
-                </button>
+                  <Phone className="w-3.5 h-3.5 text-red-brand" />
+                  <span>CALL SADDAR SHOWROOM: {BUSINESS_CONFIG.phone}</span>
+                </a>
               </div>
 
-              {/* Trust Badges */}
-              <div className="grid grid-cols-3 gap-2 pt-4 border-t border-white/5 text-[11px] text-silver-400">
-                <div className="flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900 border border-white/5">
+              {/* Pakistani Payment & Trust Badges */}
+              <div className="grid grid-cols-4 gap-2 pt-4 border-t border-white/5 text-[10px] text-silver-400">
+                <div className="flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900/60 border border-white/5">
                   <ShieldCheck className="w-4 h-4 text-red-brand mb-1" />
-                  <span className="font-bold text-white">{product.warranty || "Warranty Backed"}</span>
+                  <span className="font-bold text-white">{product.warranty ? "Warranty" : "100% Fit"}</span>
                 </div>
-                <div className="flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900 border border-white/5">
-                  <Wrench className="w-4 h-4 text-red-brand mb-1" />
+                <div className="flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900/60 border border-white/5">
+                  <Wrench className="w-4 h-4 text-amber-brand mb-1" />
                   <span className="font-bold text-white">Saddar Fitting</span>
                 </div>
-                <div className="flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900 border border-white/5">
-                  <Truck className="w-4 h-4 text-whatsapp mb-1" />
+                <div className="flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900/60 border border-white/5">
+                  <Truck className="w-4 h-4 text-emerald-400 mb-1" />
                   <span className="font-bold text-white">COD Available</span>
+                </div>
+                <div className="flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900/60 border border-white/5">
+                  <CreditCard className="w-4 h-4 text-cyan-400 mb-1" />
+                  <span className="font-bold text-white">Raast / JazzCash</span>
                 </div>
               </div>
             </div>

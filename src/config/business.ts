@@ -31,6 +31,38 @@ export interface BusinessConfig {
     symbol: string;
     code: string;
   };
+  payments: {
+    cod: {
+      enabled: boolean;
+      title: string;
+      subtitle: string;
+      notice: string;
+    };
+    bankTransfer: {
+      enabled: boolean;
+      title: string;
+      subtitle: string;
+      bankName: string;
+      accountTitle: string;
+      accountNumber: string;
+      iban: string;
+      branch: string;
+      instructions: string;
+    };
+    jazzCash: {
+      enabled: boolean;
+      title: string;
+      subtitle: string;
+      accountTitle: string;
+      accountNumber: string;
+      instructions: string;
+    };
+  };
+  delivery: {
+    standardFee: number;
+    freeDeliveryThreshold: number;
+    storePickupAddress: string;
+  };
   meta: {
     title: string;
     description: string;
@@ -72,9 +104,41 @@ export const BUSINESS_CONFIG: BusinessConfig = {
     symbol: "Rs.",
     code: "PKR",
   },
+  payments: {
+    cod: {
+      enabled: true,
+      title: "Cash on Delivery (COD)",
+      subtitle: "Pay in cash upon arrival at your doorstep",
+      notice: "Available across Pakistan via courier. Our dispatch team will call your number to verify before dispatch.",
+    },
+    bankTransfer: {
+      enabled: true,
+      title: "Bank Account / Online Transfer",
+      subtitle: "Transfer via Raast, IBFT or Mobile Banking App",
+      bankName: "Meezan Bank Ltd",
+      accountTitle: "Hasnain Auto Decoration",
+      accountNumber: "02010108928371",
+      iban: "PK45MEZN0002010108928371",
+      branch: "Kashmir Road Saddar Branch, Rawalpindi",
+      instructions: "Transfer the exact total amount via your banking app, then enter your Transaction ID (TID) below.",
+    },
+    jazzCash: {
+      enabled: true,
+      title: "JazzCash Mobile Account",
+      subtitle: "Instant mobile payment via JazzCash App or *786#",
+      accountTitle: "Hasnain Auto",
+      accountNumber: "0312-5127096",
+      instructions: "Send payment to JazzCash account 0312-5127096 (Hasnain Auto) and enter the TID/Reference number below.",
+    },
+  },
+  delivery: {
+    standardFee: 250,
+    freeDeliveryThreshold: 5000,
+    storePickupAddress: "1st Floor, Azhar Shaheed Auto Market, Kashmir Road, Saddar, Rawalpindi",
+  },
   meta: {
     title: "Hasnain Auto Decoration & Accessories | Saddar Rawalpindi",
-    description: "Premium car accessories, decoration, LED lights, Android panels, seat covers and multimedia showroom in Saddar, Rawalpindi. WhatsApp ordering & expert installation.",
+    description: "Premium car accessories, decoration, LED lights, seat covers, 7D mats, and multimedia showroom in Saddar, Rawalpindi. Cash on Delivery, Bank Transfer, JazzCash & expert installation.",
     keywords: [
       "Hasnain Auto Decoration",
       "Hasnain Auto Rawalpindi",
@@ -84,11 +148,8 @@ export const BUSINESS_CONFIG: BusinessConfig = {
       "car accessories Saddar",
       "car decoration Saddar",
       "car accessories Islamabad",
-      "auto decoration Rawalpindi",
-      "car interior accessories Rawalpindi",
-      "car lighting Rawalpindi",
-      "car multimedia Rawalpindi",
-      "Android panel Rawalpindi",
+      "seat covers Rawalpindi",
+      "7D floor mats Pakistan",
       "LED headlights Saddar",
     ],
     siteUrl: "https://hasnainauto.com",

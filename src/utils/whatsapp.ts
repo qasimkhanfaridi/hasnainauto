@@ -156,3 +156,48 @@ export function createConsultationWhatsAppUrl(customMessage?: string): string {
   const defaultText = `Assalam-o-Alaikum ${BUSINESS_CONFIG.name}, I need consultation regarding car decoration and accessories for my vehicle.`;
   return `https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(customMessage || defaultText)}`;
 }
+
+/**
+ * Creates Order Confirmation WhatsApp link for completed web checkout
+ */
+export function createOrderConfirmationWhatsAppUrl(order: import("@/types/order").Order): string {
+  const itemsText = order.items
+    .map((item, idx) => `${idx + 1}. *${item.name}*${item.variant ? ` [${item.variant}]` : ""} × ${item.quantity} = ${BUSINESS_CONFIG.currency.symbol} ${item.totalPrice.toLocaleString()}`)
+    .join("\n");
+
+  const vehicleText = order.vehicle && order.vehicle.make
+    ? `${order.vehicle.make} ${order.vehicle.model} ${order.vehicle.year || ""}`.trim()
+    : "Unspecified";
+
+  const paymentText = order.payment.method === "cod"
+    ? "Cash on Delivery (COD)"
+    : order.payment.method === "bank"
+    ? `Bank Transfer (TID: ${order.payment.transactionId || "Pending"})`
+    : `JazzCash (TID: ${order.payment.transactionId || "Pending"})`;
+
+  const deliveryText = order.customer.deliveryType === "pickup"
+    ? "Store Pickup at Saddar, Rawalpindi"
+    : `Courier Delivery to ${order.customer.city} (${order.customer.address})`;
+
+  const text = `Assalam-o-Alaikum ${BUSINESS_CONFIG.name},
+
+*ONLINE ORDER CONFIRMATION*
+• *Order ID:* #${order.orderId}
+• *Customer:* ${order.customer.fullName} (${order.customer.phone})
+• *Car:* ${vehicleText}
+• *Payment Method:* ${paymentText}
+• *Delivery:* ${deliveryText}
+
+*Items Ordered:*
+-------------------------------
+${itemsText}
+-------------------------------
+• *Subtotal:* ${BUSINESS_CONFIG.currency.symbol} ${order.pricing.subtotal.toLocaleString()}
+• *Delivery Charges:* ${order.pricing.deliveryFee > 0 ? `${BUSINESS_CONFIG.currency.symbol} ${order.pricing.deliveryFee.toLocaleString()}` : "FREE"}
+• *Total Payable:* ${BUSINESS_CONFIG.currency.symbol} ${order.pricing.grandTotal.toLocaleString()}
+
+Please confirm reception and dispatch schedule. Thank you!`;
+
+  return `https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(text)}`;
+}
+

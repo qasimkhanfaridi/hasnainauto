@@ -2,13 +2,15 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { X, Trash2, Plus, Minus, MessageCircle, ShoppingBag } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { X, Trash2, Plus, Minus, MessageCircle, ShoppingBag, CreditCard, ArrowRight } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useVehicle } from "@/context/VehicleContext";
 import { BUSINESS_CONFIG } from "@/config/business";
 import { createCartWhatsAppUrl } from "@/utils/whatsapp";
 
 export const CartDrawer: React.FC = () => {
+  const router = useRouter();
   const { items, updateQuantity, removeFromCart, cartSubtotal, isCartOpen, closeCart } = useCart();
   const { selectedVehicle } = useVehicle();
 
@@ -289,20 +291,38 @@ export const CartDrawer: React.FC = () => {
                 </span>
               </div>
 
+              {/* Direct Checkout Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  closeCart();
+                  router.push("/checkout");
+                }}
+                className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-red-glow transition-all"
+              >
+                <CreditCard className="w-4 h-4 text-white" />
+                <span>PROCEED TO ONLINE CHECKOUT</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+
               {/* Direct WhatsApp CTA Button */}
               <button
                 type="button"
                 onClick={handleWhatsAppCheckout}
-                className="w-full py-4 px-4 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-carbon-950 font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-whatsapp-glow transition-all"
+                className="w-full py-3 px-4 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-carbon-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-whatsapp-glow transition-all"
               >
-                <MessageCircle className="w-5 h-5 fill-carbon-950" />
+                <MessageCircle className="w-4 h-4 fill-carbon-950" />
                 <span>ORDER VIA WHATSAPP</span>
               </button>
+
+              <div className="text-center text-[10px] text-silver-400">
+                Cash on Delivery • Meezan Bank IBFT • JazzCash
+              </div>
 
               <button
                 type="button"
                 onClick={closeCart}
-                className="w-full py-2.5 text-center text-xs font-bold text-silver-400 hover:text-white uppercase tracking-wider transition-colors"
+                className="w-full py-2 text-center text-xs font-bold text-silver-400 hover:text-white uppercase tracking-wider transition-colors"
               >
                 Continue Shopping
               </button>
