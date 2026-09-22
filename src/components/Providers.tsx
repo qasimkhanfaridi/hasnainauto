@@ -21,7 +21,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <VehicleProvider>
       <CartProvider>
-        <div className="relative min-h-screen flex flex-col bg-carbon-950 text-silver-100 antialiased selection:bg-amber-brand selection:text-carbon-950">
+        <div className="relative min-h-screen flex flex-col bg-surface-200 text-carbon-900 antialiased selection:bg-red-soft selection:text-red-dark">
           <Header
             onOpenSearch={() => setIsSearchOpen(true)}
             onOpenQuickOrder={() => setIsQuickOrderOpen(true)}
