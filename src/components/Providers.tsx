@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { VehicleProvider } from "@/context/VehicleContext";
 import { CartProvider } from "@/context/CartContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { MobileBottomNav } from "./MobileBottomNav";
@@ -19,46 +20,48 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
   return (
-    <VehicleProvider>
-      <CartProvider>
-        <div className="relative min-h-screen flex flex-col bg-surface-200 text-carbon-900 antialiased selection:bg-red-soft selection:text-red-dark">
-          <Header
-            onOpenSearch={() => setIsSearchOpen(true)}
-            onOpenQuickOrder={() => setIsQuickOrderOpen(true)}
-          />
+    <ThemeProvider>
+      <VehicleProvider>
+        <CartProvider>
+          <div className="relative min-h-screen flex flex-col bg-surface-100 text-carbon-900 antialiased selection:bg-red-soft selection:text-red-dark">
+            <Header
+              onOpenSearch={() => setIsSearchOpen(true)}
+              onOpenQuickOrder={() => setIsQuickOrderOpen(true)}
+            />
 
-          <main className="flex-1 w-full">{children}</main>
+            <main className="flex-1 w-full min-w-0 overflow-x-hidden pb-20 lg:pb-0">{children}</main>
 
-          <Footer />
+            <Footer />
 
-          {/* Persistent Mobile Bottom Navigation */}
-          <MobileBottomNav />
+            {/* Persistent Mobile Bottom Navigation */}
+            <MobileBottomNav />
 
-          {/* Floating Action Button */}
-          <FloatingWhatsApp />
+            {/* Floating Action Button */}
+            <FloatingWhatsApp />
 
-          {/* Slide-over Shopping Cart */}
-          <CartDrawer />
+            {/* Slide-over Shopping Cart */}
+            <CartDrawer />
 
-          {/* Instant Search Dialog */}
-          <SearchModal
-            isOpen={isSearchOpen}
-            onClose={() => setIsSearchOpen(false)}
-          />
+            {/* Instant Search Dialog */}
+            <SearchModal
+              isOpen={isSearchOpen}
+              onClose={() => setIsSearchOpen(false)}
+            />
 
-          {/* Quick WhatsApp Quote Modal */}
-          <QuickOrderModal
-            isOpen={isQuickOrderOpen}
-            onClose={() => setIsQuickOrderOpen(false)}
-          />
+            {/* Quick WhatsApp Quote Modal */}
+            <QuickOrderModal
+              isOpen={isQuickOrderOpen}
+              onClose={() => setIsQuickOrderOpen(false)}
+            />
 
-          {/* Global Quick View Modal */}
-          <ProductQuickViewModal
-            product={quickViewProduct}
-            onClose={() => setQuickViewProduct(null)}
-          />
-        </div>
-      </CartProvider>
-    </VehicleProvider>
+            {/* Global Quick View Modal */}
+            <ProductQuickViewModal
+              product={quickViewProduct}
+              onClose={() => setQuickViewProduct(null)}
+            />
+          </div>
+        </CartProvider>
+      </VehicleProvider>
+    </ThemeProvider>
   );
 }

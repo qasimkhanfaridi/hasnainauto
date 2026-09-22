@@ -12,10 +12,9 @@ export const LightingShowcase: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 sm:py-20 bg-carbon-950 border-b border-white/5 relative overflow-hidden">
-      {/* Background Lighting Glow */}
-      <div className="absolute top-1/2 -right-40 -translate-y-1/2 w-96 h-96 rounded-full bg-red-600/10 blur-[140px] pointer-events-none" />
-      <div className="absolute -bottom-20 left-10 w-80 h-80 rounded-full bg-red-brand/10 blur-[130px] pointer-events-none" />
+    <section className="py-16 sm:py-20 bg-surface-200 border-b border-gray-200 relative overflow-hidden">
+      <div className="absolute top-1/2 -right-40 -translate-y-1/2 w-96 h-96 rounded-full bg-red-600/5 blur-[140px] pointer-events-none" />
+      <div className="absolute -bottom-20 left-10 w-80 h-80 rounded-full bg-red-brand/5 blur-[130px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -26,18 +25,18 @@ export const LightingShowcase: React.FC = () => {
                 <Zap className="w-3.5 h-3.5 fill-red-brand text-red-brand" />
                 <span>Optic Precision Engineering</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white uppercase tracking-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-carbon-900 uppercase tracking-tight">
                 LIGHT UP <br />
                 <span className="red-gradient-text">
                   THE ROAD.
                 </span>
               </h2>
-              <p className="text-base sm:text-lg font-bold text-silver-200 tracking-wide">
+              <p className="text-base sm:text-lg font-bold text-gray-700 tracking-wide">
                 Maximum Night Visibility & Precision Razor Cut-Off
               </p>
             </div>
 
-            <p className="text-sm text-silver-300 leading-relaxed">
+            <p className="text-sm text-gray-600 leading-relaxed">
               Drive with total confidence across GT Road, Islamabad Expressway, and the Murree Expressway. Our high-grade LED headlights and projector fog lamps deliver extreme luminous reach without dazzling oncoming vehicles, backed by a 1-year replacement warranty.
             </p>
 
@@ -48,10 +47,10 @@ export const LightingShowcase: React.FC = () => {
                     <CheckCircle2 className="w-4 h-4 text-red-brand" />
                   </div>
                   <div>
-                    <span className="text-xs font-bold text-white uppercase tracking-wide">
+                    <span className="text-xs font-bold text-carbon-900 uppercase tracking-wide">
                       {item.title}:
                     </span>{" "}
-                    <span className="text-xs text-silver-300">{item.desc}</span>
+                    <span className="text-xs text-gray-600">{item.desc}</span>
                   </div>
                 </div>
               ))}
@@ -70,7 +69,7 @@ export const LightingShowcase: React.FC = () => {
 
           {/* Right Visual: Original Bi-LED Fog Projector Photography */}
           <div className="lg:col-span-6 relative order-1 lg:order-2">
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-red-500/20 shadow-2xl bg-carbon-900 group shadow-red-950/20">
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-gray-200 shadow-card bg-white group">
               <Image
                 src="/images/products/biled-fog-projectors.jpg"
                 alt="High performance LED fog lamps by Hasnain Auto Saddar"
@@ -80,12 +79,12 @@ export const LightingShowcase: React.FC = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-carbon-950 via-carbon-950/20 to-transparent" />
 
-              <div className="absolute bottom-5 left-5 right-5 p-4 rounded-2xl bg-carbon-900/90 backdrop-blur-md border border-white/10 flex items-center justify-between">
+              <div className="absolute bottom-5 left-5 right-5 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-gray-200 flex items-center justify-between shadow-sm">
                 <div>
-                  <div className="text-[10px] font-bold text-red-accent uppercase tracking-widest">
+                  <div className="text-[10px] font-bold text-red-brand uppercase tracking-widest">
                     Precision Optical Cut-Off
                   </div>
-                  <div className="text-sm font-black text-white">
+                  <div className="text-sm font-black text-carbon-900">
                     Headlight & Fog Light Calibration
                   </div>
                 </div>

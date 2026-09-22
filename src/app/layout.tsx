@@ -4,7 +4,7 @@ import { Providers } from "@/components/Providers";
 import { BUSINESS_CONFIG } from "@/config/business";
 
 export const viewport: Viewport = {
-  themeColor: "#06070a",
+  themeColor: "#ffffff",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,

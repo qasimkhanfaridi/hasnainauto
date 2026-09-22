@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Camera } from "lucide-react";
+import { HorizontalScrollSlider } from "./CustomerFavourites";
 
 interface GalleryItem {
   id: string;
@@ -73,25 +74,23 @@ export const OurWorkGallery: React.FC = () => {
   ];
 
   return (
-    <section id="gallery" className="py-16 sm:py-20 bg-carbon-950 border-b border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+    <section id="gallery" className="py-16 sm:py-20 bg-white border-b border-gray-200 overflow-x-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-accent text-xs font-bold uppercase tracking-widest mb-2 shadow-red-glow-sm">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-light border border-red-soft text-red-brand text-xs font-bold uppercase tracking-widest mb-2">
               <Camera className="w-3.5 h-3.5 text-red-brand" />
               <span>Workshop Showcase Portfolio</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white uppercase tracking-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-carbon-900 uppercase tracking-tight">
               OUR RECENT WORK & PRODUCTS
             </h2>
-            <p className="text-xs sm:text-sm text-silver-300 mt-1 max-w-lg">
+            <p className="text-xs sm:text-sm text-gray-600 mt-1 max-w-lg">
               Tailored seat covers, 7D mats, and precision LED lighting crafted and installed at Hasnain Auto Saddar.
             </p>
           </div>
 
-          {/* Filter Tabs */}
-          <div className="flex flex-wrap gap-1.5 p-1 rounded-xl bg-carbon-900 border border-white/10 self-start md:self-auto">
+          <div className="flex flex-wrap gap-1.5 p-1 rounded-xl bg-surface-200 border border-gray-200 self-start md:self-auto">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -99,8 +98,8 @@ export const OurWorkGallery: React.FC = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   activeTab === tab.id
-                    ? "bg-red-600 text-white shadow-sm shadow-red-950/40"
-                    : "text-silver-400 hover:text-white hover:bg-carbon-800"
+                    ? "bg-red-brand text-white shadow-sm"
+                    : "text-gray-600 hover:text-carbon-900 hover:bg-white"
                 }`}
               >
                 {tab.label}
@@ -109,14 +108,13 @@ export const OurWorkGallery: React.FC = () => {
           </div>
         </div>
 
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <HorizontalScrollSlider itemClassName="shrink-0 w-[85%] sm:w-[55%] lg:w-[32%]">
           {filteredItems.map((item) => (
             <div
               key={item.id}
-              className="group relative rounded-2xl overflow-hidden bg-carbon-900 border border-white/10 hover:border-red-500/50 shadow-card-dark hover:shadow-red-glow transition-all duration-300"
+              className="group relative rounded-2xl overflow-hidden bg-white border border-gray-200 hover:border-red-brand/40 shadow-sm hover:shadow-card-hover transition-all duration-300 h-full"
             >
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-carbon-950">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">
                 <Image
                   src={item.image}
                   alt={item.title}
@@ -124,20 +122,20 @@ export const OurWorkGallery: React.FC = () => {
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-carbon-950 via-carbon-950/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
               </div>
 
               <div className="p-4 space-y-1">
-                <h4 className="text-sm font-bold text-white group-hover:text-red-accent transition-colors line-clamp-1">
+                <h4 className="text-sm font-bold text-carbon-900 group-hover:text-red-brand transition-colors line-clamp-2">
                   {item.title}
                 </h4>
-                <p className="text-xs text-silver-400 line-clamp-1">
+                <p className="text-xs text-gray-500 line-clamp-2">
                   {item.car}
                 </p>
               </div>
             </div>
           ))}
-        </div>
+        </HorizontalScrollSlider>
       </div>
     </section>
   );

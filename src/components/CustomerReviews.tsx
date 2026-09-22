@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
-import { Star, CheckCircle, ShieldCheck } from "lucide-react";
+import { Star, CheckCircle } from "lucide-react";
+import { HorizontalScrollSlider } from "./CustomerFavourites";
 
 export const CustomerReviews: React.FC = () => {
   const reviews = [
@@ -42,8 +45,8 @@ export const CustomerReviews: React.FC = () => {
   ];
 
   return (
-    <section className="py-10 sm:py-14 bg-surface-200 border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-10 sm:py-14 bg-surface-200 border-b border-gray-200 overflow-x-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
@@ -67,12 +70,11 @@ export const CustomerReviews: React.FC = () => {
           </div>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <HorizontalScrollSlider itemClassName="shrink-0 w-[88%] sm:w-[70%] md:w-[48%] lg:w-[32%]">
           {reviews.map((rev, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-2xl bg-white border border-gray-200 hover:border-red-brand/30 transition-all flex flex-col justify-between gap-3 shadow-sm"
+              className="p-5 rounded-2xl bg-white border border-gray-200 hover:border-red-brand/30 transition-all flex flex-col justify-between gap-3 shadow-sm h-full min-h-[280px]"
             >
               <div className="space-y-2">
                 {/* Header */}
@@ -112,7 +114,7 @@ export const CustomerReviews: React.FC = () => {
               </div>
             </div>
           ))}
-        </div>
+        </HorizontalScrollSlider>
       </div>
     </section>
   );

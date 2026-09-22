@@ -28,7 +28,7 @@ export const BeforeAfterSlider: React.FC = () => {
   };
 
   return (
-    <section className="py-16 sm:py-20 bg-carbon-950 border-t border-white/5 overflow-hidden">
+    <section className="py-16 sm:py-20 bg-white border-t border-gray-200 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 space-y-3">
@@ -36,10 +36,10 @@ export const BeforeAfterSlider: React.FC = () => {
             <Sparkles className="w-3.5 h-3.5" />
             <span>Night Visibility Comparison</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white uppercase tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-carbon-900 uppercase tracking-tight">
             STOCK HALOGEN <span className="text-amber-brand">VS</span> HASNAIN AUTO LED
           </h2>
-          <p className="text-xs sm:text-sm text-silver-400">
+          <p className="text-xs sm:text-sm text-gray-600">
             Slide horizontally to compare factory yellowish halogens with Hasnain Auto&apos;s 20,000 LM HyperBeam F5 Pro LEDs and 3.0&quot; Bi-LED projectors on a dark highway.
           </p>
         </div>
@@ -118,7 +118,7 @@ export const BeforeAfterSlider: React.FC = () => {
         <div className="mt-8 text-center">
           <Link
             href="/shop"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-carbon-850 hover:bg-carbon-800 border border-white/10 text-white font-bold text-xs uppercase tracking-wider transition-all"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-red-brand hover:bg-red-dark text-white font-bold text-xs uppercase tracking-wider transition-all shadow-red-glow-sm"
           >
             <span>Upgrade Your Headlights Today</span>
             <Sparkles className="w-3.5 h-3.5 text-amber-brand" />

@@ -13,12 +13,12 @@ export const InteriorShowcase: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 sm:py-20 bg-carbon-900 border-y border-white/5 relative overflow-hidden">
+    <section className="py-16 sm:py-20 bg-white border-y border-gray-200 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left Visual: Original Symphony Ambient Photo */}
           <div className="lg:col-span-6 relative">
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-red-500/20 shadow-2xl bg-carbon-950 group shadow-red-950/20">
+            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-gray-200 shadow-card bg-white group">
               <Image
                 src="/images/products/symphony-ambient-led.jpg"
                 alt="Symphony 64-color acrylic interior ambient lighting by Hasnain Auto Saddar"
@@ -26,14 +26,14 @@ export const InteriorShowcase: React.FC = () => {
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-carbon-950 via-carbon-950/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
-              <div className="absolute bottom-5 left-5 right-5 p-4 rounded-2xl bg-carbon-900/90 backdrop-blur-md border border-white/10 flex items-center justify-between">
+              <div className="absolute bottom-5 left-5 right-5 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-gray-200 flex items-center justify-between shadow-sm">
                 <div>
-                  <div className="text-[10px] font-bold text-red-accent uppercase tracking-widest">
+                  <div className="text-[10px] font-bold text-red-brand uppercase tracking-widest">
                     Cockpit Transformation
                   </div>
-                  <div className="text-sm font-black text-white">
+                  <div className="text-sm font-black text-carbon-900">
                     Symphony 64-Color Smart Ambience
                   </div>
                 </div>
@@ -51,16 +51,16 @@ export const InteriorShowcase: React.FC = () => {
                 <Sparkles className="w-3.5 h-3.5 text-red-brand" />
                 <span>Interior Lighting Excellence</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white uppercase tracking-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-carbon-900 uppercase tracking-tight">
                 SYMPHONY 64-COLOR <br />
                 <span className="red-gradient-text">CABIN AMBIENCE.</span>
               </h2>
-              <p className="text-base sm:text-lg font-bold text-silver-200 tracking-wide">
+              <p className="text-base sm:text-lg font-bold text-gray-700 tracking-wide">
                 Mercedes S-Class Luxury Lighting For Your Car
               </p>
             </div>
 
-            <p className="text-sm text-silver-300 leading-relaxed">
+            <p className="text-sm text-gray-600 leading-relaxed">
               Elevate your daily night drive. Our Symphony system utilizes razor-thin, concealed acrylic light channels that eliminate ugly bulging neon strips. Custom installed specifically for Corolla, Civic, Yaris, Sportage, Tucson, Swift, and Alto at our Saddar workshop.
             </p>
 
@@ -71,10 +71,10 @@ export const InteriorShowcase: React.FC = () => {
                     <CheckCircle2 className="w-4 h-4 text-red-brand" />
                   </div>
                   <div>
-                    <span className="text-xs font-bold text-white uppercase tracking-wide">
+                    <span className="text-xs font-bold text-carbon-900 uppercase tracking-wide">
                       {item.title}:
                     </span>{" "}
-                    <span className="text-xs text-silver-300">{item.desc}</span>
+                    <span className="text-xs text-gray-600">{item.desc}</span>
                   </div>
                 </div>
               ))}
