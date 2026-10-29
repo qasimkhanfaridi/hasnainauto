@@ -1,6 +1,7 @@
 import React from "react";
 import { HeroSection } from "@/components/HeroSection";
 import { LocationTrustBar } from "@/components/LocationTrustBar";
+import { SocketFinderBar } from "@/components/SocketFinderBar";
 import { CategoryShowcase } from "@/components/CategoryShowcase";
 import { CustomerFavourites } from "@/components/CustomerFavourites";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
@@ -21,7 +22,10 @@ export default function HomePage() {
       {/* 2. Location Trust Bar */}
       <LocationTrustBar />
 
-      {/* 3. Original Automotive LED Optical Departments */}
+      {/* 3. Novsight & Auxleds Inspired Shop By Bulb Socket Bar */}
+      <SocketFinderBar />
+
+      {/* 4. Original Automotive Departments */}
       <CategoryShowcase />
 
       {/* 4. Most Wanted LED Lighting Products */}

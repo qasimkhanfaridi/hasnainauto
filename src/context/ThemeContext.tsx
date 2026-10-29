@@ -22,10 +22,18 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [theme, setThemeState] = useState<Theme>("light");
   const [mounted, setMounted] = useState(false);
 
-  // On first mount, always use light theme for the storefront
+  // On first mount, restore saved theme from localStorage, defaulting to light
   useEffect(() => {
-    setThemeState("light");
-    localStorage.setItem("hasnain-theme", "light");
+    try {
+      const saved = localStorage.getItem("hasnain-theme") as Theme | null;
+      if (saved === "dark" || saved === "light") {
+        setThemeState(saved);
+      } else {
+        setThemeState("light");
+      }
+    } catch {
+      setThemeState("light");
+    }
     setMounted(true);
   }, []);
 
