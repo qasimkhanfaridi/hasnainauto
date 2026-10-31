@@ -9,13 +9,15 @@ import { BUSINESS_CONFIG } from "@/config/business";
 import { useCart } from "@/context/CartContext";
 import { useVehicle } from "@/context/VehicleContext";
 import { createSingleProductWhatsAppUrl } from "@/utils/whatsapp";
+import { getProductSpecChips } from "@/utils/productSpecs";
 
 interface ProductCardProps {
   product: Product;
   onQuickView?: (product: Product) => void;
+  variant?: "default" | "novsight";
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, variant = "default" }) => {
   const { addToCart } = useCart();
   const { selectedVehicle } = useVehicle();
 
@@ -32,16 +34,33 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
     selectedVehicle
   );
 
+  const isLed = product.category === "led-lights";
+  const specChips = isLed ? getProductSpecChips(product) : [];
+  const cardShell =
+    variant === "novsight" || isLed
+      ? "bg-white dark:bg-carbon-900 border-gray-200 dark:border-white/10"
+      : "bg-white border-gray-200";
+
   return (
-    <div className="group relative flex flex-col bg-white rounded-2xl border border-gray-200 hover:border-red-brand/40 shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden">
+    <div
+      className={`group relative flex flex-col ${cardShell} rounded-2xl border hover:border-red-brand/40 shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden`}
+    >
       {/* ─── Image ─── */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-50">
+      <div
+        className={`relative aspect-square w-full overflow-hidden ${
+          isLed || variant === "novsight" ? "bg-white" : "bg-gray-50 aspect-[4/3]"
+        }`}
+      >
         <Link href={`/product/${product.slug}`} className="block w-full h-full">
           <Image
             src={product.images[0]}
             alt={product.name}
             fill
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+            className={
+              isLed || variant === "novsight"
+                ? "object-contain p-3 sm:p-5 transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                : "object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+            }
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           />
         </Link>
@@ -109,9 +128,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
               />
             ))}
           </div>
-          <span className="text-[10px] font-bold text-carbon-900">{product.rating.toFixed(1)}</span>
+          <span className="text-[10px] font-bold text-carbon-900 dark:text-white">{product.rating.toFixed(1)}</span>
           <span className="text-[10px] text-gray-400">({product.reviewCount})</span>
         </div>
+
+        {specChips.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            {specChips.map((chip) => (
+              <span
+                key={chip}
+                className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-carbon-950 border border-gray-200 dark:border-white/10 text-[9px] font-bold text-carbon-900 dark:text-gray-200 uppercase"
+              >
+                {chip}
+              </span>
+            ))}
+          </div>
+        )}
 
         {/* Price + Cart row */}
         <div className="flex items-center justify-between gap-2 pt-1 mt-auto border-t border-gray-100">

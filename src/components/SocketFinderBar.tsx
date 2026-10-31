@@ -111,7 +111,7 @@ export const SocketFinderBar: React.FC = () => {
           {SOCKET_OPTIONS.map((item) => (
             <Link
               key={item.socket}
-              href={`/shop?category=led-lights&search=${encodeURIComponent(item.socket)}`}
+              href={`/shop?category=led-lights&socket=${encodeURIComponent(item.socket === "H4" ? "H4" : item.socket === "H11" ? "H11" : item.socket === "9005" ? "9005" : item.socket)}`}
               className="group relative p-3.5 sm:p-4 rounded-2xl bg-surface-200 dark:bg-carbon-950 border border-gray-200 dark:border-white/10 hover:border-red-brand dark:hover:border-red-brand transition-all hover:shadow-card hover:-translate-y-0.5"
             >
               {/* Badge if available */}

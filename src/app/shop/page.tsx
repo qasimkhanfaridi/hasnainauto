@@ -18,18 +18,22 @@ import { Product, ACTIVE_PRODUCTS_DATA, CATEGORIES_DATA } from "@/data/products"
 import { ProductCard } from "@/components/ProductCard";
 import { ProductQuickViewModal } from "@/components/ProductQuickViewModal";
 import { useVehicle } from "@/context/VehicleContext";
+import { productMatchesSocket } from "@/utils/productSpecs";
+import { LED_SOCKET_FILTERS } from "@/data/ledSeries";
 
 const PRICE_RANGES = [
   { id: "all", label: "All Prices", min: 0, max: Infinity },
-  { id: "under-3k", label: "Under Rs. 3,000", min: 0, max: 3000 },
-  { id: "3k-10k", label: "Rs. 3,000 – 10,000", min: 3000, max: 10000 },
-  { id: "10k-20k", label: "Rs. 10,000 – 20,000", min: 10000, max: 20000 },
-  { id: "above-20k", label: "Above Rs. 20,000", min: 20000, max: Infinity },
+  { id: "under-15k", label: "Under Rs. 15,000", min: 0, max: 15000 },
+  { id: "15k-20k", label: "Rs. 15,000 – 20,000", min: 15000, max: 20000 },
+  { id: "20k-25k", label: "Rs. 20,000 – 25,000", min: 20000, max: 25000 },
+  { id: "above-25k", label: "Above Rs. 25,000", min: 25000, max: Infinity },
 ];
 
 function ShopContent() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
+  const searchParam = searchParams.get("search");
+  const socketParam = searchParams.get("socket");
 
   const { selectedVehicle, clearVehicle, isCompatible } = useVehicle();
 
@@ -39,6 +43,7 @@ function ShopContent() {
   const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc" | "rating">("featured");
   const [inStockOnly, setInStockOnly] = useState(false);
   const [onlyCompatible, setOnlyCompatible] = useState(false);
+  const [selectedSocket, setSelectedSocket] = useState<string>("all");
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
@@ -48,6 +53,15 @@ function ShopContent() {
       setSelectedCategory(categoryParam);
     }
   }, [categoryParam]);
+
+  useEffect(() => {
+    const socket = socketParam || searchParam;
+    if (socket && ["H4", "H11", "9005", "9006", "H7"].some((s) => socket.toUpperCase().includes(s))) {
+      if (socket.toUpperCase().includes("H4")) setSelectedSocket("H4");
+      else if (socket.toUpperCase().includes("H11")) setSelectedSocket("H11");
+      else if (socket.toUpperCase().includes("9005")) setSelectedSocket("9005");
+    }
+  }, [socketParam, searchParam]);
 
   // Extract unique brands from active products
   const availableBrands = useMemo(() => {
@@ -86,6 +100,9 @@ function ShopContent() {
       if (onlyCompatible && selectedVehicle && !isCompatible(product)) {
         return false;
       }
+      if (selectedSocket !== "all" && product.category === "led-lights" && !productMatchesSocket(product, selectedSocket)) {
+        return false;
+      }
       return true;
     }).sort((a, b) => {
       const priceA = a.salePrice || a.price;
@@ -99,14 +116,15 @@ function ShopContent() {
       if (!a.featured && b.featured) return 1;
       return 0;
     });
-  }, [selectedCategory, selectedPriceRange, selectedBrand, inStockOnly, onlyCompatible, selectedVehicle, sortBy, isCompatible]);
+  }, [selectedCategory, selectedPriceRange, selectedBrand, inStockOnly, onlyCompatible, selectedVehicle, sortBy, isCompatible, selectedSocket]);
 
   const activeFiltersCount = 
     (selectedCategory !== "all" ? 1 : 0) +
     (selectedPriceRange !== "all" ? 1 : 0) +
     (selectedBrand !== "all" ? 1 : 0) +
     (inStockOnly ? 1 : 0) +
-    (onlyCompatible ? 1 : 0);
+    (onlyCompatible ? 1 : 0) +
+    (selectedSocket !== "all" ? 1 : 0);
 
   const resetFilters = () => {
     setSelectedCategory("all");
@@ -114,6 +132,7 @@ function ShopContent() {
     setSelectedBrand("all");
     setInStockOnly(false);
     setOnlyCompatible(false);
+    setSelectedSocket("all");
   };
 
   return (
@@ -220,6 +239,37 @@ function ShopContent() {
             </button>
           ))}
         </div>
+
+        {(selectedCategory === "led-lights" || selectedCategory === "all") && (
+          <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-2 scrollbar-none">
+            <span className="text-[10px] font-bold text-silver-500 uppercase shrink-0">Socket:</span>
+            <button
+              type="button"
+              onClick={() => setSelectedSocket("all")}
+              className={`px-3 py-1.5 rounded-lg text-[11px] font-bold border shrink-0 ${
+                selectedSocket === "all"
+                  ? "bg-amber-brand/20 text-amber-glow border-amber-brand/40"
+                  : "bg-carbon-900 text-silver-400 border-white/10"
+              }`}
+            >
+              All
+            </button>
+            {LED_SOCKET_FILTERS.map((sock) => (
+              <button
+                key={sock}
+                type="button"
+                onClick={() => setSelectedSocket(sock)}
+                className={`px-3 py-1.5 rounded-lg text-[11px] font-bold border shrink-0 ${
+                  selectedSocket === sock
+                    ? "bg-amber-brand/20 text-amber-glow border-amber-brand/40"
+                    : "bg-carbon-900 text-silver-400 border-white/10"
+                }`}
+              >
+                {sock}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Toolbar: Count, Active Filter Chips, Mobile Filter Trigger, Sort */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-white/10">
@@ -456,6 +506,7 @@ function ShopContent() {
                     key={product.id}
                     product={product}
                     onQuickView={(p) => setQuickViewProduct(p)}
+                    variant={product.category === "led-lights" ? "novsight" : "default"}
                   />
                 ))}
               </div>

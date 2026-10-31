@@ -13,52 +13,68 @@ interface HeroSectionProps {
 
 const HERO_SLIDES = [
   {
-    eyebrow: "UP TO 8X BRIGHTER THAN HALOGEN",
+    eyebrow: "REGO RACING · 001 SERIES",
     title: (
       <>
-        LIGHT UP
+        30,000 LM
         <br />
-        <span className="text-red-brand">THE ROAD</span>
+        <span className="text-red-brand">COPPER LED</span>
       </>
     ),
-    subtitle: "20,000 LM HyperBeam LED projectors with razor-sharp anti-glare cutoff. Dual vacuum copper heatpipes & zero wire cutting.",
-    pills: ["⚡ 20,000 LM Output", "🛡️ 1-Year Replacement Warranty", "🔌 100% Plug & Play", "🚗 Canbus Error-Free"],
-    image: "/images/products/f5-pro-h4-led.jpg",
-    imageAlt: "HyperBeam F5 Pro LED Headlights at Hasnain Auto Saddar Rawalpindi",
-    ctaLink: "/shop?category=led-lights",
-    ctaText: "SHOP LED LIGHTS",
+    subtitle: "Four copper heat pipes, Canbus-compatible drivers, and aluminium fan cooling. H4, H11, and 9005 — German technology with 1-year replacement warranty at Saddar.",
+    pills: ["260W System", "4 Copper Pipes", "Canbus Ready", "6500K Class White"],
+    image: "/images/products/rego-racing-led-hero.jpg",
+    imageAlt: "Rego Racing 4 copper pipe LED headlights at Hasnain Auto",
+    ctaLink: "/product/rego-racing-led-headlights",
+    ctaText: "VIEW REGO RACING",
   },
   {
-    eyebrow: "THE INTERIOR GOALS",
+    eyebrow: "MOTHER · 6 COPPER SERIES",
     title: (
       <>
-        DYNAMIC
+        TURBO FAN
         <br />
-        <span className="text-red-brand">AMBIENT GLOW</span>
+        <span className="text-red-brand">35,000 LM</span>
       </>
     ),
-    subtitle: "64-Color Symphony smart cabin lighting with music sync, paired with custom-tailored 7D diamond floor protection.",
-    pills: ["✨ 64-Color RGBIC", "🎵 Music Rhythm Sync", "📱 Smartphone App Control", "🛡️ OEM Concealed Fit"],
-    image: "/images/products/symphony-ambient-led.jpg",
-    imageAlt: "Symphony 64-Color Dynamic Ambient LED lights inside vehicle cabin",
-    ctaLink: "/shop?category=led-lights",
-    ctaText: "EXPLORE AMBIENT",
+    subtitle: "Six copper tubes and 12,000 RPM turbo fan for sustained brightness. Gold-anodized kit with Canbus decoders — a highway favourite in Pakistan.",
+    pills: ["280W System", "6 Copper Pipes", "12K RPM Fan", "Canbus"],
+    image: "/images/products/mother-6-copper-led-hero.jpg",
+    imageAlt: "Mother 6 copper tube LED headlight kit",
+    ctaLink: "/product/mother-6-copper-led-headlights",
+    ctaText: "SHOP MOTHER 6",
   },
   {
-    eyebrow: "ALL-WEATHER PENETRATION",
+    eyebrow: "GOLDEN BOX REGO · 010",
     title: (
       <>
-        BI-LED LASER
+        PREMIUM
         <br />
-        <span className="text-red-brand">FOG PROJECTORS</span>
+        <span className="text-amber-brand">REGO LINE</span>
       </>
     ),
-    subtitle: "Conquer thick winter fog, monsoon rain & dark GT Road highways with 160° ultra-wide horizontal cutoff lenses.",
-    pills: ["🌧️ IP68 Waterproof", "🔥 3000K Amber / 6000K White", "💡 350+ Meters Throw", "🛡️ 1-Year Guarantee"],
-    image: "/images/products/biled-fog-projectors.jpg",
-    imageAlt: "3.0 inch Bi-LED Projector Fog Lamps at Hasnain Auto Saddar",
+    subtitle: "230W / 35,000 lumens at 6500K with four copper tubes and Canbus technology — the golden tier Rego upgrade.",
+    pills: ["230W · 35K LM", "6500K", "4 Copper", "1Y Warranty"],
+    image: "/images/products/golden-box-rego-led-hero.jpg",
+    imageAlt: "Golden Box Rego 4 copper LED headlights",
+    ctaLink: "/product/golden-box-rego-led-headlights",
+    ctaText: "GOLDEN BOX REGO",
+  },
+  {
+    eyebrow: "FULL CATALOGUE",
+    title: (
+      <>
+        SHOP ALL
+        <br />
+        <span className="text-red-brand">LED SERIES</span>
+      </>
+    ),
+    subtitle: "B Pro 8-pipe, Mother 5, Black Box Rego, Y6 projector, Mini lens — Novsight-style lineup with Saddar installation.",
+    pills: ["8 Series Live", "H4 · H11 · 9005", "WhatsApp Fitment", "COD Pakistan"],
+    image: "/images/products/b-pro-8-copper-led-hero.jpg",
+    imageAlt: "B Pro 8 copper tube LED headlights",
     ctaLink: "/shop?category=led-lights",
-    ctaText: "VIEW FOG LIGHTS",
+    ctaText: "ALL LED LIGHTS",
   },
   {
     eyebrow: "PREMIUM COCKPIT FIT",

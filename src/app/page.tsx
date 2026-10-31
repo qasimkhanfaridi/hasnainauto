@@ -12,47 +12,43 @@ import { WhyHasnainAuto } from "@/components/WhyHasnainAuto";
 import { OurWorkGallery } from "@/components/OurWorkGallery";
 import { CustomerReviews } from "@/components/CustomerReviews";
 import { ContactSection } from "@/components/ContactSection";
+import { LedSeriesShowcase } from "@/components/LedSeriesShowcase";
+import { LedHeadlightsShowcase } from "@/components/LedHeadlightsShowcase";
+import { LedFaqSection } from "@/components/LedFaqSection";
 
 export default function HomePage() {
   return (
     <div className="w-full">
-      {/* 1. Cinematic Hero with Original LED Road Projection */}
       <HeroSection />
 
-      {/* 2. Location Trust Bar */}
       <LocationTrustBar />
 
-      {/* 3. Novsight & Auxleds Inspired Shop By Bulb Socket Bar */}
       <SocketFinderBar />
 
-      {/* 4. Original Automotive Departments */}
+      <LedSeriesShowcase />
+
+      <LedHeadlightsShowcase />
+
       <CategoryShowcase />
 
-      {/* 4. Most Wanted LED Lighting Products */}
       <CustomerFavourites />
 
-      {/* 5. Interactive Halogen vs LED Highway Comparison Slider */}
       <BeforeAfterSlider />
 
-      {/* 6. Precision Lighting & Bi-LED Fog Projector Feature */}
       <LightingShowcase />
 
-      {/* 7. Symphony 64-Color Smart Cabin Ambience Feature */}
       <InteriorShowcase />
 
-      {/* 8. Saddar Workshop Installation & Beam Calibration Guarantee */}
       <InstallationTrust />
 
-      {/* 9. Why Hasnain Auto Trust Pillars */}
       <WhyHasnainAuto />
 
-      {/* 10. Original LED Hardware Portfolio Gallery */}
       <OurWorkGallery />
 
-      {/* 11. Local Verified Customer Reviews */}
       <CustomerReviews />
 
-      {/* 12. Saddar Kashmir Road Store & Contact */}
+      <LedFaqSection />
+
       <ContactSection />
     </div>
   );
