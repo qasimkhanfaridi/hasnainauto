@@ -698,6 +698,10 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.9,
     reviewCount: 47,
     images: [
+      "/images/products/rego-racing-led-new-01.jpg",
+      "/images/products/rego-racing-led-new-02.jpg",
+      "/images/products/rego-racing-led-new-03.jpg",
+      "/images/products/rego-racing-led-new-04.jpg",
       "/images/products/rego-racing-led-01.jpg",
       "/images/products/rego-racing-led-02.jpg",
       "/images/products/rego-racing-led-03.jpg",
@@ -767,6 +771,11 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.9,
     reviewCount: 38,
     images: [
+      "/images/products/mother-6-copper-led-new-01.jpg",
+      "/images/products/mother-6-copper-led-new-02.jpg",
+      "/images/products/mother-6-copper-led-new-03.jpg",
+      "/images/products/mother-6-copper-led-new-04.jpg",
+      "/images/products/mother-6-copper-led-new-05.jpg",
       "/images/products/mother-6-copper-led-01.jpg",
       "/images/products/mother-6-copper-led-02.jpg",
       "/images/products/mother-6-copper-led-03.jpg",
@@ -900,6 +909,7 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.8,
     reviewCount: 31,
     images: [
+      "/images/products/mother-5-copper-led-new-01.jpg",
       "/images/products/mother-5-copper-led-01.jpg",
       "/images/products/mother-5-copper-led-02.jpg",
       "/images/products/mother-5-copper-led-03.jpg",
@@ -1033,6 +1043,8 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.7,
     reviewCount: 19,
     images: [
+      "/images/products/y6-projector-led-h4-new-01.jpg",
+      "/images/products/y6-projector-led-h4-new-02.jpg",
       "/images/products/y6-projector-led-h4-01.jpg",
       "/images/products/y6-projector-led-h4-02.jpg",
       "/images/products/y6-projector-led-h4-03.jpg",
@@ -1098,6 +1110,8 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.8,
     reviewCount: 16,
     images: [
+      "/images/products/mini-projector-lens-led-new-01.jpg",
+      "/images/products/mini-projector-lens-led-new-02.jpg",
       "/images/products/mini-projector-lens-led-01.jpg",
       "/images/products/mini-projector-lens-led-02.jpg",
       "/images/products/mini-projector-lens-led-03.jpg",
@@ -1160,6 +1174,10 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.9,
     reviewCount: 24,
     images: [
+      "/images/products/golden-box-rego-led-new-01.jpg",
+      "/images/products/golden-box-rego-led-new-02.jpg",
+      "/images/products/golden-box-rego-led-new-03.jpg",
+      "/images/products/golden-box-rego-led-new-04.jpg",
       "/images/products/golden-box-rego-led-01.jpg",
       "/images/products/golden-box-rego-led-02.jpg",
       "/images/products/golden-box-rego-led-03.jpg",
@@ -1227,6 +1245,9 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.8,
     reviewCount: 14,
     images: [
+      "/images/products/wooden-box-zinc-alloy-led-new-01.jpg",
+      "/images/products/wooden-box-zinc-alloy-led-new-02.jpg",
+      "/images/products/wooden-box-zinc-alloy-led-new-03.jpg",
       "/images/products/wooden-box-zinc-alloy-led-01.jpg",
       "/images/products/wooden-box-zinc-alloy-led-02.jpg",
       "/images/products/wooden-box-zinc-alloy-led-03.jpg",
@@ -1293,6 +1314,10 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.8,
     reviewCount: 11,
     images: [
+      "/images/products/tasa-h4-premium-led-new-01.jpg",
+      "/images/products/tasa-h4-premium-led-new-02.jpg",
+      "/images/products/tasa-h4-premium-led-new-03.jpg",
+      "/images/products/tasa-h4-premium-led-new-04.jpg",
       "/images/products/tasa-h4-premium-led-01.jpg",
       "/images/products/tasa-h4-premium-led-02.jpg",
       "/images/products/tasa-h4-premium-led-03.jpg",
@@ -1359,6 +1384,12 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.7,
     reviewCount: 18,
     images: [
+      "/images/products/ultra-bright-4-lens-fog-new-01.jpg",
+      "/images/products/ultra-bright-4-lens-fog-new-02.jpg",
+      "/images/products/ultra-bright-4-lens-fog-new-03.jpg",
+      "/images/products/ultra-bright-4-lens-fog-new-04.jpg",
+      "/images/products/ultra-bright-4-lens-fog-new-05.jpg",
+      "/images/products/ultra-bright-4-lens-fog-new-06.jpg",
       "/images/products/ultra-bright-4-lens-fog-01.jpg",
       "/images/products/ultra-bright-4-lens-fog-02.jpg",
       "/images/products/ultra-bright-4-lens-fog-03.jpg",
