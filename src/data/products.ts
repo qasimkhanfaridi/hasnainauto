@@ -701,14 +701,7 @@ export const PRODUCTS_DATA: Product[] = [
       "/images/products/rego-racing-led-new-01.jpg",
       "/images/products/rego-racing-led-new-02.jpg",
       "/images/products/rego-racing-led-new-03.jpg",
-      "/images/products/rego-racing-led-new-04.jpg",
-      "/images/products/rego-racing-led-01.jpg",
-      "/images/products/rego-racing-led-02.jpg",
-      "/images/products/rego-racing-led-03.jpg",
       "/images/products/rego-racing-led-04.jpg",
-      "/images/products/rego-racing-led-05.jpg",
-      "/images/products/rego-racing-led-06.jpg",
-      "/images/products/rego-racing-led-07.jpg",
     ],
     variants: [
       {
@@ -774,14 +767,7 @@ export const PRODUCTS_DATA: Product[] = [
       "/images/products/mother-6-copper-led-new-01.jpg",
       "/images/products/mother-6-copper-led-new-02.jpg",
       "/images/products/mother-6-copper-led-new-03.jpg",
-      "/images/products/mother-6-copper-led-new-04.jpg",
-      "/images/products/mother-6-copper-led-new-05.jpg",
       "/images/products/mother-6-copper-led-01.jpg",
-      "/images/products/mother-6-copper-led-02.jpg",
-      "/images/products/mother-6-copper-led-03.jpg",
-      "/images/products/mother-6-copper-led-04.jpg",
-      "/images/products/mother-6-copper-led-05.jpg",
-      "/images/products/mother-6-copper-led-06.jpg",
     ],
     variants: [
       {
@@ -845,11 +831,8 @@ export const PRODUCTS_DATA: Product[] = [
     images: [
       "/images/products/b-pro-8-copper-led-01.jpg",
       "/images/products/b-pro-8-copper-led-02.jpg",
-      "/images/products/b-pro-8-copper-led-03.jpg",
       "/images/products/b-pro-8-copper-led-04.jpg",
-      "/images/products/b-pro-8-copper-led-05.jpg",
       "/images/products/b-pro-8-copper-led-06.jpg",
-      "/images/products/b-pro-8-copper-led-07.jpg",
     ],
     variants: [
       {
@@ -911,11 +894,8 @@ export const PRODUCTS_DATA: Product[] = [
     images: [
       "/images/products/mother-5-copper-led-new-01.jpg",
       "/images/products/mother-5-copper-led-01.jpg",
-      "/images/products/mother-5-copper-led-02.jpg",
       "/images/products/mother-5-copper-led-03.jpg",
       "/images/products/mother-5-copper-led-04.jpg",
-      "/images/products/mother-5-copper-led-05.jpg",
-      "/images/products/mother-5-copper-led-06.jpg",
     ],
     variants: [
       {
@@ -979,11 +959,8 @@ export const PRODUCTS_DATA: Product[] = [
     images: [
       "/images/products/black-box-rego-led-01.jpg",
       "/images/products/black-box-rego-led-02.jpg",
-      "/images/products/black-box-rego-led-03.jpg",
       "/images/products/black-box-rego-led-04.jpg",
       "/images/products/black-box-rego-led-05.jpg",
-      "/images/products/black-box-rego-led-06.jpg",
-      "/images/products/black-box-rego-led-07.jpg",
     ],
     variants: [
       {
@@ -1046,12 +1023,7 @@ export const PRODUCTS_DATA: Product[] = [
       "/images/products/y6-projector-led-h4-new-01.jpg",
       "/images/products/y6-projector-led-h4-new-02.jpg",
       "/images/products/y6-projector-led-h4-01.jpg",
-      "/images/products/y6-projector-led-h4-02.jpg",
-      "/images/products/y6-projector-led-h4-03.jpg",
       "/images/products/y6-projector-led-h4-04.jpg",
-      "/images/products/y6-projector-led-h4-05.jpg",
-      "/images/products/y6-projector-led-h4-06.jpg",
-      "/images/products/y6-projector-led-h4-07.jpg",
     ],
     variants: [
       {
@@ -1113,10 +1085,7 @@ export const PRODUCTS_DATA: Product[] = [
       "/images/products/mini-projector-lens-led-new-01.jpg",
       "/images/products/mini-projector-lens-led-new-02.jpg",
       "/images/products/mini-projector-lens-led-01.jpg",
-      "/images/products/mini-projector-lens-led-02.jpg",
       "/images/products/mini-projector-lens-led-03.jpg",
-      "/images/products/mini-projector-lens-led-04.jpg",
-      "/images/products/mini-projector-lens-led-05.jpg",
     ],
     variants: [
       {
@@ -1177,14 +1146,7 @@ export const PRODUCTS_DATA: Product[] = [
       "/images/products/golden-box-rego-led-new-01.jpg",
       "/images/products/golden-box-rego-led-new-02.jpg",
       "/images/products/golden-box-rego-led-new-03.jpg",
-      "/images/products/golden-box-rego-led-new-04.jpg",
-      "/images/products/golden-box-rego-led-01.jpg",
-      "/images/products/golden-box-rego-led-02.jpg",
       "/images/products/golden-box-rego-led-03.jpg",
-      "/images/products/golden-box-rego-led-04.jpg",
-      "/images/products/golden-box-rego-led-05.jpg",
-      "/images/products/golden-box-rego-led-06.jpg",
-      "/images/products/golden-box-rego-led-07.jpg",
     ],
     variants: [
       {
@@ -1249,12 +1211,6 @@ export const PRODUCTS_DATA: Product[] = [
       "/images/products/wooden-box-zinc-alloy-led-new-02.jpg",
       "/images/products/wooden-box-zinc-alloy-led-new-03.jpg",
       "/images/products/wooden-box-zinc-alloy-led-01.jpg",
-      "/images/products/wooden-box-zinc-alloy-led-02.jpg",
-      "/images/products/wooden-box-zinc-alloy-led-03.jpg",
-      "/images/products/wooden-box-zinc-alloy-led-04.jpg",
-      "/images/products/wooden-box-zinc-alloy-led-05.jpg",
-      "/images/products/wooden-box-zinc-alloy-led-06.jpg",
-      "/images/products/wooden-box-zinc-alloy-led-07.jpg",
     ],
     variants: [
       {
@@ -1317,13 +1273,7 @@ export const PRODUCTS_DATA: Product[] = [
       "/images/products/tasa-h4-premium-led-new-01.jpg",
       "/images/products/tasa-h4-premium-led-new-02.jpg",
       "/images/products/tasa-h4-premium-led-new-03.jpg",
-      "/images/products/tasa-h4-premium-led-new-04.jpg",
       "/images/products/tasa-h4-premium-led-01.jpg",
-      "/images/products/tasa-h4-premium-led-02.jpg",
-      "/images/products/tasa-h4-premium-led-03.jpg",
-      "/images/products/tasa-h4-premium-led-04.jpg",
-      "/images/products/tasa-h4-premium-led-05.jpg",
-      "/images/products/tasa-h4-premium-led-06.jpg",
     ],
     variants: [
       {
@@ -1388,13 +1338,6 @@ export const PRODUCTS_DATA: Product[] = [
       "/images/products/ultra-bright-4-lens-fog-new-02.jpg",
       "/images/products/ultra-bright-4-lens-fog-new-03.jpg",
       "/images/products/ultra-bright-4-lens-fog-new-04.jpg",
-      "/images/products/ultra-bright-4-lens-fog-new-05.jpg",
-      "/images/products/ultra-bright-4-lens-fog-new-06.jpg",
-      "/images/products/ultra-bright-4-lens-fog-01.jpg",
-      "/images/products/ultra-bright-4-lens-fog-02.jpg",
-      "/images/products/ultra-bright-4-lens-fog-03.jpg",
-      "/images/products/ultra-bright-4-lens-fog-04.jpg",
-      "/images/products/ultra-bright-4-lens-fog-05.jpg",
     ],
     features: [
       "Four-lens high-intensity auxiliary LED pod",

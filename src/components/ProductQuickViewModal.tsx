@@ -16,7 +16,7 @@ interface ProductQuickViewModalProps {
 }
 
 export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({ product, onClose }) => {
-  const { addToCart } = useCart();
+  const { addToCart, openCart } = useCart();
   const { selectedVehicle, getCompatibilityBadge } = useVehicle();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -39,6 +39,7 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({ pr
   const handleAddToCart = () => {
     addToCart(product, quantity, selectedVariant);
     onClose();
+    openCart();
   };
 
   return (

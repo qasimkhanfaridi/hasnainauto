@@ -18,8 +18,15 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, variant = "default" }) => {
-  const { addToCart } = useCart();
+  const { addToCart, openCart } = useCart();
   const { selectedVehicle } = useVehicle();
+
+  const handleDirectOrder = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(product, 1, product.variants?.[0]?.options?.[0]);
+    openCart();
+  };
 
   const discountPercent = product.originalPrice
     ? Math.round(((product.originalPrice - (product.salePrice || product.price)) / product.originalPrice) * 100)
@@ -145,8 +152,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
           </div>
         )}
 
-        {/* Price + Cart row */}
-        <div className="flex items-center justify-between gap-2 pt-1 mt-auto border-t border-gray-100">
+        {/* Price + Direct Order row */}
+        <div className="flex items-center justify-between gap-2 pt-2 mt-auto border-t border-gray-100 dark:border-white/10">
           <div>
             <div className="flex items-baseline gap-1.5">
               <span className="text-base font-black text-red-brand">
@@ -158,26 +165,29 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
                 </span>
               )}
             </div>
+            <span className="text-[10px] font-semibold text-gray-500 dark:text-gray-400">Cash on Delivery</span>
           </div>
           <button
             type="button"
-            onClick={() => addToCart(product, 1, product.variants?.[0]?.options?.[0])}
-            className="p-2 rounded-xl bg-red-brand hover:bg-red-dark text-white transition-all shadow-red-glow-sm"
-            aria-label="Add to cart"
+            onClick={handleDirectOrder}
+            className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-red-brand hover:bg-red-dark text-white text-xs font-bold transition-all shadow-red-glow-sm"
+            aria-label="Order now"
+            title="Add to cart & Checkout"
           >
-            <ShoppingCart className="w-4 h-4" />
+            <ShoppingCart className="w-3.5 h-3.5" />
+            <span>Order</span>
           </button>
         </div>
 
-        {/* WhatsApp CTA */}
+        {/* WhatsApp 1-Click Order */}
         <a
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-1.5 py-2 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-white text-xs font-bold uppercase tracking-wider transition-all shadow-whatsapp-glow"
+          className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-white text-xs font-black uppercase tracking-wider transition-all shadow-whatsapp-glow"
         >
-          <MessageCircle className="w-3.5 h-3.5 fill-white" />
-          WhatsApp Order
+          <MessageCircle className="w-4 h-4 fill-white" />
+          WhatsApp 1-Click Order
         </a>
       </div>
     </div>
