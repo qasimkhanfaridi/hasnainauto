@@ -27,13 +27,13 @@ export const LedSeriesShowcase: React.FC = () => {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-brand/15 border border-amber-brand/30 text-amber-glow text-[10px] font-black uppercase tracking-widest mb-3">
               <Flame className="w-3.5 h-3.5 text-amber-brand" />
-              Inspired by Novsight Series Layout
+              Saddar Workshop Fitted
             </div>
             <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-balance">
-              Shop by <span className="text-amber-brand">LED Series</span>
+              Series choose karein — <span className="text-amber-brand">phir socket</span>
             </h2>
             <p className="text-sm text-silver-300 mt-2 max-w-2xl">
-              Rego, Mother, B Pro, and projector lines — copper cooling, Canbus drivers, and Saddar workshop fitment. Select your series, then choose H4, H11, or 9005 on the product page.
+              Rego, Mother, B Pro, Golden Box — copper cooling &amp; Canbus. Har product par H4, H11, 9005 option; COD &amp; 1-year replacement Saddar se.
             </p>
           </div>
           <Link

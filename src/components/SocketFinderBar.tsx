@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Zap, ShieldCheck, ChevronRight, Sparkles } from "lucide-react";
+import { BUSINESS_CONFIG } from "@/config/business";
 
 interface SocketOption {
   socket: string;
@@ -87,7 +88,7 @@ export const SocketFinderBar: React.FC = () => {
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/10 dark:bg-red-500/20 text-red-brand text-xs font-bold uppercase tracking-widest mb-2">
               <Zap className="w-3.5 h-3.5 fill-red-brand" />
-              <span>Novsight & Auxleds Spec Hardware</span>
+              <span>H4 · H11 · 9005 · H7 Fitment Guide</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-carbon-900 dark:text-white uppercase tracking-tight">
               SHOP BY BULB SOCKET & SIZE
@@ -166,7 +167,9 @@ export const SocketFinderBar: React.FC = () => {
             </div>
           </div>
           <a
-            href="https://wa.me/923125127096?text=Assalam-o-Alaikum%20Hasnain%20Auto%2C%20I%20need%20help%20finding%20the%20correct%20LED%20bulb%20socket%20size%20for%20my%20car."
+            href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(
+              "Assalam-o-Alaikum Hasnain Auto, I need help finding the correct LED bulb socket for my car."
+            )}`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-2 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-white text-xs font-bold transition-all shadow-sm shrink-0"

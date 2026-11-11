@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, LayoutGrid, MessageCircle, ShoppingCart, User } from "lucide-react";
+import { Home, Zap, MessageCircle, ShoppingCart, MapPin } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { BUSINESS_CONFIG } from "@/config/business";
 
@@ -30,22 +30,22 @@ export const MobileBottomNav: React.FC = () => {
 
         {/* 2. Categories */}
         <Link
-          href="/shop"
+          href="/shop?category=led-lights"
           className={`flex flex-col items-center justify-center h-full min-h-[44px] gap-0.5 transition-colors ${
-            pathname === "/shop" ? "text-red-brand" : "text-gray-400 hover:text-gray-700"
+            pathname === "/shop" ? "text-amber-brand" : "text-gray-400 hover:text-gray-700"
           }`}
-          aria-label="Categories"
+          aria-label="LED shop"
         >
-          <LayoutGrid className="w-5 h-5" />
-          <span className={`text-[10px] font-bold tracking-wider uppercase ${pathname === "/shop" ? "text-red-brand" : "text-gray-400"}`}>
-            Categories
+          <Zap className="w-5 h-5" />
+          <span className={`text-[10px] font-bold tracking-wider uppercase ${pathname === "/shop" ? "text-amber-brand" : "text-gray-400"}`}>
+            LEDs
           </span>
         </Link>
 
         {/* 3. Center: WhatsApp floating button */}
         <a
           href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(
-            "Assalam-o-Alaikum Hasnain Auto, I want to order accessories for my vehicle."
+            "Assalam-o-Alaikum Hasnain Auto, mujhe LED headlights chahiye. Meri gari: ___"
           )}`}
           target="_blank"
           rel="noopener noreferrer"
@@ -85,11 +85,11 @@ export const MobileBottomNav: React.FC = () => {
           className={`flex flex-col items-center justify-center h-full min-h-[44px] gap-0.5 transition-colors ${
             pathname === "/contact" ? "text-red-brand" : "text-gray-400 hover:text-gray-700"
           }`}
-          aria-label="Account"
+          aria-label="Saddar showroom"
         >
-          <User className="w-5 h-5" />
+          <MapPin className="w-5 h-5" />
           <span className={`text-[10px] font-bold tracking-wider uppercase ${pathname === "/contact" ? "text-red-brand" : "text-gray-400"}`}>
-            Contact
+            Saddar
           </span>
         </Link>
       </div>

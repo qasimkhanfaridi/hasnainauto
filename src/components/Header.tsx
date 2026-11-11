@@ -45,12 +45,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
   }, [pathname]);
 
   const navCategories = [
+    { name: "LED Lights", href: "/shop?category=led-lights", ledNav: true },
+    { name: "Shop by Car", href: "/shop-by-car" },
     { name: "Seat Covers", href: "/shop?category=seat-covers" },
     { name: "Floor Mats", href: "/shop?category=floor-mats" },
-    { name: "LED Lights", href: "/shop?category=led-lights" },
-    { name: "Holders & Keys", href: "/shop?category=mobile-holders" },
     { name: "Combo Deals", href: "/shop?category=combo-deals" },
-    { name: "Shop by Car", href: "/shop-by-car" },
   ];
 
   return (
@@ -64,7 +63,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
               <span>1-Year Replacement Warranty</span>
             </span>
             <span className="hidden sm:inline text-gray-400">•</span>
-            <span className="hidden sm:inline">🚚 Nationwide Cash on Delivery</span>
+            <span className="hidden sm:inline">🚚 COD — Poora Pakistan</span>
             <span className="hidden lg:inline text-gray-400">•</span>
             <span className="hidden lg:inline">📍 Azhar Shaheed Market, Saddar Rawalpindi</span>
           </div>
@@ -115,8 +114,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                   HASNAIN
                   <span className="text-red-brand">AUTO</span>
                 </span>
-                <span className="text-[8px] sm:text-[9px] text-gray-500 dark:text-gray-400 uppercase tracking-[0.15em] font-medium -mt-0.5">
-                  DECORATION ACCESSORIES
+                <span className="text-[8px] sm:text-[9px] text-amber-brand dark:text-amber-glow uppercase tracking-[0.12em] font-bold -mt-0.5">
+                  LED Lights · Saddar Rawalpindi
                 </span>
               </div>
             </Link>
@@ -129,7 +128,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                 className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl bg-gray-100 dark:bg-carbon-800 hover:bg-gray-200 dark:hover:bg-carbon-700 border border-gray-200 dark:border-white/10 hover:border-red-brand/30 text-gray-400 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-all text-sm text-left"
               >
                 <Search className="w-4 h-4 text-red-brand shrink-0" />
-                <span>Search seat covers, LED lights, bulb sockets (H4, H11)...</span>
+                <span>Search LED — H4, H11, 9005, Rego, Mother…</span>
               </button>
             </div>
 
@@ -162,7 +161,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
 
               {/* WhatsApp CTA (desktop) */}
               <a
-                href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent("Assalam-o-Alaikum Hasnain Auto, I want to inquire about accessories for my car.")}`}
+                href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent("Assalam-o-Alaikum Hasnain Auto, mujhe LED headlights order karne hain. Gari: ___ Socket: H4/H11/9005")}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-white font-bold text-xs transition-all shadow-whatsapp-glow"
@@ -228,14 +227,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
 
               {/* All Products */}
               <Link
-                href="/shop"
+                href="/shop?category=led-lights"
                 className={`flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${
                   pathname === "/shop"
                     ? "text-white border-red-brand bg-red-brand/10"
                     : "text-gray-300 border-transparent hover:text-white hover:bg-white/5"
                 }`}
               >
-                All Products
+                All LEDs
               </Link>
 
               {navCategories.map((item) => (
@@ -243,9 +242,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                   key={item.name}
                   href={item.href}
                   className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 whitespace-nowrap ${
-                    pathname === item.href
-                      ? "text-white border-red-brand bg-red-brand/10"
-                      : "text-gray-300 border-transparent hover:text-white hover:bg-white/5"
+                    "ledNav" in item && item.ledNav
+                      ? "text-amber-brand border-amber-brand bg-amber-brand/15 hover:bg-amber-brand/25 shadow-[inset_0_-2px_0_#f59e0b]"
+                      : pathname === item.href
+                        ? "text-white border-red-brand bg-red-brand/10"
+                        : "text-gray-300 border-transparent hover:text-white hover:bg-white/5"
                   }`}
                 >
                   {item.name}
@@ -283,10 +284,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
             <div className="px-4 py-4 space-y-1">
               {[
                 { name: "Home", href: "/" },
-                { name: "All Products", href: "/shop" },
-                { name: "Shop by Car", href: "/shop-by-car" },
-                ...navCategories.filter((n) => n.href !== "/shop-by-car"),
-                { name: "Visit Saddar Showroom", href: "/contact" },
+                { name: "LED Lights", href: "/shop?category=led-lights" },
+                { name: "Meri Gari (Fitment)", href: "/shop-by-car" },
+                { name: "Seat Covers & Mats", href: "/shop?category=seat-covers" },
+                { name: "Saddar Showroom", href: "/contact" },
               ].map((link) => (
                 <Link
                   key={link.name}

@@ -157,13 +157,17 @@ export default function ShopByCarPage() {
                       key={make.slug}
                       type="button"
                       onClick={() => handleSelectMake(make)}
+                      aria-label={`Select ${make.name}`}
+                      aria-pressed={isSelected}
                       className={`p-4 rounded-2xl border text-center transition-all flex flex-col items-center justify-center gap-2 group ${
                         isSelected
                           ? "bg-red-600/20 border-red-500 ring-2 ring-red-500 shadow-red-glow-sm"
                           : "bg-carbon-950/80 border-white/10 hover:border-red-500/40 hover:bg-carbon-900"
                       }`}
                     >
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black uppercase transition-colors ${
+                      <div
+                        aria-hidden
+                        className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black uppercase transition-colors ${
                         isSelected ? "bg-red-600 text-white" : "bg-carbon-850 text-silver-300 group-hover:text-white"
                       }`}>
                         {make.name.slice(0, 2)}

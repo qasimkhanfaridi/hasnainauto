@@ -14,10 +14,10 @@ export const FloatingWhatsApp: React.FC = () => {
         <div className="hidden sm:flex items-center gap-2 p-3 rounded-2xl bg-carbon-900 border border-white/10 shadow-2xl text-xs text-white animate-in slide-in-from-right duration-300">
           <div className="space-y-0.5">
             <div className="font-bold text-amber-brand text-[11px] uppercase tracking-wider">
-              Need Help or Quick Order?
+              LED order / fitment?
             </div>
             <div className="text-[11px] text-silver-300">
-              Chat live with Hasnain Auto Saddar
+              Saddar team — H4, H11, 9005 confirm karein
             </div>
           </div>
           <button
@@ -34,7 +34,7 @@ export const FloatingWhatsApp: React.FC = () => {
       {/* Floating Action Button */}
       <a
         href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(
-          "Assalam-o-Alaikum Hasnain Auto, I would like to inquire about accessories for my car."
+          "Assalam-o-Alaikum Hasnain Auto, mujhe LED headlights chahiye. Meri gari: ___ Socket maloom nahi / H4 / H11 / 9005"
         )}`}
         target="_blank"
         rel="noopener noreferrer"

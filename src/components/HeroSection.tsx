@@ -68,28 +68,12 @@ const HERO_SLIDES = [
         <span className="text-red-brand">LED SERIES</span>
       </>
     ),
-    subtitle: "B Pro 8-pipe, Mother 5, Black Box Rego, Y6 projector, Mini lens — Novsight-style lineup with Saddar installation.",
-    pills: ["8 Series Live", "H4 · H11 · 9005", "WhatsApp Fitment", "COD Pakistan"],
+    subtitle: "Rego, Mother, B Pro, Golden Box, Y6 projector — 14 kits in stock at Saddar. H4, H11, 9005 sockets with Canbus & 1-year warranty.",
+    pills: ["14 LED Kits Live", "H4 · H11 · 9005", "COD Pakistan", "Free Beam Check"],
     image: "/images/products/b-pro-8-copper-led-01.jpg",
     imageAlt: "B Pro 8 copper tube LED headlights",
     ctaLink: "/shop?category=led-lights",
     ctaText: "ALL LED LIGHTS",
-  },
-  {
-    eyebrow: "PREMIUM COCKPIT FIT",
-    title: (
-      <>
-        BESPOKE
-        <br />
-        <span className="text-red-brand">SEAT COVERS</span>
-      </>
-    ),
-    subtitle: "Handcrafted scratchless leatherette seat covers laser-contoured to your car make, model & year. Complete combo deals.",
-    pills: ["🪡 Diamond Double Stitch", "❄️ Perforated Breathable", "🛋️ Memory Foam Comfort", "💰 Save 15% on Combos"],
-    image: "/images/products/seat-cover-floor-mat-combo.jpg",
-    imageAlt: "Premium bespoke seat covers and 7D floor mat combos at Hasnain Auto Saddar Rawalpindi",
-    ctaLink: "/shop?category=seat-covers",
-    ctaText: "SHOP SEAT COVERS",
   },
 ] as const;
 
@@ -235,7 +219,9 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
   return (
     <section className="w-full overflow-hidden">
       <HeroCarousel slideCount={HERO_SLIDES.length} className="bg-white dark:bg-carbon-900">
-        {HERO_SLIDES.map((slide) => (
+        {HERO_SLIDES.map((slide, slideIndex) => {
+          const SlideHeading = slideIndex === 0 ? "h1" : "h2";
+          return (
           <div
             key={slide.eyebrow}
             className="relative overflow-hidden bg-surface-100 dark:bg-carbon-950 lg:bg-white lg:dark:bg-carbon-900 lg:min-h-[500px]"
@@ -247,9 +233,9 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
                     <span className="w-2 h-2 rounded-full bg-red-brand animate-pulse" />
                     <span>{slide.eyebrow}</span>
                   </div>
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-carbon-900 dark:text-white leading-[1.05] uppercase tracking-tight mb-3">
+                  <SlideHeading className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-carbon-900 dark:text-white leading-[1.05] uppercase tracking-tight mb-3">
                     {slide.title}
-                  </h1>
+                  </SlideHeading>
                   <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-5 font-medium leading-relaxed">
                     {slide.subtitle}
                   </p>
@@ -312,7 +298,8 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
               </div>
             </div>
           </div>
-        ))}
+        );
+        })}
       </HeroCarousel>
 
       {/* Clean Compact Trust Bar */}

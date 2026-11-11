@@ -92,9 +92,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
           <button
             type="button"
             onClick={() => onQuickView(product)}
-            className="absolute top-2.5 right-2.5 p-2 rounded-xl bg-white/90 backdrop-blur-sm border border-gray-200 text-gray-500 hover:text-red-brand hover:border-red-brand/40 opacity-0 group-hover:opacity-100 transition-all shadow-sm"
+            className="absolute top-2.5 right-2.5 p-2 rounded-xl bg-white/90 backdrop-blur-sm border border-gray-200 text-gray-500 hover:text-red-brand hover:border-red-brand/40 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100 focus:opacity-100 transition-all shadow-sm z-10"
             title="Quick view"
-            aria-label="Quick view"
+            aria-label={`Quick view ${product.name}`}
           >
             <Eye className="w-3.5 h-3.5" />
           </button>
@@ -103,7 +103,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
         {/* Wishlist heart (static display) */}
         <button
           type="button"
-          className="absolute top-2.5 right-2.5 p-2 rounded-xl bg-white/90 border border-gray-200 text-gray-400 hover:text-red-brand transition-colors opacity-0 group-hover:opacity-100 shadow-sm"
+          className={`absolute top-2.5 ${onQuickView ? "right-12" : "right-2.5"} p-2 rounded-xl bg-white/90 border border-gray-200 text-gray-400 hover:text-red-brand transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100 focus:opacity-100 shadow-sm z-10`}
           aria-label="Save to wishlist"
         >
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

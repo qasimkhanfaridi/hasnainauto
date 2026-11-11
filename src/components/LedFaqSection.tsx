@@ -42,7 +42,7 @@ export const LedFaqSection: React.FC = () => {
             LED Headlight Help
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
-            Novsight-style buying guides — tailored for Hasnain Auto Saddar customers.
+            LED kharidne se pehle ye sawal — Saddar workshop &amp; COD customers ke liye.
           </p>
         </div>
 

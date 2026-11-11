@@ -21,9 +21,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Hasnain Auto Decoration" }],
   creator: "Hasnain Auto Decoration",
   metadataBase: new URL(BUSINESS_CONFIG.meta.siteUrl),
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     type: "website",
     locale: "en_PK",
@@ -34,10 +31,10 @@ export const metadata: Metadata = {
     siteName: BUSINESS_CONFIG.name,
     images: [
       {
-        url: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200",
+        url: "/images/products/rego-racing-led-new-01.jpg",
         width: 1200,
         height: 630,
-        alt: "Hasnain Auto Decoration Saddar Rawalpindi Showroom",
+        alt: "Rego Racing LED headlights at Hasnain Auto Saddar Rawalpindi",
       },
     ],
   },
@@ -45,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Hasnain Auto Decoration & Accessories",
     description: "Premium car accessories and decoration showroom in Saddar, Rawalpindi. WhatsApp orders available.",
-    images: ["https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200"],
+    images: ["/images/products/rego-racing-led-new-01.jpg"],
   },
   robots: {
     index: true,
@@ -63,7 +60,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "AutoPartsStore",
     "name": BUSINESS_CONFIG.name,
-    "image": "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200",
+    "image": `${BUSINESS_CONFIG.meta.siteUrl}/images/products/rego-racing-led-new-01.jpg`,
     "@id": BUSINESS_CONFIG.meta.siteUrl,
     "url": BUSINESS_CONFIG.meta.siteUrl,
     "telephone": BUSINESS_CONFIG.phone,

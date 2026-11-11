@@ -42,7 +42,7 @@ function ShopContent() {
 
   const { selectedVehicle, setSelectedVehicle, clearVehicle, isCompatible } = useVehicle();
 
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>(categoryParam || "led-lights");
   const [selectedPriceRange, setSelectedPriceRange] = useState<string>("all");
   const [selectedBrand, setSelectedBrand] = useState<string>("all");
   const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc" | "rating">("featured");
@@ -181,16 +181,16 @@ function ShopContent() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb & Title */}
         <div className="mb-6 space-y-2">
-          <div className="text-xs text-silver-400">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
-            <span className="mx-2 text-silver-600">/</span>
-            <span className="text-red-accent font-semibold">Store Catalogue</span>
+          <div className="text-xs text-gray-500 dark:text-silver-400">
+            <Link href="/" className="hover:text-red-brand dark:hover:text-white transition-colors">Home</Link>
+            <span className="mx-2 text-gray-400 dark:text-silver-600">/</span>
+            <span className="text-red-brand dark:text-red-accent font-semibold">Store Catalogue</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-black text-carbon-900 dark:text-white uppercase tracking-tight">
-            AUTO DECORATION & ACCESSORIES
+            LED Lights &amp; Auto Accessories
           </h1>
           <p className="text-xs sm:text-sm text-gray-600 dark:text-silver-300">
-            Custom-tailored leather seat covers, 7D floor mats, high-output LED headlights, and premium automotive styling with Cash on Delivery, Bank Transfer, & JazzCash.
+            14 copper LED series in stock — filter by H4, H11, 9005. COD Pakistan, JazzCash, bank transfer. Seat covers &amp; mats bhi available.
           </p>
         </div>
 
@@ -280,6 +280,15 @@ function ShopContent() {
             </button>
           ))}
         </div>
+
+        {(selectedCategory === "led-lights" || selectedCategory === "all") && (
+          <p className="text-[11px] text-gray-500 dark:text-silver-400 mb-2">
+            Filter by halogen base type (Novsight / Auxleds-style shopping). Unsure?{" "}
+            <Link href="/shop-by-car" className="text-red-brand font-bold hover:underline">
+              Select your vehicle
+            </Link>
+          </p>
+        )}
 
         {(selectedCategory === "led-lights" || selectedCategory === "all") && (
           <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-2 scrollbar-none">

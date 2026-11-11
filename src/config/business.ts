@@ -79,8 +79,8 @@ export interface BusinessConfig {
 export const BUSINESS_CONFIG: BusinessConfig = {
   name: "Hasnain Auto Decoration & Accessories",
   shortName: "Hasnain Auto",
-  tagline: "Upgrade Your Drive",
-  subTagline: "Premium Car Decoration & Accessories in Saddar, Rawalpindi",
+  tagline: "LED Headlights & Car Lights",
+  subTagline: "Rego & Copper LED · Saddar Rawalpindi · COD Pakistan",
   address: {
     line1: "1st Floor, Azhar Shaheed Auto Market",
     market: "Azhar Shaheed Auto Market",
@@ -142,8 +142,9 @@ export const BUSINESS_CONFIG: BusinessConfig = {
     storePickupAddress: "1st Floor, Azhar Shaheed Auto Market, Kashmir Road, Saddar, Rawalpindi",
   },
   meta: {
-    title: "Hasnain Auto Decoration & Accessories | Saddar Rawalpindi",
-    description: "Premium car accessories, decoration, LED lights, seat covers, 7D mats, and multimedia showroom in Saddar, Rawalpindi. Cash on Delivery, Bank Transfer, JazzCash & expert installation.",
+    title: "LED Headlights Saddar | Hasnain Auto Rawalpindi",
+    description:
+      "Copper LED headlights — Rego, Mother, B Pro — H4, H11, 9005. Canbus, 1-year warranty, COD Pakistan, Saddar fitting. Seat covers & 7D mats also available.",
     keywords: [
       "Hasnain Auto Decoration",
       "Hasnain Auto Rawalpindi",

@@ -5,23 +5,32 @@ import Image from "next/image";
 import { CATEGORIES_DATA } from "@/data/products";
 
 export const CategoryShowcase: React.FC = () => {
+  const sortedCategories = [...CATEGORIES_DATA].sort((a, b) =>
+    a.id === "led-lights" ? -1 : b.id === "led-lights" ? 1 : 0
+  );
+
   return (
-    <section id="categories" className="py-10 sm:py-14 bg-white border-b border-gray-200">
+    <section id="categories" className="py-10 sm:py-14 bg-white dark:bg-carbon-900 border-b border-gray-200 dark:border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-6 sm:mb-8">
-          <h2 className="text-xl sm:text-2xl font-black text-carbon-900 uppercase tracking-tight">
-            SHOP BY CATEGORY
-          </h2>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-6 sm:mb-8">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-black text-carbon-900 dark:text-white uppercase tracking-tight">
+              More accessories
+            </h2>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              Seat covers &amp; mats bhi available — LED hamari specialty hai.
+            </p>
+          </div>
           <Link
-            href="/shop"
+            href="/shop?category=led-lights"
             className="text-xs sm:text-sm font-bold text-red-brand hover:text-red-dark uppercase tracking-wider transition-colors"
           >
-            View All
+            Back to LEDs
           </Link>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5 lg:gap-6">
-          {CATEGORIES_DATA.map((cat) => (
+          {sortedCategories.map((cat) => (
             <Link
               key={cat.id}
               href={`/shop?category=${cat.slug}`}

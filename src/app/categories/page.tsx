@@ -4,9 +4,13 @@ import { CategoryShowcase } from "@/components/CategoryShowcase";
 import { ACTIVE_CATEGORIES_DATA } from "@/data/products";
 import { ChevronRight } from "lucide-react";
 
-export const metadata = {
-  title: "Auto Accessories & Decoration Departments | Hasnain Auto Saddar Rawalpindi",
-  description: "Explore all car decoration departments: Custom Leather Seat Covers, 7D Floor Mats, LED Headlights, Mobile Holders, and Combo Bundles.",
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Auto Accessories & Decoration Departments",
+  description:
+    "Explore all car decoration departments: Custom Leather Seat Covers, 7D Floor Mats, LED Headlights, Mobile Holders, and Combo Bundles.",
+  alternates: { canonical: "/categories" },
 };
 
 export default function CategoriesPage() {
