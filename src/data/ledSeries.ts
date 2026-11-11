@@ -19,7 +19,7 @@ export const LED_SERIES_LINES: LedSeriesLine[] = [
     seriesLabel: "001 Series",
     description: "4 copper pipes, aluminium fan, German technology",
     highlight: "260W · 30,000 LM · Canbus",
-    image: "/images/products/rego-racing-led-new-01.jpg",
+    image: "/images/products/rego-racing-led-01.jpg",
     href: "/product/rego-racing-led-headlights",
     specs: ["4 Copper Pipes", "Canbus", "1Y Warranty"],
     accent: "orange",

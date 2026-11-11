@@ -717,11 +717,14 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Rego Racing",
     rating: 4.9,
     reviewCount: 47,
-    images: [
-      "/images/products/rego-racing-led-new-01.jpg",
-      "/images/products/rego-racing-led-new-02.jpg",
-      "/images/products/rego-racing-led-new-03.jpg",
+        images: [
+      "/images/products/rego-racing-led-01.jpg",
+      "/images/products/rego-racing-led-02.jpg",
+      "/images/products/rego-racing-led-03.jpg",
       "/images/products/rego-racing-led-04.jpg",
+      "/images/products/rego-racing-led-05.jpg",
+      "/images/products/rego-racing-led-06.jpg",
+      "/images/products/rego-racing-led-07.jpg",
     ],
     variants: [
       {
@@ -739,12 +742,14 @@ export const PRODUCTS_DATA: Product[] = [
       "1-year replacement warranty — Hasnain Auto Saddar",
     ],
     specifications: {
+      "Shop SKU": "001",
       "Copper Pipes": "4 copper heat pipes",
       "Power Rating": "260W (system)",
       "Luminous Flux": "30,000 Lumens",
       "Socket Options": "H4, H11, 9005",
       Canbus: "Compatible driver technology",
       Cooling: "Aluminium fan + copper pipes",
+      Technology: "German technology design",
       Warranty: "1 Year Replacement",
     },
     vehicleCompatibility: {
@@ -783,11 +788,13 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Mother",
     rating: 4.9,
     reviewCount: 38,
-    images: [
-      "/images/products/mother-6-copper-led-new-01.jpg",
-      "/images/products/mother-6-copper-led-new-02.jpg",
-      "/images/products/mother-6-copper-led-new-03.jpg",
+        images: [
       "/images/products/mother-6-copper-led-01.jpg",
+      "/images/products/mother-6-copper-led-02.jpg",
+      "/images/products/mother-6-copper-led-03.jpg",
+      "/images/products/mother-6-copper-led-04.jpg",
+      "/images/products/mother-6-copper-led-05.jpg",
+      "/images/products/mother-6-copper-led-06.jpg",
     ],
     variants: [
       {
@@ -805,6 +812,7 @@ export const PRODUCTS_DATA: Product[] = [
       "1-year replacement warranty",
     ],
     specifications: {
+      "Shop SKU": "002",
       "Copper Pipes": "6 copper heat pipes",
       "Power Rating": "280W (system)",
       "Luminous Flux": "35,000 Lumens",
@@ -848,11 +856,14 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "B Pro",
     rating: 4.8,
     reviewCount: 29,
-    images: [
+        images: [
       "/images/products/b-pro-8-copper-led-01.jpg",
       "/images/products/b-pro-8-copper-led-02.jpg",
+      "/images/products/b-pro-8-copper-led-03.jpg",
       "/images/products/b-pro-8-copper-led-04.jpg",
+      "/images/products/b-pro-8-copper-led-05.jpg",
       "/images/products/b-pro-8-copper-led-06.jpg",
+      "/images/products/b-pro-8-copper-led-07.jpg",
     ],
     variants: [
       {
@@ -869,6 +880,7 @@ export const PRODUCTS_DATA: Product[] = [
       "1-year replacement warranty",
     ],
     specifications: {
+      "Shop SKU": "003",
       "Copper Pipes": "8 copper heat pipes",
       "Power Rating": "240W (system)",
       "Luminous Flux": "30,000 Lumens",
@@ -911,11 +923,13 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Mother",
     rating: 4.8,
     reviewCount: 31,
-    images: [
-      "/images/products/mother-5-copper-led-new-01.jpg",
+        images: [
       "/images/products/mother-5-copper-led-01.jpg",
+      "/images/products/mother-5-copper-led-02.jpg",
       "/images/products/mother-5-copper-led-03.jpg",
       "/images/products/mother-5-copper-led-04.jpg",
+      "/images/products/mother-5-copper-led-05.jpg",
+      "/images/products/mother-5-copper-led-06.jpg",
     ],
     variants: [
       {
@@ -932,6 +946,7 @@ export const PRODUCTS_DATA: Product[] = [
       "1-year replacement warranty",
     ],
     specifications: {
+      "Shop SKU": "004",
       "Copper Pipes": "5 copper heat pipes",
       "Color Temperature": "6000K Cool White",
       "Power Rating": "260W (system)",
@@ -976,11 +991,14 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Rego",
     rating: 4.7,
     reviewCount: 22,
-    images: [
+        images: [
       "/images/products/black-box-rego-led-01.jpg",
       "/images/products/black-box-rego-led-02.jpg",
+      "/images/products/black-box-rego-led-03.jpg",
       "/images/products/black-box-rego-led-04.jpg",
       "/images/products/black-box-rego-led-05.jpg",
+      "/images/products/black-box-rego-led-06.jpg",
+      "/images/products/black-box-rego-led-07.jpg",
     ],
     variants: [
       {
@@ -997,6 +1015,7 @@ export const PRODUCTS_DATA: Product[] = [
       "1-year replacement warranty",
     ],
     specifications: {
+      "Shop SKU": "007",
       "Copper Pipes": "2 copper tubes",
       "Color Temperature": "6500K Daylight White",
       "Power Rating": "180W (system)",
@@ -1039,11 +1058,14 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Y6",
     rating: 4.7,
     reviewCount: 19,
-    images: [
-      "/images/products/y6-projector-led-h4-new-01.jpg",
-      "/images/products/y6-projector-led-h4-new-02.jpg",
+        images: [
       "/images/products/y6-projector-led-h4-01.jpg",
+      "/images/products/y6-projector-led-h4-02.jpg",
+      "/images/products/y6-projector-led-h4-03.jpg",
       "/images/products/y6-projector-led-h4-04.jpg",
+      "/images/products/y6-projector-led-h4-05.jpg",
+      "/images/products/y6-projector-led-h4-06.jpg",
+      "/images/products/y6-projector-led-h4-07.jpg",
     ],
     variants: [
       {
@@ -1059,6 +1081,7 @@ export const PRODUCTS_DATA: Product[] = [
       "Compact upgrade path from factory halogen H4 bulbs",
     ],
     specifications: {
+      "Shop SKU": "008",
       "Product Line": "Y6 Projector LED Tubes",
       "Power Rating": "65W",
       "Color Temperature": "5500K Neutral White",
@@ -1101,11 +1124,12 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Mini Projector",
     rating: 4.8,
     reviewCount: 16,
-    images: [
-      "/images/products/mini-projector-lens-led-new-01.jpg",
-      "/images/products/mini-projector-lens-led-new-02.jpg",
+        images: [
       "/images/products/mini-projector-lens-led-01.jpg",
+      "/images/products/mini-projector-lens-led-02.jpg",
       "/images/products/mini-projector-lens-led-03.jpg",
+      "/images/products/mini-projector-lens-led-04.jpg",
+      "/images/products/mini-projector-lens-led-05.jpg",
     ],
     variants: [
       {
@@ -1121,6 +1145,7 @@ export const PRODUCTS_DATA: Product[] = [
       "Compact footprint for many factory headlight housings",
     ],
     specifications: {
+      "Shop SKU": "009",
       Optic: "Mini projector lens",
       "Power Rating": "75W",
       "Luminous Flux": "12,000 Lumens",
@@ -1162,11 +1187,14 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Rego",
     rating: 4.9,
     reviewCount: 24,
-    images: [
-      "/images/products/golden-box-rego-led-new-01.jpg",
-      "/images/products/golden-box-rego-led-new-02.jpg",
-      "/images/products/golden-box-rego-led-new-03.jpg",
+        images: [
+      "/images/products/golden-box-rego-led-01.jpg",
+      "/images/products/golden-box-rego-led-02.jpg",
       "/images/products/golden-box-rego-led-03.jpg",
+      "/images/products/golden-box-rego-led-04.jpg",
+      "/images/products/golden-box-rego-led-05.jpg",
+      "/images/products/golden-box-rego-led-06.jpg",
+      "/images/products/golden-box-rego-led-07.jpg",
     ],
     variants: [
       {
@@ -1183,6 +1211,7 @@ export const PRODUCTS_DATA: Product[] = [
       "1-year replacement warranty",
     ],
     specifications: {
+      "Shop SKU": "010",
       "Copper Pipes": "4 copper tubes",
       "Power Rating": "230W (system)",
       "Luminous Flux": "35,000 Lumens",
@@ -1226,11 +1255,14 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Wooden Box",
     rating: 4.8,
     reviewCount: 14,
-    images: [
-      "/images/products/wooden-box-zinc-alloy-led-new-01.jpg",
-      "/images/products/wooden-box-zinc-alloy-led-new-02.jpg",
-      "/images/products/wooden-box-zinc-alloy-led-new-03.jpg",
+        images: [
       "/images/products/wooden-box-zinc-alloy-led-01.jpg",
+      "/images/products/wooden-box-zinc-alloy-led-02.jpg",
+      "/images/products/wooden-box-zinc-alloy-led-03.jpg",
+      "/images/products/wooden-box-zinc-alloy-led-04.jpg",
+      "/images/products/wooden-box-zinc-alloy-led-05.jpg",
+      "/images/products/wooden-box-zinc-alloy-led-06.jpg",
+      "/images/products/wooden-box-zinc-alloy-led-07.jpg",
     ],
     variants: [
       {
@@ -1248,6 +1280,7 @@ export const PRODUCTS_DATA: Product[] = [
       "Premium wooden box retail packaging",
     ],
     specifications: {
+      "Shop SKU": "011",
       "Housing": "Zinc alloy / premium metal body",
       Cooling: "Aluminium body + copper-based components",
       Driver: "External ATD driver",
@@ -1268,11 +1301,11 @@ export const PRODUCTS_DATA: Product[] = [
   {
     id: "20",
     slug: "tasa-h4-premium-led-headlights",
-    name: "TASA H4 Premium Automotive LED Headlights",
+    name: "TASAH4 5000W Premium Automotive LED Headlights",
     shortDescription:
-      "Dual LED chip TASA H4 kit — aluminium fan, external driver, 1-year warranty",
+      "TASAH4 dual-chip H4 kit — aluminium fan, external driver, 1-year warranty (5000W box label)",
     description:
-      "TASA H4 premium automotive LED headlight system features advanced dual LED chip technology, high-performance aluminium cooling body, and integrated cooling fan. External driver system, premium metal body, and braided heat-resistant wiring — H4 dual-beam fitment with 1-year replacement warranty from Hasnain Auto Decoration.",
+      "TASAH4 5000W premium automotive LED headlight system (retail box rating) features advanced dual LED chip technology, high-performance aluminium cooling body, and integrated cooling fan. External driver system, premium metal body, and braided heat-resistant wiring — H4 dual-beam fitment with 1-year replacement warranty from Hasnain Auto Decoration.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 21200,
@@ -1289,11 +1322,13 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "TASA",
     rating: 4.8,
     reviewCount: 11,
-    images: [
-      "/images/products/tasa-h4-premium-led-new-01.jpg",
-      "/images/products/tasa-h4-premium-led-new-02.jpg",
-      "/images/products/tasa-h4-premium-led-new-03.jpg",
+        images: [
       "/images/products/tasa-h4-premium-led-01.jpg",
+      "/images/products/tasa-h4-premium-led-02.jpg",
+      "/images/products/tasa-h4-premium-led-03.jpg",
+      "/images/products/tasa-h4-premium-led-04.jpg",
+      "/images/products/tasa-h4-premium-led-05.jpg",
+      "/images/products/tasa-h4-premium-led-06.jpg",
     ],
     variants: [
       {
@@ -1311,6 +1346,8 @@ export const PRODUCTS_DATA: Product[] = [
       "1-year replacement warranty",
     ],
     specifications: {
+      "Shop SKU": "012",
+      "Packaging Label": "5000W (printed on retail box)",
       "Socket Type": "H4 (Dual Beam)",
       Cooling: "Aluminium body + integrated fan",
       Driver: "External driver system",
@@ -1353,11 +1390,12 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Ultra 4-Lens",
     rating: 4.7,
     reviewCount: 18,
-    images: [
-      "/images/products/ultra-bright-4-lens-fog-new-01.jpg",
-      "/images/products/ultra-bright-4-lens-fog-new-02.jpg",
-      "/images/products/ultra-bright-4-lens-fog-new-03.jpg",
-      "/images/products/ultra-bright-4-lens-fog-new-04.jpg",
+        images: [
+      "/images/products/ultra-bright-4-lens-fog-01.jpg",
+      "/images/products/ultra-bright-4-lens-fog-02.jpg",
+      "/images/products/ultra-bright-4-lens-fog-03.jpg",
+      "/images/products/ultra-bright-4-lens-fog-04.jpg",
+      "/images/products/ultra-bright-4-lens-fog-05.jpg",
     ],
     features: [
       "Four-lens high-intensity auxiliary LED pod",
@@ -1368,6 +1406,7 @@ export const PRODUCTS_DATA: Product[] = [
       "Suitable for off-road and auxiliary mounting",
     ],
     specifications: {
+      "Shop SKU": "013",
       Type: "4-Lens LED fog / auxiliary light",
       Housing: "Heavy-duty metal",
       Cooling: "Integrated heat sinks",

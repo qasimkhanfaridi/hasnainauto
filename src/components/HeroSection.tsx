@@ -22,7 +22,7 @@ const HERO_SLIDES = [
     ),
     subtitle: "Four copper heat pipes, Canbus-compatible drivers, and aluminium fan cooling. H4, H11, and 9005 — German technology with 1-year replacement warranty at Saddar.",
     pills: ["260W System", "4 Copper Pipes", "Canbus Ready", "6500K Class White"],
-    image: "/images/products/rego-racing-led-new-01.jpg",
+    image: "/images/products/rego-racing-led-01.jpg",
     imageAlt: "Rego Racing 4 copper pipe LED headlights at Hasnain Auto",
     ctaLink: "/product/rego-racing-led-headlights",
     ctaText: "VIEW REGO RACING",
