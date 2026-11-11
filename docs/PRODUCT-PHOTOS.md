@@ -1,49 +1,30 @@
-# Product photos — what is edited vs raw
+# Product photos
 
-## Current status
+## Why marble was showing
 
-| Layer | What it is |
-|-------|------------|
-| **WhatsApp originals** | Shop-floor shots (marble counter, box + bulbs). Best for trust; need light retouch for web. |
-| **Old site JPGs** | AI **background removal** (rembg) on a **wrong folder** in some runs → white **smudges** on metal (not Photoshop quality). |
-| **Recommended for production** | **`catalog` mode** — brightness, contrast, sharpness, 2000×2000 on light grey (**no cutout**). |
+`catalog` mode **keeps the shop floor** (marble). That is intentional for “real shop” listings — not for ad-grade white studio.
 
-I cannot replace a human retoucher in Photoshop/Figma for hero banners, but the scripts give **consistent listing-grade** images for all SKUs.
+## What to use now (`pro` mode)
 
-## Rebuild all galleries (recommended)
-
-From the repo root, with Python 3 and `pip install pillow rembg`:
+| Mode | Marble? | Output |
+|------|---------|--------|
+| **`pro`** | Removed | 4096×4096, white cyclorama, soft shadow |
+| `catalog` | Visible | 2000, light grey frame |
+| `studio` | Removed | 2000, basic cutout |
 
 ```powershell
-cd C:\Users\qasim.faridi.LT-LE-126\.gemini\antigravity\scratch\hasnain-auto-accessories\scripts
-python process-all-galleries.py --mode catalog
+cd ...\hasnain-auto-accessories\scripts
+python process-all-galleries.py --mode pro
 python sync-product-images-from-manifest.py
-cd ..
-npm run build
 ```
 
-- Source auto-detects:  
-  `Downloads\hasnain-product-photos-extract\WhatsApp Unknown 2026-10-31 at 9.27.19 PM\`
-- Override: set env `HASNAIN_PHOTO_SRC` to your extract folder.
+## “8K” / heavy ads
 
-### Modes
+- Script output = **4096px** (sharp for web + Facebook/Instagram). True **7680×8K** for every SKU = real photoshoot or Photoshop per image.
+- **Gemini / AI image generators** can make fancy ads but may **change the product shape** — use only for **banners**, not the main product gallery, unless a human checks each image.
 
-- **`--mode catalog`** (default) — professional Daraz/Amazon-style **enhanced photo**, keeps box and real lighting.
-- **`--mode studio`** — white cutout via AI; can look bad on **chrome/copper**; use only for simple shapes.
+## Full Photoshop tier
 
-### One product test
-
-```powershell
-python process-all-galleries.py --mode catalog --only rego-racing-led --limit 3
-```
-
-## If you want “full pro”
-
-1. **Hero image (1 per SKU)** — designer: clip path + true white + soft shadow in Photoshop.
-2. **Gallery** — keep `catalog` script output or retouch heroes only.
-3. **Product 005** — photos exist; add specs in `products.ts` when confirmed, then add to sync map.
-
-## Honest limits
-
-- AI cutout ≠ studio photography.
-- Box text (e.g. “5000W” on Rego box) may differ from your WhatsApp spec sheet — site copy uses your sheet; photos show retail packaging.
+1. Shoot or pick best WhatsApp frame per SKU.
+2. Designer: pen tool cutout + dodge/burn on copper + export 4K/8K masters.
+3. Site uses `pro` script for all gallery slots until masters are ready.

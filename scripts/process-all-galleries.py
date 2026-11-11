@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import gc
 import glob
 import json
 import os
@@ -10,6 +11,7 @@ import sys
 
 from image_studio import (
     process_catalog,
+    process_pro_studio,
     process_studio_cutout,
     resolve_photo_src,
 )
@@ -50,9 +52,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Build product JPG galleries from WhatsApp photos.")
     parser.add_argument(
         "--mode",
-        choices=("catalog", "studio"),
-        default="catalog",
-        help="catalog = enhance on light canvas (recommended); studio = AI background removal",
+        choices=("pro", "catalog", "studio"),
+        default="pro",
+        help="pro = 4K white studio, no marble (recommended); catalog = keeps floor; studio = basic cutout",
     )
     parser.add_argument(
         "--only",
@@ -75,7 +77,12 @@ def main() -> None:
     print(f"Source: {src}")
     print(f"Mode: {args.mode}")
 
-    process = process_catalog if args.mode == "catalog" else process_studio_cutout
+    if args.mode == "pro":
+        process = process_pro_studio
+    elif args.mode == "catalog":
+        process = process_catalog
+    else:
+        process = process_studio_cutout
 
     manifest: dict[str, list[str]] = {}
     for pattern, prefix in BATCHES:
@@ -94,12 +101,22 @@ def main() -> None:
             out_path = os.path.join(OUT, out_name)
             process(src_path, out_path)
             urls.append(f"/images/products/{out_name}")
-            print(f"OK {out_name} <- {os.path.basename(src_path)}")
+            print(f"OK {out_name} <- {os.path.basename(src_path)}", flush=True)
+            gc.collect()
         manifest[prefix] = urls
 
     manifest_path = os.path.join(os.path.dirname(__file__), "..", "src", "data", "gallery-manifest.json")
+    if args.only:
+        merged: dict[str, list[str]] = {}
+        if os.path.isfile(manifest_path):
+            with open(manifest_path, encoding="utf-8") as f:
+                merged = json.load(f)
+        merged.update(manifest)
+        payload = merged
+    else:
+        payload = manifest
     with open(manifest_path, "w", encoding="utf-8") as f:
-        json.dump(manifest, f, indent=2)
+        json.dump(payload, f, indent=2)
     print(f"Wrote {manifest_path}")
     print("Next: python scripts/sync-product-images-from-manifest.py")
 

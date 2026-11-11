@@ -717,7 +717,7 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Rego Racing",
     rating: 4.9,
     reviewCount: 47,
-        images: [
+    images: [
       "/images/products/rego-racing-led-01.jpg",
       "/images/products/rego-racing-led-02.jpg",
       "/images/products/rego-racing-led-03.jpg",
@@ -788,7 +788,7 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Mother",
     rating: 4.9,
     reviewCount: 38,
-        images: [
+    images: [
       "/images/products/mother-6-copper-led-01.jpg",
       "/images/products/mother-6-copper-led-02.jpg",
       "/images/products/mother-6-copper-led-03.jpg",
@@ -856,7 +856,7 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "B Pro",
     rating: 4.8,
     reviewCount: 29,
-        images: [
+    images: [
       "/images/products/b-pro-8-copper-led-01.jpg",
       "/images/products/b-pro-8-copper-led-02.jpg",
       "/images/products/b-pro-8-copper-led-03.jpg",
@@ -923,7 +923,7 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Mother",
     rating: 4.8,
     reviewCount: 31,
-        images: [
+    images: [
       "/images/products/mother-5-copper-led-01.jpg",
       "/images/products/mother-5-copper-led-02.jpg",
       "/images/products/mother-5-copper-led-03.jpg",
@@ -991,7 +991,7 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Rego",
     rating: 4.7,
     reviewCount: 22,
-        images: [
+    images: [
       "/images/products/black-box-rego-led-01.jpg",
       "/images/products/black-box-rego-led-02.jpg",
       "/images/products/black-box-rego-led-03.jpg",
@@ -1058,7 +1058,7 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Y6",
     rating: 4.7,
     reviewCount: 19,
-        images: [
+    images: [
       "/images/products/y6-projector-led-h4-01.jpg",
       "/images/products/y6-projector-led-h4-02.jpg",
       "/images/products/y6-projector-led-h4-03.jpg",
@@ -1124,7 +1124,7 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Mini Projector",
     rating: 4.8,
     reviewCount: 16,
-        images: [
+    images: [
       "/images/products/mini-projector-lens-led-01.jpg",
       "/images/products/mini-projector-lens-led-02.jpg",
       "/images/products/mini-projector-lens-led-03.jpg",
@@ -1187,7 +1187,7 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Rego",
     rating: 4.9,
     reviewCount: 24,
-        images: [
+    images: [
       "/images/products/golden-box-rego-led-01.jpg",
       "/images/products/golden-box-rego-led-02.jpg",
       "/images/products/golden-box-rego-led-03.jpg",
@@ -1255,7 +1255,7 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Wooden Box",
     rating: 4.8,
     reviewCount: 14,
-        images: [
+    images: [
       "/images/products/wooden-box-zinc-alloy-led-01.jpg",
       "/images/products/wooden-box-zinc-alloy-led-02.jpg",
       "/images/products/wooden-box-zinc-alloy-led-03.jpg",
@@ -1322,7 +1322,7 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "TASA",
     rating: 4.8,
     reviewCount: 11,
-        images: [
+    images: [
       "/images/products/tasa-h4-premium-led-01.jpg",
       "/images/products/tasa-h4-premium-led-02.jpg",
       "/images/products/tasa-h4-premium-led-03.jpg",
@@ -1390,7 +1390,7 @@ export const PRODUCTS_DATA: Product[] = [
     brand: "Ultra 4-Lens",
     rating: 4.7,
     reviewCount: 18,
-        images: [
+    images: [
       "/images/products/ultra-bright-4-lens-fog-01.jpg",
       "/images/products/ultra-bright-4-lens-fog-02.jpg",
       "/images/products/ultra-bright-4-lens-fog-03.jpg",

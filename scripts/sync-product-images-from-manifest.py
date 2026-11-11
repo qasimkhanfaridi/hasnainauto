@@ -1,9 +1,12 @@
 """Update products.ts image arrays from src/data/gallery-manifest.json."""
 from __future__ import annotations
 
+import argparse
 import json
 import re
 from pathlib import Path
+
+DEFAULT_MAX_IMAGES = 7
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "src" / "data" / "gallery-manifest.json"
@@ -30,6 +33,16 @@ def format_images(urls: list[str]) -> str:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--max",
+        type=int,
+        default=DEFAULT_MAX_IMAGES,
+        help=f"Max gallery images per product on site (default {DEFAULT_MAX_IMAGES})",
+    )
+    args = parser.parse_args()
+    max_img = max(1, args.max)
+
     manifest: dict[str, list[str]] = json.loads(MANIFEST.read_text(encoding="utf-8"))
     text = PRODUCTS.read_text(encoding="utf-8")
 
@@ -38,6 +51,7 @@ def main() -> None:
         if not urls:
             print(f"skip {slug}: no manifest entry")
             continue
+        urls = urls[:max_img]
 
         pattern = (
             rf'(slug: "{re.escape(slug)}",[\s\S]*?)'
