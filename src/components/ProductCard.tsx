@@ -24,7 +24,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
   const handleDirectOrder = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(product, 1, product.variants?.[0]?.options?.[0]);
+    const unitPrice = product.salePrice || product.price;
+    addToCart(product, 1, product.variants?.[0]?.options?.[0], unitPrice);
     openCart();
   };
 

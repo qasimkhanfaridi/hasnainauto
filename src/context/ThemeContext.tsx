@@ -52,14 +52,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const toggleTheme = () => setThemeState((t) => (t === "light" ? "dark" : "light"));
   const setTheme = (t: Theme) => setThemeState(t);
 
-  // Prevent flash of wrong theme: render nothing until mounted
-  if (!mounted) {
-    return (
-      <div className="min-h-screen bg-white">
-        {/* Loading placeholder to prevent FOUC */}
-      </div>
-    );
-  }
+
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>

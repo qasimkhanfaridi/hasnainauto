@@ -37,7 +37,8 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({ pr
   );
 
   const handleAddToCart = () => {
-    addToCart(product, quantity, selectedVariant);
+    const unitPrice = product.salePrice || product.price;
+    addToCart(product, quantity, selectedVariant, unitPrice);
     onClose();
     openCart();
   };

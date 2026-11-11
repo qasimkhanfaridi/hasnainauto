@@ -48,26 +48,49 @@ export function VehicleProvider({ children }: { children: React.ReactNode }) {
     setSelectedVehicle(null);
   };
 
-  const isCompatible = (product: Product): boolean => {
+    const isCompatible = (product: Product): boolean => {
     if (!selectedVehicle || !selectedVehicle.make) return true;
-    if (product.vehicleCompatibility.universal) return true;
 
+    // Check vehicle make match
     const compat = product.vehicleCompatibility;
-    const makeMatch = !compat.makes || compat.makes.some(
-      (m) => m.toLowerCase() === selectedVehicle.make.toLowerCase()
-    );
-
-    const modelMatch = !compat.models || compat.models.some(
-      (m) => m.toLowerCase().includes(selectedVehicle.model.toLowerCase()) ||
-             selectedVehicle.model.toLowerCase().includes(m.toLowerCase())
-    );
-
-    let yearMatch = true;
-    if (selectedVehicle.year && compat.years && compat.years.length > 0) {
-      yearMatch = compat.years.includes(selectedVehicle.year);
+    if (compat.makes && compat.makes.length > 0) {
+      const makeMatch = compat.makes.some(
+        (m) => m.toLowerCase() === selectedVehicle.make.toLowerCase()
+      );
+      if (!makeMatch) return false;
     }
 
-    return makeMatch && modelMatch && yearMatch;
+    // Check vehicle model match
+    if (compat.models && compat.models.length > 0) {
+      const modelMatch = compat.models.some(
+        (m) =>
+          m.toLowerCase().includes(selectedVehicle.model.toLowerCase()) ||
+          selectedVehicle.model.toLowerCase().includes(m.toLowerCase())
+      );
+      if (!modelMatch) return false;
+    }
+
+    // Check year match
+    if (selectedVehicle.year && compat.years && compat.years.length > 0) {
+      if (!compat.years.includes(selectedVehicle.year)) return false;
+    }
+
+    // Headlight socket compatibility check for vehicle
+    const h4Cars = ["alto", "cultus", "wagonr", "wagon r", "hilux", "swift", "picanto", "mehran", "bolan", "saga"];
+    const modelLower = (selectedVehicle.model || "").toLowerCase();
+    const isCarH4 = h4Cars.some((c) => modelLower.includes(c));
+
+    // Y6 and TASA are H4-only dual beam kits - incompatible with H11/9005 vehicles like Corolla, Civic, Sportage, Tucson
+    if (product.slug === "y6-projector-led-h4" || product.slug === "tasa-h4-premium-led-headlights") {
+      if (!isCarH4) return false;
+    }
+
+    // Ultra 4-Lens Aux Light is for bikes and off-road pods
+    if (product.slug === "ultra-bright-4-lens-fog-aux-light" && (modelLower.includes("corolla") || modelLower.includes("civic"))) {
+      return false;
+    }
+
+    return true;
   };
 
   const getCompatibilityBadge = (product: Product) => {

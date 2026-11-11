@@ -90,20 +90,21 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
 
       for (const token of tokens) {
         let tokenMatched = false;
+        const tokenRegex = token.length <= 3 ? new RegExp(`\\b${token}\\b`, "i") : null;
 
-        // Direct token hit in corpus
-        if (fullCorpus.includes(token)) {
+        // Direct token hit in corpus (word boundary for short words like led, h4, etc.)
+        if (tokenRegex ? tokenRegex.test(fullCorpus) : fullCorpus.includes(token)) {
           tokenMatched = true;
           score += 10;
         }
 
         // Title hit gets extra boost
-        if (p.name.toLowerCase().includes(token)) {
+        if (tokenRegex ? tokenRegex.test(p.name) : p.name.toLowerCase().includes(token)) {
           score += 25;
         }
 
         // Category hit boost
-        if (p.category.toLowerCase().includes(token)) {
+        if (tokenRegex ? tokenRegex.test(p.category) : p.category.toLowerCase().includes(token)) {
           score += 15;
         }
 

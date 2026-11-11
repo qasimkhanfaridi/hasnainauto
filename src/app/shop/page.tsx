@@ -23,7 +23,7 @@ import { LED_SOCKET_FILTERS } from "@/data/ledSeries";
 
 const PRICE_RANGES = [
   { id: "all", label: "All Prices", min: 0, max: Infinity },
-  { id: "under-15k", label: "Under Rs. 15,000", min: 0, max: 15000 },
+  { id: "under-15k", label: "Under Rs. 15,000", min: 0, max: 14999 },
   { id: "15k-20k", label: "Rs. 15,000 – 20,000", min: 15000, max: 20000 },
   { id: "20k-25k", label: "Rs. 20,000 – 25,000", min: 20000, max: 25000 },
   { id: "above-25k", label: "Above Rs. 25,000", min: 25000, max: Infinity },
@@ -34,8 +34,13 @@ function ShopContent() {
   const categoryParam = searchParams.get("category");
   const searchParam = searchParams.get("search");
   const socketParam = searchParams.get("socket");
+  const sortParam = searchParams.get("sort");
+  const makeParam = searchParams.get("make");
+  const modelParam = searchParams.get("model");
+  const yearParam = searchParams.get("year");
+  const compatibleParam = searchParams.get("compatible");
 
-  const { selectedVehicle, clearVehicle, isCompatible } = useVehicle();
+  const { selectedVehicle, setSelectedVehicle, clearVehicle, isCompatible } = useVehicle();
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedPriceRange, setSelectedPriceRange] = useState<string>("all");
@@ -47,21 +52,49 @@ function ShopContent() {
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
-  // Sync category param from URL
+  // Sync parameters from URL
   useEffect(() => {
     if (categoryParam) {
       setSelectedCategory(categoryParam);
     }
-  }, [categoryParam]);
+    if (sortParam && ["featured", "price-asc", "price-desc", "rating"].includes(sortParam)) {
+      setSortBy(sortParam as "featured" | "price-asc" | "price-desc" | "rating");
+    }
+    if (compatibleParam === "true" || (makeParam && modelParam)) {
+      setOnlyCompatible(true);
+    }
+    if (makeParam && modelParam) {
+      setSelectedVehicle({
+        make: makeParam,
+        model: modelParam,
+        year: yearParam ? parseInt(yearParam, 10) : undefined,
+      });
+    }
+  }, [categoryParam, sortParam, compatibleParam, makeParam, modelParam, yearParam, setSelectedVehicle]);
 
   useEffect(() => {
-    const socket = socketParam || searchParam;
-    if (socket && ["H4", "H11", "9005", "9006", "H7"].some((s) => socket.toUpperCase().includes(s))) {
-      if (socket.toUpperCase().includes("H4")) setSelectedSocket("H4");
-      else if (socket.toUpperCase().includes("H11")) setSelectedSocket("H11");
-      else if (socket.toUpperCase().includes("9005")) setSelectedSocket("9005");
+    const socket = socketParam || (searchParam && ["H4", "H11", "9005", "9006", "H7"].some((s) => searchParam.toUpperCase().includes(s)) ? searchParam : null);
+    if (socket) {
+      const up = socket.toUpperCase();
+      if (up.includes("H4")) setSelectedSocket("H4");
+      else if (up.includes("H11")) setSelectedSocket("H11");
+      else if (up.includes("9005")) setSelectedSocket("9005");
+      else if (up.includes("9006")) setSelectedSocket("9006");
+      else if (up.includes("H7")) setSelectedSocket("H7");
     }
   }, [socketParam, searchParam]);
+
+  const updateUrlParam = (key: string, value: string | null) => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (value && value !== "all" && value !== "featured") {
+      params.set(key, value);
+    } else {
+      params.delete(key);
+    }
+    const newUrl = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ""}`;
+    window.history.replaceState(null, "", newUrl);
+  };
 
   // Extract unique brands from active products
   const availableBrands = useMemo(() => {
@@ -100,8 +133,16 @@ function ShopContent() {
       if (onlyCompatible && selectedVehicle && !isCompatible(product)) {
         return false;
       }
-      if (selectedSocket !== "all" && product.category === "led-lights" && !productMatchesSocket(product, selectedSocket)) {
+      if (selectedSocket !== "all" && !productMatchesSocket(product, selectedSocket)) {
         return false;
+      }
+      if (searchParam) {
+        const q = searchParam.toLowerCase().trim();
+        const tokenRegex = q.length <= 3 ? new RegExp(`\\b${q}\\b`, "i") : null;
+        const corpus = `${product.name} ${product.category} ${product.subcategory || ""} ${product.description} ${product.shortDescription}`;
+        if (tokenRegex ? !tokenRegex.test(corpus) : !corpus.toLowerCase().includes(q)) {
+          return false;
+        }
       }
       return true;
     }).sort((a, b) => {
@@ -116,7 +157,7 @@ function ShopContent() {
       if (!a.featured && b.featured) return 1;
       return 0;
     });
-  }, [selectedCategory, selectedPriceRange, selectedBrand, inStockOnly, onlyCompatible, selectedVehicle, sortBy, isCompatible, selectedSocket]);
+  }, [selectedCategory, selectedPriceRange, selectedBrand, inStockOnly, onlyCompatible, selectedVehicle, sortBy, isCompatible, selectedSocket, searchParam]);
 
   const activeFiltersCount = 
     (selectedCategory !== "all" ? 1 : 0) +
@@ -136,7 +177,7 @@ function ShopContent() {
   };
 
   return (
-    <div className="w-full bg-carbon-950 min-h-screen py-8 sm:py-12 text-slate-100">
+    <div className="w-full bg-surface-100 dark:bg-carbon-950 min-h-screen py-8 sm:py-12 text-carbon-900 dark:text-slate-100 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb & Title */}
         <div className="mb-6 space-y-2">
@@ -145,10 +186,10 @@ function ShopContent() {
             <span className="mx-2 text-silver-600">/</span>
             <span className="text-red-accent font-semibold">Store Catalogue</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-black text-carbon-900 dark:text-white uppercase tracking-tight">
             AUTO DECORATION & ACCESSORIES
           </h1>
-          <p className="text-xs sm:text-sm text-silver-300">
+          <p className="text-xs sm:text-sm text-gray-600 dark:text-silver-300">
             Custom-tailored leather seat covers, 7D floor mats, high-output LED headlights, and premium automotive styling with Cash on Delivery, Bank Transfer, & JazzCash.
           </p>
         </div>
@@ -245,7 +286,7 @@ function ShopContent() {
             <span className="text-[10px] font-bold text-silver-500 uppercase shrink-0">Socket:</span>
             <button
               type="button"
-              onClick={() => setSelectedSocket("all")}
+              onClick={() => { setSelectedSocket("all"); updateUrlParam("socket", "all"); }}
               className={`px-3 py-1.5 rounded-lg text-[11px] font-bold border shrink-0 ${
                 selectedSocket === "all"
                   ? "bg-amber-brand/20 text-amber-glow border-amber-brand/40"

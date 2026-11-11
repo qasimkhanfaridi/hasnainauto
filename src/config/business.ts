@@ -63,6 +63,11 @@ export interface BusinessConfig {
     freeDeliveryThreshold: number;
     storePickupAddress: string;
   };
+  reviews?: {
+    rating: number;
+    reviewCount: number;
+    label: string;
+  };
   meta: {
     title: string;
     description: string;
@@ -152,6 +157,6 @@ export const BUSINESS_CONFIG: BusinessConfig = {
       "7D floor mats Pakistan",
       "LED headlights Saddar",
     ],
-    siteUrl: "https://hasnainauto.com",
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://hasnainauto.vercel.app",
   },
 };

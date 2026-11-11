@@ -39,23 +39,24 @@ export const Footer: React.FC = () => {
               </div>
             </div>
 
-            {/* Social */}
+            {/* Social & WhatsApp */}
             <div className="flex items-center gap-2">
-              {[
-                { name: "Facebook", href: BUSINESS_CONFIG.social.facebook },
-                { name: "TikTok", href: BUSINESS_CONFIG.social.tiktok },
-                { name: "Instagram", href: BUSINESS_CONFIG.social.instagram },
-              ].map((s) => (
-                <a
-                  key={s.name}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-lg bg-carbon-800 border border-carbon-750 text-xs font-semibold text-gray-300 hover:text-white hover:border-red-brand/40 transition-colors"
-                >
-                  {s.name}
-                </a>
-              ))}
+              <a
+                href={BUSINESS_CONFIG.social.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded-lg bg-carbon-800 border border-carbon-750 text-xs font-semibold text-gray-300 hover:text-white hover:border-red-brand/40 transition-colors"
+              >
+                Facebook
+              </a>
+              <a
+                href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent("Salam Hasnain Auto! I want to inquire about car accessories.")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded-lg bg-carbon-800 border border-carbon-750 text-xs font-semibold text-whatsapp hover:text-white hover:border-whatsapp/40 transition-colors"
+              >
+                WhatsApp Direct
+              </a>
             </div>
           </div>
 
@@ -86,16 +87,16 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-xs">
               {[
-                "Toyota Corolla & Yaris Accessories",
-                "Honda Civic & City Upgrades",
-                "Suzuki Alto, Cultus & Swift Styling",
-                "KIA Sportage & Stonic Multimedia",
-                "Hyundai Tucson & Elantra Fitments",
-                "Universal LED & Ambient Lighting",
+                { label: "Toyota Corolla & Yaris Accessories", href: "/shop?make=Toyota&compatible=true" },
+                { label: "Honda Civic & City Upgrades", href: "/shop?make=Honda&compatible=true" },
+                { label: "Suzuki Alto, Cultus & Swift Styling", href: "/shop?make=Suzuki&compatible=true" },
+                { label: "KIA Sportage & Stonic Multimedia", href: "/shop?make=Kia&compatible=true" },
+                { label: "Hyundai Tucson & Elantra Fitments", href: "/shop?make=Hyundai&compatible=true" },
+                { label: "Universal LED & Ambient Lighting", href: "/shop?category=led-lights" },
               ].map((item) => (
-                <li key={item}>
-                  <Link href="/shop" className="hover:text-red-brand transition-colors">
-                    {item}
+                <li key={item.label}>
+                  <Link href={item.href} className="hover:text-red-brand transition-colors">
+                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -133,7 +134,7 @@ export const Footer: React.FC = () => {
               </div>
               <div className="flex items-center gap-2.5">
                 <Clock className="w-4 h-4 text-red-brand shrink-0" />
-                <span>Mon – Sat: 10:30 AM – 10:00 PM</span>
+                <div className="flex flex-col"><span>Mon – Sat: 10:30 AM – 10:00 PM</span><span className="text-silver-400">Sunday: 1:00 PM – 8:00 PM</span></div>
               </div>
             </div>
 

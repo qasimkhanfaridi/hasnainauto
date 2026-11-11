@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -26,8 +26,13 @@ import { saveOrder } from "@/utils/orderStorage";
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, cartSubtotal, clearCart } = useCart();
+  const { items, cartSubtotal, clearCart, closeCart } = useCart();
   const { selectedVehicle } = useVehicle();
+
+  // Close cart drawer if user navigated here directly or via Buy Now
+  useEffect(() => {
+    closeCart();
+  }, [closeCart]);
 
   // Form states
   const [fullName, setFullName] = useState("");
@@ -98,7 +103,7 @@ export default function CheckoutPage() {
       const orderId = `HA-${randomSuffix}`;
 
       const orderItems: OrderItem[] = items.map((item) => {
-        const unit = item.product.salePrice || item.product.price;
+        const unit = item.unitPrice ?? (item.product.salePrice || item.product.price);
         return {
           id: item.product.id,
           name: item.product.name,
@@ -609,13 +614,15 @@ export default function CheckoutPage() {
             <div className="p-5 sm:p-6 rounded-3xl bg-carbon-900 border border-white/10 space-y-4">
               <h2 className="text-sm sm:text-base font-black text-white uppercase tracking-wider pb-3 border-b border-white/10 flex items-center justify-between">
                 <span>Order Summary</span>
-                <span className="text-xs text-silver-400 font-normal">({items.length} items)</span>
+                <span className="text-xs text-silver-400 font-normal">
+                  ({items.length} {items.length === 1 ? "item" : "items"})
+                </span>
               </h2>
 
               {/* Items List */}
               <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
                 {items.map((item, idx) => {
-                  const unitPrice = item.product.salePrice || item.product.price;
+                  const unitPrice = item.unitPrice ?? (item.product.salePrice || item.product.price);
                   const itemTotal = unitPrice * item.quantity;
                   return (
                     <div key={`${item.product.id}-${idx}`} className="flex items-center gap-3 text-xs">

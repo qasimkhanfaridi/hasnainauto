@@ -51,11 +51,11 @@ export const VehicleSelector: React.FC<VehicleSelectorProps> = ({
 
   const handleApply = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!make) return;
+    if (!make || !model) return;
 
     const newVehicle: SelectedVehicle = {
       make,
-      model: model || "All Models",
+      model,
       year: year ? parseInt(year, 10) : undefined,
     };
 
@@ -63,7 +63,12 @@ export const VehicleSelector: React.FC<VehicleSelectorProps> = ({
     if (onSelected) {
       onSelected();
     }
-    router.push("/shop");
+    const params = new URLSearchParams();
+    params.set("make", make);
+    params.set("model", model);
+    if (year) params.set("year", year);
+    params.set("compatible", "true");
+    router.push(`/shop?${params.toString()}`);
   };
 
   const handleQuickSelect = (qMake: string, qModel: string, qYear?: number) => {
@@ -77,7 +82,12 @@ export const VehicleSelector: React.FC<VehicleSelectorProps> = ({
     setModel(qModel);
     setYear(qYear ? String(qYear) : "");
     if (onSelected) onSelected();
-    router.push("/shop");
+    const params = new URLSearchParams();
+    params.set("make", qMake);
+    params.set("model", qModel);
+    if (qYear) params.set("year", String(qYear));
+    params.set("compatible", "true");
+    router.push(`/shop?${params.toString()}`);
   };
 
   const popularCars = [
@@ -170,7 +180,7 @@ export const VehicleSelector: React.FC<VehicleSelectorProps> = ({
             <select
               value={model}
               onChange={(e) => handleModelChange(e.target.value)}
-              disabled={!make}
+              disabled={!make || !model}
               className="w-full h-12 px-3.5 bg-white border border-gray-300 rounded-xl text-sm font-medium text-carbon-900 focus:outline-none focus:border-red-brand focus:ring-1 focus:ring-red-brand transition-all appearance-none cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <option value="">

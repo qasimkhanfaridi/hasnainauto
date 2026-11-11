@@ -100,8 +100,8 @@ export const SEAT_COVER_QUALITIES: SeatCoverQuality[] = [
   { id: "ST8", label: "ST8", description: "Standard Leather Rite", basePrice: 15000 },
   { id: "ST27", label: "ST27", description: "Premium Leather Rite", basePrice: 18500 },
   { id: "NS3", label: "NS3", description: "Advanced Leather Rite", basePrice: 22000 },
-  { id: "Japanese Scratchless", label: "Japanese", description: "Japanese Scratchless Material", basePrice: 25000 },
-  { id: "Scratchless Premium", label: "Premium", description: "Scratchless Premium Material", basePrice: 28000 },
+  { id: "Japanese Scratchless", label: "Japanese", description: "Scratchless Material", basePrice: 25000 },
+  { id: "Scratchless Premium", label: "Premium", description: "Scratchless Leather", basePrice: 28000 },
 ];
 
 export interface CoverColor {
@@ -290,7 +290,7 @@ export const PRODUCTS_DATA: Product[] = [
     reviewCount: 96,
     images: [
       "/images/products/f5-pro-h4-led.jpg",
-      "/images/products/led-h11-novsight-pro.jpg",
+      "/images/products/mini-projector-lens-led-01.jpg",
     ],
     variants: [
       {
@@ -534,7 +534,27 @@ export const PRODUCTS_DATA: Product[] = [
     originalPrice: 21000,
     salePrice: 17500,
     badge: "Best Seller",
-    isSeatCover: true,
+    isSeatCover: false,
+    variants: [
+      {
+        name: "Seat Cover Material & Color",
+        options: [
+          "ST8 Standard - Black & Red Diamond",
+          "ST27 Premium - Black & Red Diamond",
+          "Japanese Scratchless - Carbon Black",
+          "Beige Luxury Diamond Stitch"
+        ]
+      },
+      {
+        name: "7D Floor Mat Style",
+        options: [
+          "7D Black with Red Diamond Stitch",
+          "7D All-Black Deep Dish",
+          "7D Beige Diamond Quilted",
+          "7D Coffee Brown Luxury"
+        ]
+      }
+    ],
     isFeatured: true,
     featured: true,
     bestSeller: true,

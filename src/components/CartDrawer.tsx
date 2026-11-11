@@ -95,7 +95,8 @@ export const CartDrawer: React.FC = () => {
               <>
                 <div className="space-y-3">
                   {items.map((item, idx) => {
-                    const price = (item.product.salePrice || item.product.price) * item.quantity;
+                    const itemUnitPrice = item.unitPrice ?? (item.product.salePrice || item.product.price);
+                    const price = itemUnitPrice * item.quantity;
                     return (
                       <div
                         key={`${item.product.id}-${item.selectedVariant || ""}-${idx}`}

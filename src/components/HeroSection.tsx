@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { MessageCircle, ShieldCheck, Truck, RefreshCw, ChevronRight, ChevronLeft, Star } from "lucide-react";
 import { BUSINESS_CONFIG } from "@/config/business";
-import { VehicleSelector } from "./VehicleSelector";
 
 interface HeroSectionProps {
   onOpenQuickOrder?: () => void;
@@ -23,7 +22,7 @@ const HERO_SLIDES = [
     ),
     subtitle: "Four copper heat pipes, Canbus-compatible drivers, and aluminium fan cooling. H4, H11, and 9005 — German technology with 1-year replacement warranty at Saddar.",
     pills: ["260W System", "4 Copper Pipes", "Canbus Ready", "6500K Class White"],
-    image: "/images/products/rego-racing-led-01.jpg",
+    image: "/images/products/rego-racing-led-new-01.jpg",
     imageAlt: "Rego Racing 4 copper pipe LED headlights at Hasnain Auto",
     ctaLink: "/product/rego-racing-led-headlights",
     ctaText: "VIEW REGO RACING",
@@ -316,25 +315,22 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
         ))}
       </HeroCarousel>
 
-      <div className="bg-white dark:bg-carbon-900 border-y border-gray-200 dark:border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+      {/* Clean Compact Trust Bar */}
+      <div className="bg-white dark:bg-carbon-900 border-y border-gray-200 dark:border-white/10 py-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6">
             {trustPillars.map((p) => (
-              <div key={p.label} className="flex flex-col items-center gap-1.5 text-center px-1">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-red-50 dark:bg-red-950/40 border border-red-100 dark:border-red-900/30 flex items-center justify-center shrink-0">
-                  <p.icon className="w-4 h-4 sm:w-5 sm:h-5 text-red-brand" />
+              <div key={p.label} className="flex items-center justify-center sm:justify-start gap-2.5 px-2">
+                <div className="w-7 h-7 rounded-full bg-red-50 dark:bg-red-950/40 border border-red-100 dark:border-red-900/30 flex items-center justify-center shrink-0">
+                  <p.icon className="w-3.5 h-3.5 text-red-brand" />
                 </div>
-                <div className="text-[10px] sm:text-xs font-bold text-carbon-900 dark:text-white leading-tight">{p.label}</div>
-                <div className="hidden sm:block text-[10px] text-gray-500 dark:text-gray-400">{p.sub}</div>
+                <div>
+                  <div className="text-xs font-bold text-carbon-900 dark:text-white leading-tight">{p.label}</div>
+                  <div className="text-[10px] text-gray-500 dark:text-gray-400 hidden sm:block">{p.sub}</div>
+                </div>
               </div>
             ))}
           </div>
-        </div>
-      </div>
-
-      <div className="bg-surface-200 dark:bg-carbon-950 pt-4 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <VehicleSelector />
         </div>
       </div>
     </section>

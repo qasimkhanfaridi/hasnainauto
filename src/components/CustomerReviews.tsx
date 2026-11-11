@@ -28,19 +28,19 @@ export const CustomerReviews: React.FC = () => {
       name: "Brig. (R) Salman Malik",
       location: "Chaklala Scheme III, Rawalpindi",
       car: "KIA Sportage FWD",
-      product: "10-inch QLED Android Panel & Camera",
+      product: "Rego Racing 30,000 LM LED Headlights",
       rating: 5,
       date: "3 weeks ago",
-      text: "Wireless CarPlay connects immediately when I turn on the ignition. The reverse camera is remarkably clear at night. Highly professional behaviour and fair pricing from Hasnain Auto.",
+      text: "Got the Rego Racing 4-copper LED headlights installed in my Sportage. The high-beam throw on Islamabad Highway is phenomenal. Very clean fitting without cutting any wires.",
     },
     {
       name: "Zain Ul Abideen",
       location: "Westridge, Rawalpindi",
       car: "Suzuki Alto VXL (2022)",
-      product: "7D Floor Mats & Push Start Keyless",
+      product: "7D Luxury Diamond Floor Mats & Trunk Mat",
       rating: 5,
       date: "2 months ago",
-      text: "Ordered through WhatsApp and picked up from their Saddar store. The 7D mats fit wall-to-wall in my Alto. Recommended for everyone in Twin Cities!",
+      text: "Ordered through WhatsApp and picked up from their Saddar store. The 7D mats fit wall-to-wall in my Alto and are completely waterproof. Recommended for everyone in Twin Cities!",
     },
   ];
 
@@ -58,14 +58,14 @@ export const CustomerReviews: React.FC = () => {
 
           {/* Rating Pill */}
           <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-gray-200 shadow-sm self-start">
-            <div className="text-2xl font-black text-carbon-900">4.8</div>
+            <div className="text-2xl font-black text-carbon-900">4.9</div>
             <div>
               <div className="flex items-center gap-0.5">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-3.5 h-3.5 fill-amber-brand text-amber-brand" />
                 ))}
               </div>
-              <div className="text-[10px] text-gray-500 mt-0.5">108+ Verified Reviews</div>
+              <div className="text-[10px] text-gray-500 mt-0.5">240+ Verified Drivers</div>
             </div>
           </div>
         </div>

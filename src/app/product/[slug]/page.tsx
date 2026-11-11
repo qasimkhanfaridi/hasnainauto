@@ -64,7 +64,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
     const variantStr = product.isSeatCover
       ? `${selectedQuality.label} | ${selectedColor.color}`
       : selectedVariant;
-    addToCart(product, quantity, variantStr);
+    addToCart(product, quantity, variantStr, baseUnitPrice);
     router.push("/checkout");
   };
 
@@ -276,7 +276,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                       <span className="text-3xl font-black text-white">
                         {BUSINESS_CONFIG.currency.symbol} {currentTotalPrice.toLocaleString()}
                       </span>
-                      {product.originalPrice && (
+                      {product.originalPrice && (product.originalPrice * quantity > currentTotalPrice) && (
                         <span className="text-sm text-silver-400 line-through">
                           {BUSINESS_CONFIG.currency.symbol}{" "}
                           {(product.originalPrice * quantity).toLocaleString()}
@@ -352,7 +352,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                               <CheckCircle2 className="w-3 h-3 text-red-brand" />
                             )}
                           </div>
-                          <div className="text-[10px] text-silver-400 truncate mt-0.5">
+                          <div className="text-[10px] text-silver-400 leading-tight mt-0.5">
                             {grade.description}
                           </div>
                           <div className="text-[11px] font-black text-red-accent mt-1">
@@ -459,7 +459,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <button
                     type="button"
-                    onClick={() => addToCart(product, quantity, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant)}
+                    onClick={() => addToCart(product, quantity, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, baseUnitPrice)}
                     className="w-full py-3.5 px-4 rounded-2xl bg-carbon-900 hover:bg-carbon-850 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-white/10 hover:border-white/25 transition-all shadow-sm"
                   >
                     <ShoppingBag className="w-4 h-4 text-red-brand" />

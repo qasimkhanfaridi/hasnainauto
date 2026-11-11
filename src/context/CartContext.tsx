@@ -7,11 +7,12 @@ export interface CartItem {
   product: Product;
   quantity: number;
   selectedVariant?: string;
+  unitPrice?: number;
 }
 
 interface CartContextType {
   items: CartItem[];
-  addToCart: (product: Product, quantity?: number, selectedVariant?: string) => void;
+  addToCart: (product: Product, quantity?: number, selectedVariant?: string, unitPrice?: number) => void;
   removeFromCart: (productId: string, selectedVariant?: string) => void;
   updateQuantity: (productId: string, quantity: number, selectedVariant?: string) => void;
   clearCart: () => void;
@@ -54,7 +55,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [items, isLoaded]);
 
-  const addToCart = (product: Product, quantity = 1, selectedVariant?: string) => {
+  const addToCart = (product: Product, quantity = 1, selectedVariant?: string, unitPrice?: number) => {
     setItems((prev) => {
       const existingIndex = prev.findIndex(
         (item) => item.product.id === product.id && item.selectedVariant === selectedVariant
@@ -63,9 +64,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (existingIndex > -1) {
         const updated = [...prev];
         updated[existingIndex].quantity += quantity;
+        if (unitPrice !== undefined) {
+          updated[existingIndex].unitPrice = unitPrice;
+        }
         return updated;
       } else {
-        return [...prev, { product, quantity, selectedVariant }];
+        return [...prev, { product, quantity, selectedVariant, unitPrice }];
       }
     });
     setIsCartOpen(true);
@@ -104,7 +108,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const cartSubtotal = items.reduce((sum, item) => {
-    const itemPrice = item.product.salePrice || item.product.price;
+    const itemPrice = item.unitPrice ?? (item.product.salePrice || item.product.price);
     return sum + itemPrice * item.quantity;
   }, 0);
 

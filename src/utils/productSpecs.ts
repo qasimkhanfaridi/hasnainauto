@@ -19,6 +19,7 @@ export function getProductSpecChips(product: Product, max = 3): string[] {
 }
 
 export function productMatchesSocket(product: Product, socket: string): boolean {
+  if (product.category !== "led-lights") return false;
   const q = socket.toUpperCase();
   const haystack = [
     product.name,
@@ -32,6 +33,8 @@ export function productMatchesSocket(product: Product, socket: string): boolean 
 
   if (q === "H4") return haystack.includes("H4");
   if (q === "H11") return haystack.includes("H11");
-  if (q === "9005") return haystack.includes("9005");
+  if (q === "9005") return haystack.includes("9005") || haystack.includes("HB3");
+  if (q === "9006") return haystack.includes("9006") || haystack.includes("HB4");
+  if (q === "H7") return haystack.includes("H7");
   return haystack.includes(q);
 }
