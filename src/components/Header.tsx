@@ -222,7 +222,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                 }`}
               >
                 <Home className="w-3.5 h-3.5" />
-                <span>Homes</span>
+                <span>Home</span>
               </Link>
 
               {/* All Products */}
