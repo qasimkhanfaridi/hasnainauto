@@ -29,7 +29,7 @@ export const HomeProductsShowcase: React.FC = () => {
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
   const displayedProducts = useMemo(() => {
-    return ACTIVE_PRODUCTS_DATA.filter((product) => {
+    const list = ACTIVE_PRODUCTS_DATA.filter((product) => {
       if (activeTab === "floor-mats") {
         if (product.category !== "floor-mats" && product.slug !== "seat-cover-floor-mat-combo") {
           return false;
@@ -50,6 +50,28 @@ export const HomeProductsShowcase: React.FC = () => {
 
       return true;
     });
+
+    if (activeTab === "led-lights") {
+      const flagshipOrder = [
+        "y6-projector-led-h4",
+        "rego-racing-led-headlights",
+        "mother-6-copper-led-headlights",
+        "b-pro-8-copper-led-headlights",
+        "wooden-box-zinc-alloy-led-headlights",
+        "golden-box-rego-led-headlights",
+        "tasa-h4-premium-led-headlights",
+      ];
+      return [...list].sort((a, b) => {
+        const idxA = flagshipOrder.indexOf(a.slug);
+        const idxB = flagshipOrder.indexOf(b.slug);
+        if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+        if (idxA !== -1) return -1;
+        if (idxB !== -1) return 1;
+        return 0;
+      });
+    }
+
+    return list;
   }, [activeTab, activeSocket]);
 
   const shopHref =
