@@ -19,20 +19,20 @@ const ThemeContext = createContext<ThemeContextValue>({
 export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setThemeState] = useState<Theme>("light");
+  const [theme, setThemeState] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
-  // On first mount, restore saved theme from localStorage, defaulting to light
+  // On first mount, restore saved theme from localStorage, defaulting to dark for premium automotive feel
   useEffect(() => {
     try {
       const saved = localStorage.getItem("hasnain-theme") as Theme | null;
       if (saved === "dark" || saved === "light") {
         setThemeState(saved);
       } else {
-        setThemeState("light");
+        setThemeState("dark");
       }
     } catch {
-      setThemeState("light");
+      setThemeState("dark");
     }
     setMounted(true);
   }, []);

@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Star, MessageCircle, ShoppingCart, Eye } from "lucide-react";
 import { Product } from "@/data/products";
-import { BUSINESS_CONFIG } from "@/config/business";
 import { useCart } from "@/context/CartContext";
 import { useVehicle } from "@/context/VehicleContext";
 import { createSingleProductWhatsAppUrl } from "@/utils/whatsapp";
@@ -46,29 +45,23 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
   const specChips = isLed ? getProductSpecChips(product) : [];
   const cardShell =
     variant === "novsight" || isLed
-      ? "bg-white dark:bg-carbon-900 border-gray-200 dark:border-white/10"
-      : "bg-white border-gray-200";
+      ? "bg-[#0d131f] border-gray-800/80 hover:border-cyan-500/50 hover:shadow-cyan-950/40"
+      : "bg-[#0d131f] border-gray-800 hover:border-cyan-500/40";
 
   return (
     <div
-      className={`group relative flex flex-col ${cardShell} rounded-2xl border hover:border-red-brand/40 shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden`}
+      className={`group relative flex flex-col ${cardShell} rounded-2xl border shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden`}
     >
       {/* ─── Image ─── */}
       <div
-        className={`relative aspect-square w-full overflow-hidden ${
-          isLed || variant === "novsight" ? "bg-white" : "bg-gray-50 aspect-[4/3]"
-        }`}
+        className={`relative aspect-square w-full overflow-hidden bg-gradient-to-b from-[#131b2e] to-[#0c121e] border-b border-gray-800/60`}
       >
-        <Link href={`/product/${product.slug}`} className="block w-full h-full">
+        <Link href={`/product/${product.slug}`} className="block w-full h-full relative">
           <Image
             src={product.images[0]}
             alt={product.name}
             fill
-            className={
-              isLed || variant === "novsight"
-                ? "object-contain p-3 sm:p-5 transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-                : "object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-            }
+            className="object-contain p-4 transition-transform duration-500 ease-out group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           />
         </Link>
@@ -113,15 +106,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
       </div>
 
       {/* ─── Card Body ─── */}
-      <div className="p-3.5 sm:p-4 flex flex-col flex-1 gap-2">
-        {/* Category */}
-        <span className="text-[10px] font-bold text-red-brand uppercase tracking-wider">
-          {product.subcategory || product.category.replace(/-/g, " ")}
-        </span>
+      <div className="p-3.5 sm:p-4 flex flex-col flex-1 gap-2 bg-[#0e1422]">
+        {/* Category & Sockets */}
+        <div className="flex items-center justify-between gap-1">
+          <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider">
+            {product.subcategory || product.category.replace(/-/g, " ")}
+          </span>
+          <span className="text-[10px] text-gray-400 font-mono bg-black/40 px-1.5 py-0.5 rounded border border-gray-800">
+            {product.variants?.[0]?.options?.slice(0, 3).map(o => o.split(' ')[0]).join('/') || "H4/H11"}
+          </span>
+        </div>
 
         {/* Title */}
         <Link href={`/product/${product.slug}`}>
-          <h3 className="text-sm font-black text-carbon-900 group-hover:text-red-brand transition-colors line-clamp-2 leading-snug">
+          <h3 className="text-sm font-black text-white group-hover:text-cyan-400 transition-colors line-clamp-2 leading-snug">
             {product.name}
           </h3>
         </Link>
@@ -132,12 +130,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
             {[1, 2, 3, 4, 5].map((i) => (
               <Star
                 key={i}
-                className={`w-3 h-3 ${i <= Math.round(product.rating) ? "fill-amber-brand text-amber-brand" : "fill-gray-200 text-gray-200"}`}
+                className={`w-3 h-3 ${i <= Math.round(product.rating) ? "fill-amber-brand text-amber-brand" : "fill-gray-700 text-gray-700"}`}
               />
             ))}
           </div>
-          <span className="text-[10px] font-bold text-carbon-900 dark:text-white">{product.rating.toFixed(1)}</span>
-          <span className="text-[10px] text-gray-400">({product.reviewCount})</span>
+          <span className="text-[10px] font-bold text-gray-200">{product.rating.toFixed(1)}</span>
+          <span className="text-[10px] text-gray-400">({product.reviewCount} verified)</span>
         </div>
 
         {specChips.length > 0 && (
@@ -145,7 +143,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
             {specChips.map((chip) => (
               <span
                 key={chip}
-                className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-carbon-950 border border-gray-200 dark:border-white/10 text-[9px] font-bold text-carbon-900 dark:text-gray-200 uppercase"
+                className="px-2 py-0.5 rounded bg-[#162032] border border-cyan-500/20 text-[9px] font-bold text-cyan-300 uppercase tracking-tight"
               >
                 {chip}
               </span>
@@ -154,24 +152,28 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
         )}
 
         {/* Price + Direct Order row */}
-        <div className="flex items-center justify-between gap-2 pt-2 mt-auto border-t border-gray-100 dark:border-white/10">
+        <div className="flex items-center justify-between gap-2 pt-2.5 mt-auto border-t border-gray-800/80">
           <div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-base font-black text-red-brand">
-                {BUSINESS_CONFIG.currency.symbol} {currentPrice.toLocaleString()}
+              <span className="text-base font-black text-white">
+                <span className="text-xs text-cyan-400 mr-0.5">Rs.</span>
+                {currentPrice.toLocaleString()}
               </span>
               {product.originalPrice && (
-                <span className="text-xs text-gray-400 line-through">
-                  {BUSINESS_CONFIG.currency.symbol} {product.originalPrice.toLocaleString()}
+                <span className="text-[11px] text-gray-500 line-through">
+                  Rs. {product.originalPrice.toLocaleString()}
                 </span>
               )}
             </div>
-            <span className="text-[10px] font-semibold text-gray-500 dark:text-gray-400">Cash on Delivery</span>
+            <span className="text-[10px] font-medium text-emerald-400 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              COD Free Delivery
+            </span>
           </div>
           <button
             type="button"
             onClick={handleDirectOrder}
-            className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-red-brand hover:bg-red-dark text-white text-xs font-bold transition-all shadow-red-glow-sm"
+            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-black transition-all shadow-md shadow-cyan-950"
             aria-label="Order now"
             title="Add to cart & Checkout"
           >
@@ -185,10 +187,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-white text-xs font-black uppercase tracking-wider transition-all shadow-whatsapp-glow"
+          className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white text-xs font-black uppercase tracking-wider transition-all shadow-lg shadow-green-950/40"
         >
           <MessageCircle className="w-4 h-4 fill-white" />
-          WhatsApp 1-Click Order
+          WhatsApp COD Order
         </a>
       </div>
     </div>

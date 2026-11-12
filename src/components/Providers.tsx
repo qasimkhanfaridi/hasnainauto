@@ -23,7 +23,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <ThemeProvider>
       <VehicleProvider>
         <CartProvider>
-          <div className="relative min-h-screen flex flex-col bg-surface-100 text-carbon-900 antialiased selection:bg-red-soft selection:text-red-dark">
+          <div className="relative min-h-screen flex flex-col bg-[#070b12] text-gray-100 antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
             <Header
               onOpenSearch={() => setIsSearchOpen(true)}
               onOpenQuickOrder={() => setIsQuickOrderOpen(true)}

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import React from "react";
 import { HeroSection } from "@/components/HeroSection";
-import { LedShopQuickStart } from "@/components/LedShopQuickStart";
-import { SocketFinderBar } from "@/components/SocketFinderBar";
+import { VehicleSocketFinderHero } from "@/components/VehicleSocketFinderHero";
 import { LedSeriesShowcase } from "@/components/LedSeriesShowcase";
 import { HomeProductsShowcase } from "@/components/HomeProductsShowcase";
 import { CategoryShowcase } from "@/components/CategoryShowcase";
@@ -19,12 +18,12 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="w-full">
+    <div className="w-full bg-[#070b12] text-gray-100">
       <HeroSection />
 
-      {/* LED-first path for Pakistani buyers: socket → series → order */}
-      <LedShopQuickStart />
-      <SocketFinderBar />
+      {/* Smart Vehicle Fitment & Socket Diagnostic */}
+      <VehicleSocketFinderHero />
+
       <LedSeriesShowcase />
 
       <HomeProductsShowcase />

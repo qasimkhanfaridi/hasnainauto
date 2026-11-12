@@ -58,32 +58,32 @@ export const HomeProductsShowcase: React.FC = () => {
       : `/shop?category=${activeTab}`;
 
   return (
-    <section id="led-catalog" className="py-10 sm:py-14 bg-surface-100 dark:bg-carbon-950 border-b border-gray-200 dark:border-white/10 transition-colors">
+    <section id="led-catalog" className="py-12 sm:py-16 bg-[#070b12] text-white border-b border-gray-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-brand/15 text-amber-brand dark:text-amber-glow text-[10px] font-black uppercase tracking-widest mb-2">
-              <Zap className="w-3.5 h-3.5 fill-amber-brand" />
-              In-Stock Saddar · COD Pakistan
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/70 border border-cyan-500/30 text-cyan-300 text-[10px] font-black uppercase tracking-widest mb-2">
+              <Zap className="w-3.5 h-3.5 text-cyan-400" />
+              Verified Inventory · Saddar Showroom · COD Pakistan
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-carbon-900 dark:text-white uppercase tracking-tight">
-              LED Lights &amp; Accessories
+            <h2 className="text-2xl sm:text-4xl font-black text-white uppercase tracking-tight">
+              PRO HIGH-INTENSITY LED HEADLIGHTS
             </h2>
-            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-1 max-w-xl">
-              Copper LED headlights with Canbus — prices in Rs. WhatsApp par order ya cart se COD.
+            <p className="text-xs sm:text-sm text-gray-400 mt-1 max-w-xl">
+              Equipped with liquid copper conduits, external Canbus decoders, and 1-Year Direct Over-the-Counter Replacement Warranty.
             </p>
           </div>
 
           <Link
             href={shopHref}
-            className="inline-flex items-center gap-2 text-xs font-black text-red-brand uppercase tracking-wider hover:text-red-dark group shrink-0"
+            className="inline-flex items-center gap-2 text-xs font-black text-cyan-400 uppercase tracking-wider hover:text-cyan-300 group shrink-0"
           >
-            <span>Full LED Shop</span>
+            <span>Full Catalog</span>
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 mb-4 pb-2 border-b border-gray-200 dark:border-white/10">
+        <div className="flex flex-wrap items-center gap-2 mb-4 pb-2 border-b border-gray-800">
           {CATEGORY_TABS.map((tab) => (
             <button
               key={tab.id}
@@ -96,10 +96,8 @@ export const HomeProductsShowcase: React.FC = () => {
               }}
               className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all min-h-[44px] ${
                 activeTab === tab.id
-                  ? tab.id === "led-lights"
-                    ? "bg-amber-brand text-carbon-900 shadow-md"
-                    : "bg-red-brand text-white shadow-red-glow-sm"
-                  : "bg-white dark:bg-carbon-900 text-gray-600 dark:text-gray-300 hover:text-carbon-900 dark:hover:text-white border border-gray-200 dark:border-white/10"
+                  ? "bg-cyan-500 text-black font-black shadow-lg shadow-cyan-950"
+                  : "bg-[#0f1624] text-gray-300 hover:text-white border border-gray-800"
               }`}
             >
               {tab.label}
@@ -110,22 +108,22 @@ export const HomeProductsShowcase: React.FC = () => {
         {activeTab === "led-lights" && (
           <div className="space-y-3 mb-6">
             <div className="flex flex-wrap items-center gap-2 text-xs">
-              <span className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1 mr-1">
-                <Zap className="w-3 h-3 text-red-brand" />
-                Bulb socket:
+              <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1 mr-1">
+                <Zap className="w-3 h-3 text-cyan-400" />
+                Socket Filter:
               </span>
               {SOCKET_PILLS.map((sock) => (
                 <button
                   key={sock}
                   type="button"
                   onClick={() => setActiveSocket(sock)}
-                  className={`min-h-[36px] px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  className={`min-h-[36px] px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
                     activeSocket === sock
-                      ? "bg-carbon-900 text-white dark:bg-white dark:text-carbon-900"
-                      : "bg-gray-100 dark:bg-carbon-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-carbon-700"
+                      ? "bg-white text-black font-black"
+                      : "bg-[#111927] text-gray-400 hover:bg-[#1a253a] hover:text-white border border-gray-800"
                   }`}
                 >
-                  {sock === "All" ? "Sab" : sock}
+                  {sock === "All" ? "All Sockets" : sock}
                 </button>
               ))}
             </div>

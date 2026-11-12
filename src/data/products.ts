@@ -38,7 +38,7 @@ export const CATEGORIES_DATA: CategoryInfo[] = [
     description: "Headlights, fog lights & ambient lighting",
     shortDesc: "Headlights, fog lights, laser mini pods & interior ambient lighting.",
     itemCount: "High-Output LEDs",
-    image: "/images/products/rego-racing-led-01.jpg",
+    image: "/images/products/rego-racing-ai-hero.jpg",
     isHero: false,
     subcategories: ["Headlight LEDs", "Fog Lights", "Interior Lighting"],
   },
@@ -290,7 +290,8 @@ export const PRODUCTS_DATA: Product[] = [
     reviewCount: 96,
     images: [
       "/images/products/f5-pro-h4-led.jpg",
-      "/images/products/mini-projector-lens-led-01.jpg",
+      "/images/products/mini-projector-lens-real-studio.jpg",
+        "/images/products/mini-projector-lens-led-01.jpg",
     ],
     variants: [
       {
@@ -718,6 +719,7 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.9,
     reviewCount: 47,
     images: [
+      "/images/products/rego-racing-ai-hero.jpg",
       "/images/products/rego-racing-led-01.jpg",
       "/images/products/rego-racing-led-02.jpg",
       "/images/products/rego-racing-led-03.jpg",
@@ -789,7 +791,8 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.9,
     reviewCount: 38,
     images: [
-      "/images/products/mother-6-copper-led-01.jpg",
+      "/images/products/mother-6-copper-ai-hero.jpg",
+        "/images/products/mother-6-copper-led-01.jpg",
       "/images/products/mother-6-copper-led-02.jpg",
       "/images/products/mother-6-copper-led-03.jpg",
       "/images/products/mother-6-copper-led-04.jpg",
@@ -857,7 +860,8 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.8,
     reviewCount: 29,
     images: [
-      "/images/products/b-pro-8-copper-led-01.jpg",
+      "/images/products/b-pro-8-copper-ai-hero.jpg",
+        "/images/products/b-pro-8-copper-led-01.jpg",
       "/images/products/b-pro-8-copper-led-02.jpg",
       "/images/products/b-pro-8-copper-led-03.jpg",
       "/images/products/b-pro-8-copper-led-04.jpg",
@@ -924,7 +928,8 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.8,
     reviewCount: 31,
     images: [
-      "/images/products/mother-5-copper-led-01.jpg",
+      "/images/products/mother-5-copper-real-studio.jpg",
+        "/images/products/mother-5-copper-led-01.jpg",
       "/images/products/mother-5-copper-led-02.jpg",
       "/images/products/mother-5-copper-led-03.jpg",
       "/images/products/mother-5-copper-led-04.jpg",
@@ -992,7 +997,8 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.7,
     reviewCount: 22,
     images: [
-      "/images/products/black-box-rego-led-01.jpg",
+      "/images/products/black-box-rego-real-studio.jpg",
+        "/images/products/black-box-rego-led-01.jpg",
       "/images/products/black-box-rego-led-02.jpg",
       "/images/products/black-box-rego-led-03.jpg",
       "/images/products/black-box-rego-led-04.jpg",
@@ -1059,7 +1065,8 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.7,
     reviewCount: 19,
     images: [
-      "/images/products/y6-projector-led-h4-01.jpg",
+      "/images/products/y6-projector-ai-hero.jpg",
+        "/images/products/y6-projector-led-h4-01.jpg",
       "/images/products/y6-projector-led-h4-02.jpg",
       "/images/products/y6-projector-led-h4-03.jpg",
       "/images/products/y6-projector-led-h4-04.jpg",
@@ -1188,7 +1195,8 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.9,
     reviewCount: 24,
     images: [
-      "/images/products/golden-box-rego-led-01.jpg",
+      "/images/products/golden-box-rego-ai-hero.jpg",
+        "/images/products/golden-box-rego-led-01.jpg",
       "/images/products/golden-box-rego-led-02.jpg",
       "/images/products/golden-box-rego-led-03.jpg",
       "/images/products/golden-box-rego-led-04.jpg",
@@ -1256,7 +1264,8 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.8,
     reviewCount: 14,
     images: [
-      "/images/products/wooden-box-zinc-alloy-led-01.jpg",
+      "/images/products/wooden-box-zinc-alloy-ai-hero.jpg",
+        "/images/products/wooden-box-zinc-alloy-led-01.jpg",
       "/images/products/wooden-box-zinc-alloy-led-02.jpg",
       "/images/products/wooden-box-zinc-alloy-led-03.jpg",
       "/images/products/wooden-box-zinc-alloy-led-04.jpg",
@@ -1323,7 +1332,8 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.8,
     reviewCount: 11,
     images: [
-      "/images/products/tasa-h4-premium-led-01.jpg",
+      "/images/products/tasa-h4-ai-hero.jpg",
+        "/images/products/tasa-h4-premium-led-01.jpg",
       "/images/products/tasa-h4-premium-led-02.jpg",
       "/images/products/tasa-h4-premium-led-03.jpg",
       "/images/products/tasa-h4-premium-led-04.jpg",
@@ -1391,7 +1401,8 @@ export const PRODUCTS_DATA: Product[] = [
     rating: 4.7,
     reviewCount: 18,
     images: [
-      "/images/products/ultra-bright-4-lens-fog-01.jpg",
+      "/images/products/ultra-bright-4-lens-fog-ai-hero.jpg",
+        "/images/products/ultra-bright-4-lens-fog-01.jpg",
       "/images/products/ultra-bright-4-lens-fog-02.jpg",
       "/images/products/ultra-bright-4-lens-fog-03.jpg",
       "/images/products/ultra-bright-4-lens-fog-04.jpg",
