@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="w-full bg-[#070b12] text-gray-100">
+    <div className="w-full bg-white dark:bg-[#070b12] text-gray-900 dark:text-gray-100">
       <HeroSection />
 
       {/* Smart Vehicle Fitment & Socket Diagnostic */}
