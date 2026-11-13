@@ -23,8 +23,8 @@ export const Footer: React.FC = () => {
               </span>
             </div>
             <p className="text-xs text-gray-400 leading-relaxed max-w-sm">
-              Premier automotive accessories showroom in Saddar, Rawalpindi. 
-              Seat covers, LED headlights, 7D floor mats, and expert workshop installation.
+              Premier automotive accessories showroom in Saddar, Rawalpindi.
+              LED headlights, laser fog projectors, and expert workshop installation.
             </p>
 
             {/* Payment icons */}
@@ -66,7 +66,7 @@ export const Footer: React.FC = () => {
               Categories
             </h4>
             <ul className="space-y-2 text-xs">
-              {CATEGORIES_DATA.map((cat) => (
+              {CATEGORIES_DATA.filter((cat) => !["seat-covers", "floor-mats", "combo-deals"].includes(cat.id)).map((cat) => (
                 <li key={cat.id}>
                   <Link
                     href={`/shop?category=${cat.id}`}
