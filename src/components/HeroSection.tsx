@@ -3,14 +3,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MessageCircle, ShieldCheck, Truck, RefreshCw, ChevronRight, ChevronLeft, Star, Flame, Tag } from "lucide-react";
-import { BUSINESS_CONFIG } from "@/config/business";
+import { ShieldCheck, Truck, RefreshCw, ChevronRight, Flame, Tag } from "lucide-react";
 import { PRODUCTS_DATA } from "@/data/products";
 
 interface HeroSectionProps {
   onOpenQuickOrder?: () => void;
 }
 
+/* Full-bleed photo/video slides only (AuxLEDs style). Product slides removed. */
 const HERO_SLIDES = [
   {
     eyebrow: "LED HEADLIGHTS · BRIGHTER NIGHTS",
@@ -18,16 +18,12 @@ const HERO_SLIDES = [
       <>
         SEE FARTHER
         <br />
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-red-500 to-rose-500">
-          DRIVE SAFER
-        </span>
+        <span className="text-red-500">DRIVE SAFER</span>
       </>
     ),
-    subtitle: "Upgrade your car with powerful LED headlights — brighter road, sharper cutoff, zero glare for oncoming traffic. Fitted free at our Saddar Rawalpindi workshop.",
-    pills: ["20,000 LM Output", "Plug & Play", "1-Year Warranty", "Free Fitting"],
+    subtitle: "Powerful LED headlights — brighter road, sharper cutoff, zero glare. Fitted free at our Saddar Rawalpindi workshop.",
     image: "/images/hero-sedan.jpg",
     imageAlt: "White sedan with bright LED headlights at Hasnain Auto",
-    imageFit: "cover" as const,
     ctaLink: "/shop",
     ctaText: "SHOP LED LIGHTS",
   },
@@ -37,86 +33,14 @@ const HERO_SLIDES = [
       <>
         OWN THE NIGHT
         <br />
-        <span className="text-red-600">WITH LED POWER</span>
+        <span className="text-red-500">WITH LED POWER</span>
       </>
     ),
     subtitle: "Fog-proof beams, Canbus-ready drivers and crisp 6500K white light — built for Pakistani highways, city streets and winter fog.",
-    pills: ["Fog-Proof Beam", "Canbus Ready", "6500K White", "Nationwide COD"],
     image: "/images/hero-night-cars.jpg",
     imageAlt: "Two cars driving at night with bright LED headlights on",
-    imageFit: "cover" as const,
     ctaLink: "/shop",
     ctaText: "EXPLORE LIGHTS",
-  },
-  {
-    eyebrow: "Y6 MINI PROJECTOR · LASER CUTOFF",
-    title: (
-      <>
-        ZERO GLARE
-        <br />
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-red-500 to-rose-500">
-          LASER PROJECTOR
-        </span>
-      </>
-    ),
-    subtitle: "Built-in optical convex lens with razor-sharp horizontal cutoff. 100% plug & play for Alto, Cultus, City & WagonR without unsealing the headlight housing.",
-    pills: ["German Laser Cutoff", "Anti-Glare Optics", "Direct H4 Socket", "1-Year Warranty"],
-    image: "/images/products/y6-projector-ai-hero.jpg",
-    imageAlt: "Y6 Projector LED headlights at Hasnain Auto Saddar Rawalpindi",
-    imageFit: "contain" as const,
-    ctaLink: "/product/y6-projector-led-h4",
-    ctaText: "EXPLORE Y6 PROJECTOR",
-  },
-  {
-    eyebrow: "MOTHER · 6 COPPER SERIES",
-    title: (
-      <>
-        35,000 LM
-        <br />
-        <span className="text-amber-600">HIGHWAY BEAST</span>
-      </>
-    ),
-    subtitle: "Six vacuum copper liquid conduits and 12,000 RPM turbo fan for sustained highway night visibility. Heavy Canbus decoders ensure zero dashboard error warnings.",
-    pills: ["280W System", "6 Copper Tubes", "12K RPM Fan", "Canbus Error-Free"],
-    image: "/images/products/mother-6-copper-ai-hero.jpg",
-    imageAlt: "Mother 6 copper tube LED headlight kit",
-    imageFit: "contain" as const,
-    ctaLink: "/product/mother-6-copper-led-headlights",
-    ctaText: "SHOP MOTHER 6",
-  },
-  {
-    eyebrow: "B-PRO · 8 COPPER EXTREME",
-    title: (
-      <>
-        30,000 LM
-        <br />
-        <span className="text-red-600">8-COPPER CORE</span>
-      </>
-    ),
-    subtitle: "Industry-leading 8 copper heat pipes engineered for extreme heat endurance and relentless Motorway illumination across Pakistan.",
-    pills: ["240W Rated", "8 Copper Pipes", "Aviation 6063 Alloy", "1Y Direct Warranty"],
-    image: "/images/products/b-pro-8-copper-ai-hero.jpg",
-    imageAlt: "B Pro 8 copper tube LED headlights",
-    imageFit: "contain" as const,
-    ctaLink: "/product/b-pro-8-copper-led-headlights",
-    ctaText: "VIEW B-PRO 8",
-  },
-  {
-    eyebrow: "REGO RACING · GERMAN TECH",
-    title: (
-      <>
-        260W POWER
-        <br />
-        <span className="text-red-brand">GERMAN RACING</span>
-      </>
-    ),
-    subtitle: "Four copper heat pipes, Canbus-compatible drivers, and aluminium fan cooling. H4, H11, and 9005 with over-the-counter replacement at Saddar Rawalpindi.",
-    pills: ["260W System", "4 Copper Pipes", "Canbus Ready", "6500K Class White"],
-    image: "/images/products/rego-racing-ai-hero.jpg",
-    imageAlt: "Rego Racing 4 copper pipe LED headlights at Hasnain Auto",
-    imageFit: "contain" as const,
-    ctaLink: "/product/rego-racing-led-headlights",
-    ctaText: "VIEW REGO RACING",
   },
 ] as const;
 
@@ -136,6 +60,7 @@ function formatPrice(value: number) {
   return `Rs. ${value.toLocaleString("en-PK")}`;
 }
 
+/* Compressed Hot Deals card (JS Auto size): image, badge, name, prices, View Deal, dots. Same 5s rotation. */
 function HotDealsCard() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -164,7 +89,7 @@ function HotDealsCard() {
   return (
     <aside
       aria-label="Hot deals"
-      className="relative flex flex-col overflow-hidden rounded-2xl border-2 border-red-600/20 bg-white dark:bg-gray-900 shadow-lg"
+      className="relative flex h-full flex-col overflow-hidden rounded-2xl border-2 border-red-600/20 bg-white dark:bg-gray-900 shadow-lg"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -173,17 +98,17 @@ function HotDealsCard() {
           <Flame className="w-4 h-4 fill-white" />
           Hot Deals
         </span>
-        <span className="text-[11px] font-bold uppercase tracking-wide text-red-100">
-          {index + 1} / {HOT_DEALS.length}
+        <span className="rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-gray-900">
+          Limited-Time Offers
         </span>
       </div>
 
-      <div className="relative w-full aspect-[16/10] bg-gray-50 dark:bg-gray-800">
+      <div className="relative w-full flex-1 min-h-[180px] bg-gray-50 dark:bg-gray-800">
         <Image
           src={deal.images[0]}
           alt={deal.name}
           fill
-          sizes="(max-width: 1024px) 100vw, 360px"
+          sizes="(max-width: 1024px) 100vw, 340px"
           className="object-contain p-4"
         />
         {discount > 0 && (
@@ -199,35 +124,24 @@ function HotDealsCard() {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col px-4 pb-4 pt-3">
-        <div className="flex items-center gap-1">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <Star
-              key={i}
-              className={`w-3.5 h-3.5 ${i <= Math.round(deal.rating) ? "fill-amber-500 text-amber-500" : "fill-gray-200 text-gray-200"}`}
-            />
-          ))}
-          <span className="ml-1 text-xs font-bold text-gray-600 dark:text-gray-300">
-            {deal.rating} ({deal.reviewCount})
-          </span>
-        </div>
-        <h3 className="mt-1.5 line-clamp-2 text-base font-black leading-snug text-gray-900 dark:text-white">
+      <div className="flex flex-col px-4 pb-4 pt-3">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+          {deal.subcategory || deal.category.replace(/-/g, " ")}
+        </span>
+        <h3 className="mt-1 line-clamp-1 text-base font-black leading-snug text-gray-900 dark:text-white">
           {deal.name}
         </h3>
-        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
-          {deal.shortDescription}
-        </p>
-        <div className="mt-3 flex items-baseline gap-2">
-          <span className="text-xl font-black text-red-600">{formatPrice(deal.price)}</span>
+        <div className="mt-2 flex items-baseline gap-2">
           {deal.originalPrice && deal.originalPrice > deal.price && (
             <span className="text-sm font-bold text-gray-400 line-through">
               {formatPrice(deal.originalPrice)}
             </span>
           )}
+          <span className="text-xl font-black text-amber-500">{formatPrice(deal.price)}</span>
         </div>
         <Link
           href={`/product/${deal.slug}`}
-          className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-3 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-red-700"
+          className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-2.5 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-red-700"
         >
           View Deal
           <ChevronRight className="w-4 h-4" />
@@ -304,19 +218,19 @@ function HeroCarousel({
 
   return (
     <div
-      className={`relative ${className}`}
+      className={`relative h-full ${className}`}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="overflow-hidden touch-pan-y">
+      <div className="h-full overflow-hidden touch-pan-y">
         <div
-          className="flex transition-transform duration-500 ease-out"
+          className="flex h-full transition-transform duration-500 ease-out"
           style={{ transform: `translateX(-${index * 100}%)` }}
         >
           {slides.map((slide, i) => (
-            <div key={i} className="w-full shrink-0">
+            <div key={i} className="h-full w-full shrink-0">
               {slide}
             </div>
           ))}
@@ -324,42 +238,20 @@ function HeroCarousel({
       </div>
 
       {slideCount > 1 && (
-        <>
-          <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-20">
-            <div className="flex items-center gap-2 sm:gap-3 px-2.5 py-1.5 rounded-full bg-white/95 border border-gray-200 shadow-card backdrop-blur-sm">
-              <button
-                type="button"
-                aria-label="Previous slide"
-                onClick={goPrev}
-                className="flex w-8 h-8 rounded-full items-center justify-center text-carbon-900 hover:bg-gray-100 active:bg-gray-200 transition-colors"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <div className="flex items-center gap-1.5 px-0.5">
-                {Array.from({ length: slideCount }).map((_, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    aria-label={`Go to slide ${i + 1}`}
-                    aria-current={i === index ? "true" : undefined}
-                    onClick={() => goTo(i)}
-                    className={`rounded-full transition-all ${
-                      i === index ? "w-6 h-2 bg-red-brand" : "w-2 h-2 bg-gray-300 hover:bg-gray-400"
-                    }`}
-                  />
-                ))}
-              </div>
-              <button
-                type="button"
-                aria-label="Next slide"
-                onClick={goNext}
-                className="flex w-8 h-8 rounded-full items-center justify-center text-carbon-900 hover:bg-gray-100 active:bg-gray-200 transition-colors"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </>
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+          {Array.from({ length: slideCount }).map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              aria-label={`Go to slide ${i + 1}`}
+              aria-current={i === index ? "true" : undefined}
+              onClick={() => goTo(i)}
+              className={`rounded-full transition-all ${
+                i === index ? "h-2 w-6 bg-white" : "h-2 w-2 bg-white/50 hover:bg-white/80"
+              }`}
+            />
+          ))}
+        </div>
       )}
     </div>
   );
@@ -374,99 +266,58 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
   ];
 
   return (
-    <section className="w-full overflow-hidden bg-white dark:bg-gray-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 lg:pt-8">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px] gap-5 lg:gap-6 items-stretch">
-          <HeroCarousel slideCount={HERO_SLIDES.length} className="bg-white dark:bg-gray-950 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+    <section className="w-full bg-white dark:bg-gray-950">
+      {/* Full-bleed photo/video box + compressed Hot Deals on the right */}
+      <div className="flex flex-col lg:flex-row items-stretch">
+        <div className="relative min-w-0 flex-1">
+          <HeroCarousel slideCount={HERO_SLIDES.length} className="h-[420px] sm:h-[480px] lg:h-[560px]">
             {HERO_SLIDES.map((slide, slideIndex) => {
               const SlideHeading = slideIndex === 0 ? "h1" : "h2";
               return (
-              <div
-                key={slide.eyebrow}
-                className="relative overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-950 lg:min-h-[500px]"
-              >
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-[4.5rem] sm:pt-8 sm:pb-20 lg:py-12">
-                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 xl:gap-14 items-center">
-                    <div className="relative z-10 w-full min-w-0 lg:max-w-xl">
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 font-black text-xs uppercase tracking-widest mb-3">
-                        <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
-                        <span>{slide.eyebrow}</span>
-                      </div>
-                      <SlideHeading className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 dark:text-white leading-[1.05] uppercase tracking-tight mb-3">
-                        {slide.title}
-                      </SlideHeading>
-                      <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-5 font-medium leading-relaxed">
-                        {slide.subtitle}
-                      </p>
-
-                      {/* High-Tech Spec Pills (Novsight & Auxleds Style) */}
-                      {"pills" in slide && slide.pills && (
-                        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-5 sm:mb-6">
-                          {slide.pills.map((pill: string, pIdx: number) => (
-                            <span
-                              key={pIdx}
-                              className="px-2.5 py-1 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 text-[11px] sm:text-xs font-bold"
-                            >
-                              {pill}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-
-                      <div className="flex flex-col sm:flex-row flex-wrap gap-3">
-                        <Link
-                          href={"ctaLink" in slide ? slide.ctaLink : "/shop"}
-                          className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-black text-sm uppercase tracking-wide transition-all shadow-lg shadow-red-600/25 group w-full sm:w-auto"
-                        >
-                          {"ctaText" in slide ? slide.ctaText : "SHOP NOW"}
-                          <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                        </Link>
-                        <a
-                          href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent("Assalam-o-Alaikum Hasnain Auto, I want to order automotive lights & accessories.")}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white font-black text-sm uppercase tracking-wide transition-all shadow-lg shadow-green-600/25 w-full sm:w-auto"
-                        >
-                          <MessageCircle className="w-4 h-4 fill-white" />
-                          WhatsApp Order
-                        </a>
-                      </div>
-                      <div className="mt-4 sm:mt-5 flex flex-wrap items-center gap-2">
-                        <div className="flex items-center gap-0.5">
-                          {[1, 2, 3, 4, 5].map((i) => (
-                            <Star key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-500 text-amber-500" />
-                          ))}
-                        </div>
-                        <span className="text-xs font-bold text-gray-700 dark:text-gray-200">4.9 / 5.0</span>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">• 240+ Verified Drivers Across Pakistan</span>
-                      </div>
-                    </div>
-
-                    <div className="relative z-0 w-full min-w-0 -mx-4 px-4 sm:mx-0 sm:px-0 flex justify-center lg:justify-end">
-                      <div className="relative w-full aspect-[16/11] min-h-[260px] sm:min-h-[320px] md:min-h-[360px] lg:aspect-[4/3] lg:min-h-[400px] xl:min-h-[440px] max-w-none lg:max-w-full bg-gray-50 dark:bg-gray-800 rounded-xl sm:rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden flex items-center justify-center">
-                        <Image
-                          src={slide.image}
-                          alt={slide.imageAlt}
-                          fill
-                          priority={slideIndex === 0}
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 560px"
-                          className={slide.imageFit === "cover" ? "object-cover" : "object-contain p-3 sm:p-5 lg:p-7"}
-                        />
-                      </div>
+                <div key={slide.eyebrow} className="relative h-full w-full overflow-hidden">
+                  <Image
+                    src={slide.image}
+                    alt={slide.imageAlt}
+                    fill
+                    priority={slideIndex === 0}
+                    sizes="(max-width: 1024px) 100vw, 75vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-8 lg:p-10">
+                    <span className="mb-3 inline-flex w-fit items-center gap-2 rounded-full bg-red-600 px-3 py-1 text-[11px] font-black uppercase tracking-widest text-white">
+                      {slide.eyebrow}
+                    </span>
+                    <SlideHeading className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase leading-[1.05] tracking-tight text-white">
+                      {slide.title}
+                    </SlideHeading>
+                    <p className="mt-3 max-w-lg text-sm sm:text-base font-medium leading-relaxed text-gray-200">
+                      {slide.subtitle}
+                    </p>
+                    <div className="mt-5">
+                      <Link
+                        href={slide.ctaLink}
+                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-red-600 px-6 py-3.5 text-sm font-black uppercase tracking-wide text-white shadow-lg shadow-red-600/25 transition-all hover:bg-red-700"
+                      >
+                        {slide.ctaText}
+                        <ChevronRight className="w-4 h-4" />
+                      </Link>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
+              );
             })}
           </HeroCarousel>
+        </div>
 
+        <div className="w-full shrink-0 bg-white p-3 dark:bg-gray-950 sm:p-4 lg:w-[320px] lg:p-4 xl:w-[340px]">
           <HotDealsCard />
         </div>
       </div>
 
       {/* Clean Compact Trust Bar */}
-      <div className="bg-gray-50 dark:bg-gray-900 border-y border-gray-200 dark:border-gray-800 py-3.5 mt-5 sm:mt-6">
+      <div className="bg-gray-50 dark:bg-gray-900 border-y border-gray-200 dark:border-gray-800 py-3.5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6">
             {trustPillars.map((p) => (
