@@ -204,7 +204,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
         </div>
 
         {/* ─── Desktop Category Navigation Bar ─── */}
-        <nav className="hidden lg:block bg-carbon-900 border-t border-carbon-800">
+        <nav className="hidden lg:block bg-white dark:bg-carbon-900 border-t border-gray-200 dark:border-carbon-800">
           <div className="max-w-7xl mx-auto px-8">
             <div className="flex items-center gap-0">
               {/* Home */}
@@ -212,8 +212,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                 href="/"
                 className={`flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${
                   pathname === "/"
-                    ? "text-white border-red-brand bg-red-brand/10"
-                    : "text-gray-300 border-transparent hover:text-white hover:bg-white/5"
+                    ? "text-gray-900 dark:text-white border-red-brand bg-red-brand/10"
+                    : "text-gray-600 dark:text-gray-300 border-transparent hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5"
                 }`}
               >
                 <Home className="w-3.5 h-3.5" />
@@ -225,8 +225,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                 href="/shop?category=led-lights"
                 className={`flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${
                   pathname === "/shop"
-                    ? "text-white border-red-brand bg-red-brand/10"
-                    : "text-gray-300 border-transparent hover:text-white hover:bg-white/5"
+                    ? "text-gray-900 dark:text-white border-red-brand bg-red-brand/10"
+                    : "text-gray-600 dark:text-gray-300 border-transparent hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5"
                 }`}
               >
                 All LEDs
@@ -238,10 +238,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                   href={item.href}
                   className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 whitespace-nowrap ${
                     "ledNav" in item && item.ledNav
-                      ? "text-amber-brand border-amber-brand bg-amber-brand/15 hover:bg-amber-brand/25 shadow-[inset_0_-2px_0_#f59e0b]"
+                      ? "text-amber-600 dark:text-amber-brand border-amber-brand bg-amber-brand/15 hover:bg-amber-brand/25 shadow-[inset_0_-2px_0_#f59e0b]"
                       : pathname === item.href
-                        ? "text-white border-red-brand bg-red-brand/10"
-                        : "text-gray-300 border-transparent hover:text-white hover:bg-white/5"
+                        ? "text-gray-900 dark:text-white border-red-brand bg-red-brand/10"
+                        : "text-gray-600 dark:text-gray-300 border-transparent hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5"
                   }`}
                 >
                   {item.name}
@@ -251,7 +251,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
               {/* Saddar Shop */}
               <Link
                 href="/contact"
-                className="ml-auto px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-amber-brand hover:text-amber-glow border-b-2 border-transparent hover:border-amber-brand transition-colors whitespace-nowrap"
+                className="ml-auto px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-brand hover:text-amber-500 dark:hover:text-amber-glow border-b-2 border-transparent hover:border-amber-brand transition-colors whitespace-nowrap"
               >
                 📍 Visit Saddar Shop
               </Link>
