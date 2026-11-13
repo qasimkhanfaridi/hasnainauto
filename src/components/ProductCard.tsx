@@ -14,9 +14,11 @@ interface ProductCardProps {
   product: Product;
   onQuickView?: (product: Product) => void;
   variant?: "default" | "novsight";
+  /** Red "Limited — On Sale" pill, rendered INSIDE the product image. */
+  limitedBadge?: boolean;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, variant = "default" }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, variant = "default", limitedBadge = false }) => {
   const { addToCart, openCart } = useCart();
   const { selectedVehicle } = useVehicle();
 
@@ -50,7 +52,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
 
   return (
     <div
-      className={`group relative flex flex-col ${cardShell} rounded-2xl border shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden`}
+      className={`group relative flex h-full flex-col ${cardShell} rounded-2xl border shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden`}
     >
       {/* ─── Image ─── */}
       <div
@@ -103,6 +105,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
           </svg>
         </button>
+
+        {/* Limited — On Sale pill, INSIDE the product image (bottom-center) */}
+        {limitedBadge && (
+          <span className="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-10 whitespace-nowrap px-3 py-1 rounded-full bg-red-600 text-white text-[10px] font-black uppercase tracking-wider shadow-lg shadow-red-600/40 animate-in zoom-in duration-300">
+            Limited — On Sale
+          </span>
+        )}
       </div>
 
       {/* ─── Card Body ─── */}
