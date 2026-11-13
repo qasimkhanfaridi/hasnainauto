@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Flame } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Flame } from "lucide-react";
 import { ACTIVE_PRODUCTS_DATA, Product } from "@/data/products";
 import { ProductCard } from "./ProductCard";
 import { ProductQuickViewModal } from "./ProductQuickViewModal";
 
 /**
  * BEST SELLERS — the 5 hottest products, ranked by verified-review count.
- * Every one carries a HOT / POPULAR / BEST SELLER / Limited Stock badge and
- * a real sale price, so the red "Limited — On Sale" badge on each card is
- * truthful. Order is computed from the data, not hardcoded.
+ * Carousel slider (scroll-snap + arrows + swipe): all cards share one
+ * height in a single line, and the red "Limited — On Sale" pill now sits
+ * INSIDE the product image instead of sticking out above the card.
  */
 const BEST_SELLERS: Product[] = [...ACTIVE_PRODUCTS_DATA]
   .filter((product) => product.reviewCount > 0 && Boolean(product.badge))
@@ -20,6 +20,28 @@ const BEST_SELLERS: Product[] = [...ACTIVE_PRODUCTS_DATA]
 
 export const HomeProductsShowcase: React.FC = () => {
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
+
+  const updateArrows = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setAtStart(el.scrollLeft <= 4);
+    setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 4);
+  };
+
+  useEffect(() => {
+    updateArrows();
+  }, []);
+
+  const scrollByCard = (dir: 1 | -1) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>(":scope > div");
+    const step = (card?.offsetWidth ?? 300) + 24;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  };
 
   return (
     <section id="led-catalog" className="py-12 sm:py-16 bg-white dark:bg-carbon-900 text-carbon-900 dark:text-white border-b border-gray-200 dark:border-white/10 transition-colors">
@@ -47,19 +69,42 @@ export const HomeProductsShowcase: React.FC = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 sm:gap-6">
-          {BEST_SELLERS.map((product) => (
-            <div key={product.id} className="relative pt-3">
-              <span className="absolute top-0 left-1/2 -translate-x-1/2 z-20 whitespace-nowrap px-3 py-1 rounded-full bg-red-600 text-white text-[10px] font-black uppercase tracking-wider shadow-lg shadow-red-600/40">
-                Limited — On Sale
-              </span>
-              <ProductCard
-                product={product}
-                onQuickView={(p) => setQuickViewProduct(p)}
-                variant={product.category === "led-lights" ? "novsight" : "default"}
-              />
-            </div>
-          ))}
+        <div className="relative">
+          <div
+            ref={scrollRef}
+            onScroll={updateArrows}
+            className="flex items-stretch gap-5 sm:gap-6 overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {BEST_SELLERS.map((product) => (
+              <div key={product.id} className="snap-start shrink-0 w-[270px] sm:w-[300px] lg:w-[320px]">
+                <ProductCard
+                  product={product}
+                  onQuickView={(p) => setQuickViewProduct(p)}
+                  variant={product.category === "led-lights" ? "novsight" : "default"}
+                  limitedBadge
+                />
+              </div>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            aria-label="Previous best sellers"
+            onClick={() => scrollByCard(-1)}
+            disabled={atStart}
+            className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 h-11 w-11 items-center justify-center rounded-full bg-white text-gray-900 shadow-xl border border-gray-200 transition-all hover:bg-red-600 hover:text-white disabled:opacity-40 disabled:pointer-events-none"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            type="button"
+            aria-label="Next best sellers"
+            onClick={() => scrollByCard(1)}
+            disabled={atEnd}
+            className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 h-11 w-11 items-center justify-center rounded-full bg-white text-gray-900 shadow-xl border border-gray-200 transition-all hover:bg-red-600 hover:text-white disabled:opacity-40 disabled:pointer-events-none"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
 
         <div className="mt-10 text-center">
