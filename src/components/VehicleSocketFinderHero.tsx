@@ -315,13 +315,21 @@ export const VehicleSocketFinderHero: React.FC = () => {
 
         {/* ─── Compact "SELECT YOUR VEHICLE" box (AuxLEDs style) ─── */}
         <div className="max-w-4xl mx-auto bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-5 sm:p-7">
-          <div className="text-center mb-5">
-            <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900 dark:text-white">
-              Select Your Vehicle
-            </h2>
-            <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
-              Provide vehicle details to confirm fitment
-            </p>
+          <div className="mb-5 flex items-center justify-center gap-4 sm:gap-5">
+            <Car
+              className="h-11 w-11 sm:h-12 sm:w-12 shrink-0 fill-neutral-900 text-neutral-900 dark:fill-white dark:text-white"
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
+            <span aria-hidden="true" className="h-12 w-[2px] shrink-0 bg-red-600" />
+            <div className="text-left">
+              <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900 dark:text-white">
+                Select Your Vehicle
+              </h2>
+              <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
+                Provide vehicle details to confirm fitment
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
