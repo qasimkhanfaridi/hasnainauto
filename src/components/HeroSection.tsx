@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ShieldCheck, Truck, RefreshCw, ChevronRight, Flame, Tag } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { PRODUCTS_DATA } from "@/data/products";
 
 interface HeroSectionProps {
@@ -62,6 +63,7 @@ function formatPrice(value: number) {
 
 /* Compressed Hot Deals card (JS Auto size): image, badge, name, prices, View Deal, dots. Same 5s rotation. */
 function HotDealsCard() {
+  const router = useRouter();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
 
@@ -88,12 +90,22 @@ function HotDealsCard() {
 
   return (
     <aside
-      aria-label="Hot deals"
-      className="relative flex h-full flex-col overflow-hidden rounded-2xl border-2 border-red-600/20 bg-white dark:bg-gray-900 shadow-lg"
+      aria-label={`Hot deal: ${deal.name}. Activate to view.`}
+      role="link"
+      tabIndex={0}
+      onClick={() => router.push(`/product/${deal.slug}`)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          router.push(`/product/${deal.slug}`);
+        }
+      }}
+      className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border-2 border-red-600/20 bg-white shadow-lg ring-1 ring-red-600/10 transition-all duration-300 hover:-translate-y-0.5 hover:border-red-600/40 hover:shadow-xl hover:shadow-red-600/15 dark:bg-gray-900"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="flex items-center justify-between bg-red-600 px-4 py-2.5">
+      <style>{`@keyframes dealFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } .deal-fade { animation: dealFadeIn 0.45s ease both; } @keyframes dealProgress { from { width: 0%; } to { width: 100%; } } .deal-progress { animation: dealProgress 5s linear forwards; }`}</style>
+      <div className="flex items-center justify-between bg-gradient-to-r from-red-600 to-red-500 px-4 py-2.5">
         <span className="inline-flex items-center gap-1.5 text-sm font-black uppercase tracking-wider text-white">
           <Flame className="w-4 h-4 fill-white" />
           Hot Deals
@@ -102,14 +114,22 @@ function HotDealsCard() {
           Limited-Time Offers
         </span>
       </div>
+      <div className="h-[3px] w-full bg-red-100 dark:bg-red-950/40">
+        <div
+          key={`progress-${index}`}
+          className="deal-progress h-full bg-amber-400"
+          style={{ animationPlayState: paused ? "paused" : "running" }}
+        />
+      </div>
 
+      <div key={deal.slug} className="deal-fade flex min-h-0 flex-1 flex-col">
       <div className="relative w-full flex-1 min-h-[180px] bg-gray-50 dark:bg-gray-800">
         <Image
           src={deal.images[0]}
           alt={deal.name}
           fill
           sizes="(max-width: 1024px) 100vw, 340px"
-          className="object-contain p-4"
+          className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
         />
         {discount > 0 && (
           <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-red-600 px-2.5 py-1 text-xs font-black text-white shadow">
@@ -141,7 +161,8 @@ function HotDealsCard() {
         </div>
         <Link
           href={`/product/${deal.slug}`}
-          className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-2.5 text-sm font-black uppercase tracking-wide text-white transition-colors hover:bg-red-700"
+          onClick={(e) => e.stopPropagation()}
+          className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-2.5 text-sm font-black uppercase tracking-wide text-white transition-all hover:bg-red-700 active:scale-[0.98]"
         >
           View Deal
           <ChevronRight className="w-4 h-4" />
@@ -153,13 +174,17 @@ function HotDealsCard() {
               type="button"
               aria-label={`Show deal ${i + 1}: ${d.name}`}
               aria-current={i === index ? "true" : undefined}
-              onClick={() => goTo(i)}
+              onClick={(e) => {
+                e.stopPropagation();
+                goTo(i);
+              }}
               className={`rounded-full transition-all ${
                 i === index ? "h-2 w-6 bg-red-600" : "h-2 w-2 bg-gray-300 hover:bg-gray-400 dark:bg-gray-600"
               }`}
             />
           ))}
         </div>
+      </div>
       </div>
     </aside>
   );
