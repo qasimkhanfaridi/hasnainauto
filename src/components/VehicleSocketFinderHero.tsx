@@ -3,16 +3,19 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { 
-  Car, 
-  ArrowRight, 
-  MessageCircle, 
-  ShieldCheck, 
-  Sparkles, 
+import {
+  Car,
+  ArrowRight,
+  MessageCircle,
+  ShieldCheck,
+  Search,
   Wrench,
-  Gauge
 } from "lucide-react";
 import { BUSINESS_CONFIG } from "@/config/business";
+import {
+  VEHICLE_DATABASE as VEHICLE_MAKES,
+  YEARS_LIST,
+} from "@/data/vehicles";
 
 interface VehicleSpec {
   make: string;
@@ -28,7 +31,10 @@ interface VehicleSpec {
   reason: string;
 }
 
-const VEHICLE_DATABASE: VehicleSpec[] = [
+/* Existing fitment + recommended-product data (unchanged).
+   The repo src/data/vehicles.ts only carries Make / Model / Year lists,
+   so the socket/fitment data stays here as before. */
+const FITMENT_DATABASE: VehicleSpec[] = [
   // Suzuki
   {
     make: "Suzuki",
@@ -233,220 +239,302 @@ const VEHICLE_DATABASE: VehicleSpec[] = [
   }
 ];
 
-export const VehicleSocketFinderHero: React.FC = () => {
-  const [selectedMake, setSelectedMake] = useState<string>("Suzuki");
-  const [selectedVehicle, setSelectedVehicle] = useState<VehicleSpec>(VEHICLE_DATABASE[0]);
+const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 
-  const makes = Array.from(new Set(VEHICLE_DATABASE.map((v) => v.make)));
-  const availableModels = VEHICLE_DATABASE.filter((v) => v.make === selectedMake);
+/** Match a repo Make/Model pick to the fitment database (fuzzy: "Alto" matches "Alto (660cc)", "Fortuner" matches "Hilux Revo / Fortuner"). */
+function findFitment(make: string, model: string): VehicleSpec | undefined {
+  const m = norm(make);
+  const mo = norm(model);
+  return FITMENT_DATABASE.find(
+    (v) => norm(v.make).includes(m) && norm(v.model).includes(mo)
+  );
+}
+
+const selectClass =
+  "w-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 rounded-lg px-3.5 py-3 text-sm font-semibold text-neutral-900 dark:text-white focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition";
+
+export const VehicleSocketFinderHero: React.FC = () => {
+  const [selectedMake, setSelectedMake] = useState<string>("");
+  const [selectedModel, setSelectedModel] = useState<string>("");
+  const [selectedYear, setSelectedYear] = useState<string>("");
+  const [searched, setSearched] = useState(false);
+  const [match, setMatch] = useState<VehicleSpec | undefined>(undefined);
+
+  const makes = VEHICLE_MAKES.map((v) => v.name);
+  const selectedMakeData = VEHICLE_MAKES.find((v) => v.name === selectedMake);
+  const availableModels = selectedMakeData ? selectedMakeData.models : [];
+  const selectedModelData = availableModels.find((v) => v.name === selectedModel);
+  const availableYears = selectedModelData ? selectedModelData.years : YEARS_LIST;
 
   const handleMakeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newMake = e.target.value;
-    setSelectedMake(newMake);
-    const firstModel = VEHICLE_DATABASE.find((v) => v.make === newMake);
-    if (firstModel) setSelectedVehicle(firstModel);
+    setSelectedMake(e.target.value);
+    setSelectedModel("");
+    setSelectedYear("");
+    setSearched(false);
   };
 
   const handleModelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const vehicle = VEHICLE_DATABASE.find((v) => v.make === selectedMake && v.model === e.target.value);
-    if (vehicle) setSelectedVehicle(vehicle);
+    setSelectedModel(e.target.value);
+    setSelectedYear("");
+    setSearched(false);
   };
 
-  const whatsappOrderUrl = `https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(
-    `Assalam-o-Alaikum Hasnain Auto! I want to order LED headlights for my car:\n` +
-    `• Car: ${selectedVehicle.make} ${selectedVehicle.model} (${selectedVehicle.years})\n` +
-    `• Required Socket: ${selectedVehicle.headlight}\n` +
-    `• Recommended Product: ${selectedVehicle.heroProductName} (Rs. ${selectedVehicle.heroProductPrice.toLocaleString()})\n` +
+  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedYear(e.target.value);
+    setSearched(false);
+  };
+
+  const canSearch = Boolean(selectedMake && selectedModel && selectedYear);
+
+  const handleSearch = () => {
+    if (!canSearch) return;
+    setMatch(findFitment(selectedMake, selectedModel));
+    setSearched(true);
+  };
+
+  const vehicleLabel = `${selectedMake} ${selectedModel}${selectedYear ? ` (${selectedYear})` : ""}`;
+
+  const whatsappOrderUrl = (vehicle: VehicleSpec) =>
+    `https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(
+      `Assalam-o-Alaikum Hasnain Auto! I want to order LED headlights for my car:\n` +
+      `• Car: ${vehicle.make} ${vehicle.model} (${selectedYear || vehicle.years})\n` +
+      `• Required Socket: ${vehicle.headlight}\n` +
+      `• Recommended Product: ${vehicle.heroProductName} (Rs. ${vehicle.heroProductPrice.toLocaleString()})\n` +
+      `• Please confirm 1-Year Warranty & Cash on Delivery!`
+    )}`;
+
+  const whatsappAskUrl = `https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(
+    `Assalam-o-Alaikum Hasnain Auto! Please confirm the LED headlight socket and best product for my car:\n` +
+    `• Car: ${vehicleLabel}\n` +
     `• Please confirm 1-Year Warranty & Cash on Delivery!`
   )}`;
 
   return (
-    <section className="relative py-12 sm:py-16 bg-[#070b12] text-white border-b border-gray-800/80 overflow-hidden">
-      {/* Background glow effects */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+    <section className="bg-white dark:bg-neutral-950 text-neutral-900 dark:text-white border-b border-neutral-200 dark:border-neutral-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Title & Trust Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 text-xs font-bold uppercase tracking-widest mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-            <span>Pakistan Smart Vehicle Fitment Engine</span>
+        {/* ─── Compact "SELECT YOUR VEHICLE" box (AuxLEDs style) ─── */}
+        <div className="max-w-4xl mx-auto bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-5 sm:p-7">
+          <div className="text-center mb-5">
+            <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900 dark:text-white">
+              Select Your Vehicle
+            </h2>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
+              Provide vehicle details to confirm fitment
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white leading-tight">
-            FIND THE EXACT LEDS <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300">
-              ENGINEERED FOR YOUR CAR
-            </span>
-          </h2>
-          <p className="text-sm sm:text-base text-gray-400 mt-3 leading-relaxed">
-            Select your vehicle below. Our system instantly matches your factory headlight socket, eliminates glare, and configures Canbus compatibility.
-          </p>
-        </div>
 
-        {/* ─── Interactive Console Box ─── */}
-        <div className="bg-gradient-to-b from-[#101726] to-[#0a0f1a] border border-gray-800 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-black/80">
-          
-          {/* Dropdown Selectors */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-6 border-b border-gray-800">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2 flex items-center gap-2">
-                <Car className="w-4 h-4 text-cyan-400" />
-                Step 1: Select Car Make
+              <label htmlFor="vehicle-make" className="block text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 mb-1.5">
+                Make
               </label>
               <select
+                id="vehicle-make"
                 value={selectedMake}
                 onChange={handleMakeChange}
-                className="w-full bg-[#080d16] border border-gray-700/80 rounded-xl px-4 py-3.5 text-sm font-semibold text-white focus:outline-none focus:border-cyan-400 transition"
+                className={selectClass}
               >
+                <option value="">Select Make</option>
                 {makes.map((m) => (
-                  <option key={m} value={m} className="bg-[#080d16]">
-                    {m}
-                  </option>
+                  <option key={m} value={m}>{m}</option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2 flex items-center gap-2">
-                <Gauge className="w-4 h-4 text-cyan-400" />
-                Step 2: Select Car Model & Shape
+              <label htmlFor="vehicle-model" className="block text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 mb-1.5">
+                Model
               </label>
               <select
-                value={selectedVehicle.model}
+                id="vehicle-model"
+                value={selectedModel}
                 onChange={handleModelChange}
-                className="w-full bg-[#080d16] border border-gray-700/80 rounded-xl px-4 py-3.5 text-sm font-semibold text-white focus:outline-none focus:border-cyan-400 transition"
+                disabled={!selectedMake}
+                className={`${selectClass} disabled:opacity-50`}
               >
+                <option value="">Select Model</option>
                 {availableModels.map((v) => (
-                  <option key={v.model} value={v.model} className="bg-[#080d16]">
-                    {v.model} ({v.years})
-                  </option>
+                  <option key={v.name} value={v.name}>{v.name}</option>
                 ))}
               </select>
             </div>
-          </div>
 
-          {/* ─── Result Diagnostic & Recommendation Card ─── */}
-          <div className="mt-6 pt-2 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            
-            {/* Left Fitment Data */}
-            <div className="lg:col-span-5 space-y-4">
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-                <span className="text-xs font-mono uppercase text-emerald-400 font-bold tracking-wider">
-                  Verified Socket Match Found
-                </span>
-              </div>
-
-              <h3 className="text-2xl font-black text-white">
-                {selectedVehicle.make} {selectedVehicle.model}
-              </h3>
-              <p className="text-xs text-gray-400">
-                Model Range: <strong className="text-gray-200">{selectedVehicle.years}</strong>
-              </p>
-
-              {/* Socket Badges */}
-              <div className="grid grid-cols-2 gap-3 pt-2">
-                <div className="bg-[#080c14] border border-cyan-500/30 p-3 rounded-xl">
-                  <span className="text-[10px] text-gray-400 uppercase tracking-wider block font-semibold">
-                    Headlight Socket
-                  </span>
-                  <span className="text-base font-black text-cyan-300">
-                    {selectedVehicle.headlight}
-                  </span>
-                </div>
-                <div className="bg-[#080c14] border border-gray-800 p-3 rounded-xl">
-                  <span className="text-[10px] text-gray-400 uppercase tracking-wider block font-semibold">
-                    Fog Light Socket
-                  </span>
-                  <span className="text-base font-bold text-gray-200">
-                    {selectedVehicle.fog}
-                  </span>
-                </div>
-              </div>
-
-              {/* Why it matches */}
-              <div className="p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-800/40 text-xs text-cyan-200 flex items-start gap-2.5">
-                <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                <span>{selectedVehicle.reason}</span>
-              </div>
-
-              {/* Workshop fitting note */}
-              <div className="text-[11px] text-gray-400 flex items-center gap-2">
-                <Wrench className="w-3.5 h-3.5 text-amber-brand shrink-0" />
-                <span>
-                  <strong>Rawalpindi / Islamabad Drivers:</strong> Free beam alignment at Hasnain Auto Saddar workshop!
-                </span>
-              </div>
+            <div>
+              <label htmlFor="vehicle-year" className="block text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 mb-1.5">
+                Year
+              </label>
+              <select
+                id="vehicle-year"
+                value={selectedYear}
+                onChange={handleYearChange}
+                disabled={!selectedModel}
+                className={`${selectClass} disabled:opacity-50`}
+              >
+                <option value="">Select Year</option>
+                {availableYears.map((y) => (
+                  <option key={y} value={y}>{y}</option>
+                ))}
+              </select>
             </div>
 
-            {/* Right: The Match Product Card */}
-            <div className="lg:col-span-7 bg-[#0b101c] border border-cyan-500/30 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row gap-5 items-center">
-              
-              {/* Product Photo */}
-              <div className="relative w-36 h-36 sm:w-44 sm:h-44 bg-gradient-to-b from-[#131b2e] to-[#070b12] rounded-xl border border-gray-800 overflow-hidden shrink-0 flex items-center justify-center p-2">
-                <Image
-                  src={selectedVehicle.heroProductImage}
-                  alt={selectedVehicle.heroProductName}
-                  fill
-                  className="object-contain p-2"
-                />
-              </div>
-
-              {/* Details & WhatsApp Actions */}
-              <div className="flex-1 text-center sm:text-left">
-                <div className="inline-block px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-black uppercase tracking-wider mb-2">
-                  Top Recommended Kit
-                </div>
-                
-                <h4 className="text-lg font-black text-white leading-snug">
-                  {selectedVehicle.heroProductName}
-                </h4>
-
-                <div className="flex items-baseline justify-center sm:justify-start gap-2 my-2">
-                  <span className="text-2xl font-black text-white">
-                    <span className="text-xs text-cyan-400 mr-1">Rs.</span>
-                    {selectedVehicle.heroProductPrice.toLocaleString()}
-                  </span>
-                  <span className="text-xs text-gray-400">Pair • 1-Year Warranty</span>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-2 mt-4">
-                  <a
-                    href={whatsappOrderUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-green-950/40 transition"
-                  >
-                    <MessageCircle className="w-4 h-4 fill-white" />
-                    Order for {selectedVehicle.model} on WhatsApp
-                  </a>
-
-                  <Link
-                    href={`/product/${selectedVehicle.heroProductSlug}`}
-                    className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-bold transition border border-gray-700"
-                  >
-                    <span>Full Specs</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </div>
-
+            <div className="flex items-end">
+              <button
+                type="button"
+                onClick={handleSearch}
+                disabled={!canSearch}
+                className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-red-600 hover:bg-red-700 disabled:bg-red-300 dark:disabled:bg-red-900/60 disabled:cursor-not-allowed text-white text-sm font-black uppercase tracking-wider shadow-md shadow-red-600/25 transition"
+              >
+                <Search className="w-4 h-4" />
+                Search
+              </button>
             </div>
-
           </div>
 
+          {!canSearch && !searched && (
+            <p className="text-xs text-neutral-400 dark:text-neutral-500 text-center mt-3 flex items-center justify-center gap-1.5">
+              <Car className="w-3.5 h-3.5" />
+              Select make, model and year, then press Search to see your exact socket match.
+            </p>
+          )}
         </div>
 
+        {/* ─── Search result: fitment match ─── */}
+        {searched && match && (
+          <div className="max-w-4xl mx-auto mt-6 bg-white dark:bg-neutral-900 border border-red-600/30 dark:border-red-500/30 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-5 sm:p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+              {/* Left: fitment data */}
+              <div className="lg:col-span-5 space-y-4">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+                  <span className="text-xs font-mono uppercase text-emerald-600 dark:text-emerald-400 font-bold tracking-wider">
+                    Verified Socket Match Found
+                  </span>
+                </div>
+
+                <h3 className="text-2xl font-black text-neutral-900 dark:text-white">
+                  {match.make} {match.model}
+                </h3>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  Your Vehicle: <strong className="text-neutral-800 dark:text-neutral-200">{vehicleLabel}</strong>
+                  {" · "}Model Range: <strong className="text-neutral-800 dark:text-neutral-200">{match.years}</strong>
+                </p>
+
+                <div className="grid grid-cols-2 gap-3 pt-1">
+                  <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800/50 p-3 rounded-xl">
+                    <span className="text-[10px] text-neutral-500 dark:text-neutral-400 uppercase tracking-wider block font-semibold">
+                      Headlight Socket
+                    </span>
+                    <span className="text-base font-black text-red-600 dark:text-red-400">
+                      {match.headlight}
+                    </span>
+                  </div>
+                  <div className="bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700 p-3 rounded-xl">
+                    <span className="text-[10px] text-neutral-500 dark:text-neutral-400 uppercase tracking-wider block font-semibold">
+                      Fog Light Socket
+                    </span>
+                    <span className="text-base font-bold text-neutral-800 dark:text-neutral-200">
+                      {match.fog}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800/40 text-xs text-red-800 dark:text-red-200 flex items-start gap-2.5">
+                  <ShieldCheck className="w-4 h-4 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
+                  <span>{match.reason}</span>
+                </div>
+
+                <div className="text-[11px] text-neutral-500 dark:text-neutral-400 flex items-center gap-2">
+                  <Wrench className="w-3.5 h-3.5 text-red-600 dark:text-red-400 shrink-0" />
+                  <span>
+                    <strong>Rawalpindi / Islamabad Drivers:</strong> Free beam alignment at Hasnain Auto Saddar workshop!
+                  </span>
+                </div>
+              </div>
+
+              {/* Right: recommended product card */}
+              <div className="lg:col-span-7 bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row gap-5 items-center">
+                <div className="relative w-36 h-36 sm:w-44 sm:h-44 bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden shrink-0 flex items-center justify-center p-2">
+                  <Image
+                    src={match.heroProductImage}
+                    alt={match.heroProductName}
+                    fill
+                    className="object-contain p-2"
+                  />
+                </div>
+
+                <div className="flex-1 text-center sm:text-left">
+                  <div className="inline-block px-2.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-500/30 text-[10px] font-black uppercase tracking-wider mb-2">
+                    Top Recommended Kit
+                  </div>
+
+                  <h4 className="text-lg font-black text-neutral-900 dark:text-white leading-snug">
+                    {match.heroProductName}
+                  </h4>
+
+                  <div className="flex items-baseline justify-center sm:justify-start gap-2 my-2">
+                    <span className="text-2xl font-black text-neutral-900 dark:text-white">
+                      <span className="text-xs text-red-600 dark:text-red-400 mr-1">Rs.</span>
+                      {match.heroProductPrice.toLocaleString()}
+                    </span>
+                    <span className="text-xs text-neutral-500 dark:text-neutral-400">Pair • 1-Year Warranty</span>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-2 mt-4">
+                    <a
+                      href={whatsappOrderUrl(match)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-emerald-600/25 transition"
+                    >
+                      <MessageCircle className="w-4 h-4 fill-white" />
+                      Order for {match.model} on WhatsApp
+                    </a>
+
+                    <Link
+                      href={`/product/${match.heroProductSlug}`}
+                      className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-700 dark:bg-neutral-700 dark:hover:bg-neutral-600 text-white text-xs font-bold transition"
+                    >
+                      <span>Full Specs</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ─── Search result: no exact fitment record ─── */}
+        {searched && !match && (
+          <div className="max-w-4xl mx-auto mt-6 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-5 sm:p-6 text-center">
+            <h3 className="text-lg font-black text-neutral-900 dark:text-white">
+              {vehicleLabel}
+            </h3>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-2">
+              We don&apos;t have an exact socket record saved for this model yet.
+              Message us on WhatsApp and we will confirm the right LED kit for your car.
+            </p>
+            <a
+              href={whatsappAskUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-emerald-600/25 transition"
+            >
+              <MessageCircle className="w-4 h-4 fill-white" />
+              Confirm fitment on WhatsApp
+            </a>
+          </div>
+        )}
+
         {/* Quick Sockets Bar */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-gray-400">
-          <span className="font-semibold text-gray-500 uppercase tracking-wider">Quick Direct Sockets:</span>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-neutral-500 dark:text-neutral-400">
+          <span className="font-semibold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">Quick Direct Sockets:</span>
           {["H4 Dual Beam", "H11 Low/Fog", "9005 High Beam", "9006 Low", "H7 Projector"].map((sock) => (
             <Link
               key={sock}
               href={`/shop?category=led-lights&socket=${sock.split(" ")[0]}`}
-              className="px-3 py-1 rounded-lg bg-[#0f1624] border border-gray-800 hover:border-cyan-500/50 text-gray-300 hover:text-cyan-300 transition font-mono text-[11px]"
+              className="px-3 py-1 rounded-lg bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 hover:border-red-600/50 text-neutral-700 dark:text-neutral-300 hover:text-red-600 dark:hover:text-red-400 transition font-mono text-[11px]"
             >
               {sock} →
             </Link>
