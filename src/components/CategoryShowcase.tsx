@@ -53,7 +53,7 @@ const TOP_COLLECTIONS: TopCollection[] = [
   },
   {
     id: "auxpods",
-    name: "AuxPods",
+    name: "AuxPods - Auxiliary Lighting",
     image: "/images/products/ultra-bright-4-lens-fog-ai-hero.jpg",
     href: "/shop?category=led-lights&search=auxiliary",
     count: countWhere((p) => textMatches(p, "auxiliary")),
