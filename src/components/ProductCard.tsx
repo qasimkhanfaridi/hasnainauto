@@ -45,8 +45,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
   const specChips = isLed ? getProductSpecChips(product) : [];
   const cardShell =
     variant === "novsight" || isLed
-      ? "bg-[#0d131f] border-gray-800/80 hover:border-cyan-500/50 hover:shadow-cyan-950/40"
-      : "bg-[#0d131f] border-gray-800 hover:border-cyan-500/40";
+      ? "bg-white dark:bg-[#0d131f] border-gray-200 dark:border-gray-800/80 hover:border-red-600/40 dark:hover:border-cyan-500/50 hover:shadow-red-600/10 dark:hover:shadow-cyan-950/40"
+      : "bg-white dark:bg-[#0d131f] border-gray-200 dark:border-gray-800 hover:border-red-600/40 dark:hover:border-cyan-500/40";
 
   return (
     <div
@@ -54,7 +54,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
     >
       {/* ─── Image ─── */}
       <div
-        className={`relative aspect-square w-full overflow-hidden bg-gradient-to-b from-[#131b2e] to-[#0c121e] border-b border-gray-800/60`}
+        className={`relative aspect-square w-full overflow-hidden bg-gradient-to-b from-gray-50 to-white dark:from-[#131b2e] dark:to-[#0c121e] border-b border-gray-200 dark:border-gray-800/60`}
       >
         <Link href={`/product/${product.slug}`} className="block w-full h-full relative">
           <Image
@@ -106,20 +106,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
       </div>
 
       {/* ─── Card Body ─── */}
-      <div className="p-3.5 sm:p-4 flex flex-col flex-1 gap-2 bg-[#0e1422]">
+      <div className="p-3.5 sm:p-4 flex flex-col flex-1 gap-2 bg-white dark:bg-[#0e1422]">
         {/* Category & Sockets */}
         <div className="flex items-center justify-between gap-1">
-          <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider">
+          <span className="text-[10px] font-bold text-red-600 dark:text-cyan-400 uppercase tracking-wider">
             {product.subcategory || product.category.replace(/-/g, " ")}
           </span>
-          <span className="text-[10px] text-gray-400 font-mono bg-black/40 px-1.5 py-0.5 rounded border border-gray-800">
+          <span className="text-[10px] text-gray-500 dark:text-gray-400 font-mono bg-gray-100 dark:bg-black/40 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-800">
             {product.variants?.[0]?.options?.slice(0, 3).map(o => o.split(' ')[0]).join('/') || "H4/H11"}
           </span>
         </div>
 
         {/* Title */}
         <Link href={`/product/${product.slug}`}>
-          <h3 className="text-sm font-black text-white group-hover:text-cyan-400 transition-colors line-clamp-2 leading-snug">
+          <h3 className="text-sm font-black text-gray-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-cyan-400 transition-colors line-clamp-2 leading-snug">
             {product.name}
           </h3>
         </Link>
@@ -130,11 +130,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
             {[1, 2, 3, 4, 5].map((i) => (
               <Star
                 key={i}
-                className={`w-3 h-3 ${i <= Math.round(product.rating) ? "fill-amber-brand text-amber-brand" : "fill-gray-700 text-gray-700"}`}
+                className={`w-3 h-3 ${i <= Math.round(product.rating) ? "fill-amber-brand text-amber-brand" : "fill-gray-300 text-gray-300 dark:fill-gray-700 dark:text-gray-700"}`}
               />
             ))}
           </div>
-          <span className="text-[10px] font-bold text-gray-200">{product.rating.toFixed(1)}</span>
+          <span className="text-[10px] font-bold text-gray-900 dark:text-gray-200">{product.rating.toFixed(1)}</span>
           <span className="text-[10px] text-gray-400">({product.reviewCount} verified)</span>
         </div>
 
@@ -143,7 +143,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
             {specChips.map((chip) => (
               <span
                 key={chip}
-                className="px-2 py-0.5 rounded bg-[#162032] border border-cyan-500/20 text-[9px] font-bold text-cyan-300 uppercase tracking-tight"
+                className="px-2 py-0.5 rounded bg-red-50 dark:bg-[#162032] border border-red-200 dark:border-cyan-500/20 text-[9px] font-bold text-red-600 dark:text-cyan-300 uppercase tracking-tight"
               >
                 {chip}
               </span>
@@ -152,11 +152,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
         )}
 
         {/* Price + Direct Order row */}
-        <div className="flex items-center justify-between gap-2 pt-2.5 mt-auto border-t border-gray-800/80">
+        <div className="flex items-center justify-between gap-2 pt-2.5 mt-auto border-t border-gray-200 dark:border-gray-800/80">
           <div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-base font-black text-white">
-                <span className="text-xs text-cyan-400 mr-0.5">Rs.</span>
+              <span className="text-base font-black text-gray-900 dark:text-white">
+                <span className="text-xs text-red-600 dark:text-cyan-400 mr-0.5">Rs.</span>
                 {currentPrice.toLocaleString()}
               </span>
               {product.originalPrice && (
@@ -165,15 +165,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
                 </span>
               )}
             </div>
-            <span className="text-[10px] font-medium text-emerald-400 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span className="text-[10px] font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
               COD Free Delivery
             </span>
           </div>
           <button
             type="button"
             onClick={handleDirectOrder}
-            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-black transition-all shadow-md shadow-cyan-950"
+            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-black transition-all shadow-md shadow-red-600/25"
             aria-label="Order now"
             title="Add to cart & Checkout"
           >
