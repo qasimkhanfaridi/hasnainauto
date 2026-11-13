@@ -19,20 +19,26 @@ const ThemeContext = createContext<ThemeContextValue>({
 export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setThemeState] = useState<Theme>("dark");
+  const [theme, setThemeState] = useState<Theme>("light");
   const [mounted, setMounted] = useState(false);
 
-  // On first mount, restore saved theme from localStorage, defaulting to dark for premium automotive feel
+  // On first mount, restore saved theme from localStorage, defaulting to light.
+  // Rebuild (2026-11-13): the whole site is now white — migrate everyone to
+  // light once (flag hasnain-theme-v2), the toggle still works after that.
   useEffect(() => {
     try {
+      const migrated = localStorage.getItem("hasnain-theme-v2");
       const saved = localStorage.getItem("hasnain-theme") as Theme | null;
-      if (saved === "dark" || saved === "light") {
+      if (!migrated) {
+        setThemeState("light");
+        localStorage.setItem("hasnain-theme-v2", "1");
+      } else if (saved === "dark" || saved === "light") {
         setThemeState(saved);
       } else {
-        setThemeState("dark");
+        setThemeState("light");
       }
     } catch {
-      setThemeState("dark");
+      setThemeState("light");
     }
     setMounted(true);
   }, []);
