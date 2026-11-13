@@ -269,7 +269,7 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
     <section className="w-full bg-white dark:bg-gray-950">
       {/* Full-bleed photo/video box + compressed Hot Deals on the right */}
       <div className="flex flex-col lg:flex-row items-stretch">
-        <div className="relative min-w-0 flex-1">
+        <div className="relative min-w-0 w-full lg:flex-1">
           <HeroCarousel slideCount={HERO_SLIDES.length} className="h-[420px] sm:h-[480px] lg:h-[560px]">
             {HERO_SLIDES.map((slide, slideIndex) => {
               const SlideHeading = slideIndex === 0 ? "h1" : "h2";
