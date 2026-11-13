@@ -25,7 +25,6 @@ const SHOW_MS = 6000;
 const HIDE_MS = 3000;
 
 export const FloatingWhatsApp: React.FC = () => {
-  const [showTooltip, setShowTooltip] = useState(true);
   const [purchaseIndex, setPurchaseIndex] = useState(0);
   const [visible, setVisible] = useState(true);
   const [dismissed, setDismissed] = useState(false);
@@ -119,28 +118,6 @@ export const FloatingWhatsApp: React.FC = () => {
           footerOrderVisible ? "translate-y-4 opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
         }`}
       >
-        {/* Interactive Tooltip Card (Desktop & Tablet) */}
-        {showTooltip && (
-          <div className="hidden sm:flex items-center gap-2 p-3 rounded-2xl bg-carbon-900 border border-white/10 shadow-2xl text-xs text-white animate-in slide-in-from-right duration-300">
-            <div className="space-y-0.5">
-              <div className="font-bold text-amber-brand text-[11px] uppercase tracking-wider">
-                LED order / fitment?
-              </div>
-              <div className="text-[11px] text-silver-300">
-                Saddar team — H4, H11, 9005 confirm karein
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={() => setShowTooltip(false)}
-              className="p-1 rounded text-silver-400 hover:text-white"
-              aria-label="Dismiss message"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        )}
-
         {/* Floating Action Button — WhatsApp logo, like JS Auto */}
         <a
           href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(
@@ -148,7 +125,7 @@ export const FloatingWhatsApp: React.FC = () => {
           )}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-whatsapp hover:bg-whatsapp-hover text-white shadow-whatsapp-glow transition-all hover:scale-110"
+          className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-whatsapp hover:bg-whatsapp-hover text-white shadow-whatsapp-glow transition-all hover:scale-110 animate-in zoom-in duration-500"
           aria-label="Chat on WhatsApp"
         >
           <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7" aria-hidden="true">
