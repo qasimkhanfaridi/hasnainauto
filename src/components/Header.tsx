@@ -157,26 +157,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                 )}
               </button>
 
-              {/* WhatsApp CTA (desktop) */}
-              <a
-                href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent("Assalam-o-Alaikum Hasnain Auto, mujhe LED headlights order karne hain. Gari: ___ Socket: H4/H11/9005")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-white font-bold text-xs transition-all shadow-whatsapp-glow"
-              >
-                <MessageCircle className="w-4 h-4 fill-white" />
-                <span>WhatsApp</span>
-              </a>
-
-              {/* Call Now */}
-              <a
-                href={`tel:${BUSINESS_CONFIG.phoneRaw}`}
-                className="hidden lg:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-red-brand hover:bg-red-dark text-white font-bold text-xs transition-all"
-              >
-                <Phone className="w-3.5 h-3.5" />
-                <span>Call Now</span>
-              </a>
-
               {/* Vehicle Indicator (no link — Shop by Car nav was removed) */}
               {selectedVehicle && (
                 <span className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-red-light dark:bg-red-950/40 border border-red-soft dark:border-red-900/40 text-red-brand text-[11px] font-semibold">
