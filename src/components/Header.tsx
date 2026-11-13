@@ -44,27 +44,25 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
     setMobileMenuOpen(false);
   }, [pathname]);
 
+  // Rebuild (2026-11-13): only LED Lights stays in the nav — Shop by Car,
+  // Seat Covers, Floor Mats and Combo Deals were removed by the client.
   const navCategories = [
     { name: "LED Lights", href: "/shop?category=led-lights", ledNav: true },
-    { name: "Shop by Car", href: "/shop-by-car" },
-    { name: "Seat Covers", href: "/shop?category=seat-covers" },
-    { name: "Floor Mats", href: "/shop?category=floor-mats" },
-    { name: "Combo Deals", href: "/shop?category=combo-deals" },
   ];
 
   return (
     <>
       {/* ─── Top Info Bar (Novsight & Auxleds High-Converting Style) ─── */}
-      <div className="bg-carbon-950 text-white py-2 px-4 border-b border-white/10 text-xs">
+      <div className="bg-red-brand text-white py-2 px-4 border-b border-white/10 text-xs">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-1.5 md:gap-4">
-          <div className="flex items-center gap-3 sm:gap-6 text-gray-300 text-[11px] sm:text-xs">
-            <span className="flex items-center gap-1.5 text-amber-brand font-bold">
-              <Zap className="w-3.5 h-3.5 fill-amber-brand" />
+          <div className="flex items-center gap-3 sm:gap-6 text-white text-[11px] sm:text-xs">
+            <span className="flex items-center gap-1.5 text-white font-bold">
+              <Zap className="w-3.5 h-3.5 fill-white" />
               <span>1-Year Replacement Warranty</span>
             </span>
-            <span className="hidden sm:inline text-gray-400">•</span>
+            <span className="hidden sm:inline text-white/70">•</span>
             <span className="hidden sm:inline">🚚 COD — Poora Pakistan</span>
-            <span className="hidden lg:inline text-gray-400">•</span>
+            <span className="hidden lg:inline text-white/70">•</span>
             <span className="hidden lg:inline">📍 Azhar Shaheed Market, Saddar Rawalpindi</span>
           </div>
           <div className="flex items-center gap-4 text-[11px] sm:text-xs">
@@ -72,17 +70,17 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
               href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 text-whatsapp hover:text-white transition-colors font-bold"
+              className="flex items-center gap-1 text-white hover:text-white transition-colors font-bold"
             >
-              <MessageCircle className="w-3.5 h-3.5 fill-whatsapp" />
+              <MessageCircle className="w-3.5 h-3.5 fill-white" />
               <span>WhatsApp: 0312-5127096</span>
             </a>
-            <span className="text-gray-600">|</span>
+            <span className="text-white/50">|</span>
             <a
               href={`tel:${BUSINESS_CONFIG.phoneRaw}`}
-              className="flex items-center gap-1 text-gray-300 hover:text-white transition-colors font-medium"
+              className="flex items-center gap-1 text-white hover:text-white transition-colors font-medium"
             >
-              <Phone className="w-3 h-3 text-red-accent" />
+              <Phone className="w-3 h-3 text-white" />
               <span>Call Now</span>
             </a>
           </div>
@@ -179,15 +177,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                 <span>Call Now</span>
               </a>
 
-              {/* Vehicle Indicator */}
+              {/* Vehicle Indicator (no link — Shop by Car nav was removed) */}
               {selectedVehicle && (
-                <Link
-                  href="/shop-by-car"
-                  className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-red-light dark:bg-red-950/40 border border-red-soft dark:border-red-900/40 text-red-brand text-[11px] font-semibold"
-                >
+                <span className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-red-light dark:bg-red-950/40 border border-red-soft dark:border-red-900/40 text-red-brand text-[11px] font-semibold">
                   <Car className="w-3.5 h-3.5" />
                   <span>{selectedVehicle.make} {selectedVehicle.model}</span>
-                </Link>
+                </span>
               )}
 
               {/* Cart */}
@@ -269,14 +264,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
           <div className="lg:hidden bg-white dark:bg-carbon-900 border-t border-gray-200 dark:border-white/10 shadow-lg animate-slide-up">
             {selectedVehicle && (
               <div className="px-4 py-3 bg-red-light dark:bg-red-950/40 border-b border-red-soft dark:border-red-900/30">
-                <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center text-xs">
                   <div className="flex items-center gap-2 text-red-brand font-semibold">
                     <Car className="w-4 h-4" />
                     <span>My Car: {selectedVehicle.make} {selectedVehicle.model} {selectedVehicle.year || ""}</span>
                   </div>
-                  <Link href="/shop-by-car" className="text-[11px] text-red-brand underline font-bold">
-                    Shop Fits
-                  </Link>
                 </div>
               </div>
             )}
@@ -285,8 +277,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
               {[
                 { name: "Home", href: "/" },
                 { name: "LED Lights", href: "/shop?category=led-lights" },
-                { name: "Meri Gari (Fitment)", href: "/shop-by-car" },
-                { name: "Seat Covers & Mats", href: "/shop?category=seat-covers" },
                 { name: "Saddar Showroom", href: "/contact" },
               ].map((link) => (
                 <Link
