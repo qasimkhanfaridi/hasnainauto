@@ -218,7 +218,7 @@ function HeroCarousel({
 
   return (
     <div
-      className={`relative h-full ${className}`}
+      className={`relative ${className}`}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onTouchStart={handleTouchStart}
