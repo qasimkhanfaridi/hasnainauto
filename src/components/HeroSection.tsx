@@ -325,30 +325,13 @@ function HeroCarousel({
 
       {slideCount > 1 && (
         <>
-          <button
-            type="button"
-            aria-label="Previous slide"
-            onClick={goPrev}
-            className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white border border-gray-200 shadow-card items-center justify-center text-carbon-900 hover:border-red-brand/40 transition-colors"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            type="button"
-            aria-label="Next slide"
-            onClick={goNext}
-            className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white border border-gray-200 shadow-card items-center justify-center text-carbon-900 hover:border-red-brand/40 transition-colors"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-
           <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-20">
             <div className="flex items-center gap-2 sm:gap-3 px-2.5 py-1.5 rounded-full bg-white/95 border border-gray-200 shadow-card backdrop-blur-sm">
               <button
                 type="button"
                 aria-label="Previous slide"
                 onClick={goPrev}
-                className="lg:hidden flex w-8 h-8 rounded-full items-center justify-center text-carbon-900 hover:bg-gray-100 active:bg-gray-200 transition-colors"
+                className="flex w-8 h-8 rounded-full items-center justify-center text-carbon-900 hover:bg-gray-100 active:bg-gray-200 transition-colors"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -370,7 +353,7 @@ function HeroCarousel({
                 type="button"
                 aria-label="Next slide"
                 onClick={goNext}
-                className="lg:hidden flex w-8 h-8 rounded-full items-center justify-center text-carbon-900 hover:bg-gray-100 active:bg-gray-200 transition-colors"
+                className="flex w-8 h-8 rounded-full items-center justify-center text-carbon-900 hover:bg-gray-100 active:bg-gray-200 transition-colors"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
