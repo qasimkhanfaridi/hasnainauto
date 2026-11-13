@@ -2,11 +2,8 @@ import type { Metadata } from "next";
 import React from "react";
 import { HeroSection } from "@/components/HeroSection";
 import { VehicleSocketFinderHero } from "@/components/VehicleSocketFinderHero";
-import { LedSeriesShowcase } from "@/components/LedSeriesShowcase";
-import { HomeProductsShowcase } from "@/components/HomeProductsShowcase";
 import { CategoryShowcase } from "@/components/CategoryShowcase";
-import { CustomerReviews } from "@/components/CustomerReviews";
-import { LedFaqSection } from "@/components/LedFaqSection";
+import { HomeProductsShowcase } from "@/components/HomeProductsShowcase";
 import { ContactSection } from "@/components/ContactSection";
 
 export const metadata: Metadata = {
@@ -21,19 +18,16 @@ export default function HomePage() {
     <div className="w-full bg-white dark:bg-[#070b12] text-gray-900 dark:text-gray-100">
       <HeroSection />
 
-      {/* Smart Vehicle Fitment & Socket Diagnostic */}
+      {/* SELECT YOUR VEHICLE fitment finder */}
       <VehicleSocketFinderHero />
 
-      <LedSeriesShowcase />
-
-      <HomeProductsShowcase />
-
-      <LedFaqSection />
-      <CustomerReviews />
-
-      {/* Seat covers & mats — secondary to LED */}
+      {/* TOP COLLECTIONS */}
       <CategoryShowcase />
 
+      {/* BEST SELLERS */}
+      <HomeProductsShowcase />
+
+      {/* Walk in Today */}
       <ContactSection />
     </div>
   );
