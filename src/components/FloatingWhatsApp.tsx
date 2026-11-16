@@ -1,33 +1,17 @@
 "use client";
 
+"use client";
+
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { X, BadgeCheck } from "lucide-react";
 import { BUSINESS_CONFIG } from "@/config/business";
 
-// Sample social-proof purchases using real Hasnain Auto product names +
-// their real product photos, AuxLEDs style: the card slides in, stays
-// ~6s, slides out, and the next purchase appears after a short gap.
-const RECENT_PURCHASES = [
-  { name: "Ahmed", city: "Rawalpindi", product: "Rego Racing LED Headlights (4 Copper Pipes)", minutesAgo: 70, image: "/images/products/rego-racing-ai-hero.jpg" },
-  { name: "Bilal", city: "Islamabad", product: "7D Floor Mats Premium Set", minutesAgo: 52, image: "/images/products/7d-floor-mats-premium.jpg" },
-  { name: "Usman", city: "Lahore", product: "Premium Leather Seat Covers", minutesAgo: 59, image: "/images/products/premium-leather-seat-covers.jpg" },
-  { name: "Hassan", city: "Karachi", product: "Mother 6 Copper Tube LED Headlights", minutesAgo: 83, image: "/images/products/mother-6-copper-ai-hero.jpg" },
-  { name: "Ali", city: "Faisalabad", product: "Ambient Interior LED Lights", minutesAgo: 47, image: "/images/products/symphony-ambient-led.jpg" },
-  { name: "Hamza", city: "Multan", product: "LED Headlight Projector Kit", minutesAgo: 63, image: "/images/products/f5-pro-h4-led.jpg" },
-  { name: "Zain", city: "Peshawar", product: "Seat Cover + Floor Mat Combo", minutesAgo: 55, image: "/images/products/seat-cover-floor-mat-combo.jpg" },
-  { name: "Fahad", city: "Saddar, Rawalpindi", product: "LED Fog Lights Pair", minutesAgo: 68, image: "/images/products/biled-fog-projectors.jpg" },
-  { name: "Danish", city: "Rawalpindi", product: "Golden Box Rego LED Headlights (4 Copper Tubes)", minutesAgo: 74, image: "/images/products/golden-box-rego-ai-hero.jpg" },
-  { name: "Saad", city: "Islamabad", product: "Leather Key Cover Set", minutesAgo: 79, image: "/images/products/leather-key-cover-set.jpg" },
-];
-
-const SHOW_MS = 6000;
-const HIDE_MS = 3000;
+// NOTE (2026-11-16): the AuxLEDs-style social-proof pop-up ("X purchased
+// [product]") is PAUSED — all products were removed from the site, so there
+// are no products to show in it. It comes back once the new 26 products are
+// identified, with their real names and photos. Only the floating WhatsApp
+// button below stays live.
 
 export const FloatingWhatsApp: React.FC = () => {
-  const [purchaseIndex, setPurchaseIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
-  const [dismissed, setDismissed] = useState(false);
   const [footerOrderVisible, setFooterOrderVisible] = useState(false);
 
   // Smart-hide (JS Auto rule): hide the floating button while the footer's
@@ -44,76 +28,8 @@ export const FloatingWhatsApp: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  // AuxLEDs rhythm: show ~6s, slide out, ~3s gap, next purchase slides in.
-  useEffect(() => {
-    if (dismissed) {
-      const t = setTimeout(() => {
-        setPurchaseIndex((prev) => (prev + 1) % RECENT_PURCHASES.length);
-        setDismissed(false);
-        setVisible(true);
-      }, SHOW_MS + HIDE_MS);
-      return () => clearTimeout(t);
-    }
-    const t = setTimeout(() => {
-      if (visible) {
-        setVisible(false);
-      } else {
-        setPurchaseIndex((prev) => (prev + 1) % RECENT_PURCHASES.length);
-        setVisible(true);
-      }
-    }, visible ? SHOW_MS : HIDE_MS);
-    return () => clearTimeout(t);
-  }, [visible, dismissed]);
-
-  const purchase = RECENT_PURCHASES[purchaseIndex];
-
   return (
-    <>
-      {/* Social-proof pop-up (bottom-left, never covers the WhatsApp button) */}
-      <div
-        className={`fixed bottom-20 lg:bottom-6 left-4 sm:left-6 z-40 flex items-start gap-3 max-w-[calc(100vw-2rem)] sm:max-w-sm p-3 rounded-2xl bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 shadow-2xl text-xs text-gray-900 dark:text-white transition-all duration-500 ${
-          visible && !dismissed
-            ? "translate-x-0 opacity-100"
-            : "-translate-x-[120%] opacity-0 pointer-events-none"
-        }`}
-      >
-        <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-gray-100 dark:bg-white/5 shrink-0">
-          <Image
-            src={purchase.image}
-            alt={purchase.product}
-            fill
-            sizes="48px"
-            className="object-cover"
-          />
-        </div>
-        <div className="space-y-0.5 min-w-0">
-          <div className="text-[13px] leading-tight text-gray-500 dark:text-gray-400">
-            <span className="font-bold text-gray-900 dark:text-white">{purchase.name}</span>,{" "}
-            {purchase.city} purchased
-          </div>
-          <div className="font-bold text-[13px] leading-tight line-clamp-2">{purchase.product}</div>
-          <div className="text-[11px] text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
-            <span>{purchase.minutesAgo} minutes ago</span>
-            <span className="inline-flex items-center gap-0.5 text-green-600 dark:text-green-400 font-semibold">
-              <BadgeCheck className="w-3.5 h-3.5" />
-              Verified
-            </span>
-          </div>
-        </div>
-        <button
-          type="button"
-          onClick={() => {
-            setVisible(false);
-            setDismissed(true);
-          }}
-          className="p-1 rounded text-gray-400 hover:text-gray-900 dark:hover:text-white shrink-0"
-          aria-label="Dismiss purchase notification"
-        >
-          <X className="w-3.5 h-3.5" />
-        </button>
-      </div>
-
-      <div
+    <div
         className={`fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-40 flex items-end gap-3 transition-all duration-300 ${
           footerOrderVisible ? "translate-y-4 opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
         }`}
@@ -133,6 +49,5 @@ export const FloatingWhatsApp: React.FC = () => {
           </svg>
         </a>
       </div>
-    </>
   );
 };
