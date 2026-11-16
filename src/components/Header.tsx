@@ -107,22 +107,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
             </button>
 
             {/* ─── Logo ─── */}
-            {/* 2026-11-17 (sumair): header logo fixed — car mark from the new luxury logo + big HASNAIN AUTO text (the full lockup read too small at 48px). Mobile gets the square car-front mark, desktop the wide car mark. Footer keeps the circular badge. */}
+            {/* 2026-11-17 (sumair): logo back to the original circular Ferrari badge — header + footer + favicon, one push. */}
             <Link href="/" className="flex items-center gap-2 shrink-0">
               <Image
-                src="/images/hasnain-auto-logo-mark-square.jpg"
+                src="/images/hasnain-auto-logo.png"
                 alt="Hasnain Auto — Decoration Accessories"
-                width={80}
-                height={80}
-                className="h-10 w-10 rounded-lg shrink-0 sm:hidden"
-                priority
-              />
-              <Image
-                src="/images/hasnain-auto-logo-mark.jpg"
-                alt="Hasnain Auto — Decoration Accessories"
-                width={302}
-                height={96}
-                className="hidden sm:block h-12 w-auto rounded-lg shrink-0"
+                width={64}
+                height={64}
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full shrink-0"
                 priority
               />
               <div className="flex flex-col leading-tight">
