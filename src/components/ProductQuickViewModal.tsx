@@ -23,26 +23,26 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({ pr
   const { addToCart, openCart } = useCart();
   const { selectedVehicle, getCompatibilityBadge } = useVehicle();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [quantity, setQuantity] = useState(1);
+  // 2026-11-17 (sumair): quantity lives only in the cart now — the modal always adds 1.
   const [selectedVariant, setSelectedVariant] = useState<string>(
     product?.variants?.[0]?.options?.[0] || ""
   );
 
   if (!product) return null;
 
-  const currentPrice = (product.salePrice || product.price) * quantity;
+  const currentPrice = product.salePrice || product.price;
   const fitBadge = getCompatibilityBadge(product);
 
   const whatsappUrl = createSingleProductWhatsAppUrl(
     product,
-    quantity,
+    1,
     selectedVariant,
     selectedVehicle
   );
 
   const handleAddToCart = () => {
     const unitPrice = product.salePrice || product.price;
-    addToCart(product, quantity, selectedVariant, unitPrice);
+    addToCart(product, 1, selectedVariant, unitPrice);
     onClose();
     openCart();
   };
@@ -174,14 +174,14 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({ pr
             </div>
 
             {/* Price */}
-            <div className="p-4 rounded-xl bg-gray-50 border border-gray-200 flex items-baseline justify-between">
+            <div className="p-4 rounded-xl bg-gray-50 border border-gray-200 flex items-baseline justify-between transition-all duration-300 hover:shadow-md hover:border-gray-300">
               <div>
                 <span className="text-2xl font-black text-gray-900">
                   {BUSINESS_CONFIG.currency.symbol} {currentPrice.toLocaleString()}
                 </span>
                 {product.salePrice && (
                   <span className="text-sm text-gray-500 line-through ml-2">
-                    {BUSINESS_CONFIG.currency.symbol} {(product.price * quantity).toLocaleString()}
+                    {BUSINESS_CONFIG.currency.symbol} {(product.price).toLocaleString()}
                   </span>
                 )}
               </div>
@@ -214,30 +214,6 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({ pr
                 </div>
               </div>
             )}
-
-            {/* Quantity Stepper */}
-            <div className="flex items-center gap-3">
-              <label className="text-xs font-bold text-gray-600 uppercase tracking-wider">
-                Quantity:
-              </label>
-              <div className="flex items-center rounded-xl bg-gray-50 border border-gray-200 p-1">
-                <button
-                  type="button"
-                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-200"
-                >
-                  -
-                </button>
-                <span className="w-10 text-center font-bold text-sm text-gray-900">{quantity}</span>
-                <button
-                  type="button"
-                  onClick={() => setQuantity((q) => q + 1)}
-                  className="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-200"
-                >
-                  +
-                </button>
-              </div>
-            </div>
 
             {/* Actions — 2026-11-17 (sumair): like the JS Auto quick view — red Add to cart + compact green WhatsApp icon button. */}
             <div className="flex items-stretch gap-2 pt-2">

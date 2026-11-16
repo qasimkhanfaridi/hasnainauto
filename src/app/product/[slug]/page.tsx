@@ -59,7 +59,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   const { selectedVehicle, getCompatibilityBadge } = useVehicle();
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [quantity, setQuantity] = useState(1);
+  // 2026-11-17 (sumair): quantity lives only in the cart now — the product page always adds 1.
   const [selectedVariant, setSelectedVariant] = useState<string>(
     product.variants?.[0]?.options?.[0] || ""
   );
@@ -68,7 +68,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
     const variantStr = product.isSeatCover
       ? `${selectedQuality.label} | ${selectedColor.color}`
       : selectedVariant;
-    addToCart(product, quantity, variantStr, baseUnitPrice);
+    addToCart(product, 1, variantStr, baseUnitPrice);
     router.push("/checkout");
   };
 
@@ -89,7 +89,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
     ? Math.round(selectedQuality.basePrice * vehicleMultiplier) + selectedColor.surcharge
     : product.salePrice || product.price;
 
-  const currentTotalPrice = baseUnitPrice * quantity;
+  const currentTotalPrice = baseUnitPrice; // quantity is always 1 here (cart only)
 
   const discountPercent = product.originalPrice
     ? Math.round(((product.originalPrice - (product.salePrice || product.price)) / product.originalPrice) * 100)
@@ -97,7 +97,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
 
   const whatsappUrl = createSingleProductWhatsAppUrl(
     product,
-    quantity,
+    1,
     product.isSeatCover
       ? `${selectedQuality.label} Grade | ${selectedColor.color} Color`
       : selectedVariant,
@@ -322,18 +322,18 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 </div>
               </div>
 
-              {/* Price Block with Breakdown */}
-              <div className="p-5 rounded-2xl bg-gray-50 border border-red-500/20 shadow-lg shadow-red-100">
+              {/* Price Block with Breakdown — 2026-11-17 (sumair): made smaller + hover transition. */}
+              <div className="p-3 rounded-xl bg-gray-50 border border-red-500/20 shadow-sm transition-all duration-300 hover:shadow-md hover:border-red-500/40">
                 <div className="flex items-baseline justify-between">
                   <div>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-3xl font-black text-gray-900">
+                      <span className="text-2xl font-black text-gray-900">
                         {BUSINESS_CONFIG.currency.symbol} {currentTotalPrice.toLocaleString()}
                       </span>
-                      {product.originalPrice && (product.originalPrice * quantity > currentTotalPrice) && (
+                      {product.originalPrice && (product.originalPrice > currentTotalPrice) && (
                         <span className="text-sm text-gray-500 line-through">
                           {BUSINESS_CONFIG.currency.symbol}{" "}
-                          {(product.originalPrice * quantity).toLocaleString()}
+                          {(product.originalPrice).toLocaleString()}
                         </span>
                       )}
                     </div>
@@ -481,39 +481,13 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 </div>
               )}
 
-              {/* Quantity Stepper */}
-              <div className="flex items-center gap-4">
-                <label className="text-xs font-bold text-gray-600 uppercase tracking-wider">
-                  Quantity:
-                </label>
-                <div className="flex items-center rounded-xl bg-gray-50 border border-gray-200 p-1">
-                  <button
-                    type="button"
-                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    className="w-9 h-9 flex items-center justify-center text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-200"
-                  >
-                    -
-                  </button>
-                  <span className="w-12 text-center font-bold text-sm text-gray-900">
-                    {quantity}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setQuantity((q) => q + 1)}
-                    className="w-9 h-9 flex items-center justify-center text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-200"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
               {/* Action buttons — 2026-11-17 (sumair): WhatsApp is now a compact icon button like the grid card ("bahir"), next to Add to Cart / Buy Now. */}
               <div className="space-y-2.5 pt-2">
                 {/* Add to Cart + Buy Now + WhatsApp icon — one row on desktop; on mobile Buy Now drops to its own full-width row. */}
                 <div className="grid grid-cols-[1fr_auto] sm:grid-cols-[1fr_1fr_auto] gap-2.5">
                   <button
                     type="button"
-                    onClick={() => addToCart(product, quantity, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, baseUnitPrice)}
+                    onClick={() => addToCart(product, 1, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, baseUnitPrice)}
                     className="col-start-1 row-start-1 w-full py-3.5 px-4 rounded-2xl bg-gray-900 hover:bg-gray-800 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-gray-900 transition-all shadow-sm"
                   >
                     <ShoppingBag className="w-4 h-4 text-red-brand" />
@@ -547,7 +521,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 {/* Call Showroom Button */}
                 <a
                   href={`tel:${BUSINESS_CONFIG.phoneRaw}`}
-                  className="w-full py-2.5 px-4 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-300 hover:text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-gray-900 transition-colors"
+                  className="w-full py-2.5 px-4 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-300 hover:text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-gray-900 transition-all duration-300"
                 >
                   <Phone className="w-3.5 h-3.5 text-red-brand" />
                   <span>CALL SADDAR SHOWROOM: {BUSINESS_CONFIG.phone}</span>
@@ -580,7 +554,8 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16">
             {/* Description & Features — 2026-11-17 (sumair): the "Order Through WhatsApp" sidebar box is removed; the WhatsApp icon button next to Add to Cart already covers it, so the box is redundant on every product page. */}
             <div className="md:col-span-12 space-y-6 p-6 sm:p-8 rounded-3xl bg-white border border-gray-200 shadow-sm">
-              <div>
+              {/* Product Overview — 2026-11-17 (sumair): hover transition on this box. */}
+              <div className="rounded-2xl bg-gray-50 border border-gray-200 p-4 transition-all duration-300 hover:shadow-md hover:border-gray-300">
                 <h3 className="text-lg font-black text-gray-900 uppercase tracking-wider mb-3">
                   Product Overview
                 </h3>
@@ -589,13 +564,14 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-gray-200">
+              {/* Key Specifications & Features — 2026-11-17 (sumair): hover transition on this box + each feature row. */}
+              <div className="rounded-2xl bg-gray-50 border border-gray-200 p-4 transition-all duration-300 hover:shadow-md hover:border-gray-300">
                 <h3 className="text-base font-black text-gray-900 uppercase tracking-wider mb-3">
                   Key Specifications & Features
                 </h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {product.features.map((feat, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-xs text-gray-600">
+                    <li key={i} className="flex items-start gap-2.5 text-xs text-gray-600 rounded-lg p-2 transition-all duration-300 hover:bg-white hover:shadow-sm">
                       <CheckCircle2 className="w-4 h-4 text-red-brand shrink-0 mt-0.5" />
                       <span>{feat}</span>
                     </li>
@@ -637,8 +613,8 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
         <div className="fixed bottom-16 left-0 right-0 z-30 lg:hidden p-3 bg-white/95 backdrop-blur-xl border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex items-center gap-2">
           <button
             type="button"
-            onClick={() => addToCart(product, quantity, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant)}
-            className="flex-1 py-3 px-3 rounded-xl bg-red-600 text-white font-bold text-xs uppercase tracking-wider border border-red-500/50 flex items-center justify-center gap-1.5"
+            onClick={() => addToCart(product, 1, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant)}
+            className="flex-1 py-3 px-3 rounded-xl bg-red-600 text-white font-bold text-xs uppercase tracking-wider border border-red-500/50 flex items-center justify-center gap-1.5 transition-all duration-300 hover:shadow-lg"
           >
             <ShoppingBag className="w-4 h-4 text-white" />
             <span>Add ({BUSINESS_CONFIG.currency.symbol} {currentTotalPrice.toLocaleString()})</span>
@@ -648,7 +624,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 py-3 px-3 rounded-xl bg-whatsapp text-carbon-950 font-black text-xs uppercase tracking-wider shadow-whatsapp-glow flex items-center justify-center gap-1.5"
+            className="flex-1 py-3 px-3 rounded-xl bg-whatsapp text-carbon-950 font-black text-xs uppercase tracking-wider shadow-whatsapp-glow flex items-center justify-center gap-1.5 transition-all duration-300 hover:shadow-lg"
           >
             <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true">
               <path d={WHATSAPP_PATH} />
