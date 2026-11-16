@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import React, { useEffect, useState } from "react";
 import { BUSINESS_CONFIG } from "@/config/business";
 
