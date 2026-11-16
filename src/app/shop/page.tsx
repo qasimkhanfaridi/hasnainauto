@@ -42,7 +42,7 @@ function ShopContent() {
 
   const { selectedVehicle, setSelectedVehicle, clearVehicle, isCompatible } = useVehicle();
 
-  const [selectedCategory, setSelectedCategory] = useState<string>(categoryParam || "led-lights");
+  const [selectedCategory, setSelectedCategory] = useState<string>(categoryParam || "all");
   const [selectedPriceRange, setSelectedPriceRange] = useState<string>("all");
   const [selectedBrand, setSelectedBrand] = useState<string>("all");
   const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc" | "rating">("featured");
@@ -265,7 +265,8 @@ function ShopContent() {
           >
             All Products ({ACTIVE_PRODUCTS_DATA.length})
           </button>
-          {CATEGORIES_DATA.map((cat) => (
+          {/* 2026-11-16 (sumair): LED Lights pill removed — duplicates All LEDs. */}
+          {CATEGORIES_DATA.filter((cat) => cat.slug !== "led-lights").map((cat) => (
             <button
               key={cat.id}
               type="button"
@@ -409,7 +410,8 @@ function ShopContent() {
                 >
                   All Categories ({ACTIVE_PRODUCTS_DATA.length})
                 </button>
-                {CATEGORIES_DATA.map((cat) => {
+                {/* LED Lights hidden here too (sumair 2026-11-16) */}
+                {CATEGORIES_DATA.filter((cat) => cat.slug !== "led-lights").map((cat) => {
                   const count = ACTIVE_PRODUCTS_DATA.filter((p) => p.category === cat.slug).length;
                   return (
                     <button
