@@ -25,7 +25,7 @@ export const Footer: React.FC = () => {
               />
               <div className="flex flex-col leading-tight">
                 <span className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">
-                  HASNAIN<span className="text-red-brand">AUTO</span>
+                  HASNAIN{" "}<span className="text-red-brand">AUTO</span>
                 </span>
                 <span className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-[0.15em] font-medium">
                   DECORATION ACCESSORIES
