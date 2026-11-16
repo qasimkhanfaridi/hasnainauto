@@ -200,9 +200,9 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                 <span>Home</span>
               </Link>
 
-              {/* All Products */}
+              {/* All Products — 2026-11-16: /shop now (was /shop?category=led-lights; that filter was removed from the shop UI) */}
               <Link
-                href="/shop?category=led-lights"
+                href="/shop"
                 className={`flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${
                   pathname === "/shop"
                     ? "text-gray-900 dark:text-white border-red-brand bg-red-brand/10"
