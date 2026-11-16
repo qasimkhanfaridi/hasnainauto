@@ -45,8 +45,9 @@ function ShopContent() {
   const [availIn, setAvailIn] = useState(true);
   const [availOut, setAvailOut] = useState(false);
   const [onlyCompatible, setOnlyCompatible] = useState(false);
-  const [availOpen, setAvailOpen] = useState(true);
-  const [priceOpen, setPriceOpen] = useState(true);
+  // 2026-11-17 (sumair): filter sections stay CLOSED until the user opens them.
+  const [availOpen, setAvailOpen] = useState(false);
+  const [priceOpen, setPriceOpen] = useState(false);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
@@ -274,28 +275,35 @@ function ShopContent() {
                   className={`w-4 h-4 text-gray-500 dark:text-silver-400 transition-transform ${availOpen ? "rotate-180" : ""}`}
                 />
               </button>
-              {availOpen && (
-                <div className="mt-3 space-y-2">
-                  <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-silver-300 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={availIn}
-                      onChange={(e) => setAvailIn(e.target.checked)}
-                      className="rounded accent-red-600 w-4 h-4"
-                    />
-                    <span>In stock ({inStockCount})</span>
-                  </label>
-                  <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-silver-300 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={availOut}
-                      onChange={(e) => setAvailOut(e.target.checked)}
-                      className="rounded accent-red-600 w-4 h-4"
-                    />
-                    <span>Out of stock ({outOfStockCount})</span>
-                  </label>
+              {/* Availability — closed by default; opens with a smooth grid-rows transition. */}
+              <div
+                className={`grid transition-all duration-300 ease-in-out ${
+                  availOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <div className="mt-3 space-y-2">
+                    <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-silver-300 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={availIn}
+                        onChange={(e) => setAvailIn(e.target.checked)}
+                        className="rounded accent-red-600 w-4 h-4"
+                      />
+                      <span>In stock ({inStockCount})</span>
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-silver-300 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={availOut}
+                        onChange={(e) => setAvailOut(e.target.checked)}
+                        className="rounded accent-red-600 w-4 h-4"
+                      />
+                      <span>Out of stock ({outOfStockCount})</span>
+                    </label>
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Price */}
@@ -310,34 +318,41 @@ function ShopContent() {
                   className={`w-4 h-4 text-gray-500 dark:text-silver-400 transition-transform ${priceOpen ? "rotate-180" : ""}`}
                 />
               </button>
-              {priceOpen && (
-                <div className="mt-3 space-y-3">
-                  <p className="text-sm text-gray-600 dark:text-silver-300">
-                    The highest price is Rs.{maxPrice.toLocaleString()}.00
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-600 dark:text-silver-300">Rs</span>
-                    <input
-                      type="number"
-                      min={0}
-                      value={priceMin}
-                      onChange={(e) => setPriceMin(e.target.value)}
-                      placeholder="From"
-                      aria-label="Minimum price"
-                      className="w-full px-3 py-2 bg-white dark:bg-carbon-950 border border-gray-300 dark:border-white/10 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500"
-                    />
-                    <input
-                      type="number"
-                      min={0}
-                      value={priceMax}
-                      onChange={(e) => setPriceMax(e.target.value)}
-                      placeholder="To"
-                      aria-label="Maximum price"
-                      className="w-full px-3 py-2 bg-white dark:bg-carbon-950 border border-gray-300 dark:border-white/10 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500"
-                    />
+              {/* Price — closed by default; opens with a smooth grid-rows transition. */}
+              <div
+                className={`grid transition-all duration-300 ease-in-out ${
+                  priceOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <div className="mt-3 space-y-3">
+                    <p className="text-sm text-gray-600 dark:text-silver-300">
+                      The highest price is Rs.{maxPrice.toLocaleString()}.00
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-600 dark:text-silver-300">Rs</span>
+                      <input
+                        type="number"
+                        min={0}
+                        value={priceMin}
+                        onChange={(e) => setPriceMin(e.target.value)}
+                        placeholder="From"
+                        aria-label="Minimum price"
+                        className="w-full px-3 py-2 bg-white dark:bg-carbon-950 border border-gray-300 dark:border-white/10 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500"
+                      />
+                      <input
+                        type="number"
+                        min={0}
+                        value={priceMax}
+                        onChange={(e) => setPriceMax(e.target.value)}
+                        placeholder="To"
+                        aria-label="Maximum price"
+                        className="w-full px-3 py-2 bg-white dark:bg-carbon-950 border border-gray-300 dark:border-white/10 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500"
+                      />
+                    </div>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
           </aside>
 
@@ -404,59 +419,93 @@ function ShopContent() {
               </button>
             </div>
 
-            {/* Availability */}
+            {/* Availability — closed by default, same as desktop. */}
             <div className="space-y-2">
-              <div className="text-xs font-bold text-gray-500 dark:text-silver-400 uppercase tracking-wider">
-                Availability
+              <button
+                type="button"
+                onClick={() => setAvailOpen(!availOpen)}
+                className="w-full flex items-center justify-between text-xs font-bold text-gray-500 dark:text-silver-400 uppercase tracking-wider"
+              >
+                <span>Availability</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-300 ${availOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+              <div
+                className={`grid transition-all duration-300 ease-in-out ${
+                  availOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <div className="space-y-2 pt-1">
+                    <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-silver-300 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={availIn}
+                        onChange={(e) => setAvailIn(e.target.checked)}
+                        className="rounded accent-red-600 w-4 h-4"
+                      />
+                      <span>In stock ({inStockCount})</span>
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-silver-300 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={availOut}
+                        onChange={(e) => setAvailOut(e.target.checked)}
+                        className="rounded accent-red-600 w-4 h-4"
+                      />
+                      <span>Out of stock ({outOfStockCount})</span>
+                    </label>
+                  </div>
+                </div>
               </div>
-              <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-silver-300 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={availIn}
-                  onChange={(e) => setAvailIn(e.target.checked)}
-                  className="rounded accent-red-600 w-4 h-4"
-                />
-                <span>In stock ({inStockCount})</span>
-              </label>
-              <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-silver-300 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={availOut}
-                  onChange={(e) => setAvailOut(e.target.checked)}
-                  className="rounded accent-red-600 w-4 h-4"
-                />
-                <span>Out of stock ({outOfStockCount})</span>
-              </label>
             </div>
 
-            {/* Price */}
+            {/* Price — closed by default, same as desktop. */}
             <div className="space-y-2 pt-3 border-t border-gray-200 dark:border-white/10">
-              <div className="text-xs font-bold text-gray-500 dark:text-silver-400 uppercase tracking-wider">
-                Price
-              </div>
-              <p className="text-sm text-gray-600 dark:text-silver-300">
-                The highest price is Rs.{maxPrice.toLocaleString()}.00
-              </p>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600 dark:text-silver-300">Rs</span>
-                <input
-                  type="number"
-                  min={0}
-                  value={priceMin}
-                  onChange={(e) => setPriceMin(e.target.value)}
-                  placeholder="From"
-                  aria-label="Minimum price"
-                  className="w-full px-3 py-2 bg-white dark:bg-carbon-950 border border-gray-300 dark:border-white/10 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500"
+              <button
+                type="button"
+                onClick={() => setPriceOpen(!priceOpen)}
+                className="w-full flex items-center justify-between text-xs font-bold text-gray-500 dark:text-silver-400 uppercase tracking-wider"
+              >
+                <span>Price</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-300 ${priceOpen ? "rotate-180" : ""}`}
                 />
-                <input
-                  type="number"
-                  min={0}
-                  value={priceMax}
-                  onChange={(e) => setPriceMax(e.target.value)}
-                  placeholder="To"
-                  aria-label="Maximum price"
-                  className="w-full px-3 py-2 bg-white dark:bg-carbon-950 border border-gray-300 dark:border-white/10 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500"
-                />
+              </button>
+              <div
+                className={`grid transition-all duration-300 ease-in-out ${
+                  priceOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <div className="space-y-2 pt-1">
+                    <p className="text-sm text-gray-600 dark:text-silver-300">
+                      The highest price is Rs.{maxPrice.toLocaleString()}.00
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-600 dark:text-silver-300">Rs</span>
+                      <input
+                        type="number"
+                        min={0}
+                        value={priceMin}
+                        onChange={(e) => setPriceMin(e.target.value)}
+                        placeholder="From"
+                        aria-label="Minimum price"
+                        className="w-full px-3 py-2 bg-white dark:bg-carbon-950 border border-gray-300 dark:border-white/10 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500"
+                      />
+                      <input
+                        type="number"
+                        min={0}
+                        value={priceMax}
+                        onChange={(e) => setPriceMax(e.target.value)}
+                        placeholder="To"
+                        aria-label="Maximum price"
+                        className="w-full px-3 py-2 bg-white dark:bg-carbon-950 border border-gray-300 dark:border-white/10 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
