@@ -14,12 +14,23 @@ import {
   X,
   CheckCircle2
 } from "lucide-react";
-import { Product, ACTIVE_PRODUCTS_DATA, CATEGORIES_DATA } from "@/data/products";
+import { Product, ACTIVE_PRODUCTS_DATA, COLLECTIONS_LIST, COLLECTION_PRODUCT_SLUGS } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductQuickViewModal } from "@/components/ProductQuickViewModal";
 import { useVehicle } from "@/context/VehicleContext";
 import { productMatchesSocket } from "@/utils/productSpecs";
 import { LED_SOCKET_FILTERS } from "@/data/ledSeries";
+
+/** Live product count in a TOP COLLECTIONS category (2026-11-16). */
+const collectionCount = (collectionId: string): number => {
+  const slugs = COLLECTION_PRODUCT_SLUGS[collectionId] ?? [];
+  return ACTIVE_PRODUCTS_DATA.filter((p) => slugs.includes(p.slug)).length;
+};
+
+/** Socket row only makes sense for All + the beam/fog collections. */
+const SOCKET_COLLECTIONS = ["low-beam", "high-beam", "fog-lights", "auxpods"];
+const showsSocketRow = (category: string): boolean =>
+  category === "all" || SOCKET_COLLECTIONS.includes(category);
 
 const PRICE_RANGES = [
   { id: "all", label: "All Prices", min: 0, max: Infinity },
@@ -52,10 +63,12 @@ function ShopContent() {
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
-  // Sync parameters from URL
+  // Sync parameters from URL. Categories are the 15 TOP COLLECTIONS now
+  // (2026-11-16, sumair); an old category slug (?category=led-lights or a
+  // seat-cover/floor-mat link) falls back to All Products.
   useEffect(() => {
     if (categoryParam) {
-      setSelectedCategory(categoryParam);
+      setSelectedCategory(COLLECTION_PRODUCT_SLUGS[categoryParam] !== undefined ? categoryParam : "all");
     }
     if (sortParam && ["featured", "price-asc", "price-desc", "rating"].includes(sortParam)) {
       setSortBy(sortParam as "featured" | "price-asc" | "price-desc" | "rating");
@@ -110,8 +123,12 @@ function ShopContent() {
     return ACTIVE_PRODUCTS_DATA.filter((product) => {
       const price = product.salePrice || product.price;
 
-      // Category match
-      if (selectedCategory !== "all" && product.category !== selectedCategory) {
+      // Collection match (the 15 TOP COLLECTIONS; "all" shows everything)
+      if (
+        selectedCategory !== "all" &&
+        COLLECTION_PRODUCT_SLUGS[selectedCategory] !== undefined &&
+        !(COLLECTION_PRODUCT_SLUGS[selectedCategory] ?? []).includes(product.slug)
+      ) {
         return false;
       }
       // Price range match
@@ -265,24 +282,24 @@ function ShopContent() {
           >
             All Products ({ACTIVE_PRODUCTS_DATA.length})
           </button>
-          {/* 2026-11-16 (sumair): LED Lights pill removed — duplicates All LEDs. */}
-          {CATEGORIES_DATA.filter((cat) => cat.slug !== "led-lights").map((cat) => (
+          {/* 2026-11-16 (sumair): old categories removed (no products for them yet) — the 15 TOP COLLECTIONS are the categories now. */}
+          {COLLECTIONS_LIST.map((coll) => (
             <button
-              key={cat.id}
+              key={coll.id}
               type="button"
-              onClick={() => setSelectedCategory(cat.slug)}
+              onClick={() => setSelectedCategory(coll.id)}
               className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border shrink-0 ${
-                selectedCategory === cat.slug
+                selectedCategory === coll.id
                   ? "bg-red-600 text-white border-red-500 shadow-red-glow-sm"
                   : "bg-carbon-900 text-silver-300 border-white/10 hover:text-white"
               }`}
             >
-              {cat.name}
+              {coll.name}
             </button>
           ))}
         </div>
 
-        {(selectedCategory === "led-lights" || selectedCategory === "all") && (
+        {showsSocketRow(selectedCategory) && (
           <p className="text-[11px] text-gray-500 dark:text-silver-400 mb-2">
             Filter by halogen base type (Novsight / Auxleds-style shopping). Unsure?{" "}
             <Link href="/shop-by-car" className="text-red-brand font-bold hover:underline">
@@ -291,7 +308,7 @@ function ShopContent() {
           </p>
         )}
 
-        {(selectedCategory === "led-lights" || selectedCategory === "all") && (
+        {showsSocketRow(selectedCategory) && (
           <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-2 scrollbar-none">
             <span className="text-[10px] font-bold text-silver-500 uppercase shrink-0">Socket:</span>
             <button
@@ -410,21 +427,21 @@ function ShopContent() {
                 >
                   All Categories ({ACTIVE_PRODUCTS_DATA.length})
                 </button>
-                {/* LED Lights hidden here too (sumair 2026-11-16) */}
-                {CATEGORIES_DATA.filter((cat) => cat.slug !== "led-lights").map((cat) => {
-                  const count = ACTIVE_PRODUCTS_DATA.filter((p) => p.category === cat.slug).length;
+                {/* 15 TOP COLLECTIONS as categories (sumair 2026-11-16) */}
+                {COLLECTIONS_LIST.map((coll) => {
+                  const count = collectionCount(coll.id);
                   return (
                     <button
-                      key={cat.id}
+                      key={coll.id}
                       type="button"
-                      onClick={() => setSelectedCategory(cat.slug)}
+                      onClick={() => setSelectedCategory(coll.id)}
                       className={`w-full text-left px-3 py-2 rounded-xl text-xs font-semibold transition-all flex items-center justify-between ${
-                        selectedCategory === cat.slug
+                        selectedCategory === coll.id
                           ? "bg-red-600 text-white font-bold shadow-sm shadow-red-950/40"
                           : "text-silver-300 hover:text-white hover:bg-carbon-800"
                       }`}
                     >
-                      <span>{cat.name}</span>
+                      <span>{coll.name}</span>
                       <span className="text-[11px] opacity-75">({count})</span>
                     </button>
                   );
@@ -602,18 +619,18 @@ function ShopContent() {
                 >
                   All Categories
                 </button>
-                {CATEGORIES_DATA.map((cat) => (
+                {COLLECTIONS_LIST.map((coll) => (
                   <button
-                    key={cat.id}
+                    key={coll.id}
                     type="button"
-                    onClick={() => setSelectedCategory(cat.slug)}
+                    onClick={() => setSelectedCategory(coll.id)}
                     className={`px-3 py-2 rounded-xl text-xs font-semibold border ${
-                      selectedCategory === cat.slug
+                      selectedCategory === coll.id
                         ? "bg-red-600 text-white border-red-500 font-bold"
                         : "bg-carbon-950 text-silver-300 border-white/10"
                     }`}
                   >
-                    {cat.name}
+                    {coll.name}
                   </button>
                 ))}
               </div>
