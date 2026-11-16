@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { X, Star, Check, ShoppingBag, ChevronRight, ChevronLeft } from "lucide-react";
@@ -46,6 +46,15 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({ pr
     onClose();
     openCart();
   };
+
+  // 2026-11-17 (sumair): close the modal with the Escape key, same as the cart + search. Guard AFTER all hooks (never before).
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
 
   // 2026-11-17 (sumair): image carousel — arrows + dots, like the JS Auto quick view.
   const imageCount = product.images.length;

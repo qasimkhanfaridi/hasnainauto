@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { X, Trash2, Plus, Minus, MessageCircle, ShoppingCart, CreditCard, ArrowRight } from "lucide-react";
@@ -20,6 +20,16 @@ export const CartDrawer: React.FC = () => {
   const [address, setAddress] = useState("");
   const [deliveryMethod, setDeliveryMethod] = useState<"pickup" | "delivery">("pickup");
   const [notes, setNotes] = useState("");
+
+  // 2026-11-17 (sumair): close the cart with the Escape key. Guard AFTER all hooks (never before).
+  useEffect(() => {
+    if (!isCartOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeCart();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isCartOpen, closeCart]);
 
   if (!isCartOpen) return null;
 
