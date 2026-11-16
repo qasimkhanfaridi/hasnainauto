@@ -2,49 +2,35 @@
 
 import React, { useState, useMemo, Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
-import { 
-  Filter, 
-  SlidersHorizontal, 
-  Car, 
-  RotateCcw, 
-  ArrowUpDown, 
-  ShoppingBag, 
-  Sparkles,
+import {
+  Filter,
+  SlidersHorizontal,
+  Car,
+  RotateCcw,
+  ArrowUpDown,
+  ShoppingBag,
   X,
-  CheckCircle2
+  ChevronDown,
 } from "lucide-react";
-import { Product, ACTIVE_PRODUCTS_DATA, COLLECTIONS_LIST, COLLECTION_PRODUCT_SLUGS } from "@/data/products";
+import { Product, ACTIVE_PRODUCTS_DATA } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductQuickViewModal } from "@/components/ProductQuickViewModal";
 import { useVehicle } from "@/context/VehicleContext";
-import { productMatchesSocket } from "@/utils/productSpecs";
-import { LED_SOCKET_FILTERS } from "@/data/ledSeries";
 
-/** Live product count in a TOP COLLECTIONS category (2026-11-16). */
-const collectionCount = (collectionId: string): number => {
-  const slugs = COLLECTION_PRODUCT_SLUGS[collectionId] ?? [];
-  return ACTIVE_PRODUCTS_DATA.filter((p) => slugs.includes(p.slug)).length;
-};
+type SortKey = "featured" | "price-asc" | "price-desc" | "rating" | "name-asc" | "name-desc";
 
-/** Socket row only makes sense for All + the beam/fog collections. */
-const SOCKET_COLLECTIONS = ["low-beam", "high-beam", "fog-lights", "auxpods"];
-const showsSocketRow = (category: string): boolean =>
-  category === "all" || SOCKET_COLLECTIONS.includes(category);
-
-const PRICE_RANGES = [
-  { id: "all", label: "All Prices", min: 0, max: Infinity },
-  { id: "under-15k", label: "Under Rs. 15,000", min: 0, max: 14999 },
-  { id: "15k-20k", label: "Rs. 15,000 – 20,000", min: 15000, max: 20000 },
-  { id: "20k-25k", label: "Rs. 20,000 – 25,000", min: 20000, max: 25000 },
-  { id: "above-25k", label: "Above Rs. 25,000", min: 25000, max: Infinity },
+const SORT_OPTIONS: { id: SortKey; label: string }[] = [
+  { id: "name-asc", label: "Alphabetically, A-Z" },
+  { id: "name-desc", label: "Alphabetically, Z-A" },
+  { id: "featured", label: "Featured & Best Sellers" },
+  { id: "price-asc", label: "Price: Low to High" },
+  { id: "price-desc", label: "Price: High to Low" },
+  { id: "rating", label: "Highest Rated" },
 ];
 
 function ShopContent() {
   const searchParams = useSearchParams();
-  const categoryParam = searchParams.get("category");
   const searchParam = searchParams.get("search");
-  const socketParam = searchParams.get("socket");
   const sortParam = searchParams.get("sort");
   const makeParam = searchParams.get("make");
   const modelParam = searchParams.get("model");
@@ -53,25 +39,24 @@ function ShopContent() {
 
   const { selectedVehicle, setSelectedVehicle, clearVehicle, isCompatible } = useVehicle();
 
-  const [selectedCategory, setSelectedCategory] = useState<string>(categoryParam || "all");
-  const [selectedPriceRange, setSelectedPriceRange] = useState<string>("all");
-  const [selectedBrand, setSelectedBrand] = useState<string>("all");
-  const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc" | "rating">("featured");
-  const [inStockOnly, setInStockOnly] = useState(false);
+  const [sortBy, setSortBy] = useState<SortKey>("name-asc");
+  const [priceMin, setPriceMin] = useState<string>("");
+  const [priceMax, setPriceMax] = useState<string>("");
+  const [availIn, setAvailIn] = useState(true);
+  const [availOut, setAvailOut] = useState(false);
   const [onlyCompatible, setOnlyCompatible] = useState(false);
-  const [selectedSocket, setSelectedSocket] = useState<string>("all");
+  const [availOpen, setAvailOpen] = useState(true);
+  const [priceOpen, setPriceOpen] = useState(true);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
-  // Sync parameters from URL. Categories are the 15 TOP COLLECTIONS now
-  // (2026-11-16, sumair); an old category slug (?category=led-lights or a
-  // seat-cover/floor-mat link) falls back to All Products.
+  // Sync parameters from URL. 2026-11-17 (sumair): /shop is now "All Products"
+  // — no category filter any more, so ?category= links (e.g. from the homepage
+  // TOP COLLECTIONS tiles) simply land on All Products. Vehicle fitment params
+  // from the homepage finder are still honoured.
   useEffect(() => {
-    if (categoryParam) {
-      setSelectedCategory(COLLECTION_PRODUCT_SLUGS[categoryParam] !== undefined ? categoryParam : "all");
-    }
-    if (sortParam && ["featured", "price-asc", "price-desc", "rating"].includes(sortParam)) {
-      setSortBy(sortParam as "featured" | "price-asc" | "price-desc" | "rating");
+    if (sortParam && ["featured", "price-asc", "price-desc", "rating", "name-asc", "name-desc"].includes(sortParam)) {
+      setSortBy(sortParam as SortKey);
     }
     if (compatibleParam === "true" || (makeParam && modelParam)) {
       setOnlyCompatible(true);
@@ -83,74 +68,36 @@ function ShopContent() {
         year: yearParam ? parseInt(yearParam, 10) : undefined,
       });
     }
-  }, [categoryParam, sortParam, compatibleParam, makeParam, modelParam, yearParam, setSelectedVehicle]);
+  }, [sortParam, compatibleParam, makeParam, modelParam, yearParam, setSelectedVehicle]);
 
-  useEffect(() => {
-    const socket = socketParam || (searchParam && ["H4", "H11", "9005", "9006", "H7"].some((s) => searchParam.toUpperCase().includes(s)) ? searchParam : null);
-    if (socket) {
-      const up = socket.toUpperCase();
-      if (up.includes("H4")) setSelectedSocket("H4");
-      else if (up.includes("H11")) setSelectedSocket("H11");
-      else if (up.includes("9005")) setSelectedSocket("9005");
-      else if (up.includes("9006")) setSelectedSocket("9006");
-      else if (up.includes("H7")) setSelectedSocket("H7");
-    }
-  }, [socketParam, searchParam]);
-
-  const updateUrlParam = (key: string, value: string | null) => {
-    if (typeof window === "undefined") return;
-    const params = new URLSearchParams(window.location.search);
-    if (value && value !== "all" && value !== "featured") {
-      params.set(key, value);
-    } else {
-      params.delete(key);
-    }
-    const newUrl = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ""}`;
-    window.history.replaceState(null, "", newUrl);
-  };
-
-  // Extract unique brands from active products
-  const availableBrands = useMemo(() => {
-    const set = new Set<string>();
-    ACTIVE_PRODUCTS_DATA.forEach((p) => {
-      if (p.brand) set.add(p.brand);
-    });
-    return Array.from(set).sort();
-  }, []);
+  const inStockCount = useMemo(
+    () => ACTIVE_PRODUCTS_DATA.filter((p) => p.inStock).length,
+    []
+  );
+  const outOfStockCount = ACTIVE_PRODUCTS_DATA.length - inStockCount;
+  const maxPrice = useMemo(
+    () => Math.max(...ACTIVE_PRODUCTS_DATA.map((p) => p.salePrice || p.price)),
+    []
+  );
 
   // Filtered and sorted products
   const filteredProducts = useMemo(() => {
     return ACTIVE_PRODUCTS_DATA.filter((product) => {
       const price = product.salePrice || product.price;
 
-      // Collection match (the 15 TOP COLLECTIONS; "all" shows everything)
-      if (
-        selectedCategory !== "all" &&
-        COLLECTION_PRODUCT_SLUGS[selectedCategory] !== undefined &&
-        !(COLLECTION_PRODUCT_SLUGS[selectedCategory] ?? []).includes(product.slug)
-      ) {
+      // Price From / To
+      if (priceMin !== "" && price < Number(priceMin)) {
         return false;
       }
-      // Price range match
-      if (selectedPriceRange !== "all") {
-        const range = PRICE_RANGES.find((r) => r.id === selectedPriceRange);
-        if (range && (price < range.min || price > range.max)) {
-          return false;
-        }
-      }
-      // Brand match
-      if (selectedBrand !== "all" && product.brand !== selectedBrand) {
+      if (priceMax !== "" && price > Number(priceMax)) {
         return false;
       }
-      // In-stock filter
-      if (inStockOnly && !product.inStock) {
+      // Availability
+      if (!((product.inStock && availIn) || (!product.inStock && availOut))) {
         return false;
       }
       // Vehicle compatibility filter
       if (onlyCompatible && selectedVehicle && !isCompatible(product)) {
-        return false;
-      }
-      if (selectedSocket !== "all" && !productMatchesSocket(product, selectedSocket)) {
         return false;
       }
       if (searchParam) {
@@ -169,50 +116,42 @@ function ShopContent() {
       if (sortBy === "price-asc") return priceA - priceB;
       if (sortBy === "price-desc") return priceB - priceA;
       if (sortBy === "rating") return b.rating - a.rating;
+      if (sortBy === "name-asc") return a.name.localeCompare(b.name);
+      if (sortBy === "name-desc") return b.name.localeCompare(a.name);
       // Default: featured first, then bestsellers
       if (a.featured && !b.featured) return -1;
       if (!a.featured && b.featured) return 1;
       return 0;
     });
-  }, [selectedCategory, selectedPriceRange, selectedBrand, inStockOnly, onlyCompatible, selectedVehicle, sortBy, isCompatible, selectedSocket, searchParam]);
+  }, [priceMin, priceMax, availIn, availOut, onlyCompatible, selectedVehicle, sortBy, isCompatible, searchParam]);
 
-  const activeFiltersCount = 
-    (selectedCategory !== "all" ? 1 : 0) +
-    (selectedPriceRange !== "all" ? 1 : 0) +
-    (selectedBrand !== "all" ? 1 : 0) +
-    (inStockOnly ? 1 : 0) +
-    (onlyCompatible ? 1 : 0) +
-    (selectedSocket !== "all" ? 1 : 0);
+  const activeFiltersCount =
+    (priceMin !== "" || priceMax !== "" ? 1 : 0) +
+    (!availIn || availOut ? 1 : 0) +
+    (onlyCompatible ? 1 : 0);
 
   const resetFilters = () => {
-    setSelectedCategory("all");
-    setSelectedPriceRange("all");
-    setSelectedBrand("all");
-    setInStockOnly(false);
+    setPriceMin("");
+    setPriceMax("");
+    setAvailIn(true);
+    setAvailOut(false);
     setOnlyCompatible(false);
-    setSelectedSocket("all");
   };
 
   return (
-    <div className="w-full bg-surface-100 dark:bg-carbon-950 min-h-screen py-8 sm:py-12 text-carbon-900 dark:text-slate-100 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Breadcrumb & Title */}
-        <div className="mb-6 space-y-2">
-          <div className="text-xs text-gray-500 dark:text-silver-400">
-            <Link href="/" className="hover:text-red-brand dark:hover:text-white transition-colors">Home</Link>
-            <span className="mx-2 text-gray-400 dark:text-silver-600">/</span>
-            <span className="text-red-brand dark:text-red-accent font-semibold">Store Catalogue</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-carbon-900 dark:text-white uppercase tracking-tight">
-            LED Lights &amp; Auto Accessories
+    <div className="w-full bg-surface-100 dark:bg-carbon-950 min-h-screen text-carbon-900 dark:text-slate-100 transition-colors">
+      {/* Dark title bar — "All Products" (Novsight-style) */}
+      <div className="w-full bg-carbon-900 border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+          <h1 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
+            All Products
           </h1>
-          <p className="text-xs sm:text-sm text-gray-600 dark:text-silver-300">
-            14 copper LED series in stock — filter by H4, H11, 9005. COD Pakistan, JazzCash, bank transfer. Seat covers &amp; mats bhi available.
-          </p>
         </div>
+      </div>
 
-        {/* Active Vehicle Compatibility Banner */}
-        {selectedVehicle ? (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        {/* Active Vehicle Compatibility Banner (only when a vehicle is selected) */}
+        {selectedVehicle && (
           <div className="mb-8 p-4 rounded-2xl bg-gradient-to-r from-red-600/10 via-carbon-900 to-carbon-900 border border-red-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-red-glow-sm">
             <div className="flex items-center gap-3">
               <div className="p-2.5 rounded-xl bg-red-600/20 text-red-brand">
@@ -249,107 +188,19 @@ function ShopContent() {
               </button>
             </div>
           </div>
-        ) : (
-          <div className="mb-8 p-3.5 rounded-2xl bg-carbon-900/80 border border-white/10 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-red-600/20 text-red-brand">
-                <Car className="w-4 h-4" />
-              </div>
-              <div className="text-xs">
-                <span className="font-bold text-white">Shopping for a specific car? </span>
-                <span className="text-silver-400">Filter all products guaranteed to fit your vehicle model.</span>
-              </div>
-            </div>
-            <Link
-              href="/shop-by-car"
-              className="px-3.5 py-1.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider whitespace-nowrap shadow-red-glow-sm transition-all"
-            >
-              Select Car
-            </Link>
-          </div>
         )}
 
-        {/* Quick Category Filter Chips */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-none">
-          <button
-            type="button"
-            onClick={() => setSelectedCategory("all")}
-            className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border shrink-0 ${
-              selectedCategory === "all"
-                ? "bg-red-600 text-white border-red-500 shadow-red-glow-sm"
-                : "bg-carbon-900 text-silver-300 border-white/10 hover:text-white"
-            }`}
-          >
-            All Products ({ACTIVE_PRODUCTS_DATA.length})
-          </button>
-          {/* 2026-11-16 (sumair): old categories removed (no products for them yet) — the 15 TOP COLLECTIONS are the categories now. */}
-          {COLLECTIONS_LIST.map((coll) => (
-            <button
-              key={coll.id}
-              type="button"
-              onClick={() => setSelectedCategory(coll.id)}
-              className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border shrink-0 ${
-                selectedCategory === coll.id
-                  ? "bg-red-600 text-white border-red-500 shadow-red-glow-sm"
-                  : "bg-carbon-900 text-silver-300 border-white/10 hover:text-white"
-              }`}
-            >
-              {coll.name}
-            </button>
-          ))}
-        </div>
-
-        {showsSocketRow(selectedCategory) && (
-          <p className="text-[11px] text-gray-500 dark:text-silver-400 mb-2">
-            Filter by halogen base type (Novsight / Auxleds-style shopping). Unsure?{" "}
-            <Link href="/shop-by-car" className="text-red-brand font-bold hover:underline">
-              Select your vehicle
-            </Link>
-          </p>
-        )}
-
-        {showsSocketRow(selectedCategory) && (
-          <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-2 scrollbar-none">
-            <span className="text-[10px] font-bold text-silver-500 uppercase shrink-0">Socket:</span>
-            <button
-              type="button"
-              onClick={() => { setSelectedSocket("all"); updateUrlParam("socket", "all"); }}
-              className={`px-3 py-1.5 rounded-lg text-[11px] font-bold border shrink-0 ${
-                selectedSocket === "all"
-                  ? "bg-amber-brand/20 text-amber-glow border-amber-brand/40"
-                  : "bg-carbon-900 text-silver-400 border-white/10"
-              }`}
-            >
-              All
-            </button>
-            {LED_SOCKET_FILTERS.map((sock) => (
-              <button
-                key={sock}
-                type="button"
-                onClick={() => setSelectedSocket(sock)}
-                className={`px-3 py-1.5 rounded-lg text-[11px] font-bold border shrink-0 ${
-                  selectedSocket === sock
-                    ? "bg-amber-brand/20 text-amber-glow border-amber-brand/40"
-                    : "bg-carbon-900 text-silver-400 border-white/10"
-                }`}
-              >
-                {sock}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Toolbar: Count, Active Filter Chips, Mobile Filter Trigger, Sort */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-white/10">
+        {/* Toolbar: count + reset, mobile filter trigger, sort */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-white/10">
           <div className="flex items-center gap-3">
-            <div className="text-xs font-bold text-silver-400 uppercase tracking-wider">
-              Showing <strong className="text-white font-black">{filteredProducts.length}</strong> Products
+            <div className="text-sm text-gray-600 dark:text-silver-300">
+              <strong className="text-carbon-900 dark:text-white font-black">{filteredProducts.length}</strong> products
             </div>
             {activeFiltersCount > 0 && (
               <button
                 type="button"
                 onClick={resetFilters}
-                className="text-[11px] text-red-accent hover:underline font-semibold flex items-center gap-1"
+                className="text-xs text-red-600 dark:text-red-accent hover:underline font-semibold flex items-center gap-1"
               >
                 <RotateCcw className="w-3 h-3" />
                 <span>Reset ({activeFiltersCount})</span>
@@ -362,7 +213,7 @@ function ShopContent() {
             <button
               type="button"
               onClick={() => setMobileFilterOpen(true)}
-              className="lg:hidden flex items-center gap-2 px-3.5 py-2 rounded-xl bg-carbon-850 border border-white/10 text-xs font-bold text-silver-200"
+              className="lg:hidden flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-carbon-900 border border-gray-200 dark:border-white/10 text-xs font-bold text-gray-700 dark:text-silver-200"
             >
               <Filter className="w-4 h-4 text-red-brand" />
               <span>Filter ({activeFiltersCount})</span>
@@ -370,21 +221,22 @@ function ShopContent() {
 
             {/* Sort Selector */}
             <div className="flex items-center gap-2">
-              <ArrowUpDown className="w-3.5 h-3.5 text-silver-400" />
+              <ArrowUpDown className="w-3.5 h-3.5 text-gray-500 dark:text-silver-400" />
+              <label htmlFor="shop-sort" className="text-sm text-gray-600 dark:text-silver-300">
+                Sort by:
+              </label>
               <select
+                id="shop-sort"
                 value={sortBy}
-                onChange={(e) =>
-                  setSortBy(
-                    e.target.value as "featured" | "price-asc" | "price-desc" | "rating"
-                  )
-                }
+                onChange={(e) => setSortBy(e.target.value as SortKey)}
                 aria-label="Sort products by"
-                className="h-10 px-3 bg-carbon-900 border border-white/10 rounded-xl text-xs font-semibold text-silver-200 focus:outline-none focus:border-red-500"
+                className="h-10 px-3 bg-white dark:bg-carbon-900 border border-gray-200 dark:border-white/10 rounded-xl text-xs font-semibold text-gray-800 dark:text-silver-200 focus:outline-none focus:border-red-500"
               >
-                <option value="featured">Featured & Best Sellers</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="rating">Highest Rated</option>
+                {SORT_OPTIONS.map((opt) => (
+                  <option key={opt.id} value={opt.id}>
+                    {opt.label}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -392,169 +244,119 @@ function ShopContent() {
 
         {/* Main Layout Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Desktop Filter Sidebar */}
-          <aside className="hidden lg:block lg:col-span-3 space-y-6 sticky top-24 bg-carbon-900/70 p-5 rounded-2xl border border-white/10">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
+          {/* Desktop Filter Panel (Novsight-style: Availability + Price only) */}
+          <aside className="hidden lg:block lg:col-span-3 sticky top-24 bg-white dark:bg-carbon-900 p-5 rounded-2xl border border-gray-200 dark:border-white/10">
+            <div className="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-white/10">
+              <span className="text-sm font-semibold text-carbon-900 dark:text-white flex items-center gap-1.5">
                 <SlidersHorizontal className="w-4 h-4 text-red-brand" />
-                <span>Faceted Filters</span>
+                <span>Filter:</span>
               </span>
               {activeFiltersCount > 0 && (
                 <button
                   type="button"
                   onClick={resetFilters}
-                  className="text-[11px] text-silver-400 hover:text-red-accent font-semibold"
+                  className="text-xs text-gray-500 dark:text-silver-400 hover:text-red-600 dark:hover:text-red-accent font-semibold"
                 >
                   Clear All
                 </button>
               )}
             </div>
 
-            {/* 1. Category Section */}
-            <div>
-              <div className="text-[11px] font-bold text-silver-400 uppercase tracking-wider mb-2">
-                Categories
-              </div>
-              <div className="space-y-1">
-                <button
-                  type="button"
-                  onClick={() => setSelectedCategory("all")}
-                  className={`w-full text-left px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
-                    selectedCategory === "all"
-                      ? "bg-red-600 text-white font-bold shadow-sm shadow-red-950/40"
-                      : "text-silver-300 hover:text-white hover:bg-carbon-800"
-                  }`}
-                >
-                  All Categories ({ACTIVE_PRODUCTS_DATA.length})
-                </button>
-                {/* 15 TOP COLLECTIONS as categories (sumair 2026-11-16) */}
-                {COLLECTIONS_LIST.map((coll) => {
-                  const count = collectionCount(coll.id);
-                  return (
-                    <button
-                      key={coll.id}
-                      type="button"
-                      onClick={() => setSelectedCategory(coll.id)}
-                      className={`w-full text-left px-3 py-2 rounded-xl text-xs font-semibold transition-all flex items-center justify-between ${
-                        selectedCategory === coll.id
-                          ? "bg-red-600 text-white font-bold shadow-sm shadow-red-950/40"
-                          : "text-silver-300 hover:text-white hover:bg-carbon-800"
-                      }`}
-                    >
-                      <span>{coll.name}</span>
-                      <span className="text-[11px] opacity-75">({count})</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* 2. Price Range Section */}
-            <div className="pt-4 border-t border-white/10">
-              <div className="text-[11px] font-bold text-silver-400 uppercase tracking-wider mb-2">
-                Price Range
-              </div>
-              <div className="space-y-1">
-                {PRICE_RANGES.map((range) => (
-                  <button
-                    key={range.id}
-                    type="button"
-                    onClick={() => setSelectedPriceRange(range.id)}
-                    className={`w-full text-left px-3 py-1.5 rounded-xl text-xs font-semibold transition-all flex items-center justify-between ${
-                      selectedPriceRange === range.id
-                        ? "bg-red-600/20 text-red-accent border border-red-500/40 font-bold"
-                        : "text-silver-300 hover:text-white hover:bg-carbon-800"
-                    }`}
-                  >
-                    <span>{range.label}</span>
-                    {selectedPriceRange === range.id && (
-                      <CheckCircle2 className="w-3.5 h-3.5 text-red-brand" />
-                    )}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* 3. Brand Filter */}
-            {availableBrands.length > 0 && (
-              <div className="pt-4 border-t border-white/10">
-                <div className="text-[11px] font-bold text-silver-400 uppercase tracking-wider mb-2">
-                  Brand / Line
-                </div>
-                <div className="space-y-1">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedBrand("all")}
-                    className={`w-full text-left px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                      selectedBrand === "all"
-                        ? "bg-red-600/20 text-red-accent border border-red-500/40 font-bold"
-                        : "text-silver-300 hover:text-white hover:bg-carbon-800"
-                    }`}
-                  >
-                    All Brands
-                  </button>
-                  {availableBrands.map((brand) => (
-                    <button
-                      key={brand}
-                      type="button"
-                      onClick={() => setSelectedBrand(brand)}
-                      className={`w-full text-left px-3 py-1.5 rounded-xl text-xs font-semibold transition-all flex items-center justify-between ${
-                        selectedBrand === brand
-                          ? "bg-red-600/20 text-red-accent border border-red-500/40 font-bold"
-                          : "text-silver-300 hover:text-white hover:bg-carbon-800"
-                      }`}
-                    >
-                      <span>{brand}</span>
-                      {selectedBrand === brand && (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-red-brand" />
-                      )}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* 4. In Stock Toggle */}
-            <div className="pt-4 border-t border-white/10">
-              <label className="flex items-center justify-between cursor-pointer text-xs font-semibold text-silver-300">
-                <span>In Stock at Saddar Showroom</span>
-                <input
-                  type="checkbox"
-                  checked={inStockOnly}
-                  onChange={(e) => setInStockOnly(e.target.checked)}
-                  className="rounded text-red-brand focus:ring-red-brand bg-carbon-950 border-white/10 w-4 h-4"
+            {/* Availability */}
+            <div className="py-4 border-b border-gray-200 dark:border-white/10">
+              <button
+                type="button"
+                onClick={() => setAvailOpen(!availOpen)}
+                className="w-full flex items-center justify-between text-sm font-semibold text-carbon-900 dark:text-white"
+              >
+                <span>Availability</span>
+                <ChevronDown
+                  className={`w-4 h-4 text-gray-500 dark:text-silver-400 transition-transform ${availOpen ? "rotate-180" : ""}`}
                 />
-              </label>
+              </button>
+              {availOpen && (
+                <div className="mt-3 space-y-2">
+                  <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-silver-300 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={availIn}
+                      onChange={(e) => setAvailIn(e.target.checked)}
+                      className="rounded accent-red-600 w-4 h-4"
+                    />
+                    <span>In stock ({inStockCount})</span>
+                  </label>
+                  <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-silver-300 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={availOut}
+                      onChange={(e) => setAvailOut(e.target.checked)}
+                      className="rounded accent-red-600 w-4 h-4"
+                    />
+                    <span>Out of stock ({outOfStockCount})</span>
+                  </label>
+                </div>
+              )}
             </div>
 
-            {/* In-Store Fitting Promise Box */}
-            <div className="p-4 rounded-xl bg-carbon-950 border border-red-500/20 space-y-2">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-red-accent">
-                <Sparkles className="w-3.5 h-3.5 text-red-brand" />
-                <span>Professional Installation</span>
-              </div>
-              <p className="text-[11px] text-silver-400 leading-relaxed">
-                All seat covers, 7D mats, and LED projector lights can be professionally installed and calibrated at our 1st Floor, Kashmir Road Saddar workshop.
-              </p>
+            {/* Price */}
+            <div className="py-4">
+              <button
+                type="button"
+                onClick={() => setPriceOpen(!priceOpen)}
+                className="w-full flex items-center justify-between text-sm font-semibold text-carbon-900 dark:text-white"
+              >
+                <span>Price</span>
+                <ChevronDown
+                  className={`w-4 h-4 text-gray-500 dark:text-silver-400 transition-transform ${priceOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+              {priceOpen && (
+                <div className="mt-3 space-y-3">
+                  <p className="text-sm text-gray-600 dark:text-silver-300">
+                    The highest price is Rs.{maxPrice.toLocaleString()}.00
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-gray-600 dark:text-silver-300">Rs</span>
+                    <input
+                      type="number"
+                      min={0}
+                      value={priceMin}
+                      onChange={(e) => setPriceMin(e.target.value)}
+                      placeholder="From"
+                      aria-label="Minimum price"
+                      className="w-full px-3 py-2 bg-white dark:bg-carbon-950 border border-gray-300 dark:border-white/10 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500"
+                    />
+                    <input
+                      type="number"
+                      min={0}
+                      value={priceMax}
+                      onChange={(e) => setPriceMax(e.target.value)}
+                      placeholder="To"
+                      aria-label="Maximum price"
+                      className="w-full px-3 py-2 bg-white dark:bg-carbon-950 border border-gray-300 dark:border-white/10 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </aside>
 
           {/* Product Grid */}
           <main className="lg:col-span-9">
             {filteredProducts.length === 0 ? (
-              <div className="text-center py-16 px-4 rounded-3xl bg-carbon-900 border border-white/10 space-y-4">
-                <div className="w-16 h-16 rounded-full bg-carbon-800 flex items-center justify-center text-silver-400 mx-auto">
+              <div className="text-center py-16 px-4 rounded-3xl bg-white dark:bg-carbon-900 border border-gray-200 dark:border-white/10 space-y-4">
+                <div className="w-16 h-16 rounded-full bg-gray-100 dark:bg-carbon-800 flex items-center justify-center text-gray-400 dark:text-silver-400 mx-auto">
                   <ShoppingBag className="w-8 h-8" />
                 </div>
-                <h3 className="text-lg font-black text-white">No products match your active filters</h3>
-                <p className="text-xs text-silver-400 max-w-sm mx-auto">
-                  Try adjusting the price range, brand, or category filters. Our Saddar market showroom carries complete stock for all Pakistani cars.
+                <h3 className="text-lg font-black text-carbon-900 dark:text-white">No products match your active filters</h3>
+                <p className="text-sm text-gray-600 dark:text-silver-400 max-w-sm mx-auto">
+                  Try adjusting the price or availability filters. Our Saddar market showroom carries complete stock for all Pakistani cars.
                 </p>
                 <div className="flex flex-wrap justify-center gap-3 pt-2">
                   <button
                     type="button"
                     onClick={resetFilters}
-                    className="px-5 py-2.5 rounded-xl bg-carbon-800 text-white font-bold text-xs uppercase"
+                    className="px-5 py-2.5 rounded-xl bg-gray-100 dark:bg-carbon-800 text-carbon-900 dark:text-white font-bold text-xs uppercase"
                   >
                     Reset All Filters
                   </button>
@@ -587,89 +389,75 @@ function ShopContent() {
       {/* Mobile Bottom-Sheet Filter Modal */}
       {mobileFilterOpen && (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/80 backdrop-blur-sm lg:hidden animate-in fade-in">
-          <div className="w-full max-h-[85vh] overflow-y-auto rounded-t-3xl bg-carbon-900 border-t border-white/15 p-6 space-y-6">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <h3 className="text-base font-black text-white uppercase tracking-wider flex items-center gap-2">
+          <div className="w-full max-h-[85vh] overflow-y-auto rounded-t-3xl bg-white dark:bg-carbon-900 border-t border-gray-200 dark:border-white/15 p-6 space-y-6">
+            <div className="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-white/10">
+              <h3 className="text-base font-black text-carbon-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
                 <SlidersHorizontal className="w-4 h-4 text-red-brand" />
                 <span>Filter Products</span>
               </h3>
               <button
                 type="button"
                 onClick={() => setMobileFilterOpen(false)}
-                className="p-1.5 text-silver-400 hover:text-white"
+                className="p-1.5 text-gray-500 dark:text-silver-400 hover:text-carbon-900 dark:hover:text-white"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Categories */}
+            {/* Availability */}
             <div className="space-y-2">
-              <div className="text-xs font-bold text-silver-400 uppercase tracking-wider">
-                Category
+              <div className="text-xs font-bold text-gray-500 dark:text-silver-400 uppercase tracking-wider">
+                Availability
               </div>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => setSelectedCategory("all")}
-                  className={`px-3 py-2 rounded-xl text-xs font-semibold border ${
-                    selectedCategory === "all"
-                      ? "bg-red-600 text-white border-red-500 font-bold"
-                      : "bg-carbon-950 text-silver-300 border-white/10"
-                  }`}
-                >
-                  All Categories
-                </button>
-                {COLLECTIONS_LIST.map((coll) => (
-                  <button
-                    key={coll.id}
-                    type="button"
-                    onClick={() => setSelectedCategory(coll.id)}
-                    className={`px-3 py-2 rounded-xl text-xs font-semibold border ${
-                      selectedCategory === coll.id
-                        ? "bg-red-600 text-white border-red-500 font-bold"
-                        : "bg-carbon-950 text-silver-300 border-white/10"
-                    }`}
-                  >
-                    {coll.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Price Range */}
-            <div className="space-y-2 pt-3 border-t border-white/10">
-              <div className="text-xs font-bold text-silver-400 uppercase tracking-wider">
-                Price Range
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {PRICE_RANGES.map((range) => (
-                  <button
-                    key={range.id}
-                    type="button"
-                    onClick={() => setSelectedPriceRange(range.id)}
-                    className={`px-3 py-2 rounded-xl text-xs font-semibold border ${
-                      selectedPriceRange === range.id
-                        ? "bg-red-600 text-white border-red-500 font-bold"
-                        : "bg-carbon-950 text-silver-300 border-white/10"
-                    }`}
-                  >
-                    {range.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* In-Stock Only */}
-            <div className="pt-3 border-t border-white/10">
-              <label className="flex items-center justify-between cursor-pointer text-xs font-semibold text-silver-300">
-                <span>In Stock at Saddar Showroom</span>
+              <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-silver-300 cursor-pointer">
                 <input
                   type="checkbox"
-                  checked={inStockOnly}
-                  onChange={(e) => setInStockOnly(e.target.checked)}
-                  className="rounded text-red-brand focus:ring-red-brand bg-carbon-950 border-white/10 w-4 h-4"
+                  checked={availIn}
+                  onChange={(e) => setAvailIn(e.target.checked)}
+                  className="rounded accent-red-600 w-4 h-4"
                 />
+                <span>In stock ({inStockCount})</span>
               </label>
+              <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-silver-300 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={availOut}
+                  onChange={(e) => setAvailOut(e.target.checked)}
+                  className="rounded accent-red-600 w-4 h-4"
+                />
+                <span>Out of stock ({outOfStockCount})</span>
+              </label>
+            </div>
+
+            {/* Price */}
+            <div className="space-y-2 pt-3 border-t border-gray-200 dark:border-white/10">
+              <div className="text-xs font-bold text-gray-500 dark:text-silver-400 uppercase tracking-wider">
+                Price
+              </div>
+              <p className="text-sm text-gray-600 dark:text-silver-300">
+                The highest price is Rs.{maxPrice.toLocaleString()}.00
+              </p>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-600 dark:text-silver-300">Rs</span>
+                <input
+                  type="number"
+                  min={0}
+                  value={priceMin}
+                  onChange={(e) => setPriceMin(e.target.value)}
+                  placeholder="From"
+                  aria-label="Minimum price"
+                  className="w-full px-3 py-2 bg-white dark:bg-carbon-950 border border-gray-300 dark:border-white/10 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500"
+                />
+                <input
+                  type="number"
+                  min={0}
+                  value={priceMax}
+                  onChange={(e) => setPriceMax(e.target.value)}
+                  placeholder="To"
+                  aria-label="Maximum price"
+                  className="w-full px-3 py-2 bg-white dark:bg-carbon-950 border border-gray-300 dark:border-white/10 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:border-red-500"
+                />
+              </div>
             </div>
 
             {/* Buttons: Reset & Apply */}
@@ -677,7 +465,7 @@ function ShopContent() {
               <button
                 type="button"
                 onClick={resetFilters}
-                className="py-3 rounded-xl bg-carbon-800 text-silver-300 font-bold text-xs uppercase tracking-wider"
+                className="py-3 rounded-xl bg-gray-100 dark:bg-carbon-800 text-gray-700 dark:text-silver-300 font-bold text-xs uppercase tracking-wider"
               >
                 Reset All
               </button>
