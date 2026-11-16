@@ -453,14 +453,14 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 </div>
               </div>
 
-              {/* 4-Tiered Action Button Hierarchy */}
+              {/* Action buttons — 2026-11-17 (sumair): WhatsApp is now a compact icon button like the grid card ("bahir"), next to Add to Cart / Buy Now. */}
               <div className="space-y-2.5 pt-2">
-                {/* 1. Add to Cart & 2. Buy Now Side-by-Side on Desktop */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {/* Add to Cart + Buy Now + WhatsApp icon — one row on desktop; on mobile Buy Now drops to its own full-width row. */}
+                <div className="grid grid-cols-[1fr_auto] sm:grid-cols-[1fr_1fr_auto] gap-2.5">
                   <button
                     type="button"
                     onClick={() => addToCart(product, quantity, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, baseUnitPrice)}
-                    className="w-full py-3.5 px-4 rounded-2xl bg-carbon-900 hover:bg-carbon-850 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-white/10 hover:border-white/25 transition-all shadow-sm"
+                    className="col-start-1 row-start-1 w-full py-3.5 px-4 rounded-2xl bg-carbon-900 hover:bg-carbon-850 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-white/10 hover:border-white/25 transition-all shadow-sm"
                   >
                     <ShoppingBag className="w-4 h-4 text-red-brand" />
                     <span>Add To Cart</span>
@@ -469,25 +469,26 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   <button
                     type="button"
                     onClick={handleBuyNow}
-                    className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-red-glow transition-all"
+                    className="col-span-2 row-start-2 sm:col-span-1 sm:col-start-2 sm:row-start-1 w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-red-glow transition-all"
                   >
                     <Zap className="w-4 h-4 fill-white" />
                     <span>BUY NOW (CHECKOUT)</span>
                   </button>
+
+                  {/* WhatsApp icon — same outlined green style as the grid card. */}
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="col-start-2 row-start-1 sm:col-start-3 w-12 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 hover:bg-emerald-100 flex items-center justify-center transition-all shadow-sm"
+                    aria-label="Order on WhatsApp"
+                    title="Order on WhatsApp"
+                  >
+                    <MessageCircle className="w-5 h-5 fill-emerald-600" />
+                  </a>
                 </div>
 
-                {/* 3. Direct WhatsApp Order Button */}
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3.5 px-6 rounded-2xl bg-whatsapp hover:bg-whatsapp-hover text-carbon-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-whatsapp-glow transition-all"
-                >
-                  <MessageCircle className="w-4 h-4 fill-carbon-950" />
-                  <span>ORDER ON WHATSAPP</span>
-                </a>
-
-                {/* 4. Call Showroom Button */}
+                {/* Call Showroom Button */}
                 <a
                   href={`tel:${BUSINESS_CONFIG.phoneRaw}`}
                   className="w-full py-2.5 px-4 rounded-xl bg-carbon-950 hover:bg-carbon-900 text-silver-300 hover:text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-white/5 transition-colors"
