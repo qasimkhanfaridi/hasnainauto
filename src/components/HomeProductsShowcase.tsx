@@ -19,9 +19,6 @@ const BEST_SELLERS: Product[] = [...ACTIVE_PRODUCTS_DATA]
   .slice(0, 5);
 
 export const HomeProductsShowcase: React.FC = () => {
-  // No products on the site right now (all removed 2026-11-16) — hide the section.
-  if (BEST_SELLERS.length === 0) return null;
-
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
@@ -45,6 +42,10 @@ export const HomeProductsShowcase: React.FC = () => {
     const step = (card?.offsetWidth ?? 300) + 24;
     el.scrollBy({ left: dir * step, behavior: "smooth" });
   };
+
+  // No products on the site right now (all removed 2026-11-16) — hide the
+  // section. (After all hooks: an early return before them breaks the build.)
+  if (BEST_SELLERS.length === 0) return null;
 
   return (
     <section id="led-catalog" className="py-12 sm:py-16 bg-white dark:bg-carbon-900 text-carbon-900 dark:text-white border-b border-gray-200 dark:border-white/10 transition-colors">
