@@ -33,8 +33,11 @@ const textMatches = (product: Product, query: string): boolean => {
   return corpus.includes(query.toLowerCase());
 };
 
-const countWhere = (predicate: (product: Product) => boolean): number =>
-  ACTIVE_PRODUCTS_DATA.filter(predicate).length;
+// Zero products means "Coming soon" (never a fake "0 products" label).
+const countWhere = (predicate: (product: Product) => boolean): number | null => {
+  const count = ACTIVE_PRODUCTS_DATA.filter(predicate).length;
+  return count === 0 ? null : count;
+};
 
 const TOP_COLLECTIONS: TopCollection[] = [
   {
