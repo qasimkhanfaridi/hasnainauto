@@ -46,9 +46,15 @@ const HERO_SLIDES = [
 ] as const;
 
 /* Hot Deals: real products, prices and images from src/data/products.ts.
-   Emptied 2026-11-16 — all products removed from the site; new deals will be
-   listed here once the new 26 products are identified. */
-const HOT_DEAL_SLUGS: readonly string[] = [];
+   2026-11-16 (sumair): back with the NEW 26 products — 5 flagship headlight
+   kits. Same box, same 5s rotation, same fade + progress bar + body click. */
+const HOT_DEAL_SLUGS: readonly string[] = [
+  "mother-6-copper-led-headlights",
+  "rego-4-copper-h4-golden-box",
+  "b-pro-8-copper-led-headlights",
+  "rego-racing-h4-led-headlights",
+  "ktm-ai-led-headlight",
+];
 
 const HOT_DEALS = HOT_DEAL_SLUGS.map((slug) => PRODUCTS_DATA.find((p) => p.slug === slug)).filter(
   (p): p is NonNullable<typeof p> => Boolean(p)
