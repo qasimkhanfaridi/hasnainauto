@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Zap, MessageCircle, ShoppingCart, MapPin } from "lucide-react";
+import { Home, MessageCircle, ShoppingCart, MapPin } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { BUSINESS_CONFIG } from "@/config/business";
 
@@ -13,7 +13,7 @@ export const MobileBottomNav: React.FC = () => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 block lg:hidden bg-white border-t border-gray-200 shadow-[0_-2px_12px_rgba(0,0,0,0.10)] pb-safe">
-      <div className="grid grid-cols-5 h-16 items-center px-1">
+      <div className="grid grid-cols-4 h-16 items-center px-1">
         {/* 1. Home */}
         <Link
           href="/"
@@ -28,21 +28,8 @@ export const MobileBottomNav: React.FC = () => {
           </span>
         </Link>
 
-        {/* 2. Categories */}
-        <Link
-          href="/shop?category=led-lights"
-          className={`flex flex-col items-center justify-center h-full min-h-[44px] gap-0.5 transition-colors ${
-            pathname === "/shop" ? "text-amber-brand" : "text-gray-400 hover:text-gray-700"
-          }`}
-          aria-label="LED shop"
-        >
-          <Zap className="w-5 h-5" />
-          <span className={`text-[10px] font-bold tracking-wider uppercase ${pathname === "/shop" ? "text-amber-brand" : "text-gray-400"}`}>
-            LEDs
-          </span>
-        </Link>
-
-        {/* 3. Center: WhatsApp floating button */}
+        {/* 2. Center: WhatsApp floating button */}
+        {/* 2026-11-16 (sumair): LEDs shortcut removed — duplicated All LEDs. */}
         <a
           href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(
             "Assalam-o-Alaikum Hasnain Auto, mujhe LED headlights chahiye. Meri gari: ___"
@@ -61,7 +48,7 @@ export const MobileBottomNav: React.FC = () => {
           </span>
         </a>
 
-        {/* 4. Cart */}
+        {/* 3. Cart */}
         <button
           type="button"
           onClick={openCart}
@@ -79,7 +66,7 @@ export const MobileBottomNav: React.FC = () => {
           <span className="text-[10px] font-bold tracking-wider uppercase">Cart</span>
         </button>
 
-        {/* 5. Account / Orders */}
+        {/* 4. Saddar Showroom */}
         <Link
           href="/contact"
           className={`flex flex-col items-center justify-center h-full min-h-[44px] gap-0.5 transition-colors ${
