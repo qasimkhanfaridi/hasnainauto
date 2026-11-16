@@ -2,15 +2,14 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import { ACTIVE_PRODUCTS_DATA, Product } from "@/data/products";
+import { ACTIVE_PRODUCTS_DATA, COLLECTION_PRODUCT_SLUGS } from "@/data/products";
 
 /**
  * TOP COLLECTIONS — the 15 light-type collections customers shop by.
- * Counts are computed from live product data (never invented) and every
- * tile links through a shop filter the shop page actually supports
- * (category / socket / search), so each tile lands on real results.
- * Collections with no matching product yet link to the LED catalogue and
- * show "Coming soon" instead of a fake count.
+ * Counts come from the explicit slug map in src/data/products.ts
+ * (COLLECTION_PRODUCT_SLUGS) — never invented. Every tile with products
+ * links to the shop filtered to that collection; empty collections link
+ * to the full catalogue and show "Coming soon" instead of a fake count.
  */
 interface TopCollection {
   id: string;
@@ -21,129 +20,122 @@ interface TopCollection {
   count: number | null;
 }
 
-const hasSocketOption = (product: Product, socket: string): boolean =>
-  product.category === "led-lights" &&
-  (product.variants ?? []).some((variant) =>
-    variant.options.some((option) => option.includes(socket))
-  );
-
-const textMatches = (product: Product, query: string): boolean => {
-  const corpus =
-    `${product.name} ${product.category} ${product.subcategory ?? ""} ${product.description} ${product.shortDescription}`.toLowerCase();
-  return corpus.includes(query.toLowerCase());
-};
-
 // Zero products means "Coming soon" (never a fake "0 products" label).
-const countWhere = (predicate: (product: Product) => boolean): number | null => {
-  const count = ACTIVE_PRODUCTS_DATA.filter(predicate).length;
+const countWhere = (collectionId: string): number | null => {
+  const count = ACTIVE_PRODUCTS_DATA.filter((p) =>
+    (COLLECTION_PRODUCT_SLUGS[collectionId] ?? []).includes(p.slug)
+  ).length;
   return count === 0 ? null : count;
 };
+
+const collectionHref = (collectionId: string): string =>
+  countWhere(collectionId) === null ? "/shop" : `/shop?category=${collectionId}`;
 
 const TOP_COLLECTIONS: TopCollection[] = [
   {
     id: "welcome-lights",
     name: "Welcome Lights",
     image: "/images/products/mini-projector-lens-real-studio.jpg",
-    href: "/shop?category=led-lights",
-    count: null,
+    href: collectionHref("welcome-lights"),
+    count: countWhere("welcome-lights"),
   },
   {
     id: "ambient-lights",
     name: "Ambient Lights",
     image: "/images/products/symphony-ambient-led.jpg",
-    href: "/shop?category=led-lights&search=ambient",
-    count: countWhere((p) => textMatches(p, "ambient")),
+    href: collectionHref("ambient-lights"),
+    count: countWhere("ambient-lights"),
   },
   {
     id: "auxpods",
     name: "Pods - Auxiliary Lighting",
     image: "/images/products/ultra-bright-4-lens-fog-ai-hero.jpg",
-    href: "/shop?category=led-lights&search=auxiliary",
-    count: countWhere((p) => textMatches(p, "auxiliary")),
+    href: collectionHref("auxpods"),
+    count: countWhere("auxpods"),
   },
   {
     id: "low-beam",
     name: "Low Beam",
     image: "/images/products/mother-6-copper-ai-hero.jpg",
-    href: "/shop?category=led-lights&socket=H11",
-    count: countWhere((p) => hasSocketOption(p, "H11")),
+    href: collectionHref("low-beam"),
+    count: countWhere("low-beam"),
   },
   {
     id: "high-beam",
     name: "High Beam",
     image: "/images/products/rego-racing-ai-hero.jpg",
-    href: "/shop?category=led-lights&socket=9005",
-    count: countWhere((p) => hasSocketOption(p, "9005")),
+    href: collectionHref("high-beam"),
+    count: countWhere("high-beam"),
   },
   {
     id: "fog-lights",
     name: "Fog Lights",
     image: "/images/products/biled-fog-projectors.jpg",
-    href: "/shop?category=led-lights&search=fog",
-    count: countWhere((p) => p.subcategory === "Fog Lights"),
+    href: collectionHref("fog-lights"),
+    count: countWhere("fog-lights"),
   },
   {
     id: "parking-lights",
     name: "Parking Lights",
     image: "/images/products/y6-projector-ai-hero.jpg",
-    href: "/shop?category=led-lights",
-    count: null,
+    href: collectionHref("parking-lights"),
+    count: countWhere("parking-lights"),
   },
   {
     id: "cabin-lights",
     name: "Cabin Lights",
     image: "/images/products/f5-pro-h4-led.jpg",
-    href: "/shop?category=led-lights",
-    count: null,
+    href: collectionHref("cabin-lights"),
+    count: countWhere("cabin-lights"),
   },
   {
     id: "turn-signal",
     name: "Turn Signal",
     image: "/images/products/laser-mini-driving-pod.jpg",
-    href: "/shop?category=led-lights",
-    count: null,
+    href: collectionHref("turn-signal"),
+    count: countWhere("turn-signal"),
   },
   {
     id: "dynamic-side-mirrors",
     name: "Dynamic Side Mirrors",
     image: "/images/products/golden-box-rego-ai-hero.jpg",
-    href: "/shop?category=led-lights",
-    count: null,
+    href: collectionHref("dynamic-side-mirrors"),
+    count: countWhere("dynamic-side-mirrors"),
   },
   {
     id: "license-plate",
     name: "License Plate",
     image: "/images/products/black-box-rego-real-studio.jpg",
-    href: "/shop?category=led-lights",
-    count: null,
+    href: collectionHref("license-plate"),
+    count: countWhere("license-plate"),
   },
   {
     id: "brake-lights",
     name: "Brake Lights",
     image: "/images/products/b-pro-8-copper-ai-hero.jpg",
-    href: "/shop?category=led-lights",
-    count: null,
+    href: collectionHref("brake-lights"),
+    count: countWhere("brake-lights"),
   },
   {
     id: "fender-lights",
     name: "Fender Lights",
     image: "/images/products/wooden-box-zinc-alloy-ai-hero.jpg",
-    href: "/shop?category=led-lights",
-    count: null,
+    href: collectionHref("fender-lights"),
+    count: countWhere("fender-lights"),
   },
   {
     id: "reverse-lights",
     name: "Reverse Lights",
     image: "/images/products/tasa-h4-ai-hero.jpg",
-    href: "/shop?category=led-lights",
-    count: null,
+    href: collectionHref("reverse-lights"),
+    count: countWhere("reverse-lights"),
   },
   {
     id: "motorcycle-leds",
     name: "Motorcycle Leds",
     image: "/images/products/ultra-bright-4-lens-fog-01.jpg",
-    href: "/shop?category=led-lights&search=motorcycle",
-    count: countWhere((p) => textMatches(p, "motorcycle")),
+    href: collectionHref("motorcycle-leds"),
+    count: countWhere("motorcycle-leds"),
   },
 ];
 
