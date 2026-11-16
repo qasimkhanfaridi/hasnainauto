@@ -2,10 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import {
   Car,
-  ArrowRight,
   MessageCircle,
   ShieldCheck,
   Search,
@@ -23,15 +21,11 @@ interface VehicleSpec {
   years: string;
   headlight: string;
   fog: string;
-  topRecommendedSku: string;
-  heroProductSlug: string;
-  heroProductName: string;
-  heroProductImage: string;
-  heroProductPrice: number;
   reason: string;
 }
 
-/* Existing fitment + recommended-product data (unchanged).
+/* Fitment data only — the old recommended-product fields were removed
+   2026-11-16 when all products were taken off the site.
    The repo src/data/vehicles.ts only carries Make / Model / Year lists,
    so the socket/fitment data stays here as before. */
 const FITMENT_DATABASE: VehicleSpec[] = [
@@ -42,11 +36,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "2019 – Present",
     headlight: "H4 (Dual Beam)",
     fog: "N/A (Standard Bumper)",
-    topRecommendedSku: "008 Y6 Mini Projector",
-    heroProductSlug: "y6-projector-led-h4",
-    heroProductName: "Y6 H4 Laser Cut-Off Mini Projector Lens",
-    heroProductImage: "/images/products/y6-projector-ai-hero.jpg",
-    heroProductPrice: 4999,
     reason: "Gives a razor-sharp projector beam cutoff without opening the headlight seal. 0% glare to oncoming traffic!"
   },
   {
@@ -55,11 +44,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "2017 – Present",
     headlight: "H4 (Dual Beam)",
     fog: "H11 / H8",
-    topRecommendedSku: "002 Mother 6-Copper",
-    heroProductSlug: "mother-6-copper-led-headlights",
-    heroProductName: "Mother 6-Copper 35,000 LM Extreme Headlight",
-    heroProductImage: "/images/products/mother-6-copper-ai-hero.jpg",
-    heroProductPrice: 6499,
     reason: "Heavy-duty 6 copper liquid pipes with 12,000 RPM turbo fan for maximum highway penetration."
   },
   {
@@ -68,11 +52,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "2014 – Present",
     headlight: "H4 (Dual Beam)",
     fog: "H11",
-    topRecommendedSku: "001 Rego Racing 4-Copper",
-    heroProductSlug: "rego-racing-led-headlights",
-    heroProductName: "Rego Racing 4-Copper 260W German Tech",
-    heroProductImage: "/images/products/rego-racing-ai-hero.jpg",
-    heroProductPrice: 5899,
     reason: "German thermal dissipation with external Canbus driver and pure 6500K diamond white light."
   },
   {
@@ -81,11 +60,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "2010 – 2021",
     headlight: "H4 (Dual Beam)",
     fog: "H11",
-    topRecommendedSku: "008 Y6 Mini Projector",
-    heroProductSlug: "y6-projector-led-h4",
-    heroProductName: "Y6 H4 Laser Cut-Off Mini Projector Lens",
-    heroProductImage: "/images/products/y6-projector-ai-hero.jpg",
-    heroProductPrice: 4999,
     reason: "Instant optical upgrade. Replaces dim stock reflectors with luxury laser-focused projector light."
   },
   {
@@ -94,11 +68,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "All Years",
     headlight: "H4 (Dual Beam)",
     fog: "N/A",
-    topRecommendedSku: "007 Black Box Rego",
-    heroProductSlug: "black-box-rego-led-headlights",
-    heroProductName: "Black Box Rego 2-Copper 180W 25,000 LM",
-    heroProductImage: "/images/products/black-box-rego-led-01.jpg",
-    heroProductPrice: 4799,
     reason: "High efficiency, low electrical load, highly reliable for daily commute."
   },
 
@@ -109,11 +78,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "2014 – 2020",
     headlight: "Low: 9006 / H11 · High: 9005 (HB3)",
     fog: "H11",
-    topRecommendedSku: "003 B-Pro 8-Copper",
-    heroProductSlug: "b-pro-8-copper-led-headlights",
-    heroProductName: "B-Pro 8-Copper Extreme Highway Beast",
-    heroProductImage: "/images/products/b-pro-8-copper-ai-hero.jpg",
-    heroProductPrice: 6800,
     reason: "8 vacuum copper liquid tubes. Engineered for Motorway & GT Road long-distance night travel."
   },
   {
@@ -122,11 +86,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "2014 – 2020",
     headlight: "High Beam: 9005 (HB3)",
     fog: "H11",
-    topRecommendedSku: "010 Golden Box Rego",
-    heroProductSlug: "golden-box-rego-led-headlights",
-    heroProductName: "Golden Box Rego 4-Copper 230W 35,000 LM",
-    heroProductImage: "/images/products/golden-box-rego-4k-master.jpg",
-    heroProductPrice: 5799,
     reason: "Instant instant-flash response on high-beam pass button with 35,000 LM golden-grade diodes."
   },
   {
@@ -135,11 +94,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "2020 – Present",
     headlight: "H4 (Dual Beam)",
     fog: "H11",
-    topRecommendedSku: "004 Mother 5-Copper",
-    heroProductSlug: "mother-5-copper-led-headlights",
-    heroProductName: "Mother 5-Copper 260W 6000K Pure White",
-    heroProductImage: "/images/products/mother-6-copper-studio.jpg",
-    heroProductPrice: 5999,
     reason: "Optimal 6000K color temperature matches modern vehicle electronics with full Canbus safety."
   },
   {
@@ -148,11 +102,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "2016 – Present",
     headlight: "Low: H11 · High: 9005 (HB3)",
     fog: "H11",
-    topRecommendedSku: "011 Wooden Box Zinc Alloy",
-    heroProductSlug: "wooden-box-zinc-alloy-led-headlights",
-    heroProductName: "Wooden Box Zinc Alloy with External ATD Driver",
-    heroProductImage: "/images/products/wooden-box-zinc-alloy-ai-hero.jpg",
-    heroProductPrice: 7999,
     reason: "Executive Zinc-Alloy build with external ATD driver and heat-resistant braided wire harness."
   },
 
@@ -163,11 +112,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "2016 – 2021",
     headlight: "Low: H11 · High: 9005 (HB3)",
     fog: "H11",
-    topRecommendedSku: "003 B-Pro 8-Copper",
-    heroProductSlug: "b-pro-8-copper-led-headlights",
-    heroProductName: "B-Pro 8-Copper Extreme Highway Beast",
-    heroProductImage: "/images/products/b-pro-8-copper-ai-hero.jpg",
-    heroProductPrice: 6800,
     reason: "Unrivalled light throw with zero dashboard bulb warnings or radio interference."
   },
   {
@@ -176,11 +120,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "2012 – 2016",
     headlight: "Low: 9006 · High: 9005",
     fog: "H11",
-    topRecommendedSku: "002 Mother 6-Copper",
-    heroProductSlug: "mother-6-copper-led-headlights",
-    heroProductName: "Mother 6-Copper 35,000 LM Extreme Headlight",
-    heroProductImage: "/images/products/mother-6-copper-ai-hero.jpg",
-    heroProductPrice: 6499,
     reason: "Immediate night vision upgrade with 12,000 RPM turbo cooling."
   },
   {
@@ -189,11 +128,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "2009 – 2021",
     headlight: "H4 (Dual Beam)",
     fog: "H11",
-    topRecommendedSku: "008 Y6 Mini Projector",
-    heroProductSlug: "y6-projector-led-h4",
-    heroProductName: "Y6 H4 Laser Cut-Off Mini Projector Lens",
-    heroProductImage: "/images/products/y6-projector-ai-hero.jpg",
-    heroProductPrice: 4999,
     reason: "Perfect horizontal beam cutoff. Replaces old City halogen light with luxury projector output."
   },
   {
@@ -202,11 +136,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "2021 – Present",
     headlight: "H4 (Dual Beam)",
     fog: "H11",
-    topRecommendedSku: "001 Rego Racing 4-Copper",
-    heroProductSlug: "rego-racing-led-headlights",
-    heroProductName: "Rego Racing 4-Copper 260W German Tech",
-    heroProductImage: "/images/products/rego-racing-ai-hero.jpg",
-    heroProductPrice: 5899,
     reason: "Preserves warranty with 100% plug & play fitment. No wire splicing required."
   },
 
@@ -217,11 +146,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "2019 – Present",
     headlight: "Low/High: 9005 (HB3)",
     fog: "H11",
-    topRecommendedSku: "002 Mother 6-Copper",
-    heroProductSlug: "mother-6-copper-led-headlights",
-    heroProductName: "Mother 6-Copper 35,000 LM Extreme Headlight",
-    heroProductImage: "/images/products/mother-6-copper-ai-hero.jpg",
-    heroProductPrice: 6499,
     reason: "Replaces yellow halogen projection with blazing 35,000 LM pure diamond white light."
   },
   {
@@ -230,11 +154,6 @@ const FITMENT_DATABASE: VehicleSpec[] = [
     years: "2020 – Present",
     headlight: "Low/High: 9005 (HB3)",
     fog: "N/A",
-    topRecommendedSku: "003 B-Pro 8-Copper",
-    heroProductSlug: "b-pro-8-copper-led-headlights",
-    heroProductName: "B-Pro 8-Copper Extreme Highway Beast",
-    heroProductImage: "/images/products/b-pro-8-copper-ai-hero.jpg",
-    heroProductPrice: 6800,
     reason: "Ultra long throw beam designed for crossover SUV ride height."
   }
 ];
@@ -293,15 +212,6 @@ export const VehicleSocketFinderHero: React.FC = () => {
   };
 
   const vehicleLabel = `${selectedMake} ${selectedModel}${selectedYear ? ` (${selectedYear})` : ""}`;
-
-  const whatsappOrderUrl = (vehicle: VehicleSpec) =>
-    `https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(
-      `Assalam-o-Alaikum Hasnain Auto! I want to order LED headlights for my car:\n` +
-      `• Car: ${vehicle.make} ${vehicle.model} (${selectedYear || vehicle.years})\n` +
-      `• Required Socket: ${vehicle.headlight}\n` +
-      `• Recommended Product: ${vehicle.heroProductName} (Rs. ${vehicle.heroProductPrice.toLocaleString()})\n` +
-      `• Please confirm 1-Year Warranty & Cash on Delivery!`
-    )}`;
 
   const whatsappAskUrl = `https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(
     `Assalam-o-Alaikum Hasnain Auto! Please confirm the LED headlight socket and best product for my car:\n` +
@@ -410,9 +320,9 @@ export const VehicleSocketFinderHero: React.FC = () => {
         {/* ─── Search result: fitment match ─── */}
         {searched && match && (
           <div className="max-w-4xl mx-auto mt-6 bg-white dark:bg-neutral-900 border border-red-600/30 dark:border-red-500/30 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-5 sm:p-6">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-              {/* Left: fitment data */}
-              <div className="lg:col-span-5 space-y-4">
+            <div className="grid grid-cols-1 gap-6 items-center">
+              {/* Fitment data */}
+              <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
                   <span className="text-xs font-mono uppercase text-emerald-600 dark:text-emerald-400 font-bold tracking-wider">
@@ -458,57 +368,18 @@ export const VehicleSocketFinderHero: React.FC = () => {
                     <strong>Rawalpindi / Islamabad Drivers:</strong> Free beam alignment at Hasnain Auto Saddar workshop!
                   </span>
                 </div>
+
+                <a
+                  href={whatsappAskUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-emerald-600/25 transition"
+                >
+                  <MessageCircle className="w-4 h-4 fill-white" />
+                  Order for {match.model} on WhatsApp
+                </a>
               </div>
 
-              {/* Right: recommended product card */}
-              <div className="lg:col-span-7 bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row gap-5 items-center">
-                <div className="relative w-36 h-36 sm:w-44 sm:h-44 bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-700 overflow-hidden shrink-0 flex items-center justify-center p-2">
-                  <Image
-                    src={match.heroProductImage}
-                    alt={match.heroProductName}
-                    fill
-                    className="object-contain p-2"
-                  />
-                </div>
-
-                <div className="flex-1 text-center sm:text-left">
-                  <div className="inline-block px-2.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-500/30 text-[10px] font-black uppercase tracking-wider mb-2">
-                    Top Recommended Kit
-                  </div>
-
-                  <h4 className="text-lg font-black text-neutral-900 dark:text-white leading-snug">
-                    {match.heroProductName}
-                  </h4>
-
-                  <div className="flex items-baseline justify-center sm:justify-start gap-2 my-2">
-                    <span className="text-2xl font-black text-neutral-900 dark:text-white">
-                      <span className="text-xs text-red-600 dark:text-red-400 mr-1">Rs.</span>
-                      {match.heroProductPrice.toLocaleString()}
-                    </span>
-                    <span className="text-xs text-neutral-500 dark:text-neutral-400">Pair • 1-Year Warranty</span>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row gap-2 mt-4">
-                    <a
-                      href={whatsappOrderUrl(match)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-emerald-600/25 transition"
-                    >
-                      <MessageCircle className="w-4 h-4 fill-white" />
-                      Order for {match.model} on WhatsApp
-                    </a>
-
-                    <Link
-                      href={`/product/${match.heroProductSlug}`}
-                      className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-700 dark:bg-neutral-700 dark:hover:bg-neutral-600 text-white text-xs font-bold transition"
-                    >
-                      <span>Full Specs</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         )}
