@@ -127,7 +127,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
               />
               <div className="flex flex-col leading-tight">
                 <span className="text-lg sm:text-xl font-black text-carbon-900 dark:text-white tracking-tighter uppercase">
-                  HASNAIN
+                  HASNAIN{" "}
                   <span className="text-red-brand">AUTO</span>
                 </span>
                 <span className="text-[8px] sm:text-[9px] text-amber-brand dark:text-amber-glow uppercase tracking-[0.12em] font-bold -mt-0.5">
