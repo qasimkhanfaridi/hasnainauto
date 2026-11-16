@@ -238,12 +238,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                 </Link>
               ))}
 
-              {/* Saddar Shop */}
+              {/* About Hasnain Auto — 2026-11-17 (sumair): renamed from "Visit Saddar Shop"; the /contact page covers more than address/contact. */}
               <Link
                 href="/contact"
                 className="ml-auto px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-brand hover:text-amber-500 dark:hover:text-amber-glow border-b-2 border-transparent hover:border-amber-brand transition-colors whitespace-nowrap"
               >
-                📍 Visit Saddar Shop
+                About Hasnain Auto
               </Link>
             </div>
           </div>
@@ -266,7 +266,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
             <div className="px-4 py-4 space-y-1">
               {[
                 { name: "Home", href: "/" },
-                { name: "Saddar Showroom", href: "/contact" },
+                { name: "About Hasnain Auto", href: "/contact" },
               ].map((link) => (
                 <Link
                   key={link.name}
