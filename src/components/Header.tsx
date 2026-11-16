@@ -44,11 +44,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  // Rebuild (2026-11-13): only LED Lights stays in the nav — Shop by Car,
+  // Rebuild (2026-11-13): only LED Lights stayed in the nav — Shop by Car,
   // Seat Covers, Floor Mats and Combo Deals were removed by the client.
-  const navCategories = [
-    { name: "LED Lights", href: "/shop?category=led-lights", ledNav: true },
-  ];
+  // 2026-11-16 (sumair): LED Lights tab removed too — it duplicated All LEDs
+  // (same /shop?category=led-lights destination) and served no purpose.
+  const navCategories: { name: string; href: string; ledNav?: boolean }[] = [];
 
   return (
     <>
@@ -256,7 +256,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
             <div className="px-4 py-4 space-y-1">
               {[
                 { name: "Home", href: "/" },
-                { name: "LED Lights", href: "/shop?category=led-lights" },
                 { name: "Saddar Showroom", href: "/contact" },
               ].map((link) => (
                 <Link
