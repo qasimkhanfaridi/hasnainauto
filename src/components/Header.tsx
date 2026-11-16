@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { 
   Search, 
@@ -107,6 +108,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
 
             {/* ─── Logo ─── */}
             <Link href="/" className="flex items-center gap-2 shrink-0">
+              <Image
+                src="/images/hasnain-auto-logo.png"
+                alt="Hasnain Auto — Decoration Accessories"
+                width={44}
+                height={44}
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full shrink-0"
+                priority
+              />
               <div className="flex flex-col leading-tight">
                 <span className="text-lg sm:text-xl font-black text-carbon-900 dark:text-white tracking-tighter uppercase">
                   HASNAIN
