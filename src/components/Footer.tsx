@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin, Phone, MessageCircle, Clock, ChevronRight } from "lucide-react";
 import { BUSINESS_CONFIG } from "@/config/business";
 import { CATEGORIES_DATA } from "@/data/products";
@@ -14,13 +15,22 @@ export const Footer: React.FC = () => {
           {/* Brand Col */}
           <div className="lg:col-span-4 space-y-3">
             {/* Logo */}
-            <div className="flex flex-col leading-tight">
-              <span className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">
-                HASNAIN<span className="text-red-brand">AUTO</span>
-              </span>
-              <span className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-[0.15em] font-medium">
-                DECORATION ACCESSORIES
-              </span>
+            <div className="flex items-center gap-3">
+              <Image
+                src="/images/hasnain-auto-logo.png"
+                alt="Hasnain Auto — Decoration Accessories"
+                width={64}
+                height={64}
+                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full shrink-0"
+              />
+              <div className="flex flex-col leading-tight">
+                <span className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">
+                  HASNAIN<span className="text-red-brand">AUTO</span>
+                </span>
+                <span className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-[0.15em] font-medium">
+                  DECORATION ACCESSORIES
+                </span>
+              </div>
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed max-w-sm">
               Premier automotive accessories showroom in Saddar, Rawalpindi.
