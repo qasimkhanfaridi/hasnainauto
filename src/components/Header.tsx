@@ -107,24 +107,16 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
             </button>
 
             {/* ─── Logo ─── */}
-            <Link href="/" className="flex items-center gap-2 shrink-0">
+            {/* 2026-11-17 (sumair): new luxury logo — full lockup (car + HASNAIN AUTO) as the header mark; footer keeps the circular badge. */}
+            <Link href="/" className="flex items-center shrink-0">
               <Image
-                src="/images/hasnain-auto-logo.png"
+                src="/images/hasnain-auto-logo-header.jpg"
                 alt="Hasnain Auto — Decoration Accessories"
-                width={44}
-                height={44}
-                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full shrink-0"
+                width={172}
+                height={96}
+                className="h-12 w-auto rounded-lg shrink-0"
                 priority
               />
-              <div className="flex flex-col leading-tight">
-                <span className="text-lg sm:text-xl font-black text-carbon-900 dark:text-white tracking-tighter uppercase">
-                  HASNAIN
-                  <span className="text-red-brand">AUTO</span>
-                </span>
-                <span className="text-[8px] sm:text-[9px] text-amber-brand dark:text-amber-glow uppercase tracking-[0.12em] font-bold -mt-0.5">
-                  LED Lights · Saddar Rawalpindi
-                </span>
-              </div>
             </Link>
 
             {/* ─── Desktop Search Bar ─── */}
