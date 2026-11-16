@@ -176,7 +176,7 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({ pr
             {/* Price */}
             <div className="p-4 rounded-xl bg-gray-50 border border-gray-200 flex items-baseline justify-between transition-all duration-300 hover:shadow-md hover:border-gray-300">
               <div>
-                <span className="text-2xl font-black text-gray-900">
+                <span className="text-xl font-black text-gray-900">
                   {BUSINESS_CONFIG.currency.symbol} {currentPrice.toLocaleString()}
                 </span>
                 {product.salePrice && (

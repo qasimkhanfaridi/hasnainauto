@@ -301,7 +301,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   <Sparkles className="w-3.5 h-3.5 text-red-brand" />
                   <span>{product.brand || "Hasnain Auto"} • {product.subcategory || product.category}</span>
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-black text-gray-900 leading-tight">
+                <h1 className="text-xl sm:text-2xl font-black text-gray-900 leading-tight">
                   {product.name}
                 </h1>
 
@@ -327,7 +327,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 <div className="flex items-baseline justify-between">
                   <div>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-black text-gray-900">
+                      <span className="text-xl font-black text-gray-900">
                         {BUSINESS_CONFIG.currency.symbol} {currentTotalPrice.toLocaleString()}
                       </span>
                       {product.originalPrice && (product.originalPrice > currentTotalPrice) && (
