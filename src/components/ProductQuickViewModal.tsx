@@ -28,6 +28,15 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({ pr
     product?.variants?.[0]?.options?.[0] || ""
   );
 
+  // 2026-11-17 (sumair): close the modal with the Escape key, same as the cart + search. This hook MUST stay before the early return below, or the build fails.
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   if (!product) return null;
 
   const currentPrice = product.salePrice || product.price;
@@ -46,15 +55,6 @@ export const ProductQuickViewModal: React.FC<ProductQuickViewModalProps> = ({ pr
     onClose();
     openCart();
   };
-
-  // 2026-11-17 (sumair): close the modal with the Escape key, same as the cart + search. Guard AFTER all hooks (never before).
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
 
   // 2026-11-17 (sumair): image carousel — arrows + dots, like the JS Auto quick view.
   const imageCount = product.images.length;
