@@ -578,8 +578,8 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
 
           {/* Detailed Tabs / Specifications */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16">
-            {/* Description & Features */}
-            <div className="md:col-span-8 space-y-6 p-6 sm:p-8 rounded-3xl bg-white border border-gray-200 shadow-sm">
+            {/* Description & Features — 2026-11-17 (sumair): the "Order Through WhatsApp" sidebar box is removed; the WhatsApp icon button next to Add to Cart already covers it, so the box is redundant on every product page. */}
+            <div className="md:col-span-12 space-y-6 p-6 sm:p-8 rounded-3xl bg-white border border-gray-200 shadow-sm">
               <div>
                 <h3 className="text-lg font-black text-gray-900 uppercase tracking-wider mb-3">
                   Product Overview
@@ -616,28 +616,6 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               </div>
             </div>
 
-            {/* Right Quick Summary */}
-            <div className="md:col-span-4 space-y-4">
-              <div className="p-6 rounded-3xl bg-white border border-gray-200 shadow-sm space-y-4">
-                <h3 className="text-sm font-black text-gray-900 uppercase tracking-wider">
-                  Order Through WhatsApp
-                </h3>
-                <p className="text-xs text-gray-500">
-                  Prefer discussing before placing an order? Send a WhatsApp message to confirm stock, custom fitment for your vehicle, and workshop appointment.
-                </p>
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3 px-4 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-carbon-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-whatsapp-glow transition-all"
-                >
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true">
-                    <path d={WHATSAPP_PATH} />
-                  </svg>
-                  <span>Chat With Showroom</span>
-                </a>
-              </div>
-            </div>
           </div>
 
           {/* Related Products */}
