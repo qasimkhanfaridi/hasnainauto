@@ -497,22 +497,22 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 </a>
               </div>
 
-              {/* Pakistani Payment & Trust Badges */}
+              {/* Pakistani Payment & Trust Badges — 2026-11-17 (sumair): hover transitions on the 4 boxes. */}
               <div className="grid grid-cols-4 gap-2 pt-4 border-t border-white/5 text-[10px] text-silver-400">
-                <div className="flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900/60 border border-white/5">
-                  <ShieldCheck className="w-4 h-4 text-red-brand mb-1" />
+                <div className="group flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900/60 border border-white/5 transition-all duration-300 hover:-translate-y-1 hover:border-red-brand/40 hover:shadow-lg">
+                  <ShieldCheck className="w-4 h-4 text-red-brand mb-1 transition-transform duration-300 group-hover:scale-110" />
                   <span className="font-bold text-white">{product.warranty ? "Warranty" : "100% Fit"}</span>
                 </div>
-                <div className="flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900/60 border border-white/5">
-                  <Wrench className="w-4 h-4 text-amber-brand mb-1" />
+                <div className="group flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900/60 border border-white/5 transition-all duration-300 hover:-translate-y-1 hover:border-red-brand/40 hover:shadow-lg">
+                  <Wrench className="w-4 h-4 text-amber-brand mb-1 transition-transform duration-300 group-hover:scale-110" />
                   <span className="font-bold text-white">Saddar Fitting</span>
                 </div>
-                <div className="flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900/60 border border-white/5">
-                  <Truck className="w-4 h-4 text-emerald-400 mb-1" />
+                <div className="group flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900/60 border border-white/5 transition-all duration-300 hover:-translate-y-1 hover:border-red-brand/40 hover:shadow-lg">
+                  <Truck className="w-4 h-4 text-emerald-400 mb-1 transition-transform duration-300 group-hover:scale-110" />
                   <span className="font-bold text-white">COD Available</span>
                 </div>
-                <div className="flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900/60 border border-white/5">
-                  <CreditCard className="w-4 h-4 text-cyan-400 mb-1" />
+                <div className="group flex flex-col items-center text-center p-2 rounded-xl bg-carbon-900/60 border border-white/5 transition-all duration-300 hover:-translate-y-1 hover:border-red-brand/40 hover:shadow-lg">
+                  <CreditCard className="w-4 h-4 text-cyan-400 mb-1 transition-transform duration-300 group-hover:scale-110" />
                   <span className="font-bold text-white">Raast / JazzCash</span>
                 </div>
               </div>

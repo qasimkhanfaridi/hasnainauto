@@ -179,28 +179,30 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
               COD Free Delivery
             </span>
           </div>
-          <button
-            type="button"
-            onClick={handleDirectOrder}
-            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-black transition-all shadow-md shadow-red-600/25"
-            aria-label="Order now"
-            title="Add to cart & Checkout"
-          >
-            <ShoppingCart className="w-3.5 h-3.5" />
-            <span>Order</span>
-          </button>
+          {/* Order + WhatsApp icon — 2026-11-17 (sumair): like the JS Auto card — compact green WhatsApp icon button next to Order. */}
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button
+              type="button"
+              onClick={handleDirectOrder}
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-black transition-all shadow-md shadow-red-600/25"
+              aria-label="Order now"
+              title="Add to cart & Checkout"
+            >
+              <ShoppingCart className="w-3.5 h-3.5" />
+              <span>Order</span>
+            </button>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 hover:bg-emerald-100 transition-all shadow-sm"
+              aria-label="Order on WhatsApp"
+              title="Order on WhatsApp"
+            >
+              <MessageCircle className="w-4 h-4 fill-emerald-600" />
+            </a>
+          </div>
         </div>
-
-        {/* WhatsApp 1-Click Order */}
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white text-xs font-black uppercase tracking-wider transition-all shadow-lg shadow-green-950/40"
-        >
-          <MessageCircle className="w-4 h-4 fill-white" />
-          WhatsApp COD Order
-        </a>
       </div>
     </div>
   );
