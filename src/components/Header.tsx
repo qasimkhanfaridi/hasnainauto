@@ -107,16 +107,33 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
             </button>
 
             {/* ─── Logo ─── */}
-            {/* 2026-11-17 (sumair): new luxury logo — full lockup (car + HASNAIN AUTO) as the header mark; footer keeps the circular badge. */}
-            <Link href="/" className="flex items-center shrink-0">
+            {/* 2026-11-17 (sumair): header logo fixed — car mark from the new luxury logo + big HASNAIN AUTO text (the full lockup read too small at 48px). Mobile gets the square car-front mark, desktop the wide car mark. Footer keeps the circular badge. */}
+            <Link href="/" className="flex items-center gap-2 shrink-0">
               <Image
-                src="/images/hasnain-auto-logo-header.jpg"
+                src="/images/hasnain-auto-logo-mark-square.jpg"
                 alt="Hasnain Auto — Decoration Accessories"
-                width={172}
-                height={96}
-                className="h-12 w-auto rounded-lg shrink-0"
+                width={80}
+                height={80}
+                className="h-10 w-10 rounded-lg shrink-0 sm:hidden"
                 priority
               />
+              <Image
+                src="/images/hasnain-auto-logo-mark.jpg"
+                alt="Hasnain Auto — Decoration Accessories"
+                width={302}
+                height={96}
+                className="hidden sm:block h-12 w-auto rounded-lg shrink-0"
+                priority
+              />
+              <div className="flex flex-col leading-tight">
+                <span className="text-lg sm:text-xl font-black text-carbon-900 dark:text-white tracking-tighter uppercase">
+                  HASNAIN
+                  <span className="text-red-brand">AUTO</span>
+                </span>
+                <span className="text-[8px] sm:text-[9px] text-amber-brand dark:text-amber-glow uppercase tracking-[0.12em] font-bold -mt-0.5">
+                  LED Lights · Saddar Rawalpindi
+                </span>
+              </div>
             </Link>
 
             {/* ─── Desktop Search Bar ─── */}
