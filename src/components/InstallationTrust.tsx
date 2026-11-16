@@ -33,6 +33,8 @@ export const InstallationTrust: React.FC = () => {
 
   return (
     <section className="py-16 sm:py-20 bg-surface-200 border-b border-gray-200 relative">
+      {/* 2026-11-17 (sumair): staggered fade-up entrance for the 5 step boxes. Fill mode "backwards" so the hover lift still works after the animation ends. */}
+      <style>{`@keyframes install-fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }`}</style>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-brand/10 border border-amber-brand/30 text-amber-brand text-xs font-bold uppercase tracking-widest">
@@ -51,13 +53,17 @@ export const InstallationTrust: React.FC = () => {
           {steps.map((s, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-2xl bg-white border border-gray-200 hover:border-amber-brand/40 transition-all flex flex-col justify-between space-y-4 group shadow-sm"
+              style={{
+                animation: "install-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards",
+                animationDelay: `${idx * 90}ms`,
+              }}
+              className="p-5 rounded-2xl bg-white border border-gray-200 hover:border-amber-brand/40 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl flex flex-col justify-between space-y-4 group shadow-sm"
             >
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-black text-amber-brand/40 group-hover:text-amber-brand transition-colors">
                   {s.step}
                 </span>
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 opacity-90" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 opacity-90 transition-transform duration-300 group-hover:scale-125" />
               </div>
               <div>
                 <h3 className="text-sm font-bold text-carbon-900 uppercase tracking-wide group-hover:text-amber-brand transition-colors">
