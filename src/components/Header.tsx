@@ -218,7 +218,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                 <span>Home</span>
               </Link>
 
-              {/* All Products — 2026-11-16: /shop now (was /shop?category=led-lights; that filter was removed from the shop UI) */}
+              {/* All Products — 2026-11-17 (sumair): renamed from "All LEDs"; /shop is now the All Products page (Novsight-style rebuild). */}
               <Link
                 href="/shop"
                 className={`flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${
@@ -227,7 +227,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                     : "text-gray-600 dark:text-gray-300 border-transparent hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5"
                 }`}
               >
-                All LEDs
+                All Products
               </Link>
 
               {navCategories.map((item) => (
