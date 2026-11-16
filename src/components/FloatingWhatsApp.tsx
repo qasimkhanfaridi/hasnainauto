@@ -1,16 +1,45 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { BadgeCheck, X } from "lucide-react";
 import { BUSINESS_CONFIG } from "@/config/business";
 
-// NOTE (2026-11-16): the AuxLEDs-style social-proof pop-up ("X purchased
-// [product]") is PAUSED — all products were removed from the site, so there
-// are no products to show in it. It comes back once the new 26 products are
-// identified, with their real names and photos. Only the floating WhatsApp
-// button below stays live.
+/**
+ * Social-proof pop-up (AuxLEDs style, bottom-left) + floating WhatsApp button.
+ * Pop-up: "[Name], [City] purchased [product], [X] minutes ago, Verified" with
+ * the product's real photo. Cycle: show 6s → slide out → 3s gap → next entry.
+ * Sample buyer names/cities (same as the first version) — real product names
+ * and photos from the new 26 products (2026-11-16).
+ * Paused 2026-11-16 while all products were removed; restored 2026-11-16
+ * with the new products (sumair: "ye pehly version me bhi tha").
+ */
+interface RecentPurchase {
+  name: string;
+  city: string;
+  product: string;
+  image: string;
+  minutesAgo: number;
+}
+
+const RECENT_PURCHASES: RecentPurchase[] = [
+  { name: "Ahmed", city: "Rawalpindi", product: "Mother 6 Copper LED Headlights", image: "/images/products/mother-6-copper-led-headlights-1.jpg", minutesAgo: 52 },
+  { name: "Bilal", city: "Islamabad", product: "REGO Racing H4 LED Headlights", image: "/images/products/rego-racing-h4-led-headlights-1.jpg", minutesAgo: 68 },
+  { name: "Usman", city: "Lahore", product: "Y6 H4 LED Mini Projector Lens", image: "/images/products/y6-h4-mini-projector-lens-1.jpg", minutesAgo: 47 },
+  { name: "Hassan", city: "Karachi", product: "KTM Ai LED Headlight", image: "/images/products/ktm-ai-led-headlight-1.jpg", minutesAgo: 74 },
+  { name: "Ali", city: "Faisalabad", product: "SH Pro Two-Colour LED Headlight", image: "/images/products/sh-pro-two-colour-led-headlight-1.jpg", minutesAgo: 59 },
+  { name: "Hamza", city: "Multan", product: "B PRO 8 Copper LED Headlights", image: "/images/products/b-pro-8-copper-led-headlights-1.jpg", minutesAgo: 63 },
+  { name: "Zain", city: "Peshawar", product: "Golden Box REGO LED Headlights", image: "/images/products/rego-4-copper-h4-golden-box-1.jpg", minutesAgo: 55 },
+  { name: "Fahad", city: "Saddar Rawalpindi", product: "LED Off-Road Light Bar (5-Lens)", image: "/images/products/led-off-road-light-bar-5-lens-1.jpg", minutesAgo: 71 },
+  { name: "Danish", city: "Rawalpindi", product: "Super Bright T10 LED Bulbs", image: "/images/products/super-bright-t10-led-bulbs-1.jpg", minutesAgo: 44 },
+  { name: "Saad", city: "Islamabad", product: "Premium Auto LED Interior Light Kit", image: "/images/products/premium-auto-led-interior-light-kit-1.jpg", minutesAgo: 79 },
+];
 
 export const FloatingWhatsApp: React.FC = () => {
   const [footerOrderVisible, setFooterOrderVisible] = useState(false);
+  const [purchaseIndex, setPurchaseIndex] = useState(0);
+  const [purchaseVisible, setPurchaseVisible] = useState(true);
+  const [purchaseDismissed, setPurchaseDismissed] = useState(false);
 
   // Smart-hide (JS Auto rule): hide the floating button while the footer's
   // WhatsApp Now order button is on screen, so two WhatsApp buttons never
@@ -26,8 +55,73 @@ export const FloatingWhatsApp: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Pop-up cycle: each entry shows 6s, slides out, 3s gap, next entry.
+  useEffect(() => {
+    if (purchaseDismissed) return;
+    let hideId = 0;
+    const cycleId = window.setInterval(() => {
+      setPurchaseIndex((i) => (i + 1) % RECENT_PURCHASES.length);
+      setPurchaseVisible(true);
+      window.clearTimeout(hideId);
+      hideId = window.setTimeout(() => setPurchaseVisible(false), 6000);
+    }, 9000);
+    hideId = window.setTimeout(() => setPurchaseVisible(false), 6000);
+    return () => {
+      window.clearInterval(cycleId);
+      window.clearTimeout(hideId);
+    };
+  }, [purchaseDismissed]);
+
+  const purchase = RECENT_PURCHASES[purchaseIndex];
+
   return (
-    <div
+    <>
+      {/* Social-proof pop-up — bottom-left, never covers the WhatsApp button */}
+      {!purchaseDismissed && (
+        <div
+          className={`fixed bottom-20 lg:bottom-6 left-4 z-40 transition-all duration-500 ${
+            purchaseVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 pointer-events-none"
+          }`}
+          aria-live="polite"
+        >
+          <div className="relative flex items-start gap-3 w-[320px] max-w-[calc(100vw-2rem)] rounded-2xl bg-white shadow-xl ring-1 ring-gray-200 p-3">
+            <div className="relative w-14 h-14 shrink-0 rounded-xl overflow-hidden bg-gray-100">
+              <Image
+                src={purchase.image}
+                alt={purchase.product}
+                fill
+                sizes="56px"
+                className="object-cover"
+              />
+            </div>
+            <div className="min-w-0 flex-1 pr-5">
+              <p className="text-xs text-gray-600 leading-snug">
+                <span className="font-bold text-gray-900">{purchase.name}</span>, {purchase.city} purchased
+              </p>
+              <p className="text-xs font-bold text-gray-900 leading-snug line-clamp-2 mt-0.5">
+                {purchase.product}
+              </p>
+              <p className="text-[11px] text-gray-500 mt-1 flex items-center gap-1">
+                {purchase.minutesAgo} minutes ago
+                <span className="inline-flex items-center gap-0.5 text-emerald-600 font-semibold">
+                  <BadgeCheck className="w-3.5 h-3.5" />
+                  Verified
+                </span>
+              </p>
+            </div>
+            <button
+              type="button"
+              aria-label="Dismiss purchase notification"
+              onClick={() => setPurchaseDismissed(true)}
+              className="absolute top-2 right-2 p-1 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div
         className={`fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-40 flex items-end gap-3 transition-all duration-300 ${
           footerOrderVisible ? "translate-y-4 opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
         }`}
@@ -47,5 +141,6 @@ export const FloatingWhatsApp: React.FC = () => {
           </svg>
         </a>
       </div>
+    </>
   );
 };
