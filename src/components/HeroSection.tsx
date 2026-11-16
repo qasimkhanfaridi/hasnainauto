@@ -45,13 +45,10 @@ const HERO_SLIDES = [
   },
 ] as const;
 
-/* Hot Deals: real products, prices and images from src/data/products.ts */
-const HOT_DEAL_SLUGS = [
-  "led-headlight-projector",
-  "7d-floor-mats-premium",
-  "seat-cover-floor-mat-combo",
-  "rego-racing-led-headlights",
-] as const;
+/* Hot Deals: real products, prices and images from src/data/products.ts.
+   Emptied 2026-11-16 — all products removed from the site; new deals will be
+   listed here once the new 26 products are identified. */
+const HOT_DEAL_SLUGS: readonly string[] = [];
 
 const HOT_DEALS = HOT_DEAL_SLUGS.map((slug) => PRODUCTS_DATA.find((p) => p.slug === slug)).filter(
   (p): p is NonNullable<typeof p> => Boolean(p)
@@ -336,9 +333,11 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
           </HeroCarousel>
         </div>
 
-        <div className="w-full shrink-0 bg-white p-3 dark:bg-gray-950 sm:p-4 lg:w-[320px] lg:p-4 xl:w-[340px]">
-          <HotDealsCard />
-        </div>
+        {HOT_DEALS.length > 0 && (
+          <div className="w-full shrink-0 bg-white p-3 dark:bg-gray-950 sm:p-4 lg:w-[320px] lg:p-4 xl:w-[340px]">
+            <HotDealsCard />
+          </div>
+        )}
       </div>
 
       {/* Clean Compact Trust Bar */}
