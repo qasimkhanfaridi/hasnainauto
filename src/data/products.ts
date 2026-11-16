@@ -715,3 +715,94 @@ export const PRODUCTS_DATA: Product[] = [
 // Active products & categories exported for components & SEO
 export const ACTIVE_PRODUCTS_DATA = PRODUCTS_DATA.filter((p) => !p.hidden);
 export const ACTIVE_CATEGORIES_DATA = CATEGORIES_DATA.filter((c) => !c.hidden);
+
+// TOP COLLECTIONS (2026-11-16, sumair): the 15 light-type collections from the
+// homepage, now also the shop's categories. Each collection lists the product
+// slugs that belong to it — explicit, never guessed. A dual-beam H4 kit
+// belongs to both Low Beam and High Beam (that is what dual-beam means).
+// Collections with no products yet stay empty and show "Coming soon".
+export interface CollectionInfo {
+  id: string;
+  name: string;
+}
+
+export const COLLECTIONS_LIST: CollectionInfo[] = [
+  { id: "welcome-lights", name: "Welcome Lights" },
+  { id: "ambient-lights", name: "Ambient Lights" },
+  { id: "auxpods", name: "Pods - Auxiliary Lighting" },
+  { id: "low-beam", name: "Low Beam" },
+  { id: "high-beam", name: "High Beam" },
+  { id: "fog-lights", name: "Fog Lights" },
+  { id: "parking-lights", name: "Parking Lights" },
+  { id: "cabin-lights", name: "Cabin Lights" },
+  { id: "turn-signal", name: "Turn Signal" },
+  { id: "dynamic-side-mirrors", name: "Dynamic Side Mirrors" },
+  { id: "license-plate", name: "License Plate" },
+  { id: "brake-lights", name: "Brake Lights" },
+  { id: "fender-lights", name: "Fender Lights" },
+  { id: "reverse-lights", name: "Reverse Lights" },
+  { id: "motorcycle-leds", name: "Motorcycle Leds" },
+];
+
+export const COLLECTION_PRODUCT_SLUGS: Record<string, string[]> = {
+  "welcome-lights": [],
+  "ambient-lights": ["super-bright-led-interior-dome-lights", "premium-auto-led-interior-light-kit"],
+  "auxpods": ["4x4-led-off-road-light-bar-4-lens", "led-off-road-light-bar-5-lens"],
+  "low-beam": [
+    "h11-mini-projector-lens-led",
+    "sh-pro-two-colour-led-headlight",
+    "ktm-ai-led-headlight",
+    "rego-racing-h4-led-headlights",
+    "y6-h4-mini-projector-lens",
+    "rego-4-copper-h4-golden-box",
+    "copper-led-headlights-h4-wooden-box",
+    "led-headlight-auto-intelligent-system-v150",
+    "lenso-led-headlight-bulbs",
+    "rego-racing-copper-led-headlights-6500k",
+    "mother-6-copper-led-headlights",
+    "b-pro-8-copper-led-headlights",
+    "mother-led-headlights-green",
+  ],
+  "high-beam": [
+    "sh-pro-two-colour-led-headlight",
+    "ktm-ai-led-headlight",
+    "rego-racing-h4-led-headlights",
+    "y6-h4-mini-projector-lens",
+    "rego-4-copper-h4-golden-box",
+    "copper-led-headlights-h4-wooden-box",
+    "led-headlight-auto-intelligent-system-v150",
+    "lenso-led-headlight-bulbs",
+    "rego-racing-copper-led-headlights-6500k",
+    "mother-6-copper-led-headlights",
+    "b-pro-8-copper-led-headlights",
+    "mother-led-headlights-green",
+  ],
+  "fog-lights": ["4x4-led-off-road-light-bar-4-lens", "led-off-road-light-bar-5-lens"],
+  "parking-lights": [
+    "super-bright-t10-led-bulbs",
+    "premium-t10-led-bulbs-ultra-bright",
+    "t10-led-bulbs-premium",
+    "premium-t10-led-canbus-bulbs-8000k",
+    "premium-t10-led-bulbs-ultra-bright-ceramic",
+    "t10-led-bulbs-super-bright",
+  ],
+  "cabin-lights": [
+    "super-bright-led-interior-dome-lights",
+    "premium-auto-led-interior-light-kit",
+    "led-festoon-bulbs-31mm-21-led",
+    "premium-led-festoon-bulbs-cob",
+  ],
+  "turn-signal": [],
+  "dynamic-side-mirrors": [],
+  "license-plate": [],
+  "brake-lights": [],
+  "fender-lights": [],
+  "reverse-lights": [],
+  "motorcycle-leds": ["rego-motorcycle-led-headlight"],
+};
+
+/** Live products in a collection (slugs that no longer exist are ignored). */
+export const collectionProducts = (collectionId: string): Product[] => {
+  const slugs = COLLECTION_PRODUCT_SLUGS[collectionId] ?? [];
+  return ACTIVE_PRODUCTS_DATA.filter((p) => slugs.includes(p.slug));
+};
