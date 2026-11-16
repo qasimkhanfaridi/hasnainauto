@@ -8,15 +8,24 @@ import { ProductCard } from "./ProductCard";
 import { ProductQuickViewModal } from "./ProductQuickViewModal";
 
 /**
- * BEST SELLERS — the 5 hottest products, ranked by verified-review count.
- * Carousel slider (scroll-snap + arrows + swipe): all cards share one
- * height in a single line, and the red "Limited — On Sale" pill now sits
- * INSIDE the product image instead of sticking out above the card.
+ * BEST SELLERS — 5 hand-picked flagship LEDs from the new 26 products
+ * (2026-11-16, sumair: new products, not old). Explicit slug list: the
+ * products have no verified reviews yet, so ranking by review count would
+ * hide the section. Carousel slider (scroll-snap + arrows + swipe): all
+ * cards share one height in a single line, and the red "Limited — On Sale"
+ * pill sits INSIDE the product image instead of sticking out above the card.
  */
-const BEST_SELLERS: Product[] = [...ACTIVE_PRODUCTS_DATA]
-  .filter((product) => product.reviewCount > 0 && Boolean(product.badge))
-  .sort((a, b) => b.reviewCount - a.reviewCount)
-  .slice(0, 5);
+const BEST_SELLER_SLUGS: readonly string[] = [
+  "y6-h4-mini-projector-lens",
+  "lenso-led-headlight-bulbs",
+  "sh-pro-two-colour-led-headlight",
+  "led-headlight-auto-intelligent-system-v150",
+  "premium-auto-led-interior-light-kit",
+];
+
+const BEST_SELLERS: Product[] = BEST_SELLER_SLUGS.map((slug) =>
+  ACTIVE_PRODUCTS_DATA.find((p) => p.slug === slug)
+).filter((p): p is Product => Boolean(p));
 
 export const HomeProductsShowcase: React.FC = () => {
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
@@ -60,7 +69,7 @@ export const HomeProductsShowcase: React.FC = () => {
               Best Sellers
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1 max-w-xl">
-              Our most-loved upgrades — ranked by verified reviews. Every one is on sale while stock lasts.
+              Hand-picked flagship LEDs — our most-loved upgrades. Every one is on sale while stock lasts.
             </p>
           </div>
 
