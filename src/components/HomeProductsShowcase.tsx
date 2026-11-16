@@ -19,6 +19,9 @@ const BEST_SELLERS: Product[] = [...ACTIVE_PRODUCTS_DATA]
   .slice(0, 5);
 
 export const HomeProductsShowcase: React.FC = () => {
+  // No products on the site right now (all removed 2026-11-16) — hide the section.
+  if (BEST_SELLERS.length === 0) return null;
+
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
