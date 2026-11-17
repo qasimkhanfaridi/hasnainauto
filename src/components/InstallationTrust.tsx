@@ -81,7 +81,17 @@ export const InstallationTrust: React.FC = () => {
           ))}
         </div>
 
-        <div className="rounded-3xl bg-white border border-gray-200 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-card">
+        {/* Visiting banner — 2026-11-18 (sumair): same transitions as the 5 step
+            boxes above: staggered fade-up entrance (450ms, right after box 05)
+            + hover lift/shadow. Fill mode "backwards" so the animation's final
+            transform does not override the hover lift after it ends. */}
+        <div
+          style={{
+            animation: "install-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards",
+            animationDelay: "450ms",
+          }}
+          className="rounded-3xl bg-white border border-gray-200 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-amber-brand/40"
+        >
           <div className="space-y-1 text-center md:text-left">
             <div className="text-xs font-bold text-amber-brand uppercase tracking-wider flex items-center justify-center md:justify-start gap-1.5">
               <MapPin className="w-4 h-4" />
@@ -102,7 +112,7 @@ export const InstallationTrust: React.FC = () => {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3.5 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-white font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-whatsapp-glow transition-all"
+              className="px-6 py-3.5 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-white font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-whatsapp-glow transition-all duration-300 hover:-translate-y-0.5"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true"><path d={WHATSAPP_PATH} /></svg>
               <span>Book on WhatsApp</span>
@@ -112,7 +122,7 @@ export const InstallationTrust: React.FC = () => {
               href={BUSINESS_CONFIG.googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-3.5 rounded-xl bg-white hover:bg-gray-50 text-carbon-900 font-bold text-xs uppercase tracking-wider flex items-center gap-2 border border-gray-300 transition-colors"
+              className="px-5 py-3.5 rounded-xl bg-white hover:bg-gray-50 text-carbon-900 font-bold text-xs uppercase tracking-wider flex items-center gap-2 border border-gray-300 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
             >
               <MapPin className="w-4 h-4 text-amber-brand" />
               <span>Get Directions</span>
