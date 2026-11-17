@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { MessageCircle, Send, CheckCircle2, Phone, MapPin, Clock } from "lucide-react";
+import { Send, CheckCircle2, Phone, MapPin, Clock } from "lucide-react";
 import { BUSINESS_CONFIG } from "@/config/business";
 import { ContactSection } from "@/components/ContactSection";
 import { InstallationTrust } from "@/components/InstallationTrust";
@@ -41,6 +41,11 @@ export default function ContactPage() {
 
   return (
     <div className="w-full bg-surface-100 dark:bg-carbon-950 min-h-screen py-8 sm:py-12 transition-colors">
+      {/* Card entrance (2026-11-18, sumair): same fade-up as the install boxes
+          below — own keyframe name so it never clashes with InstallationTrust's
+          install-fade-up on this same page. Fill mode "backwards" so the
+          animation's final transform does not override the hover lift. */}
+      <style>{`@keyframes contact-fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }`}</style>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <div className="text-xs text-gray-500 dark:text-silver-400 mb-2">
           <Link href="/" className="hover:underline">Home</Link> <span className="mx-1">/</span>{" "}
@@ -55,10 +60,16 @@ export default function ContactPage() {
 
         {/* Contact Form & Quick Info Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8">
-          {/* Inquiry Form */}
-          <div className="lg:col-span-7 bg-white dark:bg-carbon-900 rounded-3xl border border-gray-200 dark:border-white/10 p-6 sm:p-8 shadow-sm">
+          {/* Inquiry Form — transitions 2026-11-18 (sumair): fade-up entrance + hover lift/shadow. */}
+          <div
+            style={{
+              animation: "contact-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards",
+              animationDelay: "0ms",
+            }}
+            className="lg:col-span-7 bg-white dark:bg-carbon-900 rounded-3xl border border-gray-200 dark:border-white/10 p-6 sm:p-8 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-amber-brand/40"
+          >
             <div className="flex items-center gap-2 mb-2 text-red-brand text-xs font-bold uppercase tracking-wider">
-              <MessageCircle className="w-4 h-4" />
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true"><path d={WHATSAPP_PATH} /></svg>
               <span>Direct Customer Inquiry</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-black text-carbon-900 dark:text-white uppercase tracking-tight">
@@ -174,9 +185,15 @@ export default function ContactPage() {
             )}
           </div>
 
-          {/* Quick Contact Info Card */}
+          {/* Quick Contact Info Card — transitions 2026-11-18 (sumair): fade-up entrance (90ms after the form card) + hover lift/shadow. */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="p-6 rounded-3xl bg-white dark:bg-carbon-900 border border-gray-200 dark:border-white/10 shadow-sm space-y-4">
+            <div
+              style={{
+                animation: "contact-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards",
+                animationDelay: "90ms",
+              }}
+              className="p-6 rounded-3xl bg-white dark:bg-carbon-900 border border-gray-200 dark:border-white/10 shadow-sm space-y-4 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-amber-brand/40"
+            >
               <h3 className="text-sm font-black text-carbon-900 dark:text-white uppercase tracking-wider pb-3 border-b border-gray-100 dark:border-white/10">
                 Direct Contact Lines
               </h3>
