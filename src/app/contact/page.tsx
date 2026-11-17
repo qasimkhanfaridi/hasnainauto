@@ -51,7 +51,7 @@ export default function ContactPage() {
           <Link href="/" className="hover:underline">Home</Link> <span className="mx-1">/</span>{" "}
           <span className="text-red-brand font-semibold">Contact & Location</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-black text-carbon-900 dark:text-white uppercase tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-black text-carbon-900 dark:text-white uppercase tracking-tight">
           GET IN TOUCH WITH HASNAIN AUTO
         </h1>
         <p className="text-xs sm:text-sm text-gray-600 dark:text-silver-400 mt-1 max-w-2xl">
@@ -72,7 +72,7 @@ export default function ContactPage() {
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true"><path d={WHATSAPP_PATH} /></svg>
               <span>Direct Customer Inquiry</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black text-carbon-900 dark:text-white uppercase tracking-tight">
+            <h2 className="text-lg sm:text-xl font-black text-carbon-900 dark:text-white uppercase tracking-tight">
               SEND US A MESSAGE
             </h2>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 mb-6">

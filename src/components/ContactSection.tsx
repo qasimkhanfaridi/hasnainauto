@@ -10,6 +10,11 @@ const WHATSAPP_PATH =
 export const ContactSection: React.FC = () => {
   return (
     <section id="contact" className="py-16 sm:py-20 bg-white dark:bg-neutral-950 border-b border-gray-200 dark:border-neutral-800 relative">
+      {/* Details-card entrance (2026-11-18, sumair): same fade-up as the other
+          cards — own keyframe name so it never clashes with the contact page's
+          contact-fade-up. Fill mode "backwards" so the animation's final
+          transform does not override the hover lift. */}
+      <style>{`@keyframes walkin-fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }`}</style>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           <div className="lg:col-span-6 space-y-6">
@@ -35,7 +40,14 @@ export const ContactSection: React.FC = () => {
               </a>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 space-y-4 shadow-sm">
+            {/* Store details card — transitions 2026-11-18 (sumair): fade-up entrance + hover lift/shadow. */}
+            <div
+              style={{
+                animation: "walkin-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards",
+                animationDelay: "0ms",
+              }}
+              className="p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 space-y-4 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-red-600/40"
+            >
               <div className="flex items-start gap-3.5">
                 <div className="p-3 rounded-xl bg-gray-100 dark:bg-neutral-800 text-red-600 dark:text-red-400 border border-gray-200 dark:border-neutral-700 shrink-0">
                   <MapPin className="w-5 h-5" />
