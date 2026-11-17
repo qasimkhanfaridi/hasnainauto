@@ -13,6 +13,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { Product, ACTIVE_PRODUCTS_DATA, COLLECTIONS_LIST, COLLECTION_PRODUCT_SLUGS } from "@/data/products";
+import { productMatchesSocket } from "@/utils/productSpecs";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductQuickViewModal } from "@/components/ProductQuickViewModal";
 import { useVehicle } from "@/context/VehicleContext";
@@ -39,6 +40,7 @@ function ShopContent() {
   const modelParam = searchParams.get("model");
   const yearParam = searchParams.get("year");
   const compatibleParam = searchParams.get("compatible");
+  const socketParam = searchParams.get("socket");
 
   const { selectedVehicle, setSelectedVehicle, clearVehicle, isCompatible } = useVehicle();
 
@@ -94,19 +96,40 @@ function ShopContent() {
     router.replace(qs ? `${pathname}?${qs}` : pathname);
   };
 
-  const inStockCount = useMemo(
-    () => categoryProducts.filter((p) => p.inStock).length,
-    [categoryProducts]
+  // Active socket from ?socket= (homepage QUICK DIRECT SOCKETS chips link here).
+  // 2026-11-17 (sumair): these chips used to land on all 26 products — the old
+  // ?category=led-lights is not a collection any more, and ?socket= was ignored.
+  // Now the socket IS honoured: base set = category ∩ socket.
+  const activeSocket = useMemo(
+    () => (socketParam ? socketParam.toUpperCase() : null),
+    [socketParam]
   );
-  const outOfStockCount = categoryProducts.length - inStockCount;
+  const baseProducts = useMemo(() => {
+    if (!activeSocket) return categoryProducts;
+    return categoryProducts.filter((p) => productMatchesSocket(p, activeSocket));
+  }, [categoryProducts, activeSocket]);
+
+  // Clear only the socket param, keeping everything else intact.
+  const clearSocket = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("socket");
+    const qs = params.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname);
+  };
+
+  const inStockCount = useMemo(
+    () => baseProducts.filter((p) => p.inStock).length,
+    [baseProducts]
+  );
+  const outOfStockCount = baseProducts.length - inStockCount;
   const maxPrice = useMemo(
-    () => (categoryProducts.length === 0 ? 0 : Math.max(...categoryProducts.map((p) => p.salePrice || p.price))),
-    [categoryProducts]
+    () => (baseProducts.length === 0 ? 0 : Math.max(...baseProducts.map((p) => p.salePrice || p.price))),
+    [baseProducts]
   );
 
   // Filtered and sorted products
   const filteredProducts = useMemo(() => {
-    return categoryProducts.filter((product) => {
+    return baseProducts.filter((product) => {
       const price = product.salePrice || product.price;
 
       // Price From / To
@@ -147,13 +170,14 @@ function ShopContent() {
       if (!a.featured && b.featured) return 1;
       return 0;
     });
-  }, [categoryProducts, priceMin, priceMax, availIn, availOut, onlyCompatible, selectedVehicle, sortBy, isCompatible, searchParam]);
+  }, [baseProducts, priceMin, priceMax, availIn, availOut, onlyCompatible, selectedVehicle, sortBy, isCompatible, searchParam]);
 
   const activeFiltersCount =
     (priceMin !== "" || priceMax !== "" ? 1 : 0) +
     (!availIn || availOut ? 1 : 0) +
     (onlyCompatible ? 1 : 0) +
-    (activeCategory ? 1 : 0);
+    (activeCategory ? 1 : 0) +
+    (activeSocket ? 1 : 0);
 
   const resetFilters = () => {
     setPriceMin("");
@@ -162,6 +186,7 @@ function ShopContent() {
     setAvailOut(false);
     setOnlyCompatible(false);
     if (activeCategory) clearCategory();
+    if (activeSocket) clearSocket();
   };
 
   return (
@@ -268,25 +293,49 @@ function ShopContent() {
           </div>
         </div>
 
-        {/* Active Category — 2026-11-17 (sumair): a TOP COLLECTIONS tile lands here
-            filtered to that collection; the chip shows it and clears it. */}
-        {activeCategory && (
+        {/* Active Category / Socket — 2026-11-17 (sumair): a TOP COLLECTIONS tile lands here
+            filtered to that collection; a QUICK DIRECT SOCKETS chip lands here filtered
+            to that socket; each chip shows its count and clears itself. */}
+        {(activeCategory || activeSocket) && (
           <div className="mb-6 flex flex-wrap items-center gap-2">
-            <span className="text-sm text-gray-600 dark:text-silver-300">Showing category:</span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-600/10 border border-red-500/30 text-red-700 dark:text-red-accent text-xs font-bold">
-              {activeCategory.name}
-              <button
-                type="button"
-                onClick={clearCategory}
-                aria-label={`Clear ${activeCategory.name} filter`}
-                className="p-0.5 rounded-full hover:bg-red-600/20 transition-colors"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </span>
-            <span className="text-xs text-gray-500 dark:text-silver-400">
-              {categoryProducts.length} product{categoryProducts.length === 1 ? "" : "s"} in this collection
-            </span>
+            {activeCategory && (
+              <>
+                <span className="text-sm text-gray-600 dark:text-silver-300">Showing category:</span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-600/10 border border-red-500/30 text-red-700 dark:text-red-accent text-xs font-bold">
+                  {activeCategory.name}
+                  <button
+                    type="button"
+                    onClick={clearCategory}
+                    aria-label={`Clear ${activeCategory.name} filter`}
+                    className="p-0.5 rounded-full hover:bg-red-600/20 transition-colors"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </span>
+                <span className="text-xs text-gray-500 dark:text-silver-400">
+                  {categoryProducts.length} product{categoryProducts.length === 1 ? "" : "s"} in this collection
+                </span>
+              </>
+            )}
+            {activeSocket && (
+              <>
+                <span className="text-sm text-gray-600 dark:text-silver-300">Socket:</span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-600/10 border border-red-500/30 text-red-700 dark:text-red-accent text-xs font-bold">
+                  {activeSocket}
+                  <button
+                    type="button"
+                    onClick={clearSocket}
+                    aria-label={`Clear ${activeSocket} socket filter`}
+                    className="p-0.5 rounded-full hover:bg-red-600/20 transition-colors"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </span>
+                <span className="text-xs text-gray-500 dark:text-silver-400">
+                  {baseProducts.length} product{baseProducts.length === 1 ? "" : "s"} with {activeSocket} socket
+                </span>
+              </>
+            )}
           </div>
         )}
 

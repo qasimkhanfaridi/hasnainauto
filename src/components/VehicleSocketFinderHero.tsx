@@ -443,8 +443,11 @@ export const VehicleSocketFinderHero: React.FC = () => {
           {["H4 Dual Beam", "H11 Low/Fog", "9005 High Beam", "9006 Low", "H7 Projector"].map((sock) => (
             <Link
               key={sock}
-              href={`/shop?category=led-lights&socket=${sock.split(" ")[0]}`}
-              className="px-3 py-1 rounded-lg bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 hover:border-red-600/50 text-neutral-700 dark:text-neutral-300 hover:text-red-600 dark:hover:text-red-400 transition font-mono text-[11px]"
+              // 2026-11-17 (sumair): the old ?category=led-lights is not a collection
+              // any more (it fell back to all 26 products) and ?socket= was ignored
+              // by /shop — now the link carries only ?socket= and /shop filters by it.
+              href={`/shop?socket=${sock.split(" ")[0]}`}
+              className="px-3 py-1 rounded-lg bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 hover:border-red-600/50 text-neutral-700 dark:text-neutral-300 hover:text-red-600 dark:hover:text-red-400 transition duration-300 hover:-translate-y-0.5 hover:shadow-md font-mono text-[11px]"
             >
               {sock} →
             </Link>
