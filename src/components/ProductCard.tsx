@@ -99,17 +99,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
           </button>
         )}
 
-        {/* Wishlist heart (static display) */}
-        <button
-          type="button"
-          className={`absolute top-2.5 ${onQuickView ? "right-12" : "right-2.5"} p-2 rounded-xl bg-white/90 border border-gray-200 text-gray-400 hover:text-red-brand transition-colors opacity-100 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100 focus:opacity-100 shadow-sm z-10`}
-          aria-label="Save to wishlist"
-        >
-          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-          </svg>
-        </button>
-
         {/* Limited — On Sale pill, INSIDE the product image (bottom-center) */}
         {limitedBadge && (
           <span className="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-10 whitespace-nowrap px-3 py-1 rounded-full bg-red-600 text-white text-[10px] font-black uppercase tracking-wider shadow-lg shadow-red-600/40 animate-in zoom-in duration-300">
