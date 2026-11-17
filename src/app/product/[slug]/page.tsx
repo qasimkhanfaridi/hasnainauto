@@ -555,7 +555,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
             {/* Description & Features — 2026-11-17 (sumair): the "Order Through WhatsApp" sidebar box is removed; the WhatsApp icon button next to Add to Cart already covers it, so the box is redundant on every product page. */}
             <div className="md:col-span-12 space-y-6 p-6 sm:p-8 rounded-3xl bg-white border border-gray-200 shadow-sm">
               {/* Product Overview — 2026-11-17 (sumair): hover transition on this box. */}
-              <div className="rounded-2xl bg-gray-50 border border-gray-200 p-4 transition-all duration-300 hover:shadow-md hover:border-gray-300">
+              <div className="rounded-2xl bg-gray-50 border border-gray-200 p-4 transition-all duration-300 hover:shadow-md hover:border-gray-300 hover:-translate-y-1">
                 <h3 className="text-lg font-black text-gray-900 uppercase tracking-wider mb-3">
                   Product Overview
                 </h3>
@@ -565,7 +565,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               </div>
 
               {/* Key Specifications & Features — 2026-11-17 (sumair): hover transition on this box + each feature row. */}
-              <div className="rounded-2xl bg-gray-50 border border-gray-200 p-4 transition-all duration-300 hover:shadow-md hover:border-gray-300">
+              <div className="rounded-2xl bg-gray-50 border border-gray-200 p-4 transition-all duration-300 hover:shadow-md hover:border-gray-300 hover:-translate-y-1">
                 <h3 className="text-base font-black text-gray-900 uppercase tracking-wider mb-3">
                   Key Specifications & Features
                 </h3>
@@ -579,8 +579,8 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 </ul>
               </div>
 
-              {/* Installation Notice */}
-              <div className="pt-4 border-t border-gray-200 p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+              {/* Installation Notice — 2026-11-17 (sumair): hover transition on this box. */}
+              <div className="pt-4 border-t border-gray-200 p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-gray-300">
                 <h4 className="text-xs font-bold text-red-accent uppercase tracking-wider flex items-center gap-1.5">
                   <Wrench className="w-4 h-4 text-red-brand" />
                   <span>Workshop Installation Available</span>
