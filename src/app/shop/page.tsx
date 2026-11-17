@@ -166,8 +166,8 @@ function ShopContent() {
 
   return (
     <div className="w-full bg-surface-100 dark:bg-carbon-950 min-h-screen text-carbon-900 dark:text-slate-100 transition-colors">
-      {/* Dark title bar — "All Products" (Novsight-style) */}
-      <div className="w-full bg-carbon-900 border-b border-white/10">
+      {/* Red title bar — "All Products" (Novsight-style), same red as the top announcement bar — 2026-11-17 (sumair) */}
+      <div className="w-full bg-red-brand border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           <h1 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
             {activeCategory ? activeCategory.name : "All Products"}
