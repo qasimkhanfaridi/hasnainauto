@@ -23,7 +23,7 @@ export const ContactSection: React.FC = () => {
                 <MapPin className="w-3.5 h-3.5" />
                 <span>Rawalpindi Showroom</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
                 Walk in Today
               </h2>
               <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-2 leading-relaxed">
