@@ -350,10 +350,10 @@ export const VehicleSocketFinderHero: React.FC = () => {
 
         {/* ─── Search result: fitment match ─── */}
         {searched && match && (
-          <div className="max-w-4xl mx-auto mt-4 bg-white dark:bg-neutral-900 border border-red-600/30 dark:border-red-500/30 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-4 sm:p-5">
-            <div className="grid grid-cols-1 gap-4 items-center">
+          <div className="max-w-4xl mx-auto mt-3 bg-white dark:bg-neutral-900 border border-red-600/30 dark:border-red-500/30 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-3 sm:p-4">
+            <div className="grid grid-cols-1 gap-3 items-center">
               {/* Fitment data */}
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
                   <span className="text-xs font-mono uppercase text-emerald-600 dark:text-emerald-400 font-bold tracking-wider">
@@ -361,34 +361,34 @@ export const VehicleSocketFinderHero: React.FC = () => {
                   </span>
                 </div>
 
-                <h3 className="text-xl font-black text-neutral-900 dark:text-white">
+                <h3 className="text-lg font-black text-neutral-900 dark:text-white">
                   {match.make} {match.model}
                 </h3>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                <p className="text-[11px] text-neutral-500 dark:text-neutral-400">
                   Your Vehicle: <strong className="text-neutral-800 dark:text-neutral-200">{vehicleLabel}</strong>
                   {" · "}Model Range: <strong className="text-neutral-800 dark:text-neutral-200">{match.years}</strong>
                 </p>
 
                 <div className="grid grid-cols-2 gap-3 pt-1">
-                  <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800/50 p-2.5 rounded-xl">
+                  <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800/50 p-2 rounded-xl">
                     <span className="text-[10px] text-neutral-500 dark:text-neutral-400 uppercase tracking-wider block font-semibold">
                       Headlight Socket
                     </span>
-                    <span className="text-sm font-black text-red-600 dark:text-red-400">
+                    <span className="text-xs font-black text-red-600 dark:text-red-400">
                       {match.headlight}
                     </span>
                   </div>
-                  <div className="bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700 p-2.5 rounded-xl">
+                  <div className="bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700 p-2 rounded-xl">
                     <span className="text-[10px] text-neutral-500 dark:text-neutral-400 uppercase tracking-wider block font-semibold">
                       Fog Light Socket
                     </span>
-                    <span className="text-sm font-bold text-neutral-800 dark:text-neutral-200">
+                    <span className="text-xs font-bold text-neutral-800 dark:text-neutral-200">
                       {match.fog}
                     </span>
                   </div>
                 </div>
 
-                <div className="p-2.5 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800/40 text-xs text-red-800 dark:text-red-200 flex items-start gap-2.5">
+                <div className="p-2 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800/40 text-[11px] text-red-800 dark:text-red-200 flex items-start gap-2.5">
                   <ShieldCheck className="w-4 h-4 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
                   <span>{match.reason}</span>
                 </div>
@@ -404,7 +404,7 @@ export const VehicleSocketFinderHero: React.FC = () => {
                   href={whatsappAskUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-emerald-600/25 transition"
+                  className="inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-emerald-600/25 transition"
                 >
                   <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true"><path d={WHATSAPP_PATH} /></svg>
                   Order for {match.model} on WhatsApp
