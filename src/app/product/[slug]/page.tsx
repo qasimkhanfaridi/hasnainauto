@@ -301,7 +301,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   <Sparkles className="w-3.5 h-3.5 text-red-brand" />
                   <span>{product.brand || "Hasnain Auto"} • {product.subcategory || product.category}</span>
                 </div>
-                <h1 className="text-xl sm:text-2xl font-black text-gray-900 leading-tight">
+                <h1 className="text-lg sm:text-xl font-black text-gray-900 leading-tight">
                   {product.name}
                 </h1>
 
@@ -323,11 +323,11 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               </div>
 
               {/* Price Block with Breakdown — 2026-11-17 (sumair): made smaller + hover transition. */}
-              <div className="p-3 rounded-xl bg-gray-50 border border-red-500/20 shadow-sm transition-all duration-300 hover:shadow-md hover:border-red-500/40">
+              <div className="p-3 rounded-xl bg-gray-50 border border-red-500/20 shadow-sm transition-all duration-300 hover:shadow-md hover:border-red-500/40 hover:-translate-y-0.5">
                 <div className="flex items-baseline justify-between">
                   <div>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-xl font-black text-gray-900">
+                      <span className="text-lg font-black text-gray-900">
                         {BUSINESS_CONFIG.currency.symbol} {currentTotalPrice.toLocaleString()}
                       </span>
                       {product.originalPrice && (product.originalPrice > currentTotalPrice) && (
@@ -488,7 +488,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   <button
                     type="button"
                     onClick={() => addToCart(product, 1, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, baseUnitPrice)}
-                    className="col-start-1 row-start-1 w-full py-3.5 px-4 rounded-2xl bg-gray-900 hover:bg-gray-800 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-gray-900 transition-all shadow-sm"
+                    className="col-start-1 row-start-1 w-full py-2.5 px-4 rounded-xl bg-gray-900 hover:bg-gray-800 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-gray-900 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
                     <ShoppingBag className="w-4 h-4 text-red-brand" />
                     <span>Add To Cart</span>
@@ -497,7 +497,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   <button
                     type="button"
                     onClick={handleBuyNow}
-                    className="col-span-2 row-start-2 sm:col-span-1 sm:col-start-2 sm:row-start-1 w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-red-glow transition-all"
+                    className="col-span-2 row-start-2 sm:col-span-1 sm:col-start-2 sm:row-start-1 w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-red-glow transition-all duration-300 hover:-translate-y-0.5"
                   >
                     <Zap className="w-4 h-4 fill-white" />
                     <span>BUY NOW (CHECKOUT)</span>
@@ -508,7 +508,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="col-start-2 row-start-1 sm:col-start-3 w-12 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 hover:bg-emerald-100 hover:scale-110 hover:shadow-md flex items-center justify-center transition-all duration-300 shadow-sm"
+                    className="col-start-2 row-start-1 sm:col-start-3 w-12 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 hover:bg-emerald-100 hover:scale-110 hover:shadow-md flex items-center justify-center transition-all duration-300 shadow-sm"
                     aria-label="Order on WhatsApp"
                     title="Order on WhatsApp"
                   >
