@@ -190,7 +190,7 @@ export const ContactSection: React.FC = () => {
             href={BUSINESS_CONFIG.googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative block w-full h-[300px] sm:h-[360px] rounded-3xl overflow-hidden border border-gray-200 dark:border-neutral-800 shadow-sm bg-white dark:bg-neutral-900"
+            className="group relative block w-full h-[220px] sm:h-[260px] rounded-3xl overflow-hidden border border-gray-200 dark:border-neutral-800 shadow-sm bg-white dark:bg-neutral-900"
             aria-label="View Hasnain Auto on Google Maps"
           >
             <iframe
