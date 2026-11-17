@@ -7,9 +7,9 @@ import { ACTIVE_PRODUCTS_DATA, COLLECTION_PRODUCT_SLUGS } from "@/data/products"
 /**
  * TOP COLLECTIONS — the 15 light-type collections customers shop by.
  * Counts come from the explicit slug map in src/data/products.ts
- * (COLLECTION_PRODUCT_SLUGS) — never invented. Every tile with products
- * links to the shop filtered to that collection; empty collections link
- * to the full catalogue and show "Coming soon" instead of a fake count.
+ * (COLLECTION_PRODUCT_SLUGS) — never invented. Every tile links to the shop
+ * filtered to that collection; empty collections land on their own empty
+ * page and show "Coming soon" instead of a fake count.
  */
 interface TopCollection {
   id: string;
@@ -28,8 +28,11 @@ const countWhere = (collectionId: string): number | null => {
   return count === 0 ? null : count;
 };
 
+// 2026-11-17 (sumair): EVERY tile links to its filtered collection page —
+// a "Coming soon" (empty) tile used to link to plain /shop and show all 26
+// products. Now it lands on its own empty page (0 products + category chip).
 const collectionHref = (collectionId: string): string =>
-  countWhere(collectionId) === null ? "/shop" : `/shop?category=${collectionId}`;
+  `/shop?category=${collectionId}`;
 
 const TOP_COLLECTIONS: TopCollection[] = [
   {
