@@ -52,7 +52,15 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
   // Seat Covers, Floor Mats and Combo Deals were removed by the client.
   // 2026-11-16 (sumair): LED Lights tab removed too — it duplicated All LEDs
   // (same /shop?category=led-lights destination) and served no purpose.
-  const navCategories: { name: string; href: string; ledNav?: boolean }[] = [];
+  // 2026-11-17 (sumair): Low Beam / High Beam / Parking Lights added — the
+  // three biggest collections, linking to their filtered /shop pages. (Note:
+  // these links use the standard style; the red active highlight stays on
+  // All Products while browsing a category, since it is still the shop page.)
+  const navCategories: { name: string; href: string; ledNav?: boolean }[] = [
+    { name: "Low Beam", href: "/shop?category=low-beam" },
+    { name: "High Beam", href: "/shop?category=high-beam" },
+    { name: "Parking Lights", href: "/shop?category=parking-lights" },
+  ];
 
   return (
     <>
@@ -269,6 +277,9 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
             <div className="px-4 py-4 space-y-1">
               {[
                 { name: "Home", href: "/" },
+                { name: "Low Beam", href: "/shop?category=low-beam" },
+                { name: "High Beam", href: "/shop?category=high-beam" },
+                { name: "Parking Lights", href: "/shop?category=parking-lights" },
                 { name: "About Us", href: "/contact" },
               ].map((link) => (
                 <Link
