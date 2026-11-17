@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { X, Trash2, Plus, Minus, ShoppingCart, CreditCard, ArrowRight } from "lucide-react";
+import { X, Trash2, Plus, Minus, ShoppingBag, CreditCard, ArrowRight } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useVehicle } from "@/context/VehicleContext";
 import { BUSINESS_CONFIG } from "@/config/business";
@@ -35,7 +35,27 @@ export const CartDrawer: React.FC = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isCartOpen, closeCart]);
 
-  if (!isCartOpen) return null;
+  // Slide in/out (2026-11-18, sumair — AuxLEDs-style rebuild): the drawer stays
+  // mounted while it slides, so it animates BOTH ways. `visible` keeps it in
+  // the DOM for the 300ms close slide, then unmounts it; `slidIn` flips a
+  // frame after mount so the browser paints the off-screen state first and
+  // the transform actually transitions. (No slide without that frame.)
+  const [visible, setVisible] = useState(false);
+  const [slidIn, setSlidIn] = useState(false);
+  useEffect(() => {
+    if (isCartOpen) {
+      setVisible(true);
+      const raf = requestAnimationFrame(() =>
+        requestAnimationFrame(() => setSlidIn(true))
+      );
+      return () => cancelAnimationFrame(raf);
+    }
+    setSlidIn(false);
+    const t = setTimeout(() => setVisible(false), 300);
+    return () => clearTimeout(t);
+  }, [isCartOpen]);
+
+  if (!visible) return null;
 
   const handleWhatsAppCheckout = (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,24 +76,29 @@ export const CartDrawer: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden">
-      {/* Backdrop */}
+    <div
+      className={`fixed inset-0 z-50 overflow-hidden ${isCartOpen ? "" : "pointer-events-none"}`}
+    >
+      {/* Backdrop — fades in/out with the drawer slide */}
       <div
         onClick={closeCart}
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity animate-in fade-in"
+        className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${
+          slidIn ? "opacity-100" : "opacity-0"
+        }`}
       />
 
-      {/* Drawer */}
+      {/* Drawer — slides in from the right (AuxLEDs-style) */}
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-white border-l border-gray-200 shadow-2xl flex flex-col justify-between">
-          {/* Header */}
+        <div
+          className={`w-screen max-w-md bg-white border-l border-gray-200 shadow-2xl flex flex-col justify-between transform transition-transform duration-300 ease-out ${
+            slidIn ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          {/* Header — AuxLEDs-style: plain bold "SHOPPING CART (N)" + close X */}
           <div className="p-4 sm:p-5 border-b border-gray-200 flex items-center justify-between bg-white">
-            <div className="flex items-center gap-2">
-              <ShoppingCart className="w-5 h-5 text-red-brand" />
-              <h2 className="text-base sm:text-lg font-black text-carbon-900 uppercase tracking-tight">
-                My Cart ({items.length})
-              </h2>
-            </div>
+            <h2 className="text-base sm:text-lg font-black text-carbon-900 uppercase tracking-tight">
+              Shopping Cart ({items.length})
+            </h2>
             <button
               type="button"
               onClick={closeCart}
@@ -87,22 +112,23 @@ export const CartDrawer: React.FC = () => {
           {/* Items */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 bg-surface-200">
             {items.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-64 text-center space-y-4">
-                <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
-                  <ShoppingCart className="w-8 h-8" />
-                </div>
+              <div className="flex flex-col items-center justify-center h-full min-h-96 text-center px-6 py-10 space-y-5">
+                {/* Thin line-art bag, AuxLEDs-style — no circle behind it */}
+                <ShoppingBag className="w-20 h-20 text-gray-300" strokeWidth={1} />
                 <div>
-                  <h3 className="text-base font-bold text-carbon-900">Your cart is empty</h3>
-                  <p className="text-xs text-gray-500 mt-1 max-w-xs">
-                    Browse our premium auto accessories and add items to your cart.
+                  <h3 className="text-base font-black text-carbon-900 uppercase tracking-tight">
+                    Your cart is currently empty!
+                  </h3>
+                  <p className="text-xs text-gray-500 mt-2 max-w-xs mx-auto leading-relaxed">
+                    You may check out all the available products and buy some in the shop.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={closeCart}
-                  className="px-6 py-2.5 rounded-xl bg-red-brand text-white font-black text-xs uppercase tracking-wider hover:bg-red-dark transition-all shadow-red-glow"
+                  className="px-8 py-3 rounded-xl bg-red-brand text-white font-black text-xs uppercase tracking-wider hover:bg-red-dark transition-all shadow-red-glow"
                 >
-                  Start Shopping
+                  Continue Shopping
                 </button>
               </div>
             ) : (
@@ -114,7 +140,7 @@ export const CartDrawer: React.FC = () => {
                     return (
                       <div
                         key={`${item.product.id}-${item.selectedVariant || ""}-${idx}`}
-                        className="p-3 rounded-xl bg-white border border-gray-200 flex gap-3 items-start shadow-sm"
+                        className="p-3 rounded-xl bg-white border border-gray-200 flex gap-3 items-start shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
                       >
                         {/* Thumbnail */}
                         <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-100 shrink-0 border border-gray-200">
