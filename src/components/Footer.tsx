@@ -13,11 +13,11 @@ export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-white dark:bg-carbon-900 text-gray-600 dark:text-gray-300 pt-8 pb-20 lg:pb-8 border-t border-gray-200 dark:border-carbon-800">
+    <footer className="bg-white dark:bg-carbon-900 text-gray-600 dark:text-gray-300 pt-5 pb-20 lg:pb-6 border-t border-gray-200 dark:border-carbon-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 pb-6 border-b border-gray-200 dark:border-carbon-800">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 lg:gap-6 pb-5 border-b border-gray-200 dark:border-carbon-800">
           {/* Brand Col */}
-          <div className="lg:col-span-4 space-y-3">
+          <div className="lg:col-span-4 space-y-1.5">
             {/* Logo */}
             {/* 2026-11-17 (sumair): footer logo back to the original circular Ferrari badge — same as the header. */}
             <div className="flex items-center gap-3">
@@ -26,10 +26,10 @@ export const Footer: React.FC = () => {
                 alt="Hasnain Auto — Decoration Accessories"
                 width={64}
                 height={64}
-                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full shrink-0"
+                className="w-12 h-12 sm:w-14 sm:h-14 rounded-full shrink-0"
               />
               <div className="flex flex-col leading-tight">
-                <span className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">
+                <span className="text-xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">
                   HASNAIN{" "}<span className="text-red-brand">AUTO</span>
                 </span>
                 <span className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-[0.15em] font-medium">
@@ -76,7 +76,7 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Categories */}
-          <div className="lg:col-span-2 space-y-2">
+          <div className="lg:col-span-2 space-y-1.5">
             <h4 className="text-xs font-black text-gray-900 dark:text-white uppercase tracking-widest">
               Categories
             </h4>
@@ -96,7 +96,7 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Vehicle Links */}
-          <div className="lg:col-span-3 space-y-2">
+          <div className="lg:col-span-3 space-y-1.5">
             <h4 className="text-xs font-black text-gray-900 dark:text-white uppercase tracking-widest">
               Vehicle Upgrades
             </h4>
@@ -119,11 +119,11 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Store Info */}
-          <div className="lg:col-span-3 space-y-2">
+          <div className="lg:col-span-3 space-y-1.5">
             <h4 className="text-xs font-black text-gray-900 dark:text-white uppercase tracking-widest">
               Visit Our Store
             </h4>
-            <div className="space-y-2 text-xs">
+            <div className="space-y-1.5 text-xs">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-red-brand shrink-0 mt-0.5" />
                 <span className="leading-snug">
@@ -160,14 +160,14 @@ export const Footer: React.FC = () => {
                 href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 py-2 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-white font-bold text-xs transition-all"
+                className="flex items-center justify-center gap-2 py-1.5 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-white font-bold text-xs transition-all"
               >
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true"><path d={WHATSAPP_PATH} /></svg>
                 WhatsApp Now
               </a>
               <a
                 href={`tel:${BUSINESS_CONFIG.phoneRaw}`}
-                className="flex items-center justify-center gap-2 py-2 rounded-xl bg-red-brand hover:bg-red-dark text-white font-bold text-xs transition-all"
+                className="flex items-center justify-center gap-2 py-1.5 rounded-xl bg-red-brand hover:bg-red-dark text-white font-bold text-xs transition-all"
               >
                 <Phone className="w-4 h-4" />
                 Call Now
@@ -177,7 +177,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* SEO Text */}
-        <div className="py-3 border-b border-gray-200 dark:border-carbon-800 text-[11px] text-gray-500 dark:text-gray-600 leading-relaxed">
+        <div className="py-2 border-b border-gray-200 dark:border-carbon-800 text-[11px] text-gray-500 dark:text-gray-600 leading-relaxed">
           <p>
             Hasnain Auto Decoration & Accessories is your local trusted car modification and auto parts provider in Saddar, Rawalpindi.
             Serving drivers across Rawalpindi, Islamabad, Bahria Town, DHA, Westridge, and Chaklala with premium automotive seat covers,
@@ -186,7 +186,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Copyright */}
-        <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500">
+        <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500">
           <div>&copy; {currentYear} {BUSINESS_CONFIG.name}. All rights reserved.</div>
           <div className="flex items-center gap-4">
             <span>Saddar Rawalpindi</span>
