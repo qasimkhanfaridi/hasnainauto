@@ -240,7 +240,7 @@ export const VehicleSocketFinderHero: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 
         {/* ─── Compact "SELECT YOUR VEHICLE" box (AuxLEDs style) ─── */}
-        <div className="max-w-4xl mx-auto bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-4 sm:p-5">
+        <div className="max-w-4xl mx-auto bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-4 sm:p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-red-600/40">
           <div className="mb-4 flex items-center justify-center gap-4 sm:gap-5">
             <Car
               className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 fill-neutral-900 text-neutral-900 dark:fill-white dark:text-white"
@@ -350,7 +350,7 @@ export const VehicleSocketFinderHero: React.FC = () => {
 
         {/* ─── Search result: fitment match ─── */}
         {searched && match && (
-          <div className="max-w-4xl mx-auto mt-3 bg-white dark:bg-neutral-900 border border-red-600/30 dark:border-red-500/30 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-3 sm:p-4">
+          <div className="max-w-4xl mx-auto mt-3 bg-white dark:bg-neutral-900 border border-red-600/30 dark:border-red-500/30 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-red-600/60">
             <div className="grid grid-cols-1 gap-3 items-center">
               {/* Fitment data */}
               <div className="space-y-2">
@@ -417,7 +417,7 @@ export const VehicleSocketFinderHero: React.FC = () => {
 
         {/* ─── Search result: no exact fitment record ─── */}
         {searched && !match && (
-          <div className="max-w-4xl mx-auto mt-4 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-4 sm:p-5 text-center">
+          <div className="max-w-4xl mx-auto mt-3 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-4 sm:p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-neutral-300">
             <h3 className="text-base font-black text-neutral-900 dark:text-white">
               {vehicleLabel}
             </h3>
