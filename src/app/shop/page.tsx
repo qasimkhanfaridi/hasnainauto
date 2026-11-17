@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, Suspense, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import {
   Filter,
   SlidersHorizontal,
@@ -12,7 +12,7 @@ import {
   X,
   ChevronDown,
 } from "lucide-react";
-import { Product, ACTIVE_PRODUCTS_DATA } from "@/data/products";
+import { Product, ACTIVE_PRODUCTS_DATA, COLLECTIONS_LIST, COLLECTION_PRODUCT_SLUGS } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductQuickViewModal } from "@/components/ProductQuickViewModal";
 import { useVehicle } from "@/context/VehicleContext";
@@ -30,8 +30,11 @@ const SORT_OPTIONS: { id: SortKey; label: string }[] = [
 
 function ShopContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParam = searchParams.get("search");
   const sortParam = searchParams.get("sort");
+  const categoryParam = searchParams.get("category");
   const makeParam = searchParams.get("make");
   const modelParam = searchParams.get("model");
   const yearParam = searchParams.get("year");
@@ -51,10 +54,10 @@ function ShopContent() {
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
-  // Sync parameters from URL. 2026-11-17 (sumair): /shop is now "All Products"
-  // — no category filter any more, so ?category= links (e.g. from the homepage
-  // TOP COLLECTIONS tiles) simply land on All Products. Vehicle fitment params
-  // from the homepage finder are still honoured.
+  // Sync parameters from URL. 2026-11-17 (sumair): /shop is "All Products" but
+  // ?category= IS honoured now — a homepage TOP COLLECTIONS tile link lands here
+  // filtered to that collection. Unknown/old category ids fall back to all products.
+  // Vehicle fitment params from the homepage finder are still honoured.
   useEffect(() => {
     if (sortParam && ["featured", "price-asc", "price-desc", "rating", "name-asc", "name-desc"].includes(sortParam)) {
       setSortBy(sortParam as SortKey);
@@ -71,19 +74,39 @@ function ShopContent() {
     }
   }, [sortParam, compatibleParam, makeParam, modelParam, yearParam, setSelectedVehicle]);
 
-  const inStockCount = useMemo(
-    () => ACTIVE_PRODUCTS_DATA.filter((p) => p.inStock).length,
-    []
+  // Active collection from ?category= (homepage TOP COLLECTIONS tiles link here).
+  // The URL is the source of truth, so tile clicks and back/forward just work.
+  const activeCategory = useMemo(
+    () => COLLECTIONS_LIST.find((c) => c.id === categoryParam) ?? null,
+    [categoryParam]
   );
-  const outOfStockCount = ACTIVE_PRODUCTS_DATA.length - inStockCount;
+  const categoryProducts = useMemo(() => {
+    if (!activeCategory) return ACTIVE_PRODUCTS_DATA;
+    const slugs = COLLECTION_PRODUCT_SLUGS[activeCategory.id] ?? [];
+    return ACTIVE_PRODUCTS_DATA.filter((p) => slugs.includes(p.slug));
+  }, [activeCategory]);
+
+  // Clear only the category param, keeping search/sort/fitment params intact.
+  const clearCategory = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("category");
+    const qs = params.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname);
+  };
+
+  const inStockCount = useMemo(
+    () => categoryProducts.filter((p) => p.inStock).length,
+    [categoryProducts]
+  );
+  const outOfStockCount = categoryProducts.length - inStockCount;
   const maxPrice = useMemo(
-    () => Math.max(...ACTIVE_PRODUCTS_DATA.map((p) => p.salePrice || p.price)),
-    []
+    () => (categoryProducts.length === 0 ? 0 : Math.max(...categoryProducts.map((p) => p.salePrice || p.price))),
+    [categoryProducts]
   );
 
   // Filtered and sorted products
   const filteredProducts = useMemo(() => {
-    return ACTIVE_PRODUCTS_DATA.filter((product) => {
+    return categoryProducts.filter((product) => {
       const price = product.salePrice || product.price;
 
       // Price From / To
@@ -124,12 +147,13 @@ function ShopContent() {
       if (!a.featured && b.featured) return 1;
       return 0;
     });
-  }, [priceMin, priceMax, availIn, availOut, onlyCompatible, selectedVehicle, sortBy, isCompatible, searchParam]);
+  }, [categoryProducts, priceMin, priceMax, availIn, availOut, onlyCompatible, selectedVehicle, sortBy, isCompatible, searchParam]);
 
   const activeFiltersCount =
     (priceMin !== "" || priceMax !== "" ? 1 : 0) +
     (!availIn || availOut ? 1 : 0) +
-    (onlyCompatible ? 1 : 0);
+    (onlyCompatible ? 1 : 0) +
+    (activeCategory ? 1 : 0);
 
   const resetFilters = () => {
     setPriceMin("");
@@ -137,6 +161,7 @@ function ShopContent() {
     setAvailIn(true);
     setAvailOut(false);
     setOnlyCompatible(false);
+    if (activeCategory) clearCategory();
   };
 
   return (
@@ -145,7 +170,7 @@ function ShopContent() {
       <div className="w-full bg-carbon-900 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           <h1 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
-            All Products
+            {activeCategory ? activeCategory.name : "All Products"}
           </h1>
         </div>
       </div>
@@ -242,6 +267,28 @@ function ShopContent() {
             </div>
           </div>
         </div>
+
+        {/* Active Category — 2026-11-17 (sumair): a TOP COLLECTIONS tile lands here
+            filtered to that collection; the chip shows it and clears it. */}
+        {activeCategory && (
+          <div className="mb-6 flex flex-wrap items-center gap-2">
+            <span className="text-sm text-gray-600 dark:text-silver-300">Showing category:</span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-600/10 border border-red-500/30 text-red-700 dark:text-red-accent text-xs font-bold">
+              {activeCategory.name}
+              <button
+                type="button"
+                onClick={clearCategory}
+                aria-label={`Clear ${activeCategory.name} filter`}
+                className="p-0.5 rounded-full hover:bg-red-600/20 transition-colors"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </span>
+            <span className="text-xs text-gray-500 dark:text-silver-400">
+              {categoryProducts.length} product{categoryProducts.length === 1 ? "" : "s"} in this collection
+            </span>
+          </div>
+        )}
 
         {/* Main Layout Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
