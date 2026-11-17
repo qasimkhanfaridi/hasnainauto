@@ -37,18 +37,17 @@ export const CartDrawer: React.FC = () => {
 
   // Slide in/out (2026-11-18, sumair — AuxLEDs-style rebuild): the drawer stays
   // mounted while it slides, so it animates BOTH ways. `visible` keeps it in
-  // the DOM for the 300ms close slide, then unmounts it; `slidIn` flips a
-  // frame after mount so the browser paints the off-screen state first and
-  // the transform actually transitions. (No slide without that frame.)
+  // the DOM for the 300ms close slide, then unmounts it; `slidIn` flips 30ms
+  // after mount — a real time window, so the browser paints the off-screen
+  // state first and the transform actually transitions. (A double rAF did
+  // NOT produce that paint in headless Chrome — the open slide never ran.)
   const [visible, setVisible] = useState(false);
   const [slidIn, setSlidIn] = useState(false);
   useEffect(() => {
     if (isCartOpen) {
       setVisible(true);
-      const raf = requestAnimationFrame(() =>
-        requestAnimationFrame(() => setSlidIn(true))
-      );
-      return () => cancelAnimationFrame(raf);
+      const t = setTimeout(() => setSlidIn(true), 30);
+      return () => clearTimeout(t);
     }
     setSlidIn(false);
     const t = setTimeout(() => setVisible(false), 300);
