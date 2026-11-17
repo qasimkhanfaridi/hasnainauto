@@ -7,6 +7,7 @@ import {
   ShieldCheck,
   Search,
   Wrench,
+  RotateCcw,
 } from "lucide-react";
 import { BUSINESS_CONFIG } from "@/config/business";
 import {
@@ -173,7 +174,7 @@ function findFitment(make: string, model: string): VehicleSpec | undefined {
 }
 
 const selectClass =
-  "w-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 rounded-lg px-3.5 py-3 text-sm font-semibold text-neutral-900 dark:text-white focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition";
+  "w-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 rounded-lg px-3.5 py-2.5 text-sm font-semibold text-neutral-900 dark:text-white focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/20 transition";
 
 export const VehicleSocketFinderHero: React.FC = () => {
   const [selectedMake, setSelectedMake] = useState<string>("");
@@ -214,6 +215,18 @@ export const VehicleSocketFinderHero: React.FC = () => {
     setSearched(true);
   };
 
+  // 2026-11-17 (sumair): Clear Filters — resets the whole finder (dropdowns +
+  // search result) so another car can be searched. Local state only; the
+  // finder does not touch the global vehicle context.
+  const hasSelection = Boolean(selectedMake || selectedModel || selectedYear || searched);
+  const handleClear = () => {
+    setSelectedMake("");
+    setSelectedModel("");
+    setSelectedYear("");
+    setSearched(false);
+    setMatch(undefined);
+  };
+
   const vehicleLabel = `${selectedMake} ${selectedModel}${selectedYear ? ` (${selectedYear})` : ""}`;
 
   const whatsappAskUrl = `https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(
@@ -224,22 +237,22 @@ export const VehicleSocketFinderHero: React.FC = () => {
 
   return (
     <section className="bg-white dark:bg-neutral-950 text-neutral-900 dark:text-white border-b border-neutral-200 dark:border-neutral-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 
         {/* ─── Compact "SELECT YOUR VEHICLE" box (AuxLEDs style) ─── */}
-        <div className="max-w-4xl mx-auto bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-5 sm:p-7">
-          <div className="mb-5 flex items-center justify-center gap-4 sm:gap-5">
+        <div className="max-w-4xl mx-auto bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-lg shadow-neutral-900/5 dark:shadow-black/40 p-4 sm:p-5">
+          <div className="mb-4 flex items-center justify-center gap-4 sm:gap-5">
             <Car
-              className="h-11 w-11 sm:h-12 sm:w-12 shrink-0 fill-neutral-900 text-neutral-900 dark:fill-white dark:text-white"
+              className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 fill-neutral-900 text-neutral-900 dark:fill-white dark:text-white"
               strokeWidth={1.5}
               aria-hidden="true"
             />
-            <span aria-hidden="true" className="h-12 w-[2px] shrink-0 bg-red-600" />
+            <span aria-hidden="true" className="h-10 w-[2px] shrink-0 bg-red-600" />
             <div className="text-left">
-              <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900 dark:text-white">
+              <h2 className="text-lg sm:text-xl font-black uppercase tracking-tight text-neutral-900 dark:text-white">
                 Select Your Vehicle
               </h2>
-              <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
                 Provide vehicle details to confirm fitment
               </p>
             </div>
@@ -304,7 +317,7 @@ export const VehicleSocketFinderHero: React.FC = () => {
                 type="button"
                 onClick={handleSearch}
                 disabled={!canSearch}
-                className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-red-600 hover:bg-red-700 disabled:bg-red-300 dark:disabled:bg-red-900/60 disabled:cursor-not-allowed text-white text-sm font-black uppercase tracking-wider shadow-md shadow-red-600/25 transition"
+                className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-700 disabled:bg-red-300 dark:disabled:bg-red-900/60 disabled:cursor-not-allowed text-white text-sm font-black uppercase tracking-wider shadow-md shadow-red-600/25 transition"
               >
                 <Search className="w-4 h-4" />
                 Search
@@ -312,12 +325,27 @@ export const VehicleSocketFinderHero: React.FC = () => {
             </div>
           </div>
 
-          {!canSearch && !searched && (
-            <p className="text-xs text-neutral-400 dark:text-neutral-500 text-center mt-3 flex items-center justify-center gap-1.5">
-              <Car className="w-3.5 h-3.5" />
-              Select make, model and year, then press Search to see your exact socket match.
-            </p>
-          )}
+          {/* Hint + Clear Filters — 2026-11-17 (sumair): the button lives in this
+              box, always visible; disabled until something is selected/searched. */}
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+            {!canSearch && !searched ? (
+              <p className="text-xs text-neutral-400 dark:text-neutral-500 flex items-center gap-1.5">
+                <Car className="w-3.5 h-3.5" />
+                Select make, model and year, then press Search to see your exact socket match.
+              </p>
+            ) : (
+              <span />
+            )}
+            <button
+              type="button"
+              onClick={handleClear}
+              disabled={!hasSelection}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-xs font-bold text-neutral-600 dark:text-neutral-300 hover:text-red-600 dark:hover:text-red-400 hover:border-red-600/50 disabled:opacity-40 disabled:cursor-not-allowed transition"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              Clear Filters
+            </button>
+          </div>
         </div>
 
         {/* ─── Search result: fitment match ─── */}
