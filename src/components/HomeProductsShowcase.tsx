@@ -65,7 +65,7 @@ export const HomeProductsShowcase: React.FC = () => {
               <Flame className="w-3.5 h-3.5" />
               Limited Stock · On Sale Now · COD Pakistan
             </div>
-            <h2 className="text-2xl sm:text-4xl font-black text-carbon-900 dark:text-white uppercase tracking-tight">
+            <h2 className="text-xl sm:text-3xl font-black text-carbon-900 dark:text-white uppercase tracking-tight">
               Best Sellers
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1 max-w-xl">
