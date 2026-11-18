@@ -143,7 +143,7 @@ export const CartDrawer: React.FC = () => {
       {/* Drawer — slides in from the right (AuxLEDs-style) */}
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
         <div
-          className={`w-screen max-w-md bg-white border-l border-gray-200 shadow-2xl flex flex-col justify-between transform transition-transform duration-300 ease-out ${
+          className={`w-[calc(100vw-2.5rem)] max-w-md min-w-0 bg-white border-l border-gray-200 shadow-2xl flex flex-col justify-between transform transition-transform duration-300 ease-out ${
             slidIn ? "translate-x-0" : "translate-x-full"
           }`}
         >
