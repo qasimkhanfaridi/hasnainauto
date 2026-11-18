@@ -36,14 +36,16 @@ const collectionHref = (collectionId: string): string =>
 
 // Tile images are REAL photos from our own 26 new products (2026-11-17, sumair),
 // not the old AuxLEDs-style renders. 8 tiles show a product from their own
-// collection; the 7 empty ("Coming soon") tiles show the closest related product.
+// collection; the 7 empty ("Coming soon") tiles show the closest related product —
+// except Car Perfumes (2026-11-18, sumair), which has its own generated category
+// photo because no car-perfume products are in stock yet.
 const TOP_COLLECTIONS: TopCollection[] = [
   {
-    id: "welcome-lights",
-    name: "Welcome Lights",
-    image: "/images/products/led-festoon-bulbs-31mm-21-led-1.jpg",
-    href: collectionHref("welcome-lights"),
-    count: countWhere("welcome-lights"),
+    id: "car-perfumes",
+    name: "Car Perfumes",
+    image: "/images/car-perfumes.jpg",
+    href: collectionHref("car-perfumes"),
+    count: countWhere("car-perfumes"),
   },
   {
     id: "ambient-lights",

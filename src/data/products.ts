@@ -754,7 +754,7 @@ export interface CollectionInfo {
 }
 
 export const COLLECTIONS_LIST: CollectionInfo[] = [
-  { id: "welcome-lights", name: "Welcome Lights" },
+  { id: "car-perfumes", name: "Car Perfumes" },
   { id: "ambient-lights", name: "Ambient Lights" },
   { id: "auxpods", name: "Pods - Auxiliary Lighting" },
   { id: "low-beam", name: "Low Beam" },
@@ -772,7 +772,7 @@ export const COLLECTIONS_LIST: CollectionInfo[] = [
 ];
 
 export const COLLECTION_PRODUCT_SLUGS: Record<string, string[]> = {
-  "welcome-lights": [],
+  "car-perfumes": [],
   "ambient-lights": ["super-bright-led-interior-dome-lights", "premium-auto-led-interior-light-kit"],
   "auxpods": ["4x4-led-off-road-light-bar-4-lens", "led-off-road-light-bar-5-lens"],
   "low-beam": [
