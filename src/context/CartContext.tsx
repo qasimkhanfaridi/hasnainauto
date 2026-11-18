@@ -8,6 +8,10 @@ export interface CartItem {
   quantity: number;
   selectedVariant?: string;
   unitPrice?: number;
+  // 2026-11-18 (sumair): epoch ms when this item was FIRST added to the cart.
+  // Drives the Hot Deal sale countdown in the cart drawer (24h window).
+  // Carts saved before this field existed have no addedAt — treated as just added.
+  addedAt?: number;
 }
 
 interface CartContextType {
@@ -36,7 +40,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     try {
       const saved = localStorage.getItem("hasnain_cart_items");
       if (saved) {
-        setItems(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        // 2026-11-18: carts saved before `addedAt` existed get stamped as
+        // just added, so the Hot Deal countdown starts from now, not forever.
+        const normalized = Array.isArray(parsed)
+          ? parsed.map((it) =>
+              it && typeof it === "object" && it.addedAt === undefined
+                ? { ...it, addedAt: Date.now() }
+                : it
+            )
+          : parsed;
+        setItems(normalized);
       }
     } catch (e) {
       console.error("Failed to load cart from localStorage", e);
@@ -67,9 +81,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         if (unitPrice !== undefined) {
           updated[existingIndex].unitPrice = unitPrice;
         }
+        // addedAt is deliberately NOT touched here — the 24h Hot Deal window
+        // runs from the FIRST add, not from a quantity increase.
         return updated;
       } else {
-        return [...prev, { product, quantity, selectedVariant, unitPrice }];
+        return [...prev, { product, quantity, selectedVariant, unitPrice, addedAt: Date.now() }];
       }
     });
     setIsCartOpen(true);

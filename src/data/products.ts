@@ -833,3 +833,15 @@ export const collectionProducts = (collectionId: string): Product[] => {
   const slugs = COLLECTION_PRODUCT_SLUGS[collectionId] ?? [];
   return ACTIVE_PRODUCTS_DATA.filter((p) => slugs.includes(p.slug));
 };
+
+/* Hot Deals (2026-11-16, sumair): the 5 flagship headlight kits shown in the
+   homepage Hot Deals box. Moved here from HeroSection.tsx 2026-11-18 so the
+   list lives in ONE place — HeroSection AND the cart drawer (Hot Deal sale
+   countdown banner) both import it from here. */
+export const HOT_DEAL_SLUGS: readonly string[] = [
+  "mother-6-copper-led-headlights",
+  "rego-4-copper-h4-golden-box",
+  "b-pro-8-copper-led-headlights",
+  "rego-racing-h4-led-headlights",
+  "ktm-ai-led-headlight",
+];
