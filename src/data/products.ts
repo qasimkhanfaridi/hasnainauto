@@ -134,6 +134,7 @@ export interface ProductVariant {
 
 export interface Product {
   id: string;
+  productNumber?: number;
   name: string;
   slug: string;
   shortDescription: string;
@@ -167,6 +168,7 @@ export interface Product {
 export const PRODUCTS_DATA: Product[] = [
   {
     id: "ktm-ai-led-headlight",
+    productNumber: 1,
     name: "KTM Ai LED Headlight",
     slug: "ktm-ai-led-headlight",
     shortDescription: "App-controlled LED headlight kit with 4 bulbs and external drivers.",
@@ -188,6 +190,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "rego-racing-h4-led-headlights",
+    productNumber: 2,
     name: "REGO Racing H4 LED Headlights",
     slug: "rego-racing-h4-led-headlights",
     shortDescription: "REGO Racing H4 LED headlight bulbs, 6500K white.",
@@ -210,6 +213,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "y6-h4-mini-projector-lens",
+    productNumber: 3,
     name: "Y6 H4 LED Mini Projector Lens",
     slug: "y6-h4-mini-projector-lens",
     shortDescription: "Y6 H4 mini projector-lens LED bulbs with a sharp cutoff line.",
@@ -232,6 +236,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "h11-mini-projector-lens-led",
+    productNumber: 4,
     name: "H11 Mini Projector Lens LED",
     slug: "h11-mini-projector-lens-led",
     shortDescription: "H11 single-beam mini projector-lens LED bulbs (Smart Kit 2022).",
@@ -253,6 +258,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "rego-4-copper-h4-golden-box",
+    productNumber: 5,
     name: "REGO Racing 4 Copper H4 LED Headlights (Golden Box)",
     slug: "rego-4-copper-h4-golden-box",
     shortDescription: "REGO 4-copper H4 LED bulbs in the premium golden metal box.",
@@ -275,6 +281,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "copper-led-headlights-h4-wooden-box",
+    productNumber: 6,
     name: "Copper LED Headlights H4 (Wooden Box)",
     slug: "copper-led-headlights-h4-wooden-box",
     shortDescription: "Copper-bodied H4 LED headlights in a premium wooden presentation box.",
@@ -296,6 +303,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "4x4-led-off-road-light-bar-4-lens",
+    productNumber: 7,
     name: "4x4 LED High Power Off-Road Light Bar (4-Lens)",
     slug: "4x4-led-off-road-light-bar-4-lens",
     shortDescription: "Pair of 4-lens LED off-road light bars for pickups and 4x4s.",
@@ -317,6 +325,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "led-off-road-light-bar-5-lens",
+    productNumber: 8,
     name: "LED Off-Road Light Bar (5-Lens)",
     slug: "led-off-road-light-bar-5-lens",
     shortDescription: "Pair of 5-lens LED off-road light bars — same line as the 4-lens.",
@@ -337,6 +346,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "rego-motorcycle-led-headlight",
+    productNumber: 9,
     name: "REGO Motorcycle LED Headlight",
     slug: "rego-motorcycle-led-headlight",
     shortDescription: "REGO super-bright motorcycle LED headlight — small dual-pod projector.",
@@ -358,6 +368,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "super-bright-t10-led-bulbs",
+    productNumber: 10,
     name: "Super Bright T10 LED Bulbs (High Power)",
     slug: "super-bright-t10-led-bulbs",
     shortDescription: "Super bright high-power T10 LED wedge bulbs.",
@@ -378,6 +389,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "super-bright-led-interior-dome-lights",
+    productNumber: 11,
     name: "Super Bright LED Interior Dome Lights",
     slug: "super-bright-led-interior-dome-lights",
     shortDescription: "Round LED dome-light panels for car interiors.",
@@ -398,6 +410,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "premium-auto-led-interior-light-kit",
+    productNumber: 12,
     name: "Premium Auto LED Interior Light Kit",
     slug: "premium-auto-led-interior-light-kit",
     shortDescription: "Rectangular LED panels for car dome and roof lights.",
@@ -418,6 +431,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "premium-t10-led-bulbs-ultra-bright",
+    productNumber: 13,
     name: "Premium T10 LED Bulbs (Ultra-Bright)",
     slug: "premium-t10-led-bulbs-ultra-bright",
     shortDescription: "Premium ultra-bright T10 LED wedge bulbs, 12V.",
@@ -438,6 +452,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "t10-led-bulbs-premium",
+    productNumber: 14,
     name: "T10 LED Bulbs (Premium Automotive Lighting)",
     slug: "t10-led-bulbs-premium",
     shortDescription: "Premium ultra-bright T10 LED bulbs for automotive lighting.",
@@ -458,6 +473,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "led-festoon-bulbs-31mm-21-led",
+    productNumber: 15,
     name: "LED Festoon Bulbs 31mm 21-LED",
     slug: "led-festoon-bulbs-31mm-21-led",
     shortDescription: "31mm festoon LED bulbs, 21 LEDs per bulb.",
@@ -478,6 +494,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "premium-led-festoon-bulbs-cob",
+    productNumber: 16,
     name: "Premium LED Festoon Bulbs (COB)",
     slug: "premium-led-festoon-bulbs-cob",
     shortDescription: "Premium festoon LED bulbs with one large COB chip each.",
@@ -498,6 +515,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "premium-t10-led-canbus-bulbs-8000k",
+    productNumber: 17,
     name: "Premium T10 LED Canbus Bulbs (8000K)",
     slug: "premium-t10-led-canbus-bulbs-8000k",
     shortDescription: "Canbus error-free T10 LED bulbs, 8000K.",
@@ -518,6 +536,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "premium-t10-led-bulbs-ultra-bright-ceramic",
+    productNumber: 18,
     name: "Premium T10 LED Bulbs (Ultra Bright, Ceramic)",
     slug: "premium-t10-led-bulbs-ultra-bright-ceramic",
     shortDescription: "Premium ultra-bright T10 LED bulbs with a white ceramic body.",
@@ -538,6 +557,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "t10-led-bulbs-super-bright",
+    productNumber: 19,
     name: "T10 LED Bulbs (Super Bright)",
     slug: "t10-led-bulbs-super-bright",
     shortDescription: "Super bright T10 LED bulbs, 12V.",
@@ -558,6 +578,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "led-headlight-auto-intelligent-system-v150",
+    productNumber: 20,
     name: "LED Headlight Auto Intelligent System (V-150)",
     slug: "led-headlight-auto-intelligent-system-v150",
     shortDescription: "V-150 high-power LED headlight kit with external drivers.",
@@ -578,6 +599,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "lenso-led-headlight-bulbs",
+    productNumber: 21,
     name: "LENSO LED Headlight Bulbs (3000W Performance)",
     slug: "lenso-led-headlight-bulbs",
     shortDescription: "LENSO performance-upgrade LED headlight bulbs.",
@@ -599,6 +621,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "sh-pro-two-colour-led-headlight",
+    productNumber: 22,
     name: "SH Pro Two-Colour LED Headlight",
     slug: "sh-pro-two-colour-led-headlight",
     shortDescription: "One light, two colours — white + warm yellow, 2-year warranty.",
@@ -620,6 +643,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "rego-racing-copper-led-headlights-6500k",
+    productNumber: 23,
     name: "REGO Racing LED Headlights (Copper, 6500K)",
     slug: "rego-racing-copper-led-headlights-6500k",
     shortDescription: "REGO Racing copper LED headlights, 6500K, perfect light angle.",
@@ -641,6 +665,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "mother-6-copper-led-headlights",
+    productNumber: 24,
     name: "Mother 6 Copper LED Headlights (Professional)",
     slug: "mother-6-copper-led-headlights",
     shortDescription: "Mother 6-copper LED headlights, gold professional edition.",
@@ -663,6 +688,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "b-pro-8-copper-led-headlights",
+    productNumber: 25,
     name: "B PRO LED Headlights (8 Copper, Super Focusing)",
     slug: "b-pro-8-copper-led-headlights",
     shortDescription: "B PRO 8-copper LED headlights, high power super focusing.",
@@ -685,6 +711,7 @@ export const PRODUCTS_DATA: Product[] = [
   },
   {
     id: "mother-led-headlights-green",
+    productNumber: 26,
     name: "Mother LED Headlights (Green)",
     slug: "mother-led-headlights-green",
     shortDescription: "Mother green-edition LED headlights, 7500W drivers.",

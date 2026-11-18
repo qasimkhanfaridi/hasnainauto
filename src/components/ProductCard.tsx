@@ -74,6 +74,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
 
         {/* Badge */}
         <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10 pointer-events-none">
+          {/* Product number — 2026-11-18 (sumair): #01 to #26 on every card, catalog order */}
+          {typeof product.productNumber === "number" && (
+            <span className="px-2 py-0.5 rounded-md bg-gray-900 text-white dark:bg-white dark:text-gray-900 text-[10px] font-black tracking-wider shadow-sm">
+              #{String(product.productNumber).padStart(2, "0")}
+            </span>
+          )}
           {product.badge && (
             <span className="px-2 py-0.5 rounded-md bg-red-brand text-white text-[10px] font-black uppercase tracking-wider shadow-sm">
               {product.badge}
