@@ -175,8 +175,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "KTM Ai LED headlight system with app control — change modes from your phone. Four bulbs with colour-coded socket adapters (H4 / H11 / 9005 / 9006) and external drivers. Crisp 6000K white light, plug-and-play.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
-    basePrice: 19500, // SAMPLE price — replace with real price
-    price: 19500, // SAMPLE price — replace with real price
+    basePrice: 7500,
+    price: 7500,
     inStock: true,
     brand: "KTM",
     rating: 0,
@@ -197,9 +197,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "REGO Racing H4 LED headlight bulbs in a black metal case, with Mother 6500K drivers and braided wiring. Bright white 6500K beam, plug-and-play H4 fitment.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
-    basePrice: 21900, // OLD real price from old catalog (same product)
-    price: 21900, // OLD real price from old catalog (same product)
-    originalPrice: 24900, // OLD real price from old catalog (same product)
+    basePrice: 8500,
+    price: 8500,
     inStock: true,
     brand: "REGO Racing",
     rating: 0,
@@ -220,9 +219,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Y6 H4 mini projector-lens LED headlight bulbs — hi and lo beam in one bulb, with a sharp clear cutoff line and no glare. 6000K white, plug-and-play H4.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
-    basePrice: 16500, // OLD real price from old catalog (same product)
-    price: 16500, // OLD real price from old catalog (same product)
-    originalPrice: 19500, // OLD real price from old catalog (same product)
+    basePrice: 8000,
+    price: 8000,
     inStock: true,
     brand: "Y6",
     rating: 0,
@@ -243,9 +241,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "H11 single-beam mini projector-lens LED headlight bulbs with a focused beam and clean cutoff line. Smart Kit 2022 drivers, plug-and-play H11 — for low beam and fog.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
-    basePrice: 17200, // OLD real price from old catalog (same product)
-    price: 17200, // OLD real price from old catalog (same product)
-    originalPrice: 20500, // OLD real price from old catalog (same product)
+    basePrice: 7500,
+    price: 7500,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -265,9 +262,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "REGO Racing 4-copper H4 LED headlight bulbs, 6500K white, in the premium metallic (golden) box edition. 6-copper high-range brightness, H4 fitment.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
-    basePrice: 24200, // OLD real price from old catalog (same product)
-    price: 24200, // OLD real price from old catalog (same product)
-    originalPrice: 27800, // OLD real price from old catalog (same product)
+    basePrice: 13500,
+    price: 13500,
     inStock: true,
     brand: "REGO Racing",
     rating: 0,
@@ -288,9 +284,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Copper-bodied H4 LED headlight bulbs with fan cooling and external driver, in a premium red wooden presentation box. Brand is not printed on the box — the shop will confirm the name.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
-    basePrice: 19800, // OLD real price from old catalog (same product)
-    price: 19800, // OLD real price from old catalog (same product)
-    originalPrice: 22800, // OLD real price from old catalog (same product)
+    basePrice: 15500,
+    price: 15500,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -310,9 +305,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "4x4 LED high-power off-road light bars — two 4-lens bars with mounting brackets and hardware. Bracket-mount on bull bar, bumper or roof. Spot + flood combo for pickups, SUVs and 4x4s.",
     category: "led-lights",
     subcategory: "Fog Lights",
-    basePrice: 16800, // OLD real price from old catalog (same product)
-    price: 16800, // OLD real price from old catalog (same product)
-    originalPrice: 19500, // OLD real price from old catalog (same product)
+    basePrice: 4000,
+    price: 4000,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -332,8 +326,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "LED off-road light bars — two 5-lens bars with brackets and hardware, same 4x4 auxiliary-light line as the 4-lens version, one lens wider. Bracket-mount for pickups, SUVs and 4x4s.",
     category: "led-lights",
     subcategory: "Fog Lights",
-    basePrice: 17500, // SAMPLE price — replace with real price
-    price: 17500, // SAMPLE price — replace with real price
+    basePrice: 4500,
+    price: 4500,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -353,8 +347,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "REGO motorcycle LED headlight — small dual-pod projector light for bikes, wide 12V–85V voltage, super bright. Note: this is a bike light in a car-accessory shop — confirm it belongs on the site.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
-    basePrice: 4500, // SAMPLE price — replace with real price
-    price: 4500, // SAMPLE price — replace with real price
+    basePrice: 2500,
+    price: 2500,
     inStock: true,
     brand: "REGO",
     rating: 0,
@@ -375,8 +369,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Super bright T10 LED bulbs (high power) — wedge bulbs for parking, interior and number-plate lights. 12V, plug-and-play.",
     category: "led-lights",
     subcategory: "Interior Lighting",
-    basePrice: 1200, // SAMPLE price — replace with real price
-    price: 1200, // SAMPLE price — replace with real price
+    basePrice: 1000,
+    price: 1000,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -396,8 +390,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Super bright LED interior dome lights — four round LED panels with adapters, for bright white cabin light. Plug-and-play with multi-function adapters.",
     category: "led-lights",
     subcategory: "Interior Lighting",
-    basePrice: 2500, // SAMPLE price — replace with real price
-    price: 2500, // SAMPLE price — replace with real price
+    basePrice: 650,
+    price: 650,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -417,8 +411,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Premium auto LED interior light kit — two rectangular LED panels with festoon adapters, for dome and roof lights. Bright white cabin light, plug-and-play.",
     category: "led-lights",
     subcategory: "Interior Lighting",
-    basePrice: 2800, // SAMPLE price — replace with real price
-    price: 2800, // SAMPLE price — replace with real price
+    basePrice: 650,
+    price: 650,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -438,8 +432,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Premium T10 LED bulbs, ultra-bright — cylindrical wedge bulbs for parking, interior and number-plate lights. 12V, plug-and-play.",
     category: "led-lights",
     subcategory: "Interior Lighting",
-    basePrice: 1500, // SAMPLE price — replace with real price
-    price: 1500, // SAMPLE price — replace with real price
+    basePrice: 1000,
+    price: 1000,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -459,8 +453,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "T10 LED bulbs — premium automotive lighting, ultra bright. Longer wedge bulbs for parking, interior and number-plate lights. 12V, plug-and-play.",
     category: "led-lights",
     subcategory: "Interior Lighting",
-    basePrice: 1500, // SAMPLE price — replace with real price
-    price: 1500, // SAMPLE price — replace with real price
+    basePrice: 1000,
+    price: 1000,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -480,8 +474,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "LED festoon bulbs — 31mm, 21 LEDs per bulb, super bright, high performance. For dome, map and boot lights. 12V, plug-and-play.",
     category: "led-lights",
     subcategory: "Interior Lighting",
-    basePrice: 1800, // SAMPLE price — replace with real price
-    price: 1800, // SAMPLE price — replace with real price
+    basePrice: 850,
+    price: 850,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -501,8 +495,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Premium LED festoon bulbs with a large COB chip — bright wide spread for dome and map lights. Double-ended festoon, plug-and-play.",
     category: "led-lights",
     subcategory: "Interior Lighting",
-    basePrice: 1800, // SAMPLE price — replace with real price
-    price: 1800, // SAMPLE price — replace with real price
+    basePrice: 850,
+    price: 850,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -522,8 +516,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Premium T10 LED canbus bulbs, 8000K — error-free on canbus cars, no dashboard warning. For parking, interior and number-plate lights. 12V, plug-and-play.",
     category: "led-lights",
     subcategory: "Interior Lighting",
-    basePrice: 2200, // SAMPLE price — replace with real price
-    price: 2200, // SAMPLE price — replace with real price
+    basePrice: 1250,
+    price: 1250,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -543,8 +537,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Premium T10 LED bulbs, ultra bright — white ceramic body with two yellow chips each. For parking, interior and number-plate lights. 12V, plug-and-play.",
     category: "led-lights",
     subcategory: "Interior Lighting",
-    basePrice: 1500, // SAMPLE price — replace with real price
-    price: 1500, // SAMPLE price — replace with real price
+    basePrice: 650,
+    price: 650,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -564,8 +558,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "T10 LED bulbs, super bright — flat-board wedge bulbs for parking, interior and number-plate lights. 12V, plug-and-play.",
     category: "led-lights",
     subcategory: "Interior Lighting",
-    basePrice: 1200, // SAMPLE price — replace with real price
-    price: 1200, // SAMPLE price — replace with real price
+    basePrice: 1250,
+    price: 1250,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -585,8 +579,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "LED headlight auto intelligent system (V-150) — H4 LED headlight bulbs with gold trim ring, fan base and external drivers. Plug-and-play.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
-    basePrice: 18500, // SAMPLE price — replace with real price
-    price: 18500, // SAMPLE price — replace with real price
+    basePrice: 9500,
+    price: 9500,
     inStock: true,
     rating: 0,
     reviewCount: 0,
@@ -606,8 +600,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "LENSO LED headlight bulbs — 3000W performance upgrades line, red fan-base bulbs with external drivers. LENSO is an established Pakistani-market LED brand.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
-    basePrice: 18500, // SAMPLE price — replace with real price
-    price: 18500, // SAMPLE price — replace with real price
+    basePrice: 13500,
+    price: 13500,
     inStock: true,
     brand: "LENSO",
     rating: 0,
@@ -628,8 +622,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "SH Pro two-colour LED headlight — one light, two colours (bright white + warm yellow, switchable). H4 / 9005 / H11 compatible, 600W, 2-year warranty.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
-    basePrice: 8500, // SAMPLE price — replace with real price
-    price: 8500, // SAMPLE price — replace with real price
+    basePrice: 7500,
+    price: 7500,
     inStock: true,
     brand: "SH Pro",
     rating: 0,
@@ -650,8 +644,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "REGO Racing copper LED headlights — copper bulbs and drivers, 6500K white, perfect light angle. H4 / H11 / 9005 fitments, plug-and-play.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
-    basePrice: 19500, // SAMPLE price — replace with real price
-    price: 19500, // SAMPLE price — replace with real price
+    basePrice: 14500,
+    price: 14500,
     inStock: true,
     brand: "REGO Racing",
     rating: 0,
@@ -672,9 +666,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Mother 6-copper LED headlights, professional edition — gold copper bulbs with gold drivers, high-range brightness, 6500K. Plug-and-play.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
-    basePrice: 24500, // OLD real price from old catalog (same product)
-    price: 24500, // OLD real price from old catalog (same product)
-    originalPrice: 27900, // OLD real price from old catalog (same product)
+    basePrice: 15500,
+    price: 15500,
     inStock: true,
     brand: "MOTHER",
     rating: 0,
@@ -695,9 +688,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "B PRO LED headlights — 8-copper, high power super focusing. Black bulbs with copper chips and black drivers. Plug-and-play.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
-    basePrice: 22800, // OLD real price from old catalog (same product)
-    price: 22800, // OLD real price from old catalog (same product)
-    originalPrice: 25900, // OLD real price from old catalog (same product)
+    basePrice: 11500,
+    price: 11500,
     inStock: true,
     brand: "B PRO",
     rating: 0,
@@ -718,8 +710,8 @@ export const PRODUCTS_DATA: Product[] = [
     description: "Mother LED headlights, green edition — green anodised fan-base bulbs with black drivers printed 'MOTHER 7500 watt'. Plug-and-play.",
     category: "led-lights",
     subcategory: "Headlight LEDs",
-    basePrice: 23500, // SAMPLE price — replace with real price
-    price: 23500, // SAMPLE price — replace with real price
+    basePrice: 14500,
+    price: 14500,
     inStock: true,
     brand: "MOTHER",
     rating: 0,
@@ -735,9 +727,10 @@ export const PRODUCTS_DATA: Product[] = [
 
 // NOTE (2026-11-16): the 21 old products were removed on the owner's order.
 // The 26 new products (real images from the "All Pictures" Drive folder) were
-// added 2026-11-16 with SAMPLE prices — 8 reuse real old-catalog prices, 18 are
-// samples (sumair: "prices sample daldo filhal"). Replace with real prices
-// from the client. Do NOT re-add the old products.
+// added 2026-11-16 with SAMPLE prices. On 2026-11-19 sumair gave the CORRECT
+// prices by product number (#01-#26) and they replaced all 26 prices here
+// (price + basePrice; the 8 old originalPrice "was" values were removed, so
+// no struck-through discount shows). Do NOT re-add the old products.
 
 // Active products & categories exported for components & SEO
 export const ACTIVE_PRODUCTS_DATA = PRODUCTS_DATA.filter((p) => !p.hidden);
