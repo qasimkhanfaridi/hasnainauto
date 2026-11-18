@@ -124,14 +124,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
             </button>
 
             {/* ─── Logo ─── */}
-            {/* 2026-11-18 (sumair): NEW logo — car mark cropped from the new lockup (full lockup's text would be unreadable at header size; same lesson as 2026-11-17 Round 3). Oswald wordmark + tagline kept. */}
+            {/* 2026-11-18 (sumair): COMPLETE new logo — the marked circular lockup (ring + HASNAIN + car), cropped from the sides of the wide image, as a round badge like the old Ferrari badge. Oswald wordmark + tagline kept. */}
             <Link href="/" className="flex items-center gap-2 shrink-0">
               <Image
-                src="/images/hasnain-auto-logo-mark-v2.jpg"
+                src="/images/hasnain-auto-logo-lockup.jpg"
                 alt="Hasnain Auto — Decoration Accessories"
-                width={1360}
-                height={540}
-                className="h-10 sm:h-12 w-auto rounded-lg shrink-0"
+                width={1260}
+                height={1260}
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full shrink-0"
                 priority
               />
               <div className="flex flex-col leading-tight">

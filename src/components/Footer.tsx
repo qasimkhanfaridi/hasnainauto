@@ -19,14 +19,14 @@ export const Footer: React.FC = () => {
           {/* Brand Col */}
           <div className="lg:col-span-4 space-y-1.5">
             {/* Logo */}
-            {/* 2026-11-18 (sumair): NEW logo — same car mark as the header, cropped from the new lockup. */}
+            {/* 2026-11-18 (sumair): COMPLETE new logo — same marked circular lockup as the header. */}
             <div className="flex items-center gap-3">
               <Image
-                src="/images/hasnain-auto-logo-mark-v2.jpg"
+                src="/images/hasnain-auto-logo-lockup.jpg"
                 alt="Hasnain Auto — Decoration Accessories"
-                width={1360}
-                height={540}
-                className="h-10 sm:h-12 w-auto rounded-lg shrink-0"
+                width={1260}
+                height={1260}
+                className="w-12 h-12 sm:w-14 sm:h-14 rounded-full shrink-0"
               />
               <div className="flex flex-col leading-tight">
                 <span className="text-xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">
