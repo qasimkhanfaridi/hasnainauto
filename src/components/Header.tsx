@@ -20,6 +20,12 @@ import { BUSINESS_CONFIG } from "@/config/business";
 import { useCart } from "@/context/CartContext";
 import { useVehicle } from "@/context/VehicleContext";
 import { useTheme } from "@/context/ThemeContext";
+import { Oswald } from "next/font/google";
+
+// Wordmark font (2026-11-18, sumair): the plain system-sans "HASNAIN AUTO"
+// looked basic — Oswald is a tall condensed display face, the automotive
+// poster look. Loaded weights 600/700 only; use font-semibold/font-bold.
+const oswald = Oswald({ subsets: ["latin"], weight: ["600", "700"] });
 
 // Real WhatsApp logo (same glyph as the floating WhatsApp button) — 2026-11-17 (sumair): the generic MessageCircle bubble is NOT the WhatsApp logo.
 const WHATSAPP_PATH =
@@ -129,12 +135,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
                 priority
               />
               <div className="flex flex-col leading-tight">
-                <span className="text-lg sm:text-xl font-black text-carbon-900 dark:text-white tracking-tighter uppercase">
+                <span className={`${oswald.className} text-xl sm:text-2xl font-bold text-carbon-900 dark:text-white uppercase tracking-wide`}>
                   HASNAIN{" "}
                   <span className="text-red-brand">AUTO</span>
                 </span>
                 <span className="text-[8px] sm:text-[9px] text-amber-brand dark:text-amber-glow uppercase tracking-[0.12em] font-bold -mt-0.5">
-                  LED Lights · Saddar Rawalpindi
+                  Decoration Accessories
                 </span>
               </div>
             </Link>
