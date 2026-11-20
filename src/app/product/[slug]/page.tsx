@@ -78,7 +78,10 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
     SOCKET_OPTIONS.find((sk) => productSocketSpec.toUpperCase().includes(sk)) || "";
   const [selectedBeam, setSelectedBeam] = useState<string>("");
   const [selectedSocket, setSelectedSocket] = useState<string>(defaultSocket);
-  const fitment = productSocketSpec
+  // Only headlight-socket products (H4/H11/9005/9006/H7) get the beam +
+  // socket selectors — T10/festoon/interior products have a Socket spec
+  // too, but beam position and H-sockets do not apply to them.
+  const fitment = defaultSocket
     ? { beam: selectedBeam || undefined, socket: selectedSocket || undefined }
     : undefined;
 
@@ -541,7 +544,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               )}
 
               {/* Beam position + direct socket selectors — 2026-11-20 (sumair) */}
-              {productSocketSpec && (
+              {defaultSocket && (
                 <div className="space-y-3 rounded-2xl border border-gray-200 bg-gray-50/60 p-3.5">
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-gray-600 uppercase tracking-wider block">
