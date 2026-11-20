@@ -172,7 +172,17 @@ export const PRODUCTS_DATA: Product[] = [
     name: "KTM Ai LED Headlight",
     slug: "ktm-ai-led-headlight",
     shortDescription: "App-controlled LED headlight kit with 4 bulbs and external drivers.",
-    description: "KTM Ai LED headlight system with app control — change modes from your phone. Four bulbs with colour-coded socket adapters (H4 / H11 / 9005 / 9006) and external drivers. Crisp 6000K white light, plug-and-play.",
+    description: `Smart Lighting at Your Fingertips! Control Brightness & Color Temperatures Directly from Your Smartphone.
+
+Step into the future of automotive lighting with the KTM Ai Smart LED Headlight Kit. Designed for drivers who want total control over their road visibility in all weather conditions, these intelligent bulbs connect seamlessly to your smartphone (iOS & Android) via Bluetooth. Switch effortlessly between crisp white light for clear highway nights and warm yellow tones for heavy fog and rain — all with a single tap on the mobile app.
+
+Key Features & Smart Technology:
+- Smart Bluetooth App Control (iOS & Android): Scan the QR code to download the dedicated app and customize lighting modes, brightness levels, and color temperatures right from your phone.
+- All-Weather Multi-Color Dimming: Adapt instantly to changing weather — use 6000K–6500K Pure White for maximum clarity on dark roads, or switch to 3000K–4300K Warm Yellow to cut through thick winter fog, smog, and rain.
+- High-Intensity Automotive LED Chips: Engineered with precision-aligned CSP chips that produce a dense, wide beam pattern with zero dark spots.
+- Turbo Finned Aluminum Cooling System: Heavy-duty aviation aluminum heatsink with radial cooling fins and a high-speed silent fan prevents overheating and maximizes bulb lifespan.
+- External Intelligent CANBUS Driver: Comes with an external metallic control driver and braided cables to guarantee stable power, zero flickering, and error-free compatibility on modern vehicles.
+- Universal Socket Options Available: Available in multiple base types (H4, H7, H11, 9005/HB3, 9006/HB4) for a direct plug-and-play installation.`,
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 7500,
@@ -216,7 +226,17 @@ export const PRODUCTS_DATA: Product[] = [
     name: "Y6 H4 LED Mini Projector Lens",
     slug: "y6-h4-mini-projector-lens",
     shortDescription: "Y6 H4 mini projector-lens LED bulbs with a sharp cutoff line.",
-    description: "Y6 H4 mini projector-lens LED headlight bulbs — hi and lo beam in one bulb, with a sharp clear cutoff line and no glare. 6000K white, plug-and-play H4.",
+    description: `The Best-Selling H4 Mini Projector! Unbeatable Low-Beam Cut-Off & Long-Range High-Beam Power.
+
+Experience a massive upgrade in night-driving clarity without opening or modifying your headlight housing! The Y6 H4 Mini LED Projector Lens Kit is engineered specifically for H4 reflector headlights, combining a precision optical glass projector lens for the low beam with high-intensity LED chips for a powerful, far-reaching high beam. Say goodbye to scattered light and dark spots — drive with a crisp, luxury-car beam pattern that keeps the road bright and oncoming drivers glare-free.
+
+Key Features & Engineering:
+- Built-In Optical Mini Projector Lens (Low Beam): Delivers a clean, wide, and razor-sharp Z-shaped/flat cut-off line that illuminates the road evenly without blinding oncoming traffic.
+- Dedicated High-Beam Reflector & LED Chips: Switches instantly to a super-bright, long-throw high beam for dark highways and motorways.
+- High-Power Automotive LED Chips: Produces intense 6000K Crystal White light that cuts through darkness and improves sign visibility.
+- Aviation Aluminum Heatsink & Turbo Cooling: Heavy-duty black anodized finned aluminum body with a built-in silent cooling fan ensures rapid heat dissipation and long-lasting reliability.
+- External Intelligent Driver & 3-Pin H4 Plug: Equipped with an external current-stabilizing driver box and direct 3-pin H4 connector for true Plug-and-Play installation — zero wire cutting required.
+- Left-Hand Drive (LHD) / Right-Hand Drive (RHD) Precision: Engineered specifically for standard H4 reflector bowls with an adjustable locking collar for perfect beam alignment.`,
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 8000,
@@ -238,7 +258,17 @@ export const PRODUCTS_DATA: Product[] = [
     name: "H11 Mini Projector Lens LED",
     slug: "h11-mini-projector-lens-led",
     shortDescription: "H11 single-beam mini projector-lens LED bulbs (Smart Kit 2022).",
-    description: "H11 single-beam mini projector-lens LED headlight bulbs with a focused beam and clean cutoff line. Smart Kit 2022 drivers, plug-and-play H11 — for low beam and fog.",
+    description: `Projector-Grade Precision Without the Hassle! Crisp Cut-Off Line, Zero Glare, and 80% Upgraded Brightness.
+
+Transform your car's standard reflector headlights into a high-end projector setup in minutes! The H11 Single Beam Mini Projector Lens LED Kit is engineered with a built-in optical convex lens that focuses light directly onto the road ahead. Unlike regular LED bulbs that scatter light in reflector housings, this mini projector delivers a razor-sharp horizontal cut-off line — giving you maximum visibility at night without blinding oncoming drivers.
+
+Key Features & Specifications:
+- Built-In Mini Projector Lens: Precision optical glass lens creates a wide, uniform, and focused beam pattern with zero dark spots.
+- 6x High-Brightness CSP LED Chips: Equipped with 6 premium automotive-grade CSP chips per bulb, delivering up to 80% upgraded brightness over standard halogen bulbs.
+- Anti-Glare Sharp Cut-Off Line: Engineered specifically for reflector headlights and fog lamps to keep light strictly on the road and out of oncoming drivers' eyes.
+- Smart Kit External Driver & Braided Cables: Features an intelligent external control box ("Smart Kit") paired with heat-resistant braided wiring for stable voltage, instant start-up, and flicker-free performance.
+- Aviation-Grade Aluminum Heatsink: Finned aluminum body with a built-in turbo cooling system rapidly dissipates heat for long-lasting durability.
+- True Plug-and-Play H11 Fitment: Compact mini-lens design fits directly into standard H11/H8/H9 sockets without needing to open or modify your headlight housing.`,
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 7500,
@@ -281,7 +311,17 @@ export const PRODUCTS_DATA: Product[] = [
     name: "Copper LED Headlights H4 (Wooden Box)",
     slug: "copper-led-headlights-h4-wooden-box",
     shortDescription: "Copper-bodied H4 LED headlights in a premium wooden presentation box.",
-    description: "Copper-bodied H4 LED headlight bulbs with fan cooling and external driver, in a premium red wooden presentation box. Brand is not printed on the box — the shop will confirm the name.",
+    description: `Turn Night into Day! Experience Unmatched Brightness, Zero Overheating, and Luxury Craftsmanship.
+
+Upgrade your driving safety and give your car a bold, modern look with our flagship Quad-Copper Pipe LED Headlight Kit presented in an exclusive Luxury Wooden Gift Box. Engineered for automotive enthusiasts who refuse to compromise on visibility, these bulbs deliver a razor-sharp, pure white beam that cuts through pitch-black roads, rain, and fog without blinding oncoming traffic.
+
+Key Features & Engineering:
+- 4x Vacuum Copper Heat Pipes: Built with advanced quad-copper heat-conducting tubes that instantly pull heat away from the high-power LED chips, ensuring consistent maximum brightness without dimming.
+- Heavy-Duty Zinc Alloy Body: Precision-crafted zinc alloy housing offers superior durability, shock resistance, and sleek metallic aesthetics.
+- High-Speed Aluminum Turbo Fan: Integrated silent aluminum cooling fan works alongside the copper pipes to maintain optimal operating temperatures even on long highway drives.
+- Intelligent External CANBUS Driver: Comes with a dedicated metallic control box to ensure stable current, zero flickering, and error-free installation on modern vehicles.
+- Focused Beam Pattern (H4 Dual-Beam Design): Features precision-aligned high-intensity LED chips that replicate halogen filament positioning for a clean cut-off line and wide road coverage.
+- 1-Year Hassle-Free Replacement Warranty: Buy with complete peace of mind — backed by Hasnain Auto Decoration Accessories with a full 1-year replacement guarantee.`,
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 15500,
@@ -302,7 +342,30 @@ export const PRODUCTS_DATA: Product[] = [
     name: "4x4 LED High Power Off-Road Light Bar (4-Lens)",
     slug: "4x4-led-off-road-light-bar-4-lens",
     shortDescription: "Pair of 4-lens LED off-road light bars for pickups and 4x4s.",
-    description: "4x4 LED high-power off-road light bars — two 4-lens bars with mounting brackets and hardware. Bracket-mount on bull bar, bumper or roof. Spot + flood combo for pickups, SUVs and 4x4s.",
+    description: `Product Overview:
+Upgrade your vehicle's visibility, safety, and aggressive off-road look with the 4-Lens LED Projector Light Bar from Hasnain Auto. Engineered for extreme performance, this auxiliary light bar features advanced quad-projector lenses that concentrate light into a powerful, razor-sharp beam — ensuring maximum road coverage without blinding oncoming traffic. Whether you are driving through dense fog, heavy rain, or dark off-road trails, this multi-mode light guarantees crystal-clear vision.
+
+Key Features & 4-in-1 Lighting Modes:
+Adapt instantly to any weather or driving condition with four versatile built-in light modes:
+- Pure White Light (6000K): Delivers a crisp, ultra-bright beam for standard night driving and clear highways.
+- Golden Yellow Light (3000K): Cuts effortlessly through heavy fog, dust storms, and downpours, offering superior penetration and reducing glare.
+- Yellow & White Mix (Dual Beam): Combines both colors to give you maximum brightness and wide peripheral road coverage.
+- Strobe / Flicker Mode: Perfect for emergency situations, foggy conditions, or off-road group convoys to make your vehicle instantly visible.
+
+Product Specifications & Build Quality:
+- Quad-Projector Lens Technology: Features 4 high-intensity magnifying lenses that maximize light output and prevent scattering.
+- Universal Fitment: Designed with a flexible mounting system to fit effortlessly on the front bumper, grille, or bull bar of almost any car, SUV, 4x4 (Hilux, Revo, Prado, Land Cruiser), or pickup truck.
+- Rugged All-Weather Build: Built with a heavy-duty, die-cast aluminum housing that provides exceptional heat dissipation, waterproofing, and durability against rough terrains.
+- Energy Efficient: High illumination output with low power consumption, ensuring zero strain on your vehicle's battery.
+
+What's in the Box?
+- 2x 4-Lens LED Projector Light Bars (Left & Right Pair)
+- Complete Heavy-Duty Mounting Brackets & Fitting Hardware (Nuts/Bolts)
+
+Why Shop From Hasnain Auto?
+- 100% Quality Assurance: Rigorously tested for durability and performance.
+- Professional Installation Available: Physical fitting services available at our Saddar, Rawalpindi showroom.
+- Hassle-Free Shopping: Enjoy Cash on Delivery (COD) right at your doorstep across Pakistan.`,
     category: "led-lights",
     subcategory: "Fog Lights",
     basePrice: 4000,
@@ -471,7 +534,17 @@ export const PRODUCTS_DATA: Product[] = [
     name: "LED Festoon Bulbs 31mm 21-LED",
     slug: "led-festoon-bulbs-31mm-21-led",
     shortDescription: "31mm festoon LED bulbs, 21 LEDs per bulb.",
-    description: "LED festoon bulbs — 31mm, 21 LEDs per bulb, super bright, high performance. For dome, map and boot lights. 12V, plug-and-play.",
+    description: `Upgrade Dull Yellow Cabin Lights to Crisp, Luxury White Brilliance!
+
+Give your car's interior a clean, modern, and luxury feel with the 31MM-21LED Premium Series Festoon Bulb. Designed to replace dim, factory-installed yellowish halogen bulbs, this compact powerhouse packs 21 high-intensity SMD LED chips into a standard 31mm frame. Whether you are looking for something in your cabin at night, lighting up your trunk, or illuminating your license plate, it delivers bright, uniform, crystal-white illumination without draining your car's battery.
+
+Key Features & Specifications:
+- 21x High-Brightness SMD LED Chips: Engineered with a dense 3x7 LED array that provides 300% brighter, wider, and shadow-free illumination compared to stock bulbs.
+- Standard 31mm Festoon Fitment (DE3175 / DE3022): Universal 31mm length fits directly into most car dome lights, map/reading lights, door courtesy lights, trunk/boot lights, and license plate housings.
+- Gold-Plated Conductive Terminals: Precision-crafted metallic end caps ensure a tight, rust-free connection with zero flickering over bumpy roads.
+- Built-In Aluminum Heat Dissipation: Features an integrated metallic heatsink backing to prevent overheating and ensure a long, reliable lifespan.
+- Energy Efficient & Low Power Draw: Operates on standard 12V DC automotive power while consuming minimal energy and generating very low heat.
+- Instant Plug-and-Play Installation: No wiring or modification required — simply remove your old bulb and snap this LED into place in seconds.`,
     category: "led-lights",
     subcategory: "Interior Lighting",
     basePrice: 850,
@@ -685,7 +758,141 @@ export const PRODUCTS_DATA: Product[] = [
     name: "B PRO LED Headlights (8 Copper, Super Focusing)",
     slug: "b-pro-8-copper-led-headlights",
     shortDescription: "B PRO 8-copper LED headlights, high power super focusing.",
-    description: "B PRO LED headlights — 8-copper, high power super focusing. Black bulbs with copper chips and black drivers. Plug-and-play.",
+    description: `⚡ EXTREME POWER. MAXIMUM COOLING. UNMATCHED PERFORMANCE.
+
+Meet the Ultimate High-Performance LED Headlight from Hasnain Auto Decoration Accessories — our most powerful and fastest-performing LED lighting solution for drivers who want maximum illumination and serious road presence. 🚗💡🔥
+
+Featuring an impressive 300W Real Power, 15 high-performance LEDs, a premium Korean LED Chip, 8 Copper Heat-Dissipation Tubes, an Aluminium Cooling Fan, and Advanced CANBUS Compatible Technology, this flagship LED is engineered to deliver an exceptional lighting upgrade for compatible vehicles.
+
+With 8 copper cooling tubes, this LED is designed for enhanced heat dissipation and sustained performance, while its 300W Real Power puts it at the top of our LED performance range.
+
+🚀 EXTREME 300W REAL POWER
+
+⚡ 300W REAL POWER — OUR MOST POWERFUL LED
+
+Built for drivers who don't want an ordinary lighting upgrade.
+
+The 300W Real Power configuration delivers an extremely powerful lighting performance, designed to provide intense illumination and a stronger road presence than our lower-power LED models.
+
+🔥 Maximum Power
+💡 Maximum Illumination
+🚗 Maximum Performance
+
+If you're looking for one of the most powerful LED upgrades in our range, this is the flagship choice.
+
+🔥 8 COPPER HEAT-DISSIPATION TUBES
+
+❄️ ADVANCED 8-TUBE COOLING SYSTEM
+
+The flagship cooling system features 8 Copper Pipe Tubes, providing multiple heat-transfer pathways away from the LED assembly.
+
+Combined with the integrated Aluminium Cooling Fan, the system is designed to provide advanced thermal management and help maintain stable performance during extended operation.
+
+🔥 8 Copper Tubes
+❄️ Active Aluminium Fan Cooling
+🌡️ Advanced Heat Management
+
+More cooling capacity. More stability. Built for serious performance.
+
+💡 15 HIGH-PERFORMANCE LEDs
+
+The LED assembly features 15 high-performance LEDs designed to deliver powerful and consistent illumination.
+
+The combination of multiple LEDs and 300W Real Power creates a high-output lighting setup for drivers who demand maximum performance from their headlights.
+
+🇰🇷 PREMIUM KOREAN LED CHIP
+
+At the heart of this high-performance lighting system is a premium Korean LED Chip, selected for powerful light performance, efficiency and consistent operation.
+
+This advanced chip technology works together with the high-power LED configuration and advanced cooling system to provide a premium lighting experience.
+
+🔌 ADVANCED CANBUS COMPATIBLE TECHNOLOGY
+
+Equipped with Advanced CANBUS Compatible Technology, designed to improve compatibility with many modern vehicle electrical systems.
+
+It can also help minimize common LED-related issues such as flickering or dashboard warning lights on compatible vehicles.
+
+🚘 Modern Vehicle Compatibility
+⚡ Stable Electrical Performance
+🔌 Advanced CANBUS Technology
+
+🎯 POWERFUL & CONTROLLED BEAM
+
+Designed to provide strong, focused and controlled illumination when correctly installed in a compatible headlight housing.
+
+Its high-output performance makes it an ideal choice for drivers who frequently travel at night, drive on highways or require stronger illumination on darker roads.
+
+🌙 BUILT FOR THE NIGHT
+
+Whether you're driving through:
+
+🏙️ City Roads
+🛣️ Highways
+🌑 Dark Roads
+🚗 Long-Distance Routes
+🌧️ Low-Light Conditions
+
+The 300W flagship LED is designed to deliver the powerful illumination needed for demanding night-driving conditions.
+
+💎 PREMIUM PRODUCT SPECIFICATIONS
+
+Product Type | 🔥 Flagship High-Performance LED Headlight
+Real Power | ⚡ 300W
+LED Quantity | 💡 15 LEDs
+LED Chip | 🇰🇷 Korean Chip
+Heat Dissipation | 🔥 8 Copper Pipe Tubes
+Cooling System | ❄️ Aluminium Cooling Fan
+Technology | 🔌 Advanced CANBUS Compatible
+Performance Level | 🏆 Our Highest-Power LED
+Warranty | 🛡️ 1 Year Replacement Warranty
+
+🏆 WHY CHOOSE OUR 300W FLAGSHIP LED?
+
+✔️ 300W Real Power
+✔️ 15 High-Performance LEDs
+✔️ Premium Korean LED Chip
+✔️ 8 Copper Heat-Dissipation Tubes
+✔️ Aluminium Cooling Fan
+✔️ Advanced CANBUS Compatible Technology
+✔️ Extremely Powerful Illumination
+✔️ Advanced Thermal Management
+✔️ Focused & Controlled Beam Performance
+✔️ Premium Modern Design
+✔️ Our Highest-Power LED Model
+✔️ 1 Year Replacement Warranty
+
+🔥 THE MOST POWERFUL LED IN OUR RANGE
+
+Our LED range is built for different performance requirements — but when it comes to maximum power, the choice is clear.
+
+300W REAL POWER + 8 COPPER TUBES = FLAGSHIP PERFORMANCE 🔥
+
+The combination of 300W Real Power, 15 LEDs, Korean Chip technology, 8 Copper Heat-Dissipation Tubes, Aluminium Fan Cooling and Advanced CANBUS Technology makes this our most powerful and performance-focused LED headlight.
+
+If you're looking for maximum lighting power and premium cooling technology, this is the LED designed to stand at the top. 🚗💨🔥
+
+🛡️ 1 YEAR REPLACEMENT WARRANTY
+
+Enjoy additional confidence with a 1 YEAR REPLACEMENT WARRANTY 🛡️
+
+Warranty terms and conditions may apply.
+
+🏪 AVAILABLE AT HASNAIN AUTO DECORATION ACCESSORIES
+
+Hasnain Auto Decoration Accessories
+
+Premium Car Accessories & Auto Decoration Solutions 🚘✨
+
+📱 Call / WhatsApp: 03125127096
+💬 WhatsApp Available
+
+🔥 300W REAL POWER | 15 LEDs | 8 COPPER TUBES
+
+🇰🇷 Korean Chip | ❄️ Aluminium Fan | 🔌 Advanced CANBUS Technology | 🛡️ 1 Year Replacement Warranty
+
+💡 THE ULTIMATE POWER UPGRADE.
+
+🔥 MAXIMUM POWER. MAXIMUM COOLING. MAXIMUM PERFORMANCE.`,
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 11500,

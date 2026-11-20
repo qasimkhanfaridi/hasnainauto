@@ -22,6 +22,9 @@ import {
   Zap,
   CreditCard,
   Maximize2,
+  Heart,
+  Minus,
+  Plus,
   X
 } from "lucide-react";
 import { 
@@ -42,6 +45,131 @@ import { ProductFitmentVerifier } from "@/components/ProductFitmentVerifier";
 // Real WhatsApp logo (same glyph as the floating WhatsApp button) — 2026-11-17 (sumair): the generic MessageCircle bubble is NOT the WhatsApp logo.
 const WHATSAPP_PATH =
   "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z";
+
+// The 14-point warranty policy — AuxLEDs list minus points 7 & 13, brand
+// swapped to Hasnain Auto (sumair's decision, 2026-11-20).
+const WARRANTY_POINTS = [
+  "All products are in original packaging and the warranty seal is intact.",
+  "No alteration or work has been performed on the product for the purpose of fitment.",
+  "Water damage is not covered under the warranty.",
+  "Accident or theft is not covered under the warranty claim.",
+  "Warranty starts from the date the item is purchased.",
+  "For items delivered to an address, the warranty period starts from the delivery date.",
+  "All warranty claims will be processed upon inspection, which will be accepted or rejected under the provided conditions.",
+  "In case of a claim, the warranty will remain under the original warranty period; no new warranty will be issued for the replacement.",
+  "Installation charges are not refundable or transferable.",
+  "Items that are faulty will be replaced or repaired to their original functionality as purchased.",
+  "Replacement is only issued for items that are faulty.",
+  "Refunds will take up to 5 working days from the date they have been accepted.",
+  "Returns are at the expense of the customer; Hasnain Auto is not liable for any shipping charges.",
+  "Hasnain Auto is not liable for damage due to improper installation or alteration to the vehicle or item.",
+];
+
+const RETURN_POINTS = [
+  "Replacement or repair is issued only for items that are faulty, after inspection.",
+  "Items must be returned in their original packaging with the warranty seal intact.",
+  "Returns are at the expense of the customer; Hasnain Auto is not liable for any shipping charges.",
+  "Refunds will take up to 5 working days from the date they have been accepted.",
+  "Installation charges are not refundable or transferable.",
+];
+
+// Renders a product description in the AuxLEDs style: short bold
+// sub-headings, paragraphs and bullet lists. Understands the plain-text
+// structure of the descriptions sumair supplied (2026-11-20): lines ending
+// in ":" or "?" and ALL-CAPS lines are headings, "- "/"• "/"✔" lines are
+// bullets, "Label | Value" lines are spec rows, "---" is a separator.
+function DescriptionBlock({ text }: { text: string }) {
+  const blocks: React.ReactNode[] = [];
+  let bullets: string[] = [];
+  let rows: [string, string][] = [];
+  let k = 0;
+  const flush = () => {
+    if (bullets.length) {
+      const items = bullets;
+      blocks.push(
+        <ul key={k++} className="space-y-1.5">
+          {items.map((b, i) => (
+            <li key={i} className="flex items-start gap-2 text-sm text-gray-600 leading-relaxed">
+              <span className="text-red-brand font-black mt-0.5">•</span>
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+      );
+      bullets = [];
+    }
+    if (rows.length) {
+      const rs = rows;
+      blocks.push(
+        <div key={k++} className="rounded-xl border border-gray-200 overflow-hidden">
+          {rs.map(([label, value], i) => (
+            <div key={i} className={`flex items-start justify-between gap-3 px-3 py-2 text-xs ${i % 2 ? "bg-white" : "bg-gray-50"}`}>
+              <span className="font-bold text-gray-700">{label}</span>
+              <span className="text-gray-600 text-right">{value}</span>
+            </div>
+          ))}
+        </div>
+      );
+      rows = [];
+    }
+  };
+  for (const raw of text.split("\n")) {
+    const line = raw.trim();
+    if (!line || /^-{3,}$/.test(line)) { flush(); continue; }
+    if (line === "Specification | Details") continue;
+    if (line.startsWith("- ") || line.startsWith("• ") || line.startsWith("✔️") || line.startsWith("✔")) {
+      if (rows.length) flush();
+      bullets.push(line.replace(/^(- |• |✔️ ?|✔ ?)/, "").replace(/\*\*/g, ""));
+      continue;
+    }
+    if ((line.match(/ \| /g) || []).length === 1) {
+      if (bullets.length) flush();
+      const [a, b] = line.split(" | ");
+      rows.push([a.replace(/\*\*/g, ""), b.replace(/\*\*/g, "")]);
+      continue;
+    }
+    flush();
+    const clean = line.replace(/\*\*/g, "");
+    const isHeading =
+      clean.endsWith(":") ||
+      clean.endsWith("?") ||
+      (clean.length <= 90 && /[A-Z]/.test(clean) && clean === clean.toUpperCase());
+    if (isHeading) {
+      blocks.push(<h4 key={k++} className="text-sm font-black text-gray-900 pt-1.5">{clean}</h4>);
+    } else {
+      blocks.push(<p key={k++} className="text-sm text-gray-600 leading-relaxed">{clean}</p>);
+    }
+  }
+  flush();
+  return <div className="space-y-2.5">{blocks}</div>;
+}
+
+function PolicyAccordion({
+  title,
+  open,
+  onToggle,
+  children,
+}: {
+  title: string;
+  open: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="border-b border-gray-200">
+      <button
+        type="button"
+        onClick={onToggle}
+        className="w-full flex items-center justify-between py-3.5 text-left"
+        aria-expanded={open}
+      >
+        <span className="text-xs font-black uppercase tracking-widest text-gray-900">{title}</span>
+        <Plus className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${open ? "rotate-45" : ""}`} />
+      </button>
+      {open && <div className="pb-4">{children}</div>}
+    </div>
+  );
+}
 
 interface ProductPageProps {
   params: {
@@ -85,11 +213,69 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
     ? { beam: selectedBeam || undefined, socket: selectedSocket || undefined }
     : undefined;
 
+  // AuxLEDs product-page rebuild (2026-11-20, sumair): quantity stepper,
+  // wishlist heart, policy accordions, sticky buy bar, recently viewed.
+  const [quantity, setQuantity] = useState(1);
+  const [wishlisted, setWishlisted] = useState(false);
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+  const [showSticky, setShowSticky] = useState(false);
+  const [recentProducts, setRecentProducts] = useState<typeof PRODUCTS_DATA>([]);
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const [reviewName, setReviewName] = useState("");
+  const [reviewRating, setReviewRating] = useState(5);
+  const [reviewText, setReviewText] = useState("");
+
+  useEffect(() => {
+    try {
+      const list: string[] = JSON.parse(localStorage.getItem("hasnain_wishlist") || "[]");
+      setWishlisted(list.includes(product.slug));
+    } catch {}
+  }, [product.slug]);
+
+  const toggleWishlist = () => {
+    try {
+      const list: string[] = JSON.parse(localStorage.getItem("hasnain_wishlist") || "[]");
+      const next = list.includes(product.slug)
+        ? list.filter((x) => x !== product.slug)
+        : [...list, product.slug];
+      localStorage.setItem("hasnain_wishlist", JSON.stringify(next));
+      setWishlisted(next.includes(product.slug));
+    } catch {}
+  };
+
+  useEffect(() => {
+    try {
+      const list: string[] = JSON.parse(localStorage.getItem("hasnain_recently_viewed") || "[]");
+      setRecentProducts(
+        list
+          .filter((x) => x !== product.slug)
+          .map((x) => PRODUCTS_DATA.find((p) => p.slug === x))
+          .filter(Boolean)
+          .slice(0, 4) as typeof PRODUCTS_DATA
+      );
+      localStorage.setItem(
+        "hasnain_recently_viewed",
+        JSON.stringify([product.slug, ...list.filter((x) => x !== product.slug)].slice(0, 8))
+      );
+    } catch {}
+  }, [product.slug]);
+
+  useEffect(() => {
+    const onScroll = () => setShowSticky(window.scrollY > 700);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const reviewWhatsAppUrl = `https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(
+    `Assalam-o-Alaikum ${BUSINESS_CONFIG.name},\n\nI want to write a review for *${product.name}*:\n\n*Rating:* ${"★".repeat(reviewRating)}${"☆".repeat(5 - reviewRating)}\n*Name:* ${reviewName || "Customer"}\n*Review:* ${reviewText}`
+  )}`;
+
   const handleBuyNow = () => {
     const variantStr = product.isSeatCover
       ? `${selectedQuality.label} | ${selectedColor.color}`
       : selectedVariant;
-    addToCart(product, 1, variantStr, baseUnitPrice, fitment);
+    addToCart(product, quantity, variantStr, baseUnitPrice, fitment);
     router.push("/checkout");
   };
 
@@ -118,7 +304,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
 
   const whatsappUrl = createSingleProductWhatsAppUrl(
     product,
-    1,
+    quantity,
     product.isSeatCover
       ? `${selectedQuality.label} Grade | ${selectedColor.color} Color`
       : selectedVariant,
@@ -363,7 +549,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   <Sparkles className="w-3.5 h-3.5 text-red-brand" />
                   <span>{product.brand || "Hasnain Auto"} • {product.subcategory || product.category}</span>
                 </div>
-                <h1 className="text-lg sm:text-xl font-black text-gray-900 leading-tight">
+                <h1 className="text-lg sm:text-xl font-black text-gray-900 leading-tight uppercase">
                   {product.name}
                 </h1>
 
@@ -591,26 +777,66 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 </div>
               )}
 
-              {/* Action buttons — 2026-11-17 (sumair): WhatsApp is now a compact icon button like the grid card ("bahir"), next to Add to Cart / Buy Now. */}
+              {/* Action buttons — AuxLEDs layout (2026-11-20 rebuild, sumair):
+                  row 1 = quantity stepper + LIME Add to Cart + round wishlist
+                  heart; row 2 = outlined BUY IT NOW + WhatsApp icon button. */}
               <div className="space-y-2.5 pt-2">
-                {/* Add to Cart + Buy Now + WhatsApp icon — one row on desktop; on mobile Buy Now drops to its own full-width row. */}
-                <div className="grid grid-cols-[1fr_auto] sm:grid-cols-[1fr_1fr_auto] gap-2.5">
-                  <button
-                    type="button"
-                    onClick={() => addToCart(product, 1, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, baseUnitPrice, fitment)}
-                    className="col-start-1 row-start-1 w-full py-2.5 px-4 rounded-xl bg-gray-900 hover:bg-gray-800 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-gray-900 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
-                  >
-                    <ShoppingBag className="w-4 h-4 text-red-brand" />
-                    <span>Add To Cart</span>
-                  </button>
+                <div className="flex items-stretch gap-2.5">
+                  {/* Quantity stepper */}
+                  <div className="flex items-center rounded-xl border border-gray-300 bg-white overflow-hidden shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                      className="w-9 h-full flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors disabled:opacity-40"
+                      disabled={quantity <= 1}
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <span className="w-8 text-center text-sm font-black text-gray-900">{quantity}</span>
+                    <button
+                      type="button"
+                      onClick={() => setQuantity((q) => Math.min(99, q + 1))}
+                      className="w-9 h-full flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                      aria-label="Increase quantity"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
 
                   <button
                     type="button"
-                    onClick={handleBuyNow}
-                    className="col-span-2 row-start-2 sm:col-span-1 sm:col-start-2 sm:row-start-1 w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-red-glow transition-all duration-300 hover:-translate-y-0.5"
+                    onClick={() => addToCart(product, quantity, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, baseUnitPrice, fitment)}
+                    className="flex-1 py-2.5 px-4 rounded-xl bg-lime-400 hover:bg-lime-300 text-neutral-900 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-lime-400 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
-                    <Zap className="w-4 h-4 fill-white" />
-                    <span>BUY NOW (CHECKOUT)</span>
+                    <ShoppingBag className="w-4 h-4" />
+                    <span>Add To Cart</span>
+                  </button>
+
+                  {/* Wishlist heart — saved in this browser (localStorage). */}
+                  <button
+                    type="button"
+                    onClick={toggleWishlist}
+                    className={`w-[46px] rounded-full border flex items-center justify-center shrink-0 transition-all duration-300 hover:scale-105 ${
+                      wishlisted
+                        ? "bg-red-50 border-red-300 text-red-600"
+                        : "bg-white border-gray-300 text-gray-500 hover:text-red-600 hover:border-red-300"
+                    }`}
+                    aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+                    title={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+                  >
+                    <Heart className={`w-5 h-5 ${wishlisted ? "fill-red-600" : ""}`} />
+                  </button>
+                </div>
+
+                <div className="flex items-stretch gap-2.5">
+                  <button
+                    type="button"
+                    onClick={handleBuyNow}
+                    className="flex-1 py-2.5 px-4 rounded-xl bg-white hover:bg-gray-50 text-gray-900 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-gray-900 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                  >
+                    <Zap className="w-4 h-4" />
+                    <span>Buy It Now</span>
                   </button>
 
                   {/* WhatsApp icon — real WhatsApp logo, hover transition (scale + shadow). */}
@@ -618,7 +844,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="col-start-2 row-start-1 sm:col-start-3 w-12 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 hover:bg-emerald-100 hover:scale-110 hover:shadow-md flex items-center justify-center transition-all duration-300 shadow-sm"
+                    className="w-12 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 hover:bg-emerald-100 hover:scale-110 hover:shadow-md flex items-center justify-center transition-all duration-300 shadow-sm"
                     aria-label="Order on WhatsApp"
                     title="Order on WhatsApp"
                   >
@@ -660,6 +886,44 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
 
               {/* Verify fitment box — AuxLEDs structure, Hasnain data (2026-11-20, sumair) */}
               <ProductFitmentVerifier product={product} />
+
+              {/* DESCRIPTION — AuxLEDs position: in the right column, under
+                  the fitment box (2026-11-20 rebuild, sumair). */}
+              <div className="space-y-3">
+                <h2 className="text-xs font-black uppercase tracking-widest text-gray-900">
+                  Description
+                </h2>
+                <DescriptionBlock text={product.description} />
+              </div>
+
+              {/* Warranty / Return accordions — AuxLEDs (2026-11-20 rebuild) */}
+              <div className="border-t border-gray-200">
+                <PolicyAccordion
+                  title="Warranty Policy"
+                  open={openAccordion === "warranty"}
+                  onToggle={() => setOpenAccordion((a) => (a === "warranty" ? null : "warranty"))}
+                >
+                  <ol className="list-decimal pl-5 space-y-1.5">
+                    {WARRANTY_POINTS.map((point, i) => (
+                      <li key={i} className="text-xs text-gray-600 leading-relaxed">{point}</li>
+                    ))}
+                  </ol>
+                </PolicyAccordion>
+                <PolicyAccordion
+                  title="Return Policies"
+                  open={openAccordion === "returns"}
+                  onToggle={() => setOpenAccordion((a) => (a === "returns" ? null : "returns"))}
+                >
+                  <ul className="space-y-1.5">
+                    {RETURN_POINTS.map((point, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs text-gray-600 leading-relaxed">
+                        <span className="text-red-brand font-black mt-0.5">•</span>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </PolicyAccordion>
+              </div>
             </div>
           </div>
 
@@ -667,16 +931,6 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16">
             {/* Description & Features — 2026-11-17 (sumair): the "Order Through WhatsApp" sidebar box is removed; the WhatsApp icon button next to Add to Cart already covers it, so the box is redundant on every product page. */}
             <div className="md:col-span-12 space-y-6 p-6 sm:p-8 rounded-3xl bg-white border border-gray-200 shadow-sm">
-              {/* Product Overview — 2026-11-17 (sumair): hover transition on this box. */}
-              <div className="rounded-2xl bg-gray-50 border border-gray-200 p-4 transition-all duration-300 hover:shadow-md hover:border-gray-300 hover:-translate-y-1">
-                <h3 className="text-lg font-black text-gray-900 uppercase tracking-wider mb-3">
-                  Product Overview
-                </h3>
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  {product.description}
-                </p>
-              </div>
-
               {/* Key Specifications & Features — 2026-11-17 (sumair): hover transition on this box + each feature row. */}
               <div className="rounded-2xl bg-gray-50 border border-gray-200 p-4 transition-all duration-300 hover:shadow-md hover:border-gray-300 hover:-translate-y-1">
                 <h3 className="text-base font-black text-gray-900 uppercase tracking-wider mb-3">
@@ -707,14 +961,95 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
 
           </div>
 
-          {/* Related Products */}
+          {/* CUSTOMER REVIEWS — AuxLEDs block (2026-11-20 rebuild, sumair):
+              centred, 5 lime outline stars, WRITE A REVIEW opens a small
+              form that sends the review to the shop on WhatsApp. */}
+          <div className="space-y-4 mb-16 text-center">
+            <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight">
+              Customer Reviews
+            </h2>
+            <div className="flex items-center justify-center gap-1">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={`w-6 h-6 text-lime-500 ${product.rating > i ? "fill-lime-400" : ""}`}
+                />
+              ))}
+            </div>
+            <p className="text-sm text-gray-500">
+              {product.reviewCount > 0
+                ? `${product.reviewCount} verified review${product.reviewCount === 1 ? "" : "s"} — ${product.rating.toFixed(1)} out of 5`
+                : "Be the first to write a review"}
+            </p>
+            <button
+              type="button"
+              onClick={() => setReviewOpen((o) => !o)}
+              className="px-6 py-2.5 rounded-xl bg-white border border-gray-900 text-gray-900 font-black text-xs uppercase tracking-wider transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+            >
+              Write A Review
+            </button>
+            {reviewOpen && (
+              <div className="max-w-md mx-auto text-left space-y-3 rounded-2xl border border-gray-200 bg-gray-50/60 p-4">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xs font-bold text-gray-600 mr-1">Your rating:</span>
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <button key={n} type="button" onClick={() => setReviewRating(n)} aria-label={`${n} star${n === 1 ? "" : "s"}`}>
+                      <Star className={`w-6 h-6 text-lime-500 ${reviewRating >= n ? "fill-lime-400" : ""}`} />
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="text"
+                  value={reviewName}
+                  onChange={(e) => setReviewName(e.target.value)}
+                  placeholder="Your name"
+                  className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-red-500"
+                />
+                <textarea
+                  value={reviewText}
+                  onChange={(e) => setReviewText(e.target.value)}
+                  placeholder="How is this product? Brightness, fitting, quality..."
+                  rows={3}
+                  className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-red-500"
+                />
+                <a
+                  href={reviewWhatsAppUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-full py-2.5 px-4 rounded-xl font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all ${
+                    reviewText.trim()
+                      ? "bg-lime-400 hover:bg-lime-300 text-neutral-900 border border-lime-400"
+                      : "bg-gray-200 text-gray-400 border border-gray-200 pointer-events-none"
+                  }`}
+                >
+                  Send Review on WhatsApp
+                </a>
+              </div>
+            )}
+          </div>
+
+          {/* PEOPLE ALSO BOUGHT (related products) */}
           {relatedProducts.length > 0 && (
             <div className="space-y-6">
               <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight">
-                COMPATIBLE & RELATED ACCESSORIES
+                PEOPLE ALSO BOUGHT
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {relatedProducts.map((rel) => (
+                  <ProductCard key={rel.id} product={rel} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* RECENTLY VIEWED — this browser's history (2026-11-20 rebuild) */}
+          {recentProducts.length > 0 && (
+            <div className="space-y-6 mt-16">
+              <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight">
+                RECENTLY VIEWED
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {recentProducts.map((rel) => (
                   <ProductCard key={rel.id} product={rel} />
                 ))}
               </div>
@@ -841,29 +1176,60 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           </div>
         )}
 
-        {/* Mobile Fixed Bottom Sticky Bar */}
-        <div className="fixed bottom-16 left-0 right-0 z-30 lg:hidden p-3 bg-white/95 backdrop-blur-xl border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => addToCart(product, 1, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, undefined, fitment)}
-            className="flex-1 py-3 px-3 rounded-xl bg-red-600 text-white font-bold text-xs uppercase tracking-wider border border-red-500/50 flex items-center justify-center gap-1.5 transition-all duration-300 hover:shadow-lg"
-          >
-            <ShoppingBag className="w-4 h-4 text-white" />
-            <span>Add ({BUSINESS_CONFIG.currency.symbol} {currentTotalPrice.toLocaleString()})</span>
-          </button>
-
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 py-3 px-3 rounded-xl bg-whatsapp text-carbon-950 font-black text-xs uppercase tracking-wider shadow-whatsapp-glow flex items-center justify-center gap-1.5 transition-all duration-300 hover:shadow-lg"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true">
-              <path d={WHATSAPP_PATH} />
-            </svg>
-            <span>WhatsApp</span>
-          </a>
-        </div>
+        {/* Sticky buy bar — AuxLEDs style (2026-11-20 rebuild, sumair):
+            appears on scroll on every viewport: thumbnail + name, price,
+            quantity stepper, lime ADD TO CART. Sits above the mobile
+            bottom nav (bottom-16) and at the very bottom on desktop. */}
+        {showSticky && !lightboxOpen && (
+          <div className="fixed bottom-16 lg:bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+            <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center gap-3">
+              <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shrink-0 hidden sm:block">
+                <Image
+                  src={product.images[0]}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                  sizes="40px"
+                />
+              </div>
+              <div className="min-w-0 flex-1 hidden md:block">
+                <p className="text-xs font-bold text-gray-900 truncate uppercase">{product.name}</p>
+                <p className="text-[10px] text-gray-500">{product.brand || "Hasnain Auto"}</p>
+              </div>
+              <span className="text-sm font-black text-gray-900 shrink-0">
+                {BUSINESS_CONFIG.currency.symbol} {currentTotalPrice.toLocaleString()}
+              </span>
+              <div className="hidden sm:flex items-center rounded-lg border border-gray-300 bg-white overflow-hidden shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                  className="w-8 h-9 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors disabled:opacity-40"
+                  disabled={quantity <= 1}
+                  aria-label="Decrease quantity"
+                >
+                  <Minus className="w-3.5 h-3.5" />
+                </button>
+                <span className="w-7 text-center text-xs font-black text-gray-900">{quantity}</span>
+                <button
+                  type="button"
+                  onClick={() => setQuantity((q) => Math.min(99, q + 1))}
+                  className="w-8 h-9 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                  aria-label="Increase quantity"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={() => addToCart(product, quantity, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, baseUnitPrice, fitment)}
+                className="py-2.5 px-4 sm:px-6 rounded-xl bg-lime-400 hover:bg-lime-300 text-neutral-900 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-lime-400 transition-all duration-300 hover:shadow-md shrink-0"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                <span>Add To Cart</span>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
