@@ -407,7 +407,16 @@ Why Shop From Hasnain Auto?
     name: "LED Off-Road Light Bar (5-Lens)",
     slug: "led-off-road-light-bar-5-lens",
     shortDescription: "Pair of 5-lens LED off-road light bars — same line as the 4-lens.",
-    description: "LED off-road light bars — two 5-lens bars with brackets and hardware, same 4x4 auxiliary-light line as the 4-lens version, one lens wider. Bracket-mount for pickups, SUVs and 4x4s.",
+    description: `Conquer Darkness, Fog & Off-Road Trails! 5-Lens Dual-Color White & Amber Projector Pods with Red Accent Housing.
+
+Command the toughest trails, pitch-black highways, and heavy winter fog with the LED Off-Road Light Bar (5-Lens). Engineered with five high-precision optical projector lenses housed inside a rugged matte-black die-cast aluminum body with aggressive red side accents, these compact light bars deliver extreme forward reach and wide peripheral coverage. Featuring dual-color white and amber/yellow illumination, you can switch effortlessly between crisp 6000K white light for clear night driving and penetrating 3000K yellow light for fog, rain, and dusty off-road conditions.
+
+Key Features & Engineering:
+- 5-Lens Optical Projector Array: Five individual convex projector lenses focus high-intensity LED output into a wide, sharp, long-throw beam with zero dark spots.
+- Dual-Color White & Yellow Modes: Switch seamlessly between 6000K crystal-white light for dark roads and 3000K golden-yellow light for cutting through thick fog, smog, and heavy rain.
+- Rugged Black & Red Die-Cast Aluminum Housing: Heavy-duty finned metal body with red anodized accents dissipates heat rapidly and resists water, mud, dust, and extreme vibrations.
+- Universal 12V–24V Compatibility: Ideal for 4x4 SUVs, pickup trucks, jeeps, car bumpers/grilles, and heavy motorcycles.
+- Complete Mounting Hardware Included: Comes with sturdy black metal mounting brackets and stainless bolts for flexible installation on bumpers, roof racks, bull bars, or crash guards.`,
     category: "led-lights",
     subcategory: "Fog Lights",
     basePrice: 4500,
