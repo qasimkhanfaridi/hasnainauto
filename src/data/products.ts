@@ -529,7 +529,16 @@ Key Features & Specifications:
     name: "Premium Auto LED Interior Light Kit",
     slug: "premium-auto-led-interior-light-kit",
     shortDescription: "Rectangular LED panels for car dome and roof lights.",
-    description: "Premium auto LED interior light kit — two rectangular LED panels with festoon adapters, for dome and roof lights. Bright white cabin light, plug-and-play.",
+    description: `Daylight-Bright Cabin Upgrade! High-Density 48-SMD Total Output with T10 & Spring-Loaded Festoon Adapters for Overhead Consoles, Map & Trunk Lights.
+
+Transform dim, factory-yellow overhead lights into brilliant, daylight-clear cabin illumination with the Premium Auto LED Interior Light Kit. Designed specifically for dual-compartment roof consoles, dome lights, map/reading lights, and trunk housings, this complete kit includes two compact 24-SMD rectangular LED panels (48 bright white LEDs in total). Equipped with both T10 wedge connectors and an adjustable spring-loaded Festoon adapter, these ultra-thin boards install cleanly inside your car's overhead light cover in seconds—flooding your entire interior with crisp 6000K Crystal White light.
+
+Key Features & Specifications:
+- Dual High-Density 24-SMD Panels (48 LEDs Total): Each rectangular board packs 24 high-intensity white SMD chips (4x6 array) for wide, shadow-free cabin illumination.
+- Universal Vehicle Compatibility (T10 & Festoon Adapters): Includes both T10 (W5W) wedge plugs and a spring-loaded adjustable Festoon adapter to fit virtually all car roof, map, door, and trunk light sockets.
+- Sleek Overhead Console Fitment: Slim, low-profile square/rectangular boards sit neatly behind clear or frosted dome light lenses without blocking cover latches.
+- Easy Peel-and-Stick Mounting: Features self-adhesive backing for secure, rattle-free attachment on bumpy roads.
+- Energy Efficient & Low Heat: Runs cool on standard 12V DC automotive power with minimal battery draw and long-lasting durability.`,
     category: "led-lights",
     subcategory: "Interior Lighting",
     basePrice: 650,
