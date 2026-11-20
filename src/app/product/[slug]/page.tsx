@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, useRouter } from "next/navigation";
@@ -20,7 +20,9 @@ import {
   Palette,
   Phone,
   Zap,
-  CreditCard
+  CreditCard,
+  Maximize2,
+  X
 } from "lucide-react";
 import { 
   PRODUCTS_DATA, 
@@ -35,6 +37,7 @@ import { useCart } from "@/context/CartContext";
 import { useVehicle } from "@/context/VehicleContext";
 import { createSingleProductWhatsAppUrl } from "@/utils/whatsapp";
 import { ProductCard } from "@/components/ProductCard";
+import { ProductFitmentVerifier } from "@/components/ProductFitmentVerifier";
 
 // Real WhatsApp logo (same glyph as the floating WhatsApp button) — 2026-11-17 (sumair): the generic MessageCircle bubble is NOT the WhatsApp logo.
 const WHATSAPP_PATH =
@@ -120,6 +123,40 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   const goNextImage = () =>
     setActiveImageIndex((i) => (i + 1) % imageCount);
 
+  // 2026-11-20 (sumair): AuxLEDs-style fullscreen zoom viewer — expand
+  // button on the gallery opens it; click the image to zoom, move the
+  // mouse to pan, arrows / keyboard switch photos, ESC closes.
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxZoomed, setLightboxZoomed] = useState(false);
+  const [zoomOrigin, setZoomOrigin] = useState("50% 50%");
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    setLightboxZoomed(false);
+  };
+
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight") {
+        setLightboxZoomed(false);
+        setActiveImageIndex((i) => (i + 1) % imageCount);
+      }
+      if (e.key === "ArrowLeft") {
+        setLightboxZoomed(false);
+        setActiveImageIndex((i) => (i - 1 + imageCount) % imageCount);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lightboxOpen, imageCount]);
+
   // Related products from the same category or recommendations
   const relatedProducts = PRODUCTS_DATA.filter((p) => {
     if (p.id === product.id) return false;
@@ -187,8 +224,9 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   alt={product.name}
                   fill
                   priority
-                  className="object-cover animate-in fade-in duration-300"
+                  className="object-cover animate-in fade-in duration-300 cursor-zoom-in"
                   sizes="(max-width: 1024px) 100vw, 60vw"
+                  onClick={() => setLightboxOpen(true)}
                 />
 
                 {/* Carousel arrows */}
@@ -212,6 +250,16 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                     </button>
                   </>
                 )}
+
+                {/* Expand / fullscreen zoom — AuxLEDs style (2026-11-20, sumair) */}
+                <button
+                  type="button"
+                  onClick={() => setLightboxOpen(true)}
+                  className="absolute right-3 top-3 p-2 rounded-full bg-white/90 backdrop-blur border border-gray-200 text-gray-700 hover:text-red-600 shadow-md transition-all z-10"
+                  aria-label="View image fullscreen"
+                >
+                  <Maximize2 className="w-5 h-5" />
+                </button>
 
                 {/* Badges */}
                 <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
@@ -547,6 +595,9 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   <span className="font-bold text-gray-900">Raast / JazzCash</span>
                 </div>
               </div>
+
+              {/* Verify fitment box — AuxLEDs structure, Hasnain data (2026-11-20, sumair) */}
+              <ProductFitmentVerifier product={product} />
             </div>
           </div>
 
@@ -608,6 +659,76 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
             </div>
           )}
         </div>
+
+        {/* Fullscreen zoom viewer — AuxLEDs style (2026-11-20, sumair) */}
+        {lightboxOpen && (
+          <div
+            className="fixed inset-0 z-[80] bg-black/95 flex items-center justify-center"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${product.name} image viewer`}
+          >
+            <button
+              type="button"
+              onClick={closeLightbox}
+              className="absolute right-4 top-4 p-2.5 rounded-full bg-white/90 text-gray-800 hover:text-red-600 shadow-lg transition-all z-20"
+              aria-label="Close image viewer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {imageCount > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => { setLightboxZoomed(false); goPrevImage(); }}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/90 text-gray-800 hover:text-red-600 shadow-lg transition-all z-20"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setLightboxZoomed(false); goNextImage(); }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/90 text-gray-800 hover:text-red-600 shadow-lg transition-all z-20"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </>
+            )}
+
+            <div
+              className="relative w-full h-full overflow-hidden"
+              onMouseMove={(e) => {
+                const r = e.currentTarget.getBoundingClientRect();
+                setZoomOrigin(
+                  `${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}% ${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}%`
+                );
+              }}
+              onClick={() => setLightboxZoomed((z) => !z)}
+            >
+              <Image
+                key={activeImageIndex}
+                src={product.images[activeImageIndex] || product.images[0]}
+                alt={product.name}
+                fill
+                className={`object-contain transition-transform duration-200 ${lightboxZoomed ? "scale-[1.8] cursor-zoom-out" : "cursor-zoom-in"}`}
+                style={{ transformOrigin: zoomOrigin }}
+                sizes="100vw"
+              />
+            </div>
+
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 text-center pointer-events-none">
+              <span className="px-3 py-1 rounded-full bg-white/10 text-white text-xs font-bold">
+                {activeImageIndex + 1} / {imageCount}
+              </span>
+              <p className="text-[11px] text-white/60 mt-1.5">
+                Click the image to zoom · Move to pan · ESC to close
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Mobile Fixed Bottom Sticky Bar */}
         <div className="fixed bottom-16 left-0 right-0 z-30 lg:hidden p-3 bg-white/95 backdrop-blur-xl border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex items-center gap-2">
