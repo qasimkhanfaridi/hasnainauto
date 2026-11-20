@@ -128,7 +128,10 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   // mouse to pan, arrows / keyboard switch photos, ESC closes.
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxZoomed, setLightboxZoomed] = useState(false);
-  const [zoomOrigin, setZoomOrigin] = useState("50% 50%");
+  // Zoom v2 (2026-11-20, sumair: "the zoom one feature isnt right") — the
+  // zoomed view is a background-image pan (AuxLEDs style): the photo is
+  // shown at 220% and the mouse / touch position pans across it smoothly.
+  const [zoomPan, setZoomPan] = useState({ x: 50, y: 50 });
 
   const closeLightbox = () => {
     setLightboxOpen(false);
@@ -699,24 +702,54 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
             )}
 
             <div
-              className="relative w-full h-full overflow-hidden"
+              className={`relative w-full h-full overflow-hidden ${lightboxZoomed ? "cursor-zoom-out" : "cursor-zoom-in"}`}
               onMouseMove={(e) => {
                 const r = e.currentTarget.getBoundingClientRect();
-                setZoomOrigin(
-                  `${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}% ${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}%`
-                );
+                setZoomPan({
+                  x: ((e.clientX - r.left) / r.width) * 100,
+                  y: ((e.clientY - r.top) / r.height) * 100,
+                });
               }}
-              onClick={() => setLightboxZoomed((z) => !z)}
+              onTouchMove={(e) => {
+                const t = e.touches[0];
+                if (!t) return;
+                const r = e.currentTarget.getBoundingClientRect();
+                setZoomPan({
+                  x: ((t.clientX - r.left) / r.width) * 100,
+                  y: ((t.clientY - r.top) / r.height) * 100,
+                });
+              }}
+              onClick={(e) => {
+                if (!lightboxZoomed) {
+                  const r = e.currentTarget.getBoundingClientRect();
+                  setZoomPan({
+                    x: ((e.clientX - r.left) / r.width) * 100,
+                    y: ((e.clientY - r.top) / r.height) * 100,
+                  });
+                }
+                setLightboxZoomed((z) => !z);
+              }}
             >
-              <Image
-                key={activeImageIndex}
-                src={product.images[activeImageIndex] || product.images[0]}
-                alt={product.name}
-                fill
-                className={`object-contain transition-transform duration-200 ${lightboxZoomed ? "scale-[1.8] cursor-zoom-out" : "cursor-zoom-in"}`}
-                style={{ transformOrigin: zoomOrigin }}
-                sizes="100vw"
-              />
+              {lightboxZoomed ? (
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    backgroundImage: `url(${product.images[activeImageIndex] || product.images[0]})`,
+                    backgroundSize: "220%",
+                    backgroundPosition: `${zoomPan.x}% ${zoomPan.y}%`,
+                    backgroundRepeat: "no-repeat",
+                  }}
+                />
+              ) : (
+                <Image
+                  key={activeImageIndex}
+                  src={product.images[activeImageIndex] || product.images[0]}
+                  alt={product.name}
+                  fill
+                  className="object-contain pointer-events-none"
+                  sizes="100vw"
+                />
+              )}
             </div>
 
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 text-center pointer-events-none">

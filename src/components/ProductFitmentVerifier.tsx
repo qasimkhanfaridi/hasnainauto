@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { CheckCircle2, XCircle } from "lucide-react";
 import { BUSINESS_CONFIG } from "@/config/business";
 import {
@@ -105,11 +104,6 @@ export const ProductFitmentVerifier: React.FC<{ product: Product }> = ({
       `• Product: ${product.name}\n` +
       `• Car: ${vehicleLabel}`
   )}`;
-
-  const fitSocket =
-    verdict && verdict.kind !== "norecord" && verdict.match
-      ? socketsOf(verdict.match.headlight)[0]
-      : undefined;
 
   return (
     <div className="rounded-xl bg-neutral-200/80 border border-neutral-300 p-3.5">
@@ -230,14 +224,6 @@ export const ProductFitmentVerifier: React.FC<{ product: Product }> = ({
               </p>
             )}
           </div>
-          {fitSocket && (
-            <Link
-              href={`/shop?socket=${fitSocket}`}
-              className="inline-block mt-2 text-xs font-semibold text-neutral-700 underline underline-offset-2 hover:text-red-600"
-            >
-              Other products that fit your vehicle
-            </Link>
-          )}
         </div>
       )}
 
@@ -265,14 +251,6 @@ export const ProductFitmentVerifier: React.FC<{ product: Product }> = ({
               needs {verdict.match.headlight}
             </p>
           </div>
-          {fitSocket && (
-            <Link
-              href={`/shop?socket=${fitSocket}`}
-              className="inline-block mt-2 text-xs font-semibold text-neutral-700 underline underline-offset-2 hover:text-red-600"
-            >
-              Other products that fit your vehicle
-            </Link>
-          )}
         </div>
       )}
 
