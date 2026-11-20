@@ -571,7 +571,16 @@ Key Features & Specifications:
     name: "T10 LED Bulbs (Premium Automotive Lighting)",
     slug: "t10-led-bulbs-premium",
     shortDescription: "Premium ultra-bright T10 LED bulbs for automotive lighting.",
-    description: "T10 LED bulbs — premium automotive lighting, ultra bright. Longer wedge bulbs for parking, interior and number-plate lights. 12V, plug-and-play.",
+    description: `Crisp, High-Output White Brilliance! Upgrade Dull Factory Bulbs to Modern 12V LED Illumination in Seconds.
+
+Elevate your vehicle's exterior and interior styling with the Premium T10 W5W Ultra-Bright LED Bulbs. Encased in a crystal-clear, heat-resistant silicone sleeve for superior shock and moisture protection, these compact wedge bulbs feature high-intensity SMD LED chips arranged on all sides for true 360-degree uniform light distribution. Ideal for front parking/pilot lights, license plate lights, cabin map lights, door courtesy lights, and trunk compartments, they deliver a clean, modern 6000K Crystal White glow on standard 12V automotive systems.
+
+Key Features & Specifications:
+- Ultra-Bright Multi-SMD Array: Delivers intense, crisp 6000K Crystal White illumination with zero dark spots, outshining standard halogen T10 bulbs.
+- Protective Clear Silicone Encapsulation: Fully sealed against water, humidity, dust, and road vibrations while resisting engine bay heat.
+- Universal T10 / W5W Fitment (194 / 168): Direct replacement for standard 12V wedge sockets across cars and motorcycles, including parking lights, number plate lights, speedometer clusters, and interior dome/map housings.
+- Low Power Draw & Cool Operation: Consumes minimal 12V DC current to protect your battery and prevent melting or yellowing of plastic light lenses.
+- Instant Plug-and-Play Installation: Simple direct-fit base allows effortless installation in seconds with zero wire cutting or modifications.`,
     category: "led-lights",
     subcategory: "Interior Lighting",
     basePrice: 1000,
@@ -623,7 +632,17 @@ Key Features & Specifications:
     name: "Premium LED Festoon Bulbs (COB)",
     slug: "premium-led-festoon-bulbs-cob",
     shortDescription: "Premium festoon LED bulbs with one large COB chip each.",
-    description: "Premium LED festoon bulbs with a large COB chip — bright wide spread for dome and map lights. Double-ended festoon, plug-and-play.",
+    description: `Upgrade Dull Yellow Cabin Lights to Crisp, Luxury White Brilliance!
+
+Give your car's interior a clean, modern, and luxury feel with the 31MM-21LED Premium Series Festoon Bulb. Designed to replace dim, factory-installed yellowish halogen bulbs, this compact powerhouse packs 21 high-intensity SMD LED chips into a standard 31mm frame. Whether you are looking for something in your cabin at night, lighting up your trunk, or illuminating your license plate, it delivers bright, uniform, crystal-white illumination without draining your car's battery.
+
+Key Features & Specifications:
+- 21x High-Brightness SMD LED Chips: Engineered with a dense 3x7 LED array that provides 300% brighter, wider, and shadow-free illumination compared to stock bulbs.
+- Standard 31mm Festoon Fitment (DE3175 / DE3022): Universal 31mm length fits directly into most car dome lights, map/reading lights, door courtesy lights, trunk/boot lights, and license plate housings.
+- Gold-Plated Conductive Terminals: Precision-crafted metallic end caps ensure a tight, rust-free connection with zero flickering over bumpy roads.
+- Built-In Aluminum Heat Dissipation: Features an integrated metallic heatsink backing to prevent overheating and ensure a long, reliable lifespan.
+- Energy Efficient & Low Power Draw: Operates on standard 12V DC automotive power while consuming minimal energy and generating very low heat.
+- Instant Plug-and-Play Installation: No wiring or modification required — simply remove your old bulb and snap this LED into place in seconds.`,
     category: "led-lights",
     subcategory: "Interior Lighting",
     basePrice: 850,
@@ -644,7 +663,16 @@ Key Features & Specifications:
     name: "Premium T10 LED Canbus Bulbs (8000K)",
     slug: "premium-t10-led-canbus-bulbs-8000k",
     shortDescription: "Canbus error-free T10 LED bulbs, 8000K.",
-    description: "Premium T10 LED canbus bulbs, 8000K — error-free on canbus cars, no dashboard warning. For parking, interior and number-plate lights. 12V, plug-and-play.",
+    description: `Crisp, High-Output White Brilliance! Upgrade Dull Factory Bulbs to Modern 12V LED Illumination in Seconds.
+
+Elevate your vehicle's exterior and interior styling with the Premium T10 W5W Ultra-Bright LED Bulbs. Encased in a crystal-clear, heat-resistant silicone sleeve for superior shock and moisture protection, these compact wedge bulbs feature high-intensity SMD LED chips arranged on all sides for true 360-degree uniform light distribution. Ideal for front parking/pilot lights, license plate lights, cabin map lights, door courtesy lights, and trunk compartments, they deliver a clean, modern 6000K Crystal White glow on standard 12V automotive systems.
+
+Key Features & Specifications:
+- Ultra-Bright Multi-SMD Array: Delivers intense, crisp 6000K Crystal White illumination with zero dark spots, outshining standard halogen T10 bulbs.
+- Protective Clear Silicone Encapsulation: Fully sealed against water, humidity, dust, and road vibrations while resisting engine bay heat.
+- Universal T10 / W5W Fitment (194 / 168): Direct replacement for standard 12V wedge sockets across cars and motorcycles, including parking lights, number plate lights, speedometer clusters, and interior dome/map housings.
+- Low Power Draw & Cool Operation: Consumes minimal 12V DC current to protect your battery and prevent melting or yellowing of plastic light lenses.
+- Instant Plug-and-Play Installation: Simple direct-fit base allows effortless installation in seconds with zero wire cutting or modifications.`,
     category: "led-lights",
     subcategory: "Interior Lighting",
     basePrice: 1250,
@@ -665,7 +693,16 @@ Key Features & Specifications:
     name: "Premium T10 LED Bulbs (Ultra Bright, Ceramic)",
     slug: "premium-t10-led-bulbs-ultra-bright-ceramic",
     shortDescription: "Premium ultra-bright T10 LED bulbs with a white ceramic body.",
-    description: "Premium T10 LED bulbs, ultra bright — white ceramic body with two yellow chips each. For parking, interior and number-plate lights. 12V, plug-and-play.",
+    description: `Crisp, High-Output White Brilliance! Upgrade Dull Factory Bulbs to Modern 12V LED Illumination in Seconds.
+
+Elevate your vehicle's exterior and interior styling with the Premium T10 W5W Ultra-Bright LED Bulbs. Encased in a crystal-clear, heat-resistant silicone sleeve for superior shock and moisture protection, these compact wedge bulbs feature high-intensity SMD LED chips arranged on all sides for true 360-degree uniform light distribution. Ideal for front parking/pilot lights, license plate lights, cabin map lights, door courtesy lights, and trunk compartments, they deliver a clean, modern 6000K Crystal White glow on standard 12V automotive systems.
+
+Key Features & Specifications:
+- Ultra-Bright Multi-SMD Array: Delivers intense, crisp 6000K Crystal White illumination with zero dark spots, outshining standard halogen T10 bulbs.
+- Protective Clear Silicone Encapsulation: Fully sealed against water, humidity, dust, and road vibrations while resisting engine bay heat.
+- Universal T10 / W5W Fitment (194 / 168): Direct replacement for standard 12V wedge sockets across cars and motorcycles, including parking lights, number plate lights, speedometer clusters, and interior dome/map housings.
+- Low Power Draw & Cool Operation: Consumes minimal 12V DC current to protect your battery and prevent melting or yellowing of plastic light lenses.
+- Instant Plug-and-Play Installation: Simple direct-fit base allows effortless installation in seconds with zero wire cutting or modifications.`,
     category: "led-lights",
     subcategory: "Interior Lighting",
     basePrice: 650,
@@ -686,7 +723,16 @@ Key Features & Specifications:
     name: "T10 LED Bulbs (Super Bright)",
     slug: "t10-led-bulbs-super-bright",
     shortDescription: "Super bright T10 LED bulbs, 12V.",
-    description: "T10 LED bulbs, super bright — flat-board wedge bulbs for parking, interior and number-plate lights. 12V, plug-and-play.",
+    description: `Crisp, High-Output White Brilliance! Upgrade Dull Factory Bulbs to Modern 12V LED Illumination in Seconds.
+
+Elevate your vehicle's exterior and interior styling with the Premium T10 W5W Ultra-Bright LED Bulbs. Encased in a crystal-clear, heat-resistant silicone sleeve for superior shock and moisture protection, these compact wedge bulbs feature high-intensity SMD LED chips arranged on all sides for true 360-degree uniform light distribution. Ideal for front parking/pilot lights, license plate lights, cabin map lights, door courtesy lights, and trunk compartments, they deliver a clean, modern 6000K Crystal White glow on standard 12V automotive systems.
+
+Key Features & Specifications:
+- Ultra-Bright Multi-SMD Array: Delivers intense, crisp 6000K Crystal White illumination with zero dark spots, outshining standard halogen T10 bulbs.
+- Protective Clear Silicone Encapsulation: Fully sealed against water, humidity, dust, and road vibrations while resisting engine bay heat.
+- Universal T10 / W5W Fitment (194 / 168): Direct replacement for standard 12V wedge sockets across cars and motorcycles, including parking lights, number plate lights, speedometer clusters, and interior dome/map housings.
+- Low Power Draw & Cool Operation: Consumes minimal 12V DC current to protect your battery and prevent melting or yellowing of plastic light lenses.
+- Instant Plug-and-Play Installation: Simple direct-fit base allows effortless installation in seconds with zero wire cutting or modifications.`,
     category: "led-lights",
     subcategory: "Interior Lighting",
     basePrice: 1250,
