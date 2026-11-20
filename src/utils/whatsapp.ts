@@ -17,6 +17,8 @@ export interface CartOrderDetails {
     selectedVariant?: string;
     customDetails?: string;
     finalPrice?: number;
+    beam?: string;
+    socket?: string;
   }[];
   customerName: string;
   customerPhone: string;
@@ -46,7 +48,8 @@ export function createSingleProductWhatsAppUrl(
   selectedVariant?: string,
   vehicle?: SelectedVehicle | null,
   customPrice?: number,
-  customBreakdown?: CustomBreakdown
+  customBreakdown?: CustomBreakdown,
+  fitment?: { beam?: string; socket?: string }
 ): string {
   const finalPrice = customPrice !== undefined ? customPrice * quantity : (product.salePrice || product.price) * quantity;
   const vehicleStr = vehicle && vehicle.make
@@ -66,11 +69,15 @@ export function createSingleProductWhatsAppUrl(
     breakdownStr += `\n*Vehicle Size Multiplier:* ${customBreakdown.multiplier}x (${vehicleStr})`;
   }
 
+  const fitmentStr =
+    (fitment?.beam ? `\n*Beam Position:* ${fitment.beam}` : "") +
+    (fitment?.socket ? `\n*Socket:* ${fitment.socket}` : "");
+
   const text = `Assalam-o-Alaikum ${BUSINESS_CONFIG.name},
 
 I want to order:
 *Product:* ${product.name}${variantStr}${breakdownStr}
-*Vehicle:* ${vehicleStr}
+*Vehicle:* ${vehicleStr}${fitmentStr}
 *Quantity:* ${quantity}
 *Total Calculated Price:* ${BUSINESS_CONFIG.currency.symbol} ${finalPrice.toLocaleString()}
 
@@ -92,7 +99,9 @@ export function createCartWhatsAppUrl(details: CartOrderDetails): string {
       const price = (item.finalPrice || item.product.salePrice || item.product.price) * item.quantity;
       const variant = item.selectedVariant ? ` [${item.selectedVariant}]` : "";
       const extra = item.customDetails ? ` (${item.customDetails})` : "";
-      return `${index + 1}. *${item.product.name}*${variant}${extra} × ${item.quantity} = ${BUSINESS_CONFIG.currency.symbol} ${price.toLocaleString()}`;
+      const fit = [item.beam ? `Beam: ${item.beam}` : "", item.socket ? `Socket: ${item.socket}` : ""].filter(Boolean).join(" · ");
+      const fitStr = fit ? ` (${fit})` : "";
+      return `${index + 1}. *${item.product.name}*${variant}${extra}${fitStr} × ${item.quantity} = ${BUSINESS_CONFIG.currency.symbol} ${price.toLocaleString()}`;
     })
     .join("\n");
 

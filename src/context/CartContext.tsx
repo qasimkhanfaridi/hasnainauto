@@ -8,6 +8,11 @@ export interface CartItem {
   quantity: number;
   selectedVariant?: string;
   unitPrice?: number;
+  // 2026-11-20 (sumair): beam position (Low Beam / High Beam / Fog) and the
+  // directly-selected socket (H4 / H11 / 9005...) chosen on the product page.
+  // Both ride into the cart and the WhatsApp order message.
+  beam?: string;
+  socket?: string;
   // 2026-11-18 (sumair): epoch ms when this item was FIRST added to the cart.
   // Drives the Hot Deal sale countdown in the cart drawer (24h window).
   // Carts saved before this field existed have no addedAt — treated as just added.
@@ -16,9 +21,9 @@ export interface CartItem {
 
 interface CartContextType {
   items: CartItem[];
-  addToCart: (product: Product, quantity?: number, selectedVariant?: string, unitPrice?: number) => void;
-  removeFromCart: (productId: string, selectedVariant?: string) => void;
-  updateQuantity: (productId: string, quantity: number, selectedVariant?: string) => void;
+  addToCart: (product: Product, quantity?: number, selectedVariant?: string, unitPrice?: number, fitment?: { beam?: string; socket?: string }) => void;
+  removeFromCart: (productId: string, selectedVariant?: string, beam?: string, socket?: string) => void;
+  updateQuantity: (productId: string, quantity: number, selectedVariant?: string, beam?: string, socket?: string) => void;
   clearCart: () => void;
   cartCount: number;
   cartSubtotal: number;
@@ -69,10 +74,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [items, isLoaded]);
 
-  const addToCart = (product: Product, quantity = 1, selectedVariant?: string, unitPrice?: number) => {
+  const addToCart = (product: Product, quantity = 1, selectedVariant?: string, unitPrice?: number, fitment?: { beam?: string; socket?: string }) => {
     setItems((prev) => {
       const existingIndex = prev.findIndex(
-        (item) => item.product.id === product.id && item.selectedVariant === selectedVariant
+        (item) =>
+          item.product.id === product.id &&
+          item.selectedVariant === selectedVariant &&
+          (item.beam || undefined) === (fitment?.beam || undefined) &&
+          (item.socket || undefined) === (fitment?.socket || undefined)
       );
 
       if (existingIndex > -1) {
@@ -85,28 +94,39 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         // runs from the FIRST add, not from a quantity increase.
         return updated;
       } else {
-        return [...prev, { product, quantity, selectedVariant, unitPrice, addedAt: Date.now() }];
+        return [...prev, { product, quantity, selectedVariant, unitPrice, beam: fitment?.beam, socket: fitment?.socket, addedAt: Date.now() }];
       }
     });
     setIsCartOpen(true);
   };
 
-  const removeFromCart = (productId: string, selectedVariant?: string) => {
+  const removeFromCart = (productId: string, selectedVariant?: string, beam?: string, socket?: string) => {
     setItems((prev) =>
       prev.filter(
-        (item) => !(item.product.id === productId && item.selectedVariant === selectedVariant)
+        (item) =>
+          !(
+            item.product.id === productId &&
+            item.selectedVariant === selectedVariant &&
+            (beam === undefined || (item.beam || undefined) === beam) &&
+            (socket === undefined || (item.socket || undefined) === socket)
+          )
       )
     );
   };
 
-  const updateQuantity = (productId: string, quantity: number, selectedVariant?: string) => {
+  const updateQuantity = (productId: string, quantity: number, selectedVariant?: string, beam?: string, socket?: string) => {
     if (quantity <= 0) {
-      removeFromCart(productId, selectedVariant);
+      removeFromCart(productId, selectedVariant, beam, socket);
       return;
     }
     setItems((prev) =>
       prev.map((item) => {
-        if (item.product.id === productId && item.selectedVariant === selectedVariant) {
+        if (
+          item.product.id === productId &&
+          item.selectedVariant === selectedVariant &&
+          (beam === undefined || (item.beam || undefined) === beam) &&
+          (socket === undefined || (item.socket || undefined) === socket)
+        ) {
           return { ...item, quantity };
         }
         return item;

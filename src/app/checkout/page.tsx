@@ -112,7 +112,10 @@ export default function CheckoutPage() {
           quantity: item.quantity,
           unitPrice: unit,
           totalPrice: unit * item.quantity,
-          variant: item.selectedVariant,
+          // Beam + socket ride into the order's WhatsApp confirmation via the variant text.
+          variant:
+            [item.selectedVariant, item.beam, item.socket].filter(Boolean).join(" · ") ||
+            item.selectedVariant,
         };
       });
 
@@ -633,6 +636,11 @@ export default function CheckoutPage() {
                         <div className="font-bold text-gray-900 truncate">{item.product.name}</div>
                         {item.selectedVariant && (
                           <div className="text-[10px] text-amber-brand">{item.selectedVariant}</div>
+                        )}
+                        {(item.beam || item.socket) && (
+                          <div className="text-[10px] text-gray-500">
+                            {[item.beam, item.socket].filter(Boolean).join(" · ")}
+                          </div>
                         )}
                         <div className="text-gray-500 text-[11px]">
                           {item.quantity} × Rs. {unitPrice.toLocaleString()}

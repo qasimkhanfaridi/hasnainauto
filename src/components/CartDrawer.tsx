@@ -267,6 +267,11 @@ export const CartDrawer: React.FC = () => {
                               Variant: {item.selectedVariant}
                             </p>
                           )}
+                          {(item.beam || item.socket) && (
+                            <p className="text-[10px] text-gray-500 font-medium">
+                              {[item.beam, item.socket].filter(Boolean).join(" · ")}
+                            </p>
+                          )}
                           <div className="text-xs font-black text-red-brand">
                             {BUSINESS_CONFIG.currency.symbol} {price.toLocaleString()}
                           </div>
@@ -280,7 +285,9 @@ export const CartDrawer: React.FC = () => {
                                   updateQuantity(
                                     item.product.id,
                                     item.quantity - 1,
-                                    item.selectedVariant
+                                    item.selectedVariant,
+                                    item.beam,
+                                    item.socket
                                   )
                                 }
                                 className="w-6 h-6 flex items-center justify-center text-gray-600 hover:text-red-brand rounded transition-colors"
@@ -296,7 +303,9 @@ export const CartDrawer: React.FC = () => {
                                   updateQuantity(
                                     item.product.id,
                                     item.quantity + 1,
-                                    item.selectedVariant
+                                    item.selectedVariant,
+                                    item.beam,
+                                    item.socket
                                   )
                                 }
                                 className="w-6 h-6 flex items-center justify-center text-gray-600 hover:text-red-brand rounded transition-colors"
@@ -308,7 +317,7 @@ export const CartDrawer: React.FC = () => {
                             <button
                               type="button"
                               onClick={() =>
-                                removeFromCart(item.product.id, item.selectedVariant)
+                                removeFromCart(item.product.id, item.selectedVariant, item.beam, item.socket)
                               }
                               className="text-gray-400 hover:text-red-brand p-1 transition-colors"
                               title="Remove item"

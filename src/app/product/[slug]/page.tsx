@@ -67,11 +67,26 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
     product.variants?.[0]?.options?.[0] || ""
   );
 
+  // Beam position + direct socket — 2026-11-20 (sumair): two extra order
+  // options on socket (headlight) products. Beam: Low Beam / High Beam /
+  // Fog. Socket: picked directly (H4 / H11 / 9005 / 9006 / H7), defaulting
+  // to this product's own socket. Both ride into the cart item and the
+  // WhatsApp order message.
+  const productSocketSpec = product.specifications?.Socket || "";
+  const SOCKET_OPTIONS = ["H4", "H11", "9005", "9006", "H7"];
+  const defaultSocket =
+    SOCKET_OPTIONS.find((sk) => productSocketSpec.toUpperCase().includes(sk)) || "";
+  const [selectedBeam, setSelectedBeam] = useState<string>("");
+  const [selectedSocket, setSelectedSocket] = useState<string>(defaultSocket);
+  const fitment = productSocketSpec
+    ? { beam: selectedBeam || undefined, socket: selectedSocket || undefined }
+    : undefined;
+
   const handleBuyNow = () => {
     const variantStr = product.isSeatCover
       ? `${selectedQuality.label} | ${selectedColor.color}`
       : selectedVariant;
-    addToCart(product, 1, variantStr, baseUnitPrice);
+    addToCart(product, 1, variantStr, baseUnitPrice, fitment);
     router.push("/checkout");
   };
 
@@ -113,7 +128,8 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           colorSurcharge: selectedColor.surcharge,
           multiplier: vehicleMultiplier,
         }
-      : undefined
+      : undefined,
+    fitment
   );
 
   // 2026-11-17 (sumair): image carousel — arrows + dots, like the JS Auto quick view.
@@ -524,13 +540,61 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 </div>
               )}
 
+              {/* Beam position + direct socket selectors — 2026-11-20 (sumair) */}
+              {productSocketSpec && (
+                <div className="space-y-3 rounded-2xl border border-gray-200 bg-gray-50/60 p-3.5">
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-gray-600 uppercase tracking-wider block">
+                      Beam Position:
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {["Low Beam", "High Beam", "Fog"].map((beam) => (
+                        <button
+                          key={beam}
+                          type="button"
+                          onClick={() => setSelectedBeam((b) => (b === beam ? "" : beam))}
+                          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
+                            selectedBeam === beam
+                              ? "bg-red-600 text-white border-red-500 shadow-red-glow-sm"
+                              : "bg-white text-gray-700 border-gray-200 hover:text-gray-900"
+                          }`}
+                        >
+                          {beam}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-gray-600 uppercase tracking-wider block">
+                      Socket — Select Directly:
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {SOCKET_OPTIONS.map((sk) => (
+                        <button
+                          key={sk}
+                          type="button"
+                          onClick={() => setSelectedSocket(sk)}
+                          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
+                            selectedSocket === sk
+                              ? "bg-red-600 text-white border-red-500 shadow-red-glow-sm"
+                              : "bg-white text-gray-700 border-gray-200 hover:text-gray-900"
+                          }`}
+                        >
+                          {sk}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Action buttons — 2026-11-17 (sumair): WhatsApp is now a compact icon button like the grid card ("bahir"), next to Add to Cart / Buy Now. */}
               <div className="space-y-2.5 pt-2">
                 {/* Add to Cart + Buy Now + WhatsApp icon — one row on desktop; on mobile Buy Now drops to its own full-width row. */}
                 <div className="grid grid-cols-[1fr_auto] sm:grid-cols-[1fr_1fr_auto] gap-2.5">
                   <button
                     type="button"
-                    onClick={() => addToCart(product, 1, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, baseUnitPrice)}
+                    onClick={() => addToCart(product, 1, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, baseUnitPrice, fitment)}
                     className="col-start-1 row-start-1 w-full py-2.5 px-4 rounded-xl bg-gray-900 hover:bg-gray-800 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-gray-900 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
                     <ShoppingBag className="w-4 h-4 text-red-brand" />
@@ -778,7 +842,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
         <div className="fixed bottom-16 left-0 right-0 z-30 lg:hidden p-3 bg-white/95 backdrop-blur-xl border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex items-center gap-2">
           <button
             type="button"
-            onClick={() => addToCart(product, 1, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant)}
+            onClick={() => addToCart(product, 1, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, undefined, fitment)}
             className="flex-1 py-3 px-3 rounded-xl bg-red-600 text-white font-bold text-xs uppercase tracking-wider border border-red-500/50 flex items-center justify-center gap-1.5 transition-all duration-300 hover:shadow-lg"
           >
             <ShoppingBag className="w-4 h-4 text-white" />
