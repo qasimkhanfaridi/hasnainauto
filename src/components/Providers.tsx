@@ -29,7 +29,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
               onOpenQuickOrder={() => setIsQuickOrderOpen(true)}
             />
 
-            <main className="flex-1 w-full min-w-0 overflow-x-hidden pb-20 lg:pb-0">{children}</main>
+            <main className="flex-1 w-full min-w-0 overflow-x-clip pb-20 lg:pb-0">{children}</main>
 
             <Footer />
 
