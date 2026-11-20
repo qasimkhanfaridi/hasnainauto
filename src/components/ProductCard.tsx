@@ -70,7 +70,29 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
             className="object-contain p-4 transition-transform duration-500 ease-out group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           />
+          {product.images[1] && (
+            <Image
+              src={product.images[1]}
+              alt=""
+              aria-hidden="true"
+              fill
+              className="object-contain p-4 opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 ease-out"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            />
+          )}
         </Link>
+
+        {/* ADD TO CART slide-up bar — AuxLEDs collection hover (2026-11-20):
+            white bar rises from the bottom of the photo on hover (desktop);
+            same action as the card's Order button (add + open cart). */}
+        <button
+          type="button"
+          onClick={handleDirectOrder}
+          className="absolute bottom-0 inset-x-0 z-20 hidden sm:flex items-center justify-center py-2.5 bg-white/95 backdrop-blur border-t border-gray-200 text-gray-900 text-[11px] font-black uppercase tracking-[0.2em] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out hover:bg-white"
+          aria-label={`Add ${product.name} to cart`}
+        >
+          Add to Cart
+        </button>
 
         {/* Badge */}
         <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10 pointer-events-none">
