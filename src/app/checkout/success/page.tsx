@@ -230,8 +230,6 @@ function OrderSuccessContent() {
             </div>
             <div className="flex flex-wrap justify-center gap-4 text-xs font-semibold">
               <span className="text-white">📍 1st Floor, Azhar Shaheed Auto Market, Kashmir Rd, Saddar</span>
-              <span className="text-silver-500">•</span>
-              <span className="text-emerald-400">🕒 10:30 AM – 10:00 PM (Daily)</span>
             </div>
             <div className="pt-2">
               <Link

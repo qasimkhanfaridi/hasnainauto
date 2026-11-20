@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { MapPin, Phone, Clock, Navigation } from "lucide-react";
+import { MapPin, Phone, Navigation } from "lucide-react";
 import { BUSINESS_CONFIG } from "@/config/business";
 
 // Real WhatsApp logo (same glyph as the floating WhatsApp button) — 2026-11-17 (sumair): the generic MessageCircle bubble is NOT the WhatsApp logo.
@@ -99,20 +99,6 @@ export const ContactSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 pt-3 border-t border-gray-100 dark:border-neutral-800">
-                <div className="p-2.5 rounded-xl bg-gray-100 dark:bg-neutral-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-neutral-700 shrink-0">
-                  <Clock className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-[10px] text-gray-500 dark:text-gray-400 uppercase font-semibold">Opening Hours</div>
-                  <div className="text-xs text-gray-700 dark:text-gray-200 mt-0.5">
-                    {BUSINESS_CONFIG.openingHours.weekdays}
-                  </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">
-                    {BUSINESS_CONFIG.openingHours.sunday}
-                  </div>
-                </div>
-              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">

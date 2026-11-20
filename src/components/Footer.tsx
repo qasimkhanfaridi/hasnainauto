@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Phone, Clock, ChevronRight } from "lucide-react";
+import { MapPin, Phone, ChevronRight } from "lucide-react";
 import { BUSINESS_CONFIG } from "@/config/business";
 import { CATEGORIES_DATA } from "@/data/products";
 
@@ -146,10 +146,6 @@ export const Footer: React.FC = () => {
                 >
                   WhatsApp: {BUSINESS_CONFIG.whatsapp}
                 </a>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Clock className="w-4 h-4 text-red-brand shrink-0" />
-                <div className="flex flex-col"><span>Mon – Sat: 10:30 AM – 10:00 PM</span><span className="text-gray-400 dark:text-silver-400">Sunday: 1:00 PM – 8:00 PM</span></div>
               </div>
             </div>
 

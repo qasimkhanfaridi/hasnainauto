@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Send, CheckCircle2, Phone, MapPin, Clock } from "lucide-react";
+import { Send, CheckCircle2, Phone, MapPin } from "lucide-react";
 import { BUSINESS_CONFIG } from "@/config/business";
 import { ContactSection } from "@/components/ContactSection";
 import { InstallationTrust } from "@/components/InstallationTrust";
@@ -227,16 +227,6 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <div className="p-2.5 rounded-xl bg-gray-50 dark:bg-carbon-800 text-gray-600 dark:text-gray-300 shrink-0">
-                  <Clock className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-[10px] text-gray-500 uppercase font-bold">Opening Hours</div>
-                  <div className="text-xs font-semibold text-carbon-900 dark:text-white">{BUSINESS_CONFIG.openingHours.weekdays}</div>
-                  <div className="text-xs text-gray-500 dark:text-silver-400">{BUSINESS_CONFIG.openingHours.sunday}</div>
-                </div>
-              </div>
 
               <div className="flex items-start gap-3">
                 <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-brand shrink-0">
