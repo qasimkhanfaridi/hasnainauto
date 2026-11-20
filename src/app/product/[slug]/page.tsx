@@ -132,7 +132,11 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   // zoomed view is a background-image pan (AuxLEDs style): the photo is
   // shown at 220% and the mouse / touch position pans across it smoothly.
   const [zoomPan, setZoomPan] = useState({ x: 50, y: 50 });
-  const lightboxImgRef = useRef<HTMLImageElement | null>(null);
+  // Zoom v5: the stage is sized EXACTLY to the photo (aspect from the
+  // loaded image), and the zoom is 2x of the photo itself with the cursor
+  // point pinned under the cursor — the way real zoom viewers do it.
+  const [stageAspect, setStageAspect] = useState(0.75);
+  const touchUsedRef = useRef(false);
 
   const closeLightbox = () => {
     setLightboxOpen(false);
@@ -655,12 +659,12 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           )}
         </div>
 
-        {/* Fullscreen zoom viewer — copied from sumair's AuxLEDs example
-            recording (2026-11-20): white viewer, HOVER to zoom (no click),
-            the pan follows the mouse, leaving the photo unzooms, and the
-            controls are a small pill at the bottom centre (< 1 / 11 >)
-            with a plain round close button top-right. Tap still toggles
-            the zoom on touch screens. */}
+        {/* Fullscreen zoom viewer — AuxLEDs style (sumair's example
+            recording): white viewer, bottom-centre pill controls, and a
+            professional hover zoom — the stage is exactly the photo's
+            size, hovering zooms to 2x OF THE PHOTO with the cursor point
+            pinned under the cursor; leaving the photo unzooms. On touch
+            screens a tap toggles the zoom and a drag pans. */}
         {lightboxOpen && (
           <div
             className="fixed inset-0 z-[80] bg-white flex items-center justify-center"
@@ -678,29 +682,21 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
             </button>
 
             <div
-              className={`relative w-full h-full overflow-hidden ${lightboxZoomed ? "cursor-zoom-out" : "cursor-zoom-in"}`}
+              className={`relative overflow-hidden ${lightboxZoomed ? "cursor-zoom-out" : "cursor-zoom-in"}`}
+              style={{
+                aspectRatio: `${stageAspect} / 1`,
+                width: `min(100%, calc(100dvh * ${stageAspect}))`,
+              }}
               onMouseMove={(e) => {
-                const el = e.currentTarget;
-                const r = el.getBoundingClientRect();
+                const r = e.currentTarget.getBoundingClientRect();
                 setZoomPan({
                   x: ((e.clientX - r.left) / r.width) * 100,
                   y: ((e.clientY - r.top) / r.height) * 100,
                 });
-                // Hover-zoom gate: zoom only while the mouse is over the
-                // photo itself (its object-contain rect), not the margins.
-                const img = lightboxImgRef.current;
-                if (img && img.naturalWidth > 0) {
-                  const scale = Math.min(r.width / img.naturalWidth, r.height / img.naturalHeight);
-                  const cw = img.naturalWidth * scale;
-                  const ch = img.naturalHeight * scale;
-                  const cx = r.left + (r.width - cw) / 2;
-                  const cy = r.top + (r.height - ch) / 2;
-                  setLightboxZoomed(
-                    e.clientX >= cx && e.clientX <= cx + cw && e.clientY >= cy && e.clientY <= cy + ch
-                  );
-                }
+                setLightboxZoomed(true);
               }}
               onMouseLeave={() => setLightboxZoomed(false)}
+              onTouchStart={() => { touchUsedRef.current = true; }}
               onTouchMove={(e) => {
                 const t = e.touches[0];
                 if (!t) return;
@@ -711,8 +707,8 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 });
               }}
               onClick={(e) => {
-                // Touch screens have no hover: tap toggles the zoom.
-                if (!window.matchMedia("(hover: none)").matches) return;
+                // Desktop zoom is hover-driven; taps (touch) toggle it.
+                if (!touchUsedRef.current) return;
                 if (!lightboxZoomed) {
                   const r = e.currentTarget.getBoundingClientRect();
                   setZoomPan({
@@ -724,20 +720,27 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               }}
             >
               <Image
-                ref={lightboxImgRef}
                 src={product.images[activeImageIndex] || product.images[0]}
                 alt={product.name}
                 fill
-                className={`object-contain pointer-events-none transition-opacity duration-150 ${lightboxZoomed ? "opacity-0" : "opacity-100"}`}
+                className="object-cover pointer-events-none"
                 sizes="100vw"
+                onLoad={(e) => {
+                  const t = e.currentTarget;
+                  if (t.naturalWidth > 0) setStageAspect(t.naturalWidth / t.naturalHeight);
+                }}
               />
-              <div
-                className={`absolute inset-0 pointer-events-none transition-opacity duration-150 ${lightboxZoomed ? "opacity-100" : "opacity-0"}`}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={product.images[activeImageIndex] || product.images[0]}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 style={{
-                  backgroundImage: `url(${product.images[activeImageIndex] || product.images[0]})`,
-                  backgroundSize: "220%",
-                  backgroundPosition: `${zoomPan.x}% ${zoomPan.y}%`,
-                  backgroundRepeat: "no-repeat",
+                  transform: `scale(${lightboxZoomed ? 2 : 1})`,
+                  transformOrigin: `${zoomPan.x}% ${zoomPan.y}%`,
+                  opacity: lightboxZoomed ? 1 : 0,
+                  transition: "transform 250ms ease, opacity 150ms ease",
                 }}
               />
             </div>
