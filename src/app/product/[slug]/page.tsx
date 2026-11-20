@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, useRouter } from "next/navigation";
+import { Archivo_Black } from "next/font/google";
 import { 
   Star, 
   ShoppingBag, 
@@ -14,6 +15,7 @@ import {
   Car, 
   ChevronRight,
   ChevronLeft,
+  ChevronUp,
   Flame,
   Sparkles,
   Layers,
@@ -41,6 +43,10 @@ import { useVehicle } from "@/context/VehicleContext";
 import { createSingleProductWhatsAppUrl } from "@/utils/whatsapp";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductFitmentVerifier } from "@/components/ProductFitmentVerifier";
+
+// Headings display font — the heavy AuxLEDs-style face from sumair's
+// recording (2026-11-20): product title + section headings + sticky bar name.
+const archivo = Archivo_Black({ subsets: ["latin"], weight: ["400"] });
 
 // Real WhatsApp logo (same glyph as the floating WhatsApp button) — 2026-11-17 (sumair): the generic MessageCircle bubble is NOT the WhatsApp logo.
 const WHATSAPP_PATH =
@@ -219,6 +225,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   const [wishlisted, setWishlisted] = useState(false);
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const [showSticky, setShowSticky] = useState(false);
+  const [footerVisible, setFooterVisible] = useState(false);
   const [recentProducts, setRecentProducts] = useState<typeof PRODUCTS_DATA>([]);
   const [reviewOpen, setReviewOpen] = useState(false);
   const [reviewName, setReviewName] = useState("");
@@ -259,6 +266,17 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
       );
     } catch {}
   }, [product.slug]);
+
+  useEffect(() => {
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setFooterVisible(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    obs.observe(footer);
+    return () => obs.disconnect();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setShowSticky(window.scrollY > 700);
@@ -425,7 +443,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           {/* Main Product Showcase Section */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-16">
             {/* Left Column: Image Gallery */}
-            <div className="lg:col-span-7 space-y-4">
+            <div className="lg:col-span-7 space-y-4 lg:sticky lg:top-[128px]">
               <div className="group relative aspect-[4/3] sm:aspect-[16/11] w-full rounded-3xl overflow-hidden bg-gray-50 border border-gray-200 shadow-xl">
                 {/* Smart carousel slider — AuxLEDs style (2026-11-20, sumair):
                     a real sliding track, not a fade swap. */}
@@ -549,7 +567,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   <Sparkles className="w-3.5 h-3.5 text-red-brand" />
                   <span>{product.brand || "Hasnain Auto"} • {product.subcategory || product.category}</span>
                 </div>
-                <h1 className="text-lg sm:text-xl font-black text-gray-900 leading-tight uppercase">
+                <h1 className={`${archivo.className} text-xl sm:text-2xl text-gray-900 leading-tight uppercase`}>
                   {product.name}
                 </h1>
 
@@ -965,7 +983,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               centred, 5 lime outline stars, WRITE A REVIEW opens a small
               form that sends the review to the shop on WhatsApp. */}
           <div className="space-y-4 mb-16 text-center">
-            <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight">
+            <h2 className={`${archivo.className} text-2xl text-gray-900 uppercase tracking-tight`}>
               Customer Reviews
             </h2>
             <div className="flex items-center justify-center gap-1">
@@ -1031,7 +1049,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           {/* PEOPLE ALSO BOUGHT (related products) */}
           {relatedProducts.length > 0 && (
             <div className="space-y-6">
-              <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight">
+              <h2 className={`${archivo.className} text-2xl text-gray-900 uppercase tracking-tight`}>
                 PEOPLE ALSO BOUGHT
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1045,7 +1063,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           {/* RECENTLY VIEWED — this browser's history (2026-11-20 rebuild) */}
           {recentProducts.length > 0 && (
             <div className="space-y-6 mt-16">
-              <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight">
+              <h2 className={`${archivo.className} text-2xl text-gray-900 uppercase tracking-tight`}>
                 RECENTLY VIEWED
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1181,22 +1199,36 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
             quantity stepper, lime ADD TO CART. Sits above the mobile
             bottom nav (bottom-16) and at the very bottom on desktop. */}
         {showSticky && !lightboxOpen && (
-          <div className="fixed bottom-16 lg:bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+          <>
+          {/* Round back-to-top — sits above the bar, hides with it at the footer. */}
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            aria-label="Back to top"
+            className={`fixed right-4 bottom-[152px] lg:bottom-[96px] z-40 w-11 h-11 rounded-full bg-neutral-900 text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-neutral-700 ${
+              footerVisible ? "translate-y-4 opacity-0 pointer-events-none" : "opacity-100"
+            }`}
+          >
+            <ChevronUp className="w-5 h-5" />
+          </button>
+          <div className={`fixed bottom-16 lg:bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-t border-gray-200 shadow-[0_-4px_24px_rgba(0,0,0,0.12)] transition-all duration-300 ${
+            footerVisible ? "translate-y-full opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
+          }`}>
             <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center gap-3">
-              <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shrink-0 hidden sm:block">
+              <div className="relative w-11 h-11 rounded-full overflow-hidden bg-gray-100 border border-gray-200 shrink-0 hidden sm:block shadow-sm">
                 <Image
                   src={product.images[0]}
                   alt={product.name}
                   fill
                   className="object-cover"
-                  sizes="40px"
+                  sizes="44px"
                 />
               </div>
               <div className="min-w-0 flex-1 hidden md:block">
-                <p className="text-xs font-bold text-gray-900 truncate uppercase">{product.name}</p>
+                <p className={`${archivo.className} text-xs text-gray-900 truncate uppercase`}>{product.name}</p>
                 <p className="text-[10px] text-gray-500">{product.brand || "Hasnain Auto"}</p>
               </div>
-              <span className="text-sm font-black text-gray-900 shrink-0">
+              <span className="px-3 py-2 rounded-lg border border-gray-300 bg-white text-sm font-black text-gray-900 shrink-0 shadow-sm">
                 {BUSINESS_CONFIG.currency.symbol} {currentTotalPrice.toLocaleString()}
               </span>
               <div className="hidden sm:flex items-center rounded-lg border border-gray-300 bg-white overflow-hidden shrink-0">
@@ -1229,6 +1261,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               </button>
             </div>
           </div>
+          </>
         )}
       </div>
     </>
