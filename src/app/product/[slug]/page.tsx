@@ -871,35 +871,6 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                     </svg>
                   </a>
                 </div>
-
-                {/* Call Showroom Button */}
-                <a
-                  href={`tel:${BUSINESS_CONFIG.phoneRaw}`}
-                  className="w-full py-2.5 px-4 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-300 hover:text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-gray-900 transition-all duration-300"
-                >
-                  <Phone className="w-3.5 h-3.5 text-red-brand" />
-                  <span>CALL SADDAR SHOWROOM: {BUSINESS_CONFIG.phone}</span>
-                </a>
-              </div>
-
-              {/* Pakistani Payment & Trust Badges — 2026-11-17 (sumair): hover transitions on the 4 boxes. */}
-              <div className="grid grid-cols-4 gap-2 pt-4 border-t border-gray-200 text-[10px] text-gray-500">
-                <div className="group flex flex-col items-center text-center p-2 rounded-xl bg-gray-50 border border-gray-200 transition-all duration-300 hover:-translate-y-1 hover:border-red-brand/40 hover:shadow-lg">
-                  <ShieldCheck className="w-4 h-4 text-red-brand mb-1 transition-transform duration-300 group-hover:scale-110" />
-                  <span className="font-bold text-gray-900">{product.warranty ? "Warranty" : "100% Fit"}</span>
-                </div>
-                <div className="group flex flex-col items-center text-center p-2 rounded-xl bg-gray-50 border border-gray-200 transition-all duration-300 hover:-translate-y-1 hover:border-red-brand/40 hover:shadow-lg">
-                  <Wrench className="w-4 h-4 text-amber-brand mb-1 transition-transform duration-300 group-hover:scale-110" />
-                  <span className="font-bold text-gray-900">Saddar Fitting</span>
-                </div>
-                <div className="group flex flex-col items-center text-center p-2 rounded-xl bg-gray-50 border border-gray-200 transition-all duration-300 hover:-translate-y-1 hover:border-red-brand/40 hover:shadow-lg">
-                  <Truck className="w-4 h-4 text-emerald-500 mb-1 transition-transform duration-300 group-hover:scale-110" />
-                  <span className="font-bold text-gray-900">COD Available</span>
-                </div>
-                <div className="group flex flex-col items-center text-center p-2 rounded-xl bg-gray-50 border border-gray-200 transition-all duration-300 hover:-translate-y-1 hover:border-red-brand/40 hover:shadow-lg">
-                  <CreditCard className="w-4 h-4 text-cyan-500 mb-1 transition-transform duration-300 group-hover:scale-110" />
-                  <span className="font-bold text-gray-900">Raast / JazzCash</span>
-                </div>
               </div>
 
               {/* Verify fitment box — AuxLEDs structure, Hasnain data (2026-11-20, sumair) */}

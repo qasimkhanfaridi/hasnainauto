@@ -54,25 +54,6 @@ export const Footer: React.FC = () => {
               </div>
             </div>
 
-            {/* Social & WhatsApp */}
-            <div className="flex items-center gap-2">
-              <a
-                href={BUSINESS_CONFIG.social.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-carbon-800 border border-gray-200 dark:border-carbon-750 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:border-red-brand/40 transition-colors"
-              >
-                Facebook
-              </a>
-              <a
-                href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent("Salam Hasnain Auto! I want to inquire about car accessories.")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-carbon-800 border border-gray-200 dark:border-carbon-750 text-xs font-semibold text-whatsapp hover:border-whatsapp/40 transition-colors"
-              >
-                WhatsApp Direct
-              </a>
-            </div>
           </div>
 
           {/* Categories */}
