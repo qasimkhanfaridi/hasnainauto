@@ -132,11 +132,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   // zoomed view is a background-image pan (AuxLEDs style): the photo is
   // shown at 220% and the mouse / touch position pans across it smoothly.
   const [zoomPan, setZoomPan] = useState({ x: 50, y: 50 });
-  // Zoom v5: the stage is sized EXACTLY to the photo (aspect from the
-  // loaded image), and the zoom is 2x of the photo itself with the cursor
-  // point pinned under the cursor — the way real zoom viewers do it.
-  const [stageAspect, setStageAspect] = useState(0.75);
-  const touchUsedRef = useRef(false);
+  const fittedImgRef = useRef<HTMLImageElement | null>(null);
 
   const closeLightbox = () => {
     setLightboxOpen(false);
@@ -659,15 +655,15 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           )}
         </div>
 
-        {/* Fullscreen zoom viewer — AuxLEDs style (sumair's example
-            recording): white viewer, bottom-centre pill controls, and a
-            professional hover zoom — the stage is exactly the photo's
-            size, hovering zooms to 2x OF THE PHOTO with the cursor point
-            pinned under the cursor; leaving the photo unzooms. On touch
-            screens a tap toggles the zoom and a drag pans. */}
+        {/* Fullscreen zoom viewer — copy-paste of sumair's AuxLEDs
+            example scene (2026-11-20): white fullscreen viewer, photo
+            fitted in the centre, bottom-centre pill (< 1 / 11 >), round
+            close button. CLICK the photo = zoom in at that exact point
+            (full-bleed), moving the mouse pans, CLICK again = back to
+            fitted, and clicking the white margin closes the viewer. */}
         {lightboxOpen && (
           <div
-            className="fixed inset-0 z-[80] bg-white flex items-center justify-center"
+            className="fixed inset-0 z-[80] bg-white"
             role="dialog"
             aria-modal="true"
             aria-label={`${product.name} image viewer`}
@@ -682,21 +678,14 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
             </button>
 
             <div
-              className={`relative overflow-hidden ${lightboxZoomed ? "cursor-zoom-out" : "cursor-zoom-in"}`}
-              style={{
-                aspectRatio: `${stageAspect} / 1`,
-                width: `min(100%, calc(100dvh * ${stageAspect}))`,
-              }}
+              className={`absolute inset-0 overflow-hidden ${lightboxZoomed ? "cursor-zoom-out" : "cursor-zoom-in"}`}
               onMouseMove={(e) => {
                 const r = e.currentTarget.getBoundingClientRect();
                 setZoomPan({
                   x: ((e.clientX - r.left) / r.width) * 100,
                   y: ((e.clientY - r.top) / r.height) * 100,
                 });
-                setLightboxZoomed(true);
               }}
-              onMouseLeave={() => setLightboxZoomed(false)}
-              onTouchStart={() => { touchUsedRef.current = true; }}
               onTouchMove={(e) => {
                 const t = e.touches[0];
                 if (!t) return;
@@ -707,10 +696,27 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 });
               }}
               onClick={(e) => {
-                // Desktop zoom is hover-driven; taps (touch) toggle it.
-                if (!touchUsedRef.current) return;
+                const el = e.currentTarget;
+                const r = el.getBoundingClientRect();
+                // Is the click on the photo itself or on the white margin?
+                // (the fitted photo is object-contain centred in the frame)
+                const img = fittedImgRef.current;
+                let onPhoto = true;
+                if (img && img.naturalWidth > 0) {
+                  const scale = Math.min(r.width / img.naturalWidth, r.height / img.naturalHeight);
+                  const cw = img.naturalWidth * scale;
+                  const ch = img.naturalHeight * scale;
+                  const cx = r.left + (r.width - cw) / 2;
+                  const cy = r.top + (r.height - ch) / 2;
+                  onPhoto =
+                    e.clientX >= cx && e.clientX <= cx + cw &&
+                    e.clientY >= cy && e.clientY <= cy + ch;
+                }
+                if (!onPhoto) {
+                  closeLightbox();
+                  return;
+                }
                 if (!lightboxZoomed) {
-                  const r = e.currentTarget.getBoundingClientRect();
                   setZoomPan({
                     x: ((e.clientX - r.left) / r.width) * 100,
                     y: ((e.clientY - r.top) / r.height) * 100,
@@ -720,22 +726,19 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               }}
             >
               <Image
+                ref={fittedImgRef}
                 src={product.images[activeImageIndex] || product.images[0]}
                 alt={product.name}
                 fill
-                className="object-cover pointer-events-none"
+                className="object-contain pointer-events-none"
                 sizes="100vw"
-                onLoad={(e) => {
-                  const t = e.currentTarget;
-                  if (t.naturalWidth > 0) setStageAspect(t.naturalWidth / t.naturalHeight);
-                }}
               />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={product.images[activeImageIndex] || product.images[0]}
                 alt=""
                 aria-hidden="true"
-                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                className="absolute inset-0 w-full h-full object-contain pointer-events-none"
                 style={{
                   transform: `scale(${lightboxZoomed ? 2 : 1})`,
                   transformOrigin: `${zoomPan.x}% ${zoomPan.y}%`,
