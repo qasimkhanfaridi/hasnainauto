@@ -20,7 +20,6 @@ import {
   Palette,
   Zap,
   Maximize2,
-  Heart,
   Minus,
   Plus,
   X
@@ -216,9 +215,8 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
     : undefined;
 
   // AuxLEDs product-page rebuild (2026-11-20, sumair): quantity stepper,
-  // wishlist heart, policy accordions, sticky buy bar, recently viewed.
+  // policy accordions, sticky buy bar, recently viewed.
   const [quantity, setQuantity] = useState(1);
-  const [wishlisted, setWishlisted] = useState(false);
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const [showSticky, setShowSticky] = useState(false);
   const [footerVisible, setFooterVisible] = useState(false);
@@ -227,24 +225,6 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   const [reviewName, setReviewName] = useState("");
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewText, setReviewText] = useState("");
-
-  useEffect(() => {
-    try {
-      const list: string[] = JSON.parse(localStorage.getItem("hasnain_wishlist") || "[]");
-      setWishlisted(list.includes(product.slug));
-    } catch {}
-  }, [product.slug]);
-
-  const toggleWishlist = () => {
-    try {
-      const list: string[] = JSON.parse(localStorage.getItem("hasnain_wishlist") || "[]");
-      const next = list.includes(product.slug)
-        ? list.filter((x) => x !== product.slug)
-        : [...list, product.slug];
-      localStorage.setItem("hasnain_wishlist", JSON.stringify(next));
-      setWishlisted(next.includes(product.slug));
-    } catch {}
-  };
 
   useEffect(() => {
     try {
@@ -792,8 +772,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               )}
 
               {/* Action buttons — AuxLEDs layout (2026-11-20 rebuild, sumair):
-                  row 1 = quantity stepper + LIME Add to Cart + round wishlist
-                  heart; row 2 = outlined BUY IT NOW + WhatsApp icon button. */}
+                  row 1 = quantity stepper + LIME Add to Cart; row 2 = outlined BUY IT NOW + WhatsApp icon button. */}
               <div className="space-y-2.5 pt-2">
                 <div className="flex items-stretch gap-2.5">
                   {/* Quantity stepper */}
@@ -827,20 +806,6 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                     <span>Add To Cart</span>
                   </button>
 
-                  {/* Wishlist heart — saved in this browser (localStorage). */}
-                  <button
-                    type="button"
-                    onClick={toggleWishlist}
-                    className={`w-[46px] rounded-full border flex items-center justify-center shrink-0 transition-all duration-300 hover:scale-105 ${
-                      wishlisted
-                        ? "bg-red-50 border-red-300 text-red-600"
-                        : "bg-white border-gray-300 text-gray-500 hover:text-red-600 hover:border-red-300"
-                    }`}
-                    aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
-                    title={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
-                  >
-                    <Heart className={`w-5 h-5 ${wishlisted ? "fill-red-600" : ""}`} />
-                  </button>
                 </div>
 
                 <div className="flex items-stretch gap-2.5">
