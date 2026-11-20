@@ -721,26 +721,22 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 setLightboxZoomed((z) => !z);
               }}
             >
-              {lightboxZoomed ? (
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    backgroundImage: `url(${product.images[activeImageIndex] || product.images[0]})`,
-                    backgroundSize: "220%",
-                    backgroundPosition: `${zoomPan.x}% ${zoomPan.y}%`,
-                    backgroundRepeat: "no-repeat",
-                  }}
-                />
-              ) : (
-                <Image
-                  key={activeImageIndex}
-                  src={product.images[activeImageIndex] || product.images[0]}
-                  alt={product.name}
-                  fill
-                  className="object-contain pointer-events-none"
-                  sizes="100vw"
-                />
-              )}
+              <Image
+                src={product.images[activeImageIndex] || product.images[0]}
+                alt={product.name}
+                fill
+                className={`object-contain pointer-events-none transition-opacity duration-150 ${lightboxZoomed ? "opacity-0" : "opacity-100"}`}
+                sizes="100vw"
+              />
+              <div
+                className={`absolute inset-0 pointer-events-none transition-opacity duration-150 ${lightboxZoomed ? "opacity-100" : "opacity-0"}`}
+                style={{
+                  backgroundImage: `url(${product.images[activeImageIndex] || product.images[0]})`,
+                  backgroundSize: "220%",
+                  backgroundPosition: `${zoomPan.x}% ${zoomPan.y}%`,
+                  backgroundRepeat: "no-repeat",
+                }}
+              />
             </div>
 
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 text-center pointer-events-none">
