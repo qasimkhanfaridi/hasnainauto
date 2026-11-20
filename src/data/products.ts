@@ -204,7 +204,17 @@ Key Features & Smart Technology:
     name: "REGO Racing H4 LED Headlights",
     slug: "rego-racing-h4-led-headlights",
     shortDescription: "REGO Racing H4 LED headlight bulbs, 6500K white.",
-    description: "REGO Racing H4 LED headlight bulbs in a black metal case, with Mother 6500K drivers and braided wiring. Bright white 6500K beam, plug-and-play H4 fitment.",
+    description: `Built for Performance! Extreme Long-Range Brightness, Heavy-Duty Cooling, and Rugged Braided Durability.
+
+Unleash maximum road visibility on dark highways and city streets with the REGO Racing H4 LED Headlight Kit. Engineered for drivers who demand racing-grade reliability and intense illumination, these dual-beam bulbs feature elongated high-output LED strips on both sides for a wide, penetrating 6000K–6500K Crystal White beam. Housed in a rugged gunmetal aluminum body with heavy-duty braided cables and external control drivers, this kit is built to handle Pakistan's toughest road and weather conditions.
+
+Key Features & Engineering:
+- High-Intensity Dual-Sided LED Chips: Precision-placed high-output LED strips deliver a sharp, focused High and Low beam pattern with zero dark spots.
+- Gunmetal Finned Aluminum Heatsink & Turbo Fan: Thick radial cooling fins paired with a high-speed silent fan rapidly dissipate heat, ensuring consistent brightness on long night drives.
+- External Metal Control Drivers: Dedicated metallic driver boxes regulate voltage fluctuations, preventing flickering and protecting the LED chips.
+- Heavy-Duty Braided Wiring Harness: Wrapped in a tough black-and-yellow woven sleeve to resist engine bay heat, abrasion, and moisture.
+- True Plug-and-Play 3-Pin H4 Connector: Direct OEM 3-pin H4 plug design allows quick, hassle-free installation with zero wire cutting.
+- Protective Hard Carrying Case: Comes packed in a durable black hard case with foam cushioning for safe storage and guaranteed genuine quality.`,
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 8500,
@@ -289,7 +299,18 @@ Key Features & Specifications:
     name: "REGO Racing 4 Copper H4 LED Headlights (Golden Box)",
     slug: "rego-4-copper-h4-golden-box",
     shortDescription: "REGO 4-copper H4 LED bulbs in the premium golden metal box.",
-    description: "REGO Racing 4-copper H4 LED headlight bulbs, 6500K white, in the premium metallic (golden) box edition. 6-copper high-range brightness, H4 fitment.",
+    description: `Unrivaled Quad-Copper Cooling & Racing-Grade Brilliance in an Exclusive Golden Metal Box!
+
+Command the road at night with the flagship REGO Racing 4-Copper Pipe H4 LED Headlight Kit, presented in a signature Golden Metal Tin Box. Engineered for drivers who want maximum lumen output without overheating or dimming on long journeys, these bulbs feature four vacuum-sealed copper heat pipes paired with a gold-anodized turbo cooling body. Delivering a razor-sharp, ultra-bright 6000K–6500K Crystal White beam, they turn pitch-black highways into crystal-clear driving lanes.
+
+Key Features & Engineering:
+- 4x Quad-Copper Heat Dissipation Pipes: Four pure copper thermal tubes rapidly pull heat away from the high-power LED chips, maintaining 100% peak brightness even during hours of continuous night driving.
+- Gold-Anodized Aluminum Heatsink & Turbo Fan: Precision-milled golden cooling fins combined with a high-speed silent turbo fan ensure superior thermal management and extended bulb lifespan.
+- High-Intensity Dual-Beam LED Chips (H4): Produces a wide, focused Low Beam with a clean cut-off and an ultra-long-throw High Beam for dark motorways.
+- External Golden CANBUS Control Driver: Dedicated metallic driver box stabilizes voltage fluctuations, prevents dashboard error codes, and eliminates flickering.
+- Heavy-Duty Red & Black Braided Wiring: Heat-resistant woven cable sleeve protects against engine bay heat, vibration, and moisture.
+- True Plug-and-Play 3-Pin H4 Fitment: Direct OEM 3-pin H4 connector allows fast, damage-free installation with zero wire cutting.
+- Signature Golden Metal Storage Box: Packed in an embossed, foam-lined golden collector's box guaranteeing authentic REGO Racing quality.`,
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 13500,
@@ -407,7 +428,17 @@ Why Shop From Hasnain Auto?
     name: "REGO Motorcycle LED Headlight",
     slug: "rego-motorcycle-led-headlight",
     shortDescription: "REGO super-bright motorcycle LED headlight — small dual-pod projector.",
-    description: "REGO motorcycle LED headlight — small dual-pod projector light for bikes, wide 12V–85V voltage, super bright. Note: this is a bike light in a car-accessory shop — confirm it belongs on the site.",
+    description: `Compact Size, Massive Output! Dual-Color White & Yellow Projector Beam for Bikes, Cars & Off-Road Rides.
+
+Ride safely through pitch-black roads, heavy fog, and rain with the REGO Super Bright Motorcycle LED Mini Driving Lights. Engineered with high-precision optical projector lenses inside a rugged red-and-black aluminum casing, these compact auxiliary pods deliver an intense, focused beam pattern without blinding oncoming traffic. Featuring dual-color technology, you can switch seamlessly between crisp 6000K White for clear night cruising and 3000K Golden Yellow for cutting through thick winter fog, smog, and rain.
+
+Key Features & Specifications:
+- Dual-Color Beam Mode (White & Yellow): Instant switching between pure white light (high visibility on dark roads) and warm yellow light (all-weather fog and rain penetration).
+- High-Brightness Projector Lens: Optical convex lens focuses 2000LM–3000LM of light into a sharp, wide beam with zero dark spots.
+- Wide Voltage Compatibility (12V–80V DC): Works reliably on almost all motorcycles (70cc, 125cc, 150cc, heavy bikes), cars, rickshaws, and e-bikes without burning out.
+- 20W–25W Efficient Power Output: Delivers maximum illumination while drawing low current, keeping your bike's battery and wiring completely safe.
+- Rugged Waterproof Aluminum Housing: Heavy-duty die-cast aluminum body with red anodized accents resists water, dust, mud, and road vibrations.
+- Adjustable Mounting Brackets Included: Comes with sturdy metal brackets and bolts for easy installation on handlebars, crash guards, front forks, or car bumpers.`,
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 2500,
@@ -429,7 +460,16 @@ Why Shop From Hasnain Auto?
     name: "Super Bright T10 LED Bulbs (High Power)",
     slug: "super-bright-t10-led-bulbs",
     shortDescription: "Super bright high-power T10 LED wedge bulbs.",
-    description: "Super bright T10 LED bulbs (high power) — wedge bulbs for parking, interior and number-plate lights. 12V, plug-and-play.",
+    description: `Small Bulb, Massive Upgrade! Crisp 6000K White Glow for Parking Lights, Cabin, Trunk & License Plates.
+
+Replace dull, yellowish factory bulbs with the Super Bright T10 High-Power LED Bulbs. Encased in a clear, heat-resistant silicone gel body for shock and moisture protection, these compact wedge bulbs feature multiple high-intensity SMD LED chips arranged for 360-degree uniform lighting. Whether used as front parking/pilot lights, interior map/dome lights, trunk lights, or rear license plate lights, they instantly give your vehicle a clean, modern luxury look.
+
+Key Features & Specifications:
+- High-Power Multi-SMD LED Chips: Delivers intense, crisp 6000K Crystal White brightness that is up to 3x brighter than standard halogen T10 bulbs.
+- Protective Silicone Gel Coating: Transparent waterproof and shockproof encapsulation protects the LED chips from moisture, dust, and engine heat.
+- Universal T10 Wedge Fitment (W5W / 194 / 168): Fits almost all cars and motorcycles in parking lights, speedometers, door courtesy lights, cabin/map lights, trunk lights, and number plate housings.
+- Energy Saving & Low Heat: Draws minimal 12V DC power, preventing battery drain and avoiding melting of plastic light covers.
+- Easy Plug-and-Play Installation: Simply pull out the old glass bulb and push in the T10 LED—zero wiring or modification needed.`,
     category: "led-lights",
     subcategory: "Interior Lighting",
     basePrice: 1000,
@@ -450,7 +490,16 @@ Why Shop From Hasnain Auto?
     name: "Super Bright LED Interior Dome Lights",
     slug: "super-bright-led-interior-dome-lights",
     shortDescription: "Round LED dome-light panels for car interiors.",
-    description: "Super bright LED interior dome lights — four round LED panels with adapters, for bright white cabin light. Plug-and-play with multi-function adapters.",
+    description: `Flood Your Car Cabin with Daylight! Ultra-Wide Multi-Segment Illumination for Roof, Map & Trunk Lights.
+
+Say goodbye to dim, single-bulb cabin lighting and transform your car's interior with the Super Bright Multi-Segment LED Interior Panel Light. Featuring an innovative 4-circle clover-style LED array, this high-power panel packs dozens of bright white LED chips into a sleek, low-profile board that illuminates every corner of your cabin. Whether you are reading, searching for items at night, or lighting up your boot/trunk, it delivers clean, wide-angle 6000K Crystal White brightness with universal plug-and-play compatibility.
+
+Key Features & Specifications:
+- High-Power Multi-Segment LED Design: Four interconnected circular LED clusters deliver maximum, shadow-free brightness across the entire cabin.
+- Universal Fitment: Designed to fit seamlessly inside almost all car roof/dome light housings, map/reading lights, and trunk/luggage compartments.
+- Plug-and-Play Connector Wiring: Equipped with pre-attached red-and-black extension leads and universal pin connectors for quick, solder-free installation.
+- Easy Peel-and-Stick Backing: Slim, lightweight board easily mounts inside any light cover without rattling or loose connections.
+- Energy Efficient & Long Lifespan: Operates on standard 12V DC power with ultra-low heat generation and extended durability.`,
     category: "led-lights",
     subcategory: "Interior Lighting",
     basePrice: 650,
@@ -492,7 +541,16 @@ Why Shop From Hasnain Auto?
     name: "Premium T10 LED Bulbs (Ultra-Bright)",
     slug: "premium-t10-led-bulbs-ultra-bright",
     shortDescription: "Premium ultra-bright T10 LED wedge bulbs, 12V.",
-    description: "Premium T10 LED bulbs, ultra-bright — cylindrical wedge bulbs for parking, interior and number-plate lights. 12V, plug-and-play.",
+    description: `Crisp, High-Output White Brilliance! Upgrade Dull Factory Bulbs to Modern 12V LED Illumination in Seconds.
+
+Elevate your vehicle's exterior and interior styling with the Premium T10 W5W Ultra-Bright LED Bulbs. Encased in a crystal-clear, heat-resistant silicone sleeve for superior shock and moisture protection, these compact wedge bulbs feature high-intensity SMD LED chips arranged on all sides for true 360-degree uniform light distribution. Ideal for front parking/pilot lights, license plate lights, cabin map lights, door courtesy lights, and trunk compartments, they deliver a clean, modern 6000K Crystal White glow on standard 12V automotive systems.
+
+Key Features & Specifications:
+- Ultra-Bright Multi-SMD Array: Delivers intense, crisp 6000K Crystal White illumination with zero dark spots, outshining standard halogen T10 bulbs.
+- Protective Clear Silicone Encapsulation: Fully sealed against water, humidity, dust, and road vibrations while resisting engine bay heat.
+- Universal T10 / W5W Fitment (194 / 168): Direct replacement for standard 12V wedge sockets across cars and motorcycles, including parking lights, number plate lights, speedometer clusters, and interior dome/map housings.
+- Low Power Draw & Cool Operation: Consumes minimal 12V DC current to protect your battery and prevent melting or yellowing of plastic light lenses.
+- Instant Plug-and-Play Installation: Simple direct-fit base allows effortless installation in seconds with zero wire cutting or modifications.`,
     category: "led-lights",
     subcategory: "Interior Lighting",
     basePrice: 1000,
@@ -649,7 +707,17 @@ Key Features & Specifications:
     name: "LED Headlight Auto Intelligent System (V-150)",
     slug: "led-headlight-auto-intelligent-system-v150",
     shortDescription: "V-150 high-power LED headlight kit with external drivers.",
-    description: "LED headlight auto intelligent system (V-150) — H4 LED headlight bulbs with gold trim ring, fan base and external drivers. Plug-and-play.",
+    description: `Intelligent Night-Vision Engineering! Crisp 6500K Pure White Beam, Heavy-Duty Cooling & Smart Voltage Control.
+
+Command dark roads with confidence using the LED Headlight Auto Intelligent System (V-150). Engineered for maximum brightness and electrical stability, this high-power kit features elongated dual-sided LED chips that deliver a wide, focused 6500K pure white beam without dark spots. Built with a black-and-gold finned aluminum heatsink, an external V-150 intelligent driver module, and rugged braided wiring, it comes neatly packed in a durable protective hard case—making it a reliable, long-lasting upgrade for daily city driving and motorway travel.
+
+Key Features & Specifications:
+- High-Power 6500K LED Chips: Produces intense, crystal-white illumination for clear road visibility, sharp sign reflection, and superior night-driving safety.
+- Auto Intelligent V-150 External Driver: Dedicated metallic control box regulates voltage fluctuations, prevents flickering, and ensures error-free compatibility on modern vehicle electrical systems.
+- Black & Gold Finned Aluminum Heatsink: Precision-milled cooling fins paired with a built-in silent turbo fan rapidly dissipate heat for consistent peak output.
+- Heavy-Duty Braided Wiring Harness: Wrapped in a tough woven protective sleeve to resist engine bay heat, abrasion, and moisture.
+- True Plug-and-Play Installation: Standard OEM connector design allows quick, hassle-free installation in minutes with zero wire cutting or modifications.
+- Protective Hard Carrying Case: Presented in a sturdy black-and-red hard storage case with foam cushioning to keep the kit protected and authentic.`,
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 9500,
@@ -670,7 +738,16 @@ Key Features & Specifications:
     name: "LENSO LED Headlight Bulbs (3000W Performance)",
     slug: "lenso-led-headlight-bulbs",
     shortDescription: "LENSO performance-upgrade LED headlight bulbs.",
-    description: "LENSO LED headlight bulbs — 3000W performance upgrades line, red fan-base bulbs with external drivers. LENSO is an established Pakistani-market LED brand.",
+    description: `Performance-Grade Road Illumination! Intense 6000K–6500K White Beam, Red Anodized Turbo Cooling & External CANBUS Driver.
+
+Transform your night driving experience with the LENSO 3000W Performance Upgrades LED Headlight Kit. Engineered for drivers seeking high-output visibility and modern styling, these bulbs feature precision-aligned high-intensity LED chips that project a wide, razor-sharp pure white beam across dark highways and city roads. Built with a striking red-anodized finned aluminum heatsink, a silent high-speed cooling fan, and an external control driver, this performance upgrade delivers consistent brightness without overheating or flickering.
+
+Key Features & Specifications:
+- 3000W Performance-Grade Output: High-intensity automotive LED chips produce a dense, far-reaching 6000K–6500K crystal-white beam with zero dark spots.
+- Red-Anodized Aluminum Heatsink & Turbo Fan: Heavy-duty finned aluminum body with a red metallic finish rapidly dissipates heat to protect the LED chips and extend bulb lifespan.
+- External Intelligent Control Driver: Dedicated inline driver box stabilizes voltage fluctuations, prevents flickering, and ensures error-free operation on modern vehicles.
+- Focused Beam Pattern: Replicates halogen filament geometry to maximize down-road visibility while minimizing glare for oncoming drivers.
+- True Plug-and-Play Installation: Direct OEM socket fitment allows quick, hassle-free installation in minutes with zero wire cutting or modifications.`,
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 13500,
@@ -692,7 +769,16 @@ Key Features & Specifications:
     name: "SH Pro Two-Colour LED Headlight",
     slug: "sh-pro-two-colour-led-headlight",
     shortDescription: "One light, two colours — white + warm yellow, 2-year warranty.",
-    description: "SH Pro two-colour LED headlight — one light, two colours (bright white + warm yellow, switchable). H4 / 9005 / H11 compatible, 600W, 2-year warranty.",
+    description: `Conquer Any Weather! Switch Effortlessly Between 6000K Crystal White & 3000K Golden Yellow in One Bulb.
+
+Master every road and weather condition with the SH Pro Two-Colour LED Headlight Kit. Engineered for drivers who need extreme brightness on clear nights and superior visibility during heavy winter fog, smog, or rain, these dual-color bulbs allow instant switching between pure white and warm yellow light using your vehicle's existing headlight switch. Built with a rugged black-and-gold finned aluminum heatsink, a silent high-speed turbo fan, and external control drivers, the SH Pro delivers reliable, high-output illumination all year round.
+
+Key Features & Specifications:
+- All-Weather Two-Colour Technology: Easily toggle between 6000K Crystal White for maximum clarity on dark highways and 3000K Golden Yellow to cut through thick fog, rain, and dust.
+- High-Power 600W / 60,000LM Performance: Equipped with dual-color high-intensity LED chips that project a wide, dense, and focused beam with zero dark spots.
+- Black & Gold Finned Aluminum Cooling System: Precision-milled aluminum heatsink paired with a high-speed silent turbo fan rapidly dissipates heat for consistent peak brightness.
+- External Intelligent Control Drivers: Dedicated inline driver modules regulate voltage fluctuations, prevent flickering, and ensure smooth color switching.
+- True Plug-and-Play Installation: Direct OEM connector fitment allows quick, hassle-free installation in minutes with zero wire cutting or extra switches required.`,
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 7500,
@@ -714,7 +800,17 @@ Key Features & Specifications:
     name: "REGO Racing LED Headlights (Copper, 6500K)",
     slug: "rego-racing-copper-led-headlights-6500k",
     shortDescription: "REGO Racing copper LED headlights, 6500K, perfect light angle.",
-    description: "REGO Racing copper LED headlights — copper bulbs and drivers, 6500K white, perfect light angle. H4 / H11 / 9005 fitments, plug-and-play.",
+    description: `Flagship Copper Thermal Engineering! Extreme 6500K Crystal-White Brilliance, Full-Copper Body & External CANBUS Drivers.
+
+Experience top-tier automotive lighting performance with the flagship REGO Racing Full-Copper LED Headlight Kit, presented in a signature luxury black magnetic box with custom foam cushioning. Engineered with a full copper-finish body, matching copper external control drivers, and high-output dual-sided LED chips, these bulbs deliver a razor-sharp, high-intensity 6500K pure white beam with maximum focus and zero dark spots. Designed for drivers who demand uncompromised night visibility and long-term thermal stability on dark highways and motorways.
+
+Key Features & Specifications:
+- Full-Copper Thermal Body & Heatsink: Precision-machined copper housing rapidly pulls heat away from the LED chips, preventing lumen drop and ensuring consistent peak brightness during extended night drives.
+- High-Intensity 6500K Focus Beam: Engineered with high-output dual-sided LED chips and adjustable collar positioning to produce a clean, focused beam pattern that illuminates the road without blinding oncoming traffic.
+- High-Speed Silent Turbo Cooling Fan: Built-in heavy-duty cooling fan works alongside the finned copper heatsink for superior heat dissipation and extended bulb lifespan.
+- Matching Copper External CANBUS Drivers: Dedicated metallic driver modules regulate voltage fluctuations, eliminate flickering, and ensure error-free compatibility on modern vehicle electrical systems.
+- True Plug-and-Play Installation: Direct OEM connector fitment with braided wiring allows quick, damage-free installation in minutes with zero wire cutting.
+- Signature Black Presentation Box: Comes packed in a rigid black REGO Racing display box with precision-cut protective foam and user manual.`,
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 14500,
@@ -736,7 +832,17 @@ Key Features & Specifications:
     name: "Mother 6 Copper LED Headlights (Professional)",
     slug: "mother-6-copper-led-headlights",
     shortDescription: "Mother 6-copper LED headlights, gold professional edition.",
-    description: "Mother 6-copper LED headlights, professional edition — gold copper bulbs with gold drivers, high-range brightness, 6500K. Plug-and-play.",
+    description: `Ultimate 6-Copper Thermal Engineering! Unrivaled Long-Range 6000K Crystal-White Output & Multi-Module External CANBUS System.
+
+Experience flagship-grade road illumination with the Mother 6-Copper Pipe Professional LED Headlight Kit. Engineered for automotive enthusiasts and long-distance highway drivers who demand maximum output without thermal throttling, these heavy-duty bulbs feature an advanced six-copper heat-pipe cooling architecture inside a precision gold-anodized body. Supported by dedicated external golden metallic CANBUS driver modules and rugged braided cables, this professional series kit delivers an intense, razor-sharp 6000K crystal-white beam that cuts through pitch-black roads and harsh weather with zero flickering.
+
+Key Features & Engineering:
+- 6x Vacuum-Sealed Copper Heat Pipes: Six pure copper thermal tubes rapidly pull heat away from the high-power LED chips, ensuring 100% peak brightness without dimming even on multi-hour motorway drives.
+- Gold-Anodized Aluminum Heatsink & Turbo Fan: Precision-milled golden cooling fins paired with a silent high-speed turbo fan maximize airflow and extend bulb lifespan.
+- Heavy-Duty External Metallic CANBUS Drivers: High-grade gold-finished external control modules regulate voltage fluctuations, eliminate dashboard error codes, and guarantee flicker-free performance.
+- High-Intensity Focused Beam Pattern: Precision-aligned dual-sided LED chips project a wide, dense beam with a clean cut-off line—maximizing road visibility without blinding oncoming traffic.
+- Braided Heat-Resistant Wiring Harness: Wrapped in a tough woven protective sleeve to withstand extreme engine bay heat, vibration, and moisture.
+- True Plug-and-Play Installation: Direct OEM connector fitment allows fast, damage-free installation in minutes with zero wire cutting.`,
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 15500,
@@ -914,7 +1020,16 @@ Premium Car Accessories & Auto Decoration Solutions 🚘✨
     name: "Mother LED Headlights (Green)",
     slug: "mother-led-headlights-green",
     shortDescription: "Mother green-edition LED headlights, 7500W drivers.",
-    description: "Mother LED headlights, green edition — green anodised fan-base bulbs with black drivers printed 'MOTHER 7500 watt'. Plug-and-play.",
+    description: `Signature Emerald-Green Precision! Extreme Long-Range 6000K–6500K White Beam, Heavy-Duty Finned Heatsink & External CANBUS Driver.
+
+Command pitch-black roads with unmatched clarity using the Mother Auto LED Headlight System (Green Edition). Engineered for drivers seeking high-output performance and durable thermal management, these bulbs feature an emerald-green anodized aluminum heatsink paired with precision dual-sided LED chips. Delivering a wide, focused 6000K–6500K crystal-white beam with zero dark spots, the kit includes an external black metallic CANBUS control box and rugged braided wiring for flicker-free reliability on daily city commutes and long motorway journeys.
+
+Key Features & Engineering:
+- High-Intensity Dual-Sided LED Chips: Projects a dense, far-reaching 6000K–6500K pure white beam with a clean cut-off pattern that maximizes visibility without blinding oncoming traffic.
+- Emerald-Green Anodized Aluminum Heatsink & Turbo Fan: Thick radial cooling fins combined with a high-speed silent turbo fan rapidly dissipate heat to prevent dimming and extend bulb lifespan.
+- External Metallic CANBUS Control Driver: Dedicated black control module stabilizes voltage fluctuations, eliminates dashboard error codes, and ensures smooth, flicker-free operation.
+- Heavy-Duty Braided Wiring Harness: Wrapped in a tough woven protective sleeve to resist extreme engine bay heat, vibration, and moisture.
+- True Plug-and-Play Fitment: Direct OEM socket design allows quick, damage-free installation in minutes with zero wire cutting or modifications.`,
     category: "led-lights",
     subcategory: "Headlight LEDs",
     basePrice: 14500,
