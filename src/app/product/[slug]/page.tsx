@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, useRouter } from "next/navigation";
@@ -132,6 +132,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   // zoomed view is a background-image pan (AuxLEDs style): the photo is
   // shown at 220% and the mouse / touch position pans across it smoothly.
   const [zoomPan, setZoomPan] = useState({ x: 50, y: 50 });
+  const lightboxImgRef = useRef<HTMLImageElement | null>(null);
 
   const closeLightbox = () => {
     setLightboxOpen(false);
@@ -654,10 +655,15 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           )}
         </div>
 
-        {/* Fullscreen zoom viewer — AuxLEDs style (2026-11-20, sumair) */}
+        {/* Fullscreen zoom viewer — copied from sumair's AuxLEDs example
+            recording (2026-11-20): white viewer, HOVER to zoom (no click),
+            the pan follows the mouse, leaving the photo unzooms, and the
+            controls are a small pill at the bottom centre (< 1 / 11 >)
+            with a plain round close button top-right. Tap still toggles
+            the zoom on touch screens. */}
         {lightboxOpen && (
           <div
-            className="fixed inset-0 z-[80] bg-black flex items-center justify-center"
+            className="fixed inset-0 z-[80] bg-white flex items-center justify-center"
             role="dialog"
             aria-modal="true"
             aria-label={`${product.name} image viewer`}
@@ -665,42 +671,36 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
             <button
               type="button"
               onClick={closeLightbox}
-              className="absolute right-4 top-4 p-2.5 rounded-full bg-white/90 text-gray-800 hover:text-red-600 shadow-lg transition-all z-20"
+              className="absolute right-4 top-4 p-2.5 rounded-full bg-white text-neutral-700 border border-neutral-200 shadow-md hover:text-red-600 transition-all z-20"
               aria-label="Close image viewer"
             >
               <X className="w-5 h-5" />
             </button>
 
-            {imageCount > 1 && (
-              <>
-                <button
-                  type="button"
-                  onClick={() => { setLightboxZoomed(false); goPrevImage(); }}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/90 text-gray-800 hover:text-red-600 shadow-lg transition-all z-20"
-                  aria-label="Previous image"
-                >
-                  <ChevronLeft className="w-6 h-6" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => { setLightboxZoomed(false); goNextImage(); }}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-white/90 text-gray-800 hover:text-red-600 shadow-lg transition-all z-20"
-                  aria-label="Next image"
-                >
-                  <ChevronRight className="w-6 h-6" />
-                </button>
-              </>
-            )}
-
             <div
               className={`relative w-full h-full overflow-hidden ${lightboxZoomed ? "cursor-zoom-out" : "cursor-zoom-in"}`}
               onMouseMove={(e) => {
-                const r = e.currentTarget.getBoundingClientRect();
+                const el = e.currentTarget;
+                const r = el.getBoundingClientRect();
                 setZoomPan({
                   x: ((e.clientX - r.left) / r.width) * 100,
                   y: ((e.clientY - r.top) / r.height) * 100,
                 });
+                // Hover-zoom gate: zoom only while the mouse is over the
+                // photo itself (its object-contain rect), not the margins.
+                const img = lightboxImgRef.current;
+                if (img && img.naturalWidth > 0) {
+                  const scale = Math.min(r.width / img.naturalWidth, r.height / img.naturalHeight);
+                  const cw = img.naturalWidth * scale;
+                  const ch = img.naturalHeight * scale;
+                  const cx = r.left + (r.width - cw) / 2;
+                  const cy = r.top + (r.height - ch) / 2;
+                  setLightboxZoomed(
+                    e.clientX >= cx && e.clientX <= cx + cw && e.clientY >= cy && e.clientY <= cy + ch
+                  );
+                }
               }}
+              onMouseLeave={() => setLightboxZoomed(false)}
               onTouchMove={(e) => {
                 const t = e.touches[0];
                 if (!t) return;
@@ -711,6 +711,8 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 });
               }}
               onClick={(e) => {
+                // Touch screens have no hover: tap toggles the zoom.
+                if (!window.matchMedia("(hover: none)").matches) return;
                 if (!lightboxZoomed) {
                   const r = e.currentTarget.getBoundingClientRect();
                   setZoomPan({
@@ -722,6 +724,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               }}
             >
               <Image
+                ref={lightboxImgRef}
                 src={product.images[activeImageIndex] || product.images[0]}
                 alt={product.name}
                 fill
@@ -739,14 +742,29 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               />
             </div>
 
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 text-center pointer-events-none">
-              <span className="px-3 py-1 rounded-full bg-white/10 text-white text-xs font-bold">
-                {activeImageIndex + 1} / {imageCount}
-              </span>
-              <p className="text-[11px] text-white/60 mt-1.5">
-                Click the image to zoom · Move to pan · ESC to close
-              </p>
-            </div>
+            {imageCount > 1 && (
+              <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 rounded-full bg-white border border-neutral-200 shadow-lg px-1.5 py-1">
+                <button
+                  type="button"
+                  onClick={() => { setLightboxZoomed(false); goPrevImage(); }}
+                  className="p-1.5 rounded-full text-neutral-700 hover:bg-neutral-100 transition-colors"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <span className="text-xs font-semibold text-neutral-700 min-w-[44px] text-center">
+                  {activeImageIndex + 1} / {imageCount}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => { setLightboxZoomed(false); goNextImage(); }}
+                  className="p-1.5 rounded-full text-neutral-700 hover:bg-neutral-100 transition-colors"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+            )}
           </div>
         )}
 
