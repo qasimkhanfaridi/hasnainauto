@@ -221,16 +221,26 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
             {/* Left Column: Image Gallery */}
             <div className="lg:col-span-7 space-y-4">
               <div className="relative aspect-[4/3] sm:aspect-[16/11] w-full rounded-3xl overflow-hidden bg-gray-50 border border-gray-200 shadow-xl">
-                <Image
-                  key={activeImageIndex}
-                  src={product.images[activeImageIndex] || product.images[0]}
-                  alt={product.name}
-                  fill
-                  priority
-                  className="object-cover animate-in fade-in duration-300 cursor-zoom-in"
-                  sizes="(max-width: 1024px) 100vw, 60vw"
-                  onClick={() => setLightboxOpen(true)}
-                />
+                {/* Smart carousel slider — AuxLEDs style (2026-11-20, sumair):
+                    a real sliding track, not a fade swap. */}
+                <div
+                  className="flex h-full transition-transform duration-500 ease-in-out"
+                  style={{ transform: `translateX(-${activeImageIndex * 100}%)` }}
+                >
+                  {product.images.map((img, idx) => (
+                    <div key={idx} className="relative w-full h-full shrink-0">
+                      <Image
+                        src={img}
+                        alt={product.name}
+                        fill
+                        priority={idx === 0}
+                        className="object-cover cursor-zoom-in"
+                        sizes="(max-width: 1024px) 100vw, 60vw"
+                        onClick={() => setLightboxOpen(true)}
+                      />
+                    </div>
+                  ))}
+                </div>
 
                 {/* Carousel arrows */}
                 {imageCount > 1 && (
