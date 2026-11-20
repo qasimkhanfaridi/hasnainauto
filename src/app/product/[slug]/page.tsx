@@ -220,7 +220,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-16">
             {/* Left Column: Image Gallery */}
             <div className="lg:col-span-7 space-y-4">
-              <div className="relative aspect-[4/3] sm:aspect-[16/11] w-full rounded-3xl overflow-hidden bg-gray-50 border border-gray-200 shadow-xl">
+              <div className="group relative aspect-[4/3] sm:aspect-[16/11] w-full rounded-3xl overflow-hidden bg-gray-50 border border-gray-200 shadow-xl">
                 {/* Smart carousel slider — AuxLEDs style (2026-11-20, sumair):
                     a real sliding track, not a fade swap. */}
                 <div
@@ -248,7 +248,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                     <button
                       type="button"
                       onClick={goPrevImage}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 backdrop-blur border border-gray-200 text-gray-700 hover:text-red-600 shadow-md transition-all z-10"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 backdrop-blur border border-gray-200 text-gray-700 hover:bg-neutral-900 hover:text-white shadow-md transition-all duration-300 z-10 lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100"
                       aria-label="Previous image"
                     >
                       <ChevronLeft className="w-5 h-5" />
@@ -256,7 +256,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                     <button
                       type="button"
                       onClick={goNextImage}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 backdrop-blur border border-gray-200 text-gray-700 hover:text-red-600 shadow-md transition-all z-10"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 backdrop-blur border border-gray-200 text-gray-700 hover:bg-neutral-900 hover:text-white shadow-md transition-all duration-300 z-10 lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100"
                       aria-label="Next image"
                     >
                       <ChevronRight className="w-5 h-5" />
@@ -290,28 +290,9 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 </div>
               </div>
 
-              {/* Carousel dots */}
-              {imageCount > 1 && (
-                <div className="flex items-center justify-center gap-1.5">
-                  {product.images.map((_, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => setActiveImageIndex(idx)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        activeImageIndex === idx
-                          ? "bg-red-600 scale-110"
-                          : "bg-gray-300 hover:bg-gray-400"
-                      }`}
-                      aria-label={`View image ${idx + 1}`}
-                    />
-                  ))}
-                </div>
-              )}
-
               {/* Thumbnails */}
               {product.images.length > 1 && (
-                <div className="flex gap-3">
+                <div className="flex flex-wrap gap-3">
                   {product.images.map((img, idx) => (
                     <button
                       key={idx}
@@ -676,7 +657,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
         {/* Fullscreen zoom viewer — AuxLEDs style (2026-11-20, sumair) */}
         {lightboxOpen && (
           <div
-            className="fixed inset-0 z-[80] bg-black/95 flex items-center justify-center"
+            className="fixed inset-0 z-[80] bg-black flex items-center justify-center"
             role="dialog"
             aria-modal="true"
             aria-label={`${product.name} image viewer`}
