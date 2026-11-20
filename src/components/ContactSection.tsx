@@ -151,8 +151,8 @@ export const ContactSection: React.FC = () => {
           <div className="lg:col-span-6 h-full">
             <div className="relative w-full h-[380px] sm:h-[450px] rounded-3xl overflow-hidden border border-gray-200 dark:border-neutral-800 shadow-sm bg-white dark:bg-neutral-900">
               <Image
-                src="/images/walk-in-today-civic-x.jpg"
-                alt="White Honda Civic X with Hasnain Auto LED headlights on, parked outside the Hasnain Auto shop at night in Saddar, Rawalpindi"
+                src="/images/walk-in-today-civic-x-black.jpg"
+                alt="Black Honda Civic X with Hasnain Auto LED headlights on, parked outside the Hasnain Auto showroom at night in Saddar, Rawalpindi"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
