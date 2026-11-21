@@ -449,7 +449,8 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                         muted
                         loop
                         playsInline
-                        className="w-full h-full object-cover"
+                        controls
+                        className="w-full h-full object-contain"
                       />
                     </div>
                   )}
@@ -491,14 +492,16 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 )}
 
                 {/* Expand / fullscreen zoom — AuxLEDs style (2026-11-20, sumair) */}
-                <button
-                  type="button"
-                  onClick={() => openLightbox(Math.max(0, activeImageIndex - slideOffset))}
-                  className="absolute right-3 top-3 p-2 rounded-full bg-white/90 backdrop-blur border border-gray-200 text-gray-700 hover:text-red-600 shadow-md transition-all z-10"
-                  aria-label="View image fullscreen"
-                >
-                  <Maximize2 className="w-5 h-5" />
-                </button>
+                {!(hasVideo && activeImageIndex === 0) && (
+                  <button
+                    type="button"
+                    onClick={() => openLightbox(Math.max(0, activeImageIndex - slideOffset))}
+                    className="absolute right-3 top-3 p-2 rounded-full bg-white/90 backdrop-blur border border-gray-200 text-gray-700 hover:text-red-600 shadow-md transition-all z-10"
+                    aria-label="View image fullscreen"
+                  >
+                    <Maximize2 className="w-5 h-5" />
+                  </button>
+                )}
 
                 {/* Badges */}
                 <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
