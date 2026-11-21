@@ -20,6 +20,7 @@ import {
   Palette,
   Zap,
   Maximize2,
+  Play,
   Minus,
   Plus,
   X
@@ -317,16 +318,28 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
 
   // 2026-11-17 (sumair): image carousel — arrows + dots, like the JS Auto quick view.
   const imageCount = product.images.length;
+  // Product video (2026-11-22, sumair): when a product has a video it is
+  // slide 0 of the gallery, before the photos; the zoom viewer stays
+  // photo-only and keeps its own index (lightboxIndex below).
+  const hasVideo = !!product.video;
+  const slideOffset = hasVideo ? 1 : 0;
+  const slideCount = imageCount + slideOffset;
   const goPrevImage = () =>
-    setActiveImageIndex((i) => (i - 1 + imageCount) % imageCount);
+    setActiveImageIndex((i) => (i - 1 + slideCount) % slideCount);
   const goNextImage = () =>
-    setActiveImageIndex((i) => (i + 1) % imageCount);
+    setActiveImageIndex((i) => (i + 1) % slideCount);
 
   // 2026-11-20 (sumair): AuxLEDs-style fullscreen zoom viewer — expand
   // button on the gallery opens it; click the image to zoom, move the
   // mouse to pan, arrows / keyboard switch photos, ESC closes.
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxZoomed, setLightboxZoomed] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const openLightbox = (imgIdx: number) => {
+    setLightboxIndex(imgIdx);
+    setLightboxZoomed(false);
+    setLightboxOpen(true);
+  };
   // Zoom v2 (2026-11-20, sumair: "the zoom one feature isnt right") — the
   // zoomed view is a background-image pan (AuxLEDs style): the photo is
   // shown at 220% and the mouse / touch position pans across it smoothly.
@@ -344,11 +357,11 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
       if (e.key === "Escape") closeLightbox();
       if (e.key === "ArrowRight") {
         setLightboxZoomed(false);
-        setActiveImageIndex((i) => (i + 1) % imageCount);
+        setLightboxIndex((i) => (i + 1) % imageCount);
       }
       if (e.key === "ArrowLeft") {
         setLightboxZoomed(false);
-        setActiveImageIndex((i) => (i - 1 + imageCount) % imageCount);
+        setLightboxIndex((i) => (i - 1 + imageCount) % imageCount);
       }
     };
     document.addEventListener("keydown", onKey);
@@ -427,6 +440,19 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   className="flex h-full transition-transform duration-500 ease-in-out"
                   style={{ transform: `translateX(-${activeImageIndex * 100}%)` }}
                 >
+                  {hasVideo && (
+                    <div className="relative w-full h-full shrink-0 bg-black">
+                      <video
+                        src={product.video}
+                        poster={product.images[0]}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
                   {product.images.map((img, idx) => (
                     <div key={idx} className="relative w-full h-full shrink-0">
                       <Image
@@ -436,14 +462,14 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                         priority={idx === 0}
                         className="object-cover cursor-zoom-in"
                         sizes="(max-width: 1024px) 100vw, 60vw"
-                        onClick={() => setLightboxOpen(true)}
+                        onClick={() => openLightbox(idx)}
                       />
                     </div>
                   ))}
                 </div>
 
                 {/* Carousel arrows */}
-                {imageCount > 1 && (
+                {slideCount > 1 && (
                   <>
                     <button
                       type="button"
@@ -467,7 +493,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 {/* Expand / fullscreen zoom — AuxLEDs style (2026-11-20, sumair) */}
                 <button
                   type="button"
-                  onClick={() => setLightboxOpen(true)}
+                  onClick={() => openLightbox(Math.max(0, activeImageIndex - slideOffset))}
                   className="absolute right-3 top-3 p-2 rounded-full bg-white/90 backdrop-blur border border-gray-200 text-gray-700 hover:text-red-600 shadow-md transition-all z-10"
                   aria-label="View image fullscreen"
                 >
@@ -491,15 +517,31 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               </div>
 
               {/* Thumbnails */}
-              {product.images.length > 1 && (
+              {slideCount > 1 && (
                 <div className="flex flex-wrap gap-3">
+                  {hasVideo && (
+                    <button
+                      type="button"
+                      onClick={() => setActiveImageIndex(0)}
+                      className={`relative w-20 h-20 rounded-2xl overflow-hidden border transition-all ${
+                        activeImageIndex === 0
+                          ? "border-red-500 ring-2 ring-red-500/50 scale-105"
+                          : "border-gray-200 opacity-70 hover:opacity-100"
+                      }`}
+                    >
+                      <Image src={product.images[0]} alt="" fill className="object-cover" />
+                      <span className="absolute inset-0 flex items-center justify-center bg-black/35">
+                        <Play className="w-6 h-6 text-white fill-white" />
+                      </span>
+                    </button>
+                  )}
                   {product.images.map((img, idx) => (
                     <button
                       key={idx}
                       type="button"
-                      onClick={() => setActiveImageIndex(idx)}
+                      onClick={() => setActiveImageIndex(idx + slideOffset)}
                       className={`relative w-20 h-20 rounded-2xl overflow-hidden border transition-all ${
-                        activeImageIndex === idx
+                        activeImageIndex === idx + slideOffset
                           ? "border-red-500 ring-2 ring-red-500/50 scale-105"
                           : "border-gray-200 opacity-70 hover:opacity-100"
                       }`}
@@ -1079,7 +1121,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
             >
               <Image
                 ref={fittedImgRef}
-                src={product.images[activeImageIndex] || product.images[0]}
+                src={product.images[lightboxIndex] || product.images[0]}
                 alt={product.name}
                 fill
                 className="object-contain pointer-events-none"
@@ -1087,7 +1129,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={product.images[activeImageIndex] || product.images[0]}
+                src={product.images[lightboxIndex] || product.images[0]}
                 alt=""
                 aria-hidden="true"
                 className="absolute inset-0 w-full h-full object-contain pointer-events-none"
@@ -1104,18 +1146,18 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 rounded-full bg-white border border-neutral-200 shadow-lg px-1.5 py-1">
                 <button
                   type="button"
-                  onClick={() => { setLightboxZoomed(false); goPrevImage(); }}
+                  onClick={() => { setLightboxZoomed(false); setLightboxIndex((i) => (i - 1 + imageCount) % imageCount); }}
                   className="p-1.5 rounded-full text-neutral-700 hover:bg-neutral-100 transition-colors"
                   aria-label="Previous image"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <span className="text-xs font-semibold text-neutral-700 min-w-[44px] text-center">
-                  {activeImageIndex + 1} / {imageCount}
+                  {lightboxIndex + 1} / {imageCount}
                 </span>
                 <button
                   type="button"
-                  onClick={() => { setLightboxZoomed(false); goNextImage(); }}
+                  onClick={() => { setLightboxZoomed(false); setLightboxIndex((i) => (i + 1) % imageCount); }}
                   className="p-1.5 rounded-full text-neutral-700 hover:bg-neutral-100 transition-colors"
                   aria-label="Next image"
                 >

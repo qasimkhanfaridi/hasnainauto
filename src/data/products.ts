@@ -156,6 +156,7 @@ export interface Product {
   rating: number;
   reviewCount: number;
   images: string[];
+  video?: string;
   features: string[];
   specifications: { [key: string]: string };
   vehicleCompatibility: VehicleCompatibility;
@@ -1109,6 +1110,38 @@ Key Features & Engineering:
     relatedSlugs: ["mother-6-copper-led-headlights"],
     warranty: "1-Year Replacement Warranty",
   },
+  {
+    id: "volcano-lava-car-aroma-diffuser",
+    productNumber: 27,
+    name: "Volcano Lava Car Aroma Diffuser & Ultrasonic Humidifier",
+    slug: "volcano-lava-car-aroma-diffuser",
+    shortDescription: "Volcano lava mist aroma diffuser with dual-color LED ambience and ultrasonic humidifier.",
+    description: `Turn Every Drive into a Luxury Lounge Experience! Hypnotic Erupting Lava Mist, Dual-Color LED Ambience & Whisper-Quiet Ultrasonic Aromatherapy.
+
+Upgrade your car's interior atmosphere with the show-stopping Volcano Lava Car Aroma Diffuser & Ultrasonic Humidifier. Sculpted with a realistic 3D volcanic mountain core inside a sleek, futuristic metallic-black housing, this diffuser creates a mesmerizing visual effect—releasing ultra-fine, swirling cool mist illuminated by glowing lava-red and electric-blue LED ambient rings. More than just a luxury dashboard centerpiece, it neutralizes smoke, food, and stale cabin odors while keeping your car's air fresh, hydrated, and infused with your favorite essential oils or car perfumes.
+
+Key Features & Engineering:
+- Hypnotic Volcanic Lava Mist Effect: High-frequency ultrasonic atomization transforms water and essential oils into a dense, cool micro-mist that cascades dramatically around the illuminated volcano crater.
+- Dual-Mode Ambient LED Lighting: Switch between fiery Volcanic Lava Red/Orange and futuristic Cyber Blue ambient glow (or dual-color blend) to match your car's interior mood lighting at night.
+- Odor Elimination & Cabin Hydration: Effectively eliminates cigarette smoke, AC staleness, and unpleasant odors while adding soothing moisture to dry air-conditioned cabins.
+- Whisper-Quiet Ultrasonic Operation: Engineered for silent performance so you enjoy pure relaxation and fresh fragrance without distracting motor noise.
+- Sleek Dashboard & Console Fitment: Compact, weighted non-slip base sits securely on your dashboard or center console armrest without sliding during sharp turns.
+- USB Plug-and-Play Convenience: Easily powers via your car's USB port or 12V charger adapter, making it equally versatile for your office desk or bedroom.`,
+    category: "car-perfumes",
+    subcategory: "Car Perfumes",
+    basePrice: 2500,
+    price: 2500,
+    inStock: true,
+    rating: 0,
+    reviewCount: 0,
+    images: ["/images/products/volcano-lava-car-aroma-diffuser-1.jpg", "/images/products/volcano-lava-car-aroma-diffuser-2.jpg", "/images/products/volcano-lava-car-aroma-diffuser-3.jpg", "/images/products/volcano-lava-car-aroma-diffuser-4.jpg", "/images/products/volcano-lava-car-aroma-diffuser-5.jpg", "/images/products/volcano-lava-car-aroma-diffuser-6.jpg"],
+    video: "/videos/volcano-lava-car-aroma-diffuser.mp4",
+    features: ["Volcanic lava mist effect", "Dual-color LED ambience", "USB powered"],
+    specifications: {"Type": "Aroma diffuser & humidifier", "Power": "USB", "Lighting": "Dual-color LED"},
+    vehicleCompatibility: { universal: true },
+    relatedSlugs: ["premium-auto-led-interior-light-kit", "super-bright-led-interior-dome-lights"],
+    warranty: "1-Year Replacement Warranty",
+  },
 ];
 
 // NOTE (2026-11-16): the 21 old products were removed on the owner's order.
@@ -1151,7 +1184,7 @@ export const COLLECTIONS_LIST: CollectionInfo[] = [
 ];
 
 export const COLLECTION_PRODUCT_SLUGS: Record<string, string[]> = {
-  "car-perfumes": [],
+  "car-perfumes": ["volcano-lava-car-aroma-diffuser"],
   "ambient-lights": ["super-bright-led-interior-dome-lights", "premium-auto-led-interior-light-kit"],
   "auxpods": ["4x4-led-off-road-light-bar-4-lens", "led-off-road-light-bar-5-lens"],
   "low-beam": [
