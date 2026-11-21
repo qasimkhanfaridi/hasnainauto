@@ -95,8 +95,17 @@ export const FloatingWhatsApp: React.FC = () => {
           <div className="relative w-[330px] max-w-[calc(100vw-2rem)]">
             <Link
               href={`/product/${purchase.slug}`}
-              className="flex items-start gap-3 rounded-2xl bg-white shadow-2xl ring-1 ring-gray-200 p-3.5 transition-shadow hover:ring-red-300"
+              className="relative overflow-hidden flex items-start gap-3 rounded-2xl bg-white shadow-2xl ring-1 ring-gray-200 p-3.5 transition-shadow hover:ring-red-300"
             >
+              {purchaseVisible && (
+                <span className="absolute top-0 left-0 right-0 h-[3px] bg-amber-500/15 z-10" aria-hidden="true">
+                  <span
+                    key={purchaseIndex}
+                    className="block h-full w-full bg-amber-400 origin-left"
+                    style={{ animation: "ha-popup-timer 6s linear forwards" }}
+                  />
+                </span>
+              )}
               <div className="relative w-16 h-16 shrink-0 rounded-xl overflow-hidden bg-gray-100">
                 <Image
                   src={purchase.image}

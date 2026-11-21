@@ -97,3 +97,11 @@
     display: none;
   }
 }
+
+/* Social-proof pop-up timer line (2026-11-22, sumair): fills across the
+   top of the pop-up card over its 6s visible window. It is a visual
+   timer only — it never drives the pop-up rotation. */
+@keyframes ha-popup-timer {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
