@@ -318,12 +318,20 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
 
   // 2026-11-17 (sumair): image carousel — arrows + dots, like the JS Auto quick view.
   const imageCount = product.images.length;
-  // Product video (2026-11-22, sumair): when a product has a video it is
-  // slide 0 of the gallery, before the photos; the zoom viewer stays
-  // photo-only and keeps its own index (lightboxIndex below).
+  // Product video (2026-11-22, sumair): when a product has a video, the
+  // gallery order is: first photo (product name pinned on it), then the
+  // video as the second slide, then the remaining photos. The zoom viewer
+  // stays photo-only and keeps its own index (lightboxIndex below).
   const hasVideo = !!product.video;
-  const slideOffset = hasVideo ? 1 : 0;
-  const slideCount = imageCount + slideOffset;
+  type GallerySlide = { kind: "image"; img: string; imgIdx: number } | { kind: "video" };
+  const gallerySlides: GallerySlide[] = [];
+  product.images.forEach((img, imgIdx) => {
+    gallerySlides.push({ kind: "image", img, imgIdx });
+    if (imgIdx === 0 && hasVideo) gallerySlides.push({ kind: "video" });
+  });
+  const slideCount = gallerySlides.length;
+  const activeSlide = gallerySlides[activeImageIndex];
+  const onVideoSlide = !!activeSlide && activeSlide.kind === "video";
   const goPrevImage = () =>
     setActiveImageIndex((i) => (i - 1 + slideCount) % slideCount);
   const goNextImage = () =>
@@ -440,33 +448,39 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   className="flex h-full transition-transform duration-500 ease-in-out"
                   style={{ transform: `translateX(-${activeImageIndex * 100}%)` }}
                 >
-                  {hasVideo && (
-                    <div className="relative w-full h-full shrink-0 bg-black">
-                      <video
-                        src={product.video}
-                        poster={product.images[0]}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        controls
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
+                  {gallerySlides.map((slide, sIdx) =>
+                    slide.kind === "video" ? (
+                      <div key={sIdx} className="relative w-full h-full shrink-0 bg-black">
+                        <video
+                          src={product.video}
+                          poster={product.images[0]}
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                          controls
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                    ) : (
+                      <div key={sIdx} className="relative w-full h-full shrink-0">
+                        <Image
+                          src={slide.img}
+                          alt={product.name}
+                          fill
+                          priority={slide.imgIdx === 0}
+                          className="object-cover cursor-zoom-in"
+                          sizes="(max-width: 1024px) 100vw, 60vw"
+                          onClick={() => openLightbox(slide.imgIdx)}
+                        />
+                        {hasVideo && sIdx === 0 && (
+                          <span className="absolute left-3 bottom-3 z-10 max-w-[85%] px-3 py-1.5 rounded-lg bg-black/65 backdrop-blur-sm text-white text-[11px] sm:text-xs font-bold uppercase tracking-wide pointer-events-none">
+                            {product.name}
+                          </span>
+                        )}
+                      </div>
+                    )
                   )}
-                  {product.images.map((img, idx) => (
-                    <div key={idx} className="relative w-full h-full shrink-0">
-                      <Image
-                        src={img}
-                        alt={product.name}
-                        fill
-                        priority={idx === 0}
-                        className="object-cover cursor-zoom-in"
-                        sizes="(max-width: 1024px) 100vw, 60vw"
-                        onClick={() => openLightbox(idx)}
-                      />
-                    </div>
-                  ))}
                 </div>
 
                 {/* Carousel arrows */}
@@ -492,10 +506,10 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 )}
 
                 {/* Expand / fullscreen zoom — AuxLEDs style (2026-11-20, sumair) */}
-                {!(hasVideo && activeImageIndex === 0) && (
+                {!onVideoSlide && (
                   <button
                     type="button"
-                    onClick={() => openLightbox(Math.max(0, activeImageIndex - slideOffset))}
+                    onClick={() => openLightbox(activeSlide && activeSlide.kind === "image" ? activeSlide.imgIdx : 0)}
                     className="absolute right-3 top-3 p-2 rounded-full bg-white/90 backdrop-blur border border-gray-200 text-gray-700 hover:text-red-600 shadow-md transition-all z-10"
                     aria-label="View image fullscreen"
                   >
@@ -522,34 +536,27 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               {/* Thumbnails */}
               {slideCount > 1 && (
                 <div className="flex flex-wrap gap-3">
-                  {hasVideo && (
+                  {gallerySlides.map((slide, sIdx) => (
                     <button
+                      key={sIdx}
                       type="button"
-                      onClick={() => setActiveImageIndex(0)}
+                      onClick={() => setActiveImageIndex(sIdx)}
                       className={`relative w-20 h-20 rounded-2xl overflow-hidden border transition-all ${
-                        activeImageIndex === 0
+                        activeImageIndex === sIdx
                           ? "border-red-500 ring-2 ring-red-500/50 scale-105"
                           : "border-gray-200 opacity-70 hover:opacity-100"
                       }`}
                     >
-                      <Image src={product.images[0]} alt="" fill className="object-cover" />
-                      <span className="absolute inset-0 flex items-center justify-center bg-black/35">
-                        <Play className="w-6 h-6 text-white fill-white" />
-                      </span>
-                    </button>
-                  )}
-                  {product.images.map((img, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => setActiveImageIndex(idx + slideOffset)}
-                      className={`relative w-20 h-20 rounded-2xl overflow-hidden border transition-all ${
-                        activeImageIndex === idx + slideOffset
-                          ? "border-red-500 ring-2 ring-red-500/50 scale-105"
-                          : "border-gray-200 opacity-70 hover:opacity-100"
-                      }`}
-                    >
-                      <Image src={img} alt="" fill className="object-cover" />
+                      {slide.kind === "video" ? (
+                        <>
+                          <Image src={product.images[1] || product.images[0]} alt="" fill className="object-cover" />
+                          <span className="absolute inset-0 flex items-center justify-center bg-black/35">
+                            <Play className="w-6 h-6 text-white fill-white" />
+                          </span>
+                        </>
+                      ) : (
+                        <Image src={slide.img} alt="" fill className="object-cover" />
+                      )}
                     </button>
                   ))}
                 </div>
