@@ -4,7 +4,6 @@ import Image from "next/image";
 import { MapPin, Phone, ChevronRight } from "lucide-react";
 import { Oswald } from "next/font/google";
 import { BUSINESS_CONFIG } from "@/config/business";
-import { CATEGORIES_DATA } from "@/data/products";
 
 // Real WhatsApp logo (same glyph as the floating WhatsApp button) — 2026-11-17 (sumair): the generic MessageCircle bubble is NOT the WhatsApp logo.
 const WHATSAPP_PATH =
@@ -66,7 +65,11 @@ export const Footer: React.FC = () => {
               Categories
             </h4>
             <ul className="space-y-1.5 text-xs">
-              {CATEGORIES_DATA.filter((cat) => !["seat-covers", "floor-mats", "combo-deals"].includes(cat.id)).map((cat) => (
+              {[
+                { id: "low-beam", name: "Low Beam" },
+                { id: "high-beam", name: "High Beam" },
+                { id: "parking-lights", name: "Parking Lights" },
+              ].map((cat) => (
                 <li key={cat.id}>
                   <Link
                     href={`/shop?category=${cat.id}`}
@@ -83,16 +86,14 @@ export const Footer: React.FC = () => {
           {/* Vehicle Links */}
           <div className="lg:col-span-3 space-y-1.5">
             <h4 className="text-xs font-black text-gray-900 dark:text-white uppercase tracking-widest">
-              Vehicle Upgrades
+              More to Explore
             </h4>
             <ul className="space-y-1.5 text-xs">
               {[
-                { label: "Toyota Corolla & Yaris Accessories", href: "/shop?make=Toyota&compatible=true" },
-                { label: "Honda Civic & City Upgrades", href: "/shop?make=Honda&compatible=true" },
-                { label: "Suzuki Alto, Cultus & Swift Styling", href: "/shop?make=Suzuki&compatible=true" },
-                { label: "KIA Sportage & Stonic Multimedia", href: "/shop?make=Kia&compatible=true" },
-                { label: "Hyundai Tucson & Elantra Fitments", href: "/shop?make=Hyundai&compatible=true" },
-                { label: "Universal LED & Ambient Lighting", href: "/shop?category=led-lights" },
+                { label: "Ambient Lights", href: "/shop?category=ambient-lights" },
+                { label: "Pods - Auxiliary Lighting", href: "/shop?category=auxpods" },
+                { label: "All Products", href: "/shop" },
+                { label: "About Us / Visit Our Store", href: "/contact" },
               ].map((item) => (
                 <li key={item.label}>
                   <Link href={item.href} className="hover:text-red-brand transition-colors">
