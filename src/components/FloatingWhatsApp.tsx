@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { BadgeCheck, X } from "lucide-react";
 import { BUSINESS_CONFIG } from "@/config/business";
 
@@ -18,27 +19,28 @@ interface RecentPurchase {
   name: string;
   city: string;
   product: string;
+  slug: string;
   image: string;
   minutesAgo: number;
 }
 
 const RECENT_PURCHASES: RecentPurchase[] = [
-  { name: "Ahmed", city: "Rawalpindi", product: "Mother 6 Copper LED Headlights", image: "/images/products/mother-6-copper-led-headlights-1.jpg", minutesAgo: 52 },
-  { name: "Bilal", city: "Islamabad", product: "REGO Racing H4 LED Headlights", image: "/images/products/rego-racing-h4-led-headlights-1.jpg", minutesAgo: 68 },
-  { name: "Usman", city: "Lahore", product: "Y6 H4 LED Mini Projector Lens", image: "/images/products/y6-h4-mini-projector-lens-1.jpg", minutesAgo: 47 },
-  { name: "Hassan", city: "Karachi", product: "KTM Ai LED Headlight", image: "/images/products/ktm-ai-led-headlight-1.jpg", minutesAgo: 74 },
-  { name: "Ali", city: "Faisalabad", product: "SH Pro Two-Colour LED Headlight", image: "/images/products/sh-pro-two-colour-led-headlight-1.jpg", minutesAgo: 59 },
-  { name: "Hamza", city: "Multan", product: "B PRO 8 Copper LED Headlights", image: "/images/products/b-pro-8-copper-led-headlights-1.jpg", minutesAgo: 63 },
-  { name: "Zain", city: "Peshawar", product: "Golden Box REGO LED Headlights", image: "/images/products/rego-4-copper-h4-golden-box-1.jpg", minutesAgo: 55 },
-  { name: "Fahad", city: "Saddar Rawalpindi", product: "LED Off-Road Light Bar (5-Lens)", image: "/images/products/led-off-road-light-bar-5-lens-1.jpg", minutesAgo: 71 },
-  { name: "Danish", city: "Rawalpindi", product: "Super Bright T10 LED Bulbs", image: "/images/products/super-bright-t10-led-bulbs-1.jpg", minutesAgo: 44 },
-  { name: "Saad", city: "Islamabad", product: "Premium Auto LED Interior Light Kit", image: "/images/products/premium-auto-led-interior-light-kit-1.jpg", minutesAgo: 79 },
+  { name: "Ahmed", city: "Rawalpindi", product: "Mother 6 Copper LED Headlights", slug: "mother-6-copper-led-headlights", image: "/images/products/mother-6-copper-led-headlights-1.jpg", minutesAgo: 52 },
+  { name: "Bilal", city: "Islamabad", product: "REGO Racing H4 LED Headlights", slug: "rego-racing-h4-led-headlights", image: "/images/products/rego-racing-h4-led-headlights-1.jpg", minutesAgo: 68 },
+  { name: "Usman", city: "Lahore", product: "Y6 H4 LED Mini Projector Lens", slug: "y6-h4-mini-projector-lens", image: "/images/products/y6-h4-mini-projector-lens-1.jpg", minutesAgo: 47 },
+  { name: "Hassan", city: "Karachi", product: "KTM Ai LED Headlight", slug: "ktm-ai-led-headlight", image: "/images/products/ktm-ai-led-headlight-1.jpg", minutesAgo: 74 },
+  { name: "Ali", city: "Faisalabad", product: "SH Pro Two-Colour LED Headlight", slug: "sh-pro-two-colour-led-headlight", image: "/images/products/sh-pro-two-colour-led-headlight-1.jpg", minutesAgo: 59 },
+  { name: "Hamza", city: "Multan", product: "B PRO 8 Copper LED Headlights", slug: "b-pro-8-copper-led-headlights", image: "/images/products/b-pro-8-copper-led-headlights-1.jpg", minutesAgo: 63 },
+  { name: "Zain", city: "Peshawar", product: "Golden Box REGO LED Headlights", slug: "rego-4-copper-h4-golden-box", image: "/images/products/rego-4-copper-h4-golden-box-1.jpg", minutesAgo: 55 },
+  { name: "Fahad", city: "Saddar Rawalpindi", product: "LED Off-Road Light Bar (5-Lens)", slug: "led-off-road-light-bar-5-lens", image: "/images/products/led-off-road-light-bar-5-lens-1.jpg", minutesAgo: 71 },
+  { name: "Danish", city: "Rawalpindi", product: "Super Bright T10 LED Bulbs", slug: "super-bright-t10-led-bulbs", image: "/images/products/super-bright-t10-led-bulbs-1.jpg", minutesAgo: 44 },
+  { name: "Saad", city: "Islamabad", product: "Premium Auto LED Interior Light Kit", slug: "premium-auto-led-interior-light-kit", image: "/images/products/premium-auto-led-interior-light-kit-1.jpg", minutesAgo: 79 },
 ];
 
 export const FloatingWhatsApp: React.FC = () => {
   const [footerOrderVisible, setFooterOrderVisible] = useState(false);
   const [purchaseIndex, setPurchaseIndex] = useState(0);
-  const [purchaseVisible, setPurchaseVisible] = useState(true);
+  const [purchaseVisible, setPurchaseVisible] = useState(false);
   const [purchaseDismissed, setPurchaseDismissed] = useState(false);
 
   // Smart-hide (JS Auto rule): hide the floating button while the footer's
@@ -55,18 +57,22 @@ export const FloatingWhatsApp: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Pop-up cycle: each entry shows 6s, slides out, 3s gap, next entry.
+  // Pop-up cycle (rebuilt 2026-11-22, sumair — AuxLEDs recording): the
+  // first entry slides in from the left after 1s, each entry shows ~6s,
+  // slides out, ~3-4s gap, next entry.
   useEffect(() => {
     if (purchaseDismissed) return;
     let hideId = 0;
+    const firstIn = window.setTimeout(() => setPurchaseVisible(true), 1000);
+    hideId = window.setTimeout(() => setPurchaseVisible(false), 7000);
     const cycleId = window.setInterval(() => {
       setPurchaseIndex((i) => (i + 1) % RECENT_PURCHASES.length);
       setPurchaseVisible(true);
       window.clearTimeout(hideId);
       hideId = window.setTimeout(() => setPurchaseVisible(false), 6000);
-    }, 9000);
-    hideId = window.setTimeout(() => setPurchaseVisible(false), 6000);
+    }, 10000);
     return () => {
+      window.clearTimeout(firstIn);
       window.clearInterval(cycleId);
       window.clearTimeout(hideId);
     };
@@ -79,41 +85,48 @@ export const FloatingWhatsApp: React.FC = () => {
       {/* Social-proof pop-up — bottom-left, never covers the WhatsApp button */}
       {!purchaseDismissed && (
         <div
-          className={`fixed bottom-20 lg:bottom-6 left-4 z-40 transition-all duration-500 ${
-            purchaseVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 pointer-events-none"
+          className={`fixed bottom-20 lg:bottom-6 left-4 z-40 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            purchaseVisible
+              ? "translate-x-0 opacity-100 scale-100"
+              : "-translate-x-[110%] opacity-0 scale-95 pointer-events-none"
           }`}
           aria-live="polite"
         >
-          <div className="relative flex items-start gap-3 w-[320px] max-w-[calc(100vw-2rem)] rounded-2xl bg-white shadow-xl ring-1 ring-gray-200 p-3">
-            <div className="relative w-14 h-14 shrink-0 rounded-xl overflow-hidden bg-gray-100">
-              <Image
-                src={purchase.image}
-                alt={purchase.product}
-                fill
-                sizes="56px"
-                className="object-cover"
-              />
-            </div>
-            <div className="min-w-0 flex-1 pr-5">
-              <p className="text-xs text-gray-600 leading-snug">
-                <span className="font-bold text-gray-900">{purchase.name}</span>, {purchase.city} purchased
-              </p>
-              <p className="text-xs font-bold text-gray-900 leading-snug line-clamp-2 mt-0.5">
-                {purchase.product}
-              </p>
-              <p className="text-[11px] text-gray-500 mt-1 flex items-center gap-1">
-                {purchase.minutesAgo} minutes ago
-                <span className="inline-flex items-center gap-0.5 text-emerald-600 font-semibold">
-                  <BadgeCheck className="w-3.5 h-3.5" />
-                  Verified
-                </span>
-              </p>
-            </div>
+          <div className="relative w-[330px] max-w-[calc(100vw-2rem)]">
+            <Link
+              href={`/product/${purchase.slug}`}
+              className="flex items-start gap-3 rounded-2xl bg-white shadow-2xl ring-1 ring-gray-200 p-3.5 transition-shadow hover:ring-red-300"
+            >
+              <div className="relative w-16 h-16 shrink-0 rounded-xl overflow-hidden bg-gray-100">
+                <Image
+                  src={purchase.image}
+                  alt={purchase.product}
+                  fill
+                  sizes="64px"
+                  className="object-cover"
+                />
+              </div>
+              <div className="min-w-0 flex-1 pr-5">
+                <p className="text-xs text-gray-600 leading-snug">
+                  <span className="font-bold text-gray-900">{purchase.name}</span>, {purchase.city} purchased
+                </p>
+                <p className="text-[13px] font-bold text-gray-900 leading-snug line-clamp-2 mt-0.5">
+                  {purchase.product}
+                </p>
+                <p className="text-[11px] text-gray-500 mt-1 flex items-center gap-1">
+                  {purchase.minutesAgo} minutes ago
+                  <span className="inline-flex items-center gap-0.5 text-emerald-600 font-semibold">
+                    <BadgeCheck className="w-3.5 h-3.5" />
+                    Verified
+                  </span>
+                </p>
+              </div>
+            </Link>
             <button
               type="button"
               aria-label="Dismiss purchase notification"
               onClick={() => setPurchaseDismissed(true)}
-              className="absolute top-2 right-2 p-1 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+              className="absolute top-2 right-2 z-10 p-1 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>

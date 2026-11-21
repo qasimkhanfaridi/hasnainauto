@@ -220,6 +220,8 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   const [quantity, setQuantity] = useState(1);
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const [showSticky, setShowSticky] = useState(false);
+  const [barMounted, setBarMounted] = useState(false);
+  const [barEntered, setBarEntered] = useState(false);
   const [footerVisible, setFooterVisible] = useState(false);
   const [recentProducts, setRecentProducts] = useState<typeof PRODUCTS_DATA>([]);
   const [reviewOpen, setReviewOpen] = useState(false);
@@ -256,11 +258,26 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   }, []);
 
   useEffect(() => {
-    const onScroll = () => setShowSticky(window.scrollY > 700);
+    const onScroll = () => {
+      const past = window.scrollY > 700;
+      setShowSticky(past);
+      if (past) setBarMounted(true);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Sticky buy bar (2026-11-22, sumair — AuxLEDs recording): once it has
+  // appeared it stays mounted, so it slides IN attractively on scroll and
+  // slides OUT when the footer arrives (smart hide) or on scroll-up,
+  // instead of popping in and out instantly.
+  useEffect(() => {
+    if (!barMounted) return;
+    const id = window.setTimeout(() => setBarEntered(true), 30);
+    return () => window.clearTimeout(id);
+  }, [barMounted]);
+
 
   const reviewWhatsAppUrl = `https://wa.me/${BUSINESS_CONFIG.whatsappRaw}?text=${encodeURIComponent(
     `Assalam-o-Alaikum ${BUSINESS_CONFIG.name},\n\nI want to write a review for *${product.name}*:\n\n*Rating:* ${"★".repeat(reviewRating)}${"☆".repeat(5 - reviewRating)}\n*Name:* ${reviewName || "Customer"}\n*Review:* ${reviewText}`
@@ -380,6 +397,8 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lightboxOpen, imageCount]);
+
+  const barVisible = barEntered && showSticky && !footerVisible && !lightboxOpen;
 
   // Related products from the same category or recommendations
   const relatedProducts = PRODUCTS_DATA.filter((p) => {
@@ -1179,21 +1198,21 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
             appears on scroll on every viewport: thumbnail + name, price,
             quantity stepper, lime ADD TO CART. Sits above the mobile
             bottom nav (bottom-16) and at the very bottom on desktop. */}
-        {showSticky && !lightboxOpen && (
+        {barMounted && (
           <>
           {/* Round back-to-top — sits above the bar, hides with it at the footer. */}
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             aria-label="Back to top"
-            className={`fixed right-4 bottom-[152px] lg:bottom-[96px] z-40 w-11 h-11 rounded-full bg-neutral-900 text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-neutral-700 ${
-              footerVisible ? "translate-y-4 opacity-0 pointer-events-none" : "opacity-100"
+            className={`fixed right-4 bottom-[152px] lg:bottom-[96px] z-40 w-11 h-11 rounded-full bg-neutral-900 text-white shadow-lg flex items-center justify-center transition-all duration-500 hover:bg-neutral-700 ${
+              barVisible ? "opacity-100" : "translate-y-4 opacity-0 pointer-events-none"
             }`}
           >
             <ChevronUp className="w-5 h-5" />
           </button>
-          <div className={`fixed bottom-16 lg:bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-t border-gray-200 shadow-[0_-4px_24px_rgba(0,0,0,0.12)] transition-all duration-300 ${
-            footerVisible ? "translate-y-full opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
+          <div className={`fixed bottom-16 lg:bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-t border-gray-200 shadow-[0_-4px_24px_rgba(0,0,0,0.12)] transition-all duration-500 ${
+            barVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
           }`}>
             <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center gap-3">
               <div className="relative w-11 h-11 rounded-full overflow-hidden bg-gray-100 border border-gray-200 shrink-0 hidden sm:block shadow-sm">
