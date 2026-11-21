@@ -585,7 +585,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   <Sparkles className="w-3.5 h-3.5 text-red-brand" />
                   <span>{product.brand || "Hasnain Auto"} • {product.subcategory || product.category}</span>
                 </div>
-                <h1 className={`${archivo.className} text-xl sm:text-2xl text-gray-900 leading-tight uppercase`}>
+                <h1 className={`${archivo.className} text-lg sm:text-xl text-gray-900 leading-tight uppercase`}>
                   {product.name}
                 </h1>
 
@@ -814,25 +814,25 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               )}
 
               {/* Action buttons — AuxLEDs layout (2026-11-20 rebuild, sumair):
-                  row 1 = quantity stepper + LIME Add to Cart; row 2 = outlined BUY IT NOW + WhatsApp icon button. */}
-              <div className="space-y-2.5 pt-2">
-                <div className="flex items-stretch gap-2.5">
+                  ONE row (2026-11-22, sumair): quantity stepper + LIME Add to Cart + outlined BUY IT NOW + WhatsApp icon button. */}
+              <div className="pt-2">
+                <div className="flex items-stretch gap-2 sm:gap-2.5">
                   {/* Quantity stepper */}
                   <div className="flex items-center rounded-xl border border-gray-300 bg-white overflow-hidden shrink-0">
                     <button
                       type="button"
                       onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                      className="w-9 h-full flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors disabled:opacity-40"
+                      className="w-7 sm:w-9 h-full flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors disabled:opacity-40"
                       disabled={quantity <= 1}
                       aria-label="Decrease quantity"
                     >
                       <Minus className="w-4 h-4" />
                     </button>
-                    <span className="w-8 text-center text-sm font-black text-gray-900">{quantity}</span>
+                    <span className="w-6 sm:w-8 text-center text-xs sm:text-sm font-black text-gray-900">{quantity}</span>
                     <button
                       type="button"
                       onClick={() => setQuantity((q) => Math.min(99, q + 1))}
-                      className="w-9 h-full flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                      className="w-7 sm:w-9 h-full flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
                       aria-label="Increase quantity"
                     >
                       <Plus className="w-4 h-4" />
@@ -842,22 +842,19 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   <button
                     type="button"
                     onClick={() => addToCart(product, quantity, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, baseUnitPrice, fitment)}
-                    className="flex-1 py-2.5 px-4 rounded-xl bg-lime-400 hover:bg-lime-300 text-neutral-900 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-lime-400 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                    className="flex-1 min-w-0 py-2.5 px-2 sm:px-4 rounded-xl bg-lime-400 hover:bg-lime-300 text-neutral-900 font-black text-[10px] sm:text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 sm:gap-2 border border-lime-400 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
-                    <ShoppingBag className="w-4 h-4" />
-                    <span>Add To Cart</span>
+                    <ShoppingBag className="w-4 h-4 hidden sm:block" />
+                    <span className="whitespace-nowrap">Add To Cart</span>
                   </button>
 
-                </div>
-
-                <div className="flex items-stretch gap-2.5">
                   <button
                     type="button"
                     onClick={handleBuyNow}
-                    className="flex-1 py-2.5 px-4 rounded-xl bg-white hover:bg-gray-50 text-gray-900 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-gray-900 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                    className="flex-1 min-w-0 py-2.5 px-2 sm:px-4 rounded-xl bg-white hover:bg-gray-50 text-gray-900 font-black text-[10px] sm:text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 sm:gap-2 border border-gray-900 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
-                    <Zap className="w-4 h-4" />
-                    <span>Buy It Now</span>
+                    <Zap className="w-4 h-4 hidden sm:block" />
+                    <span className="whitespace-nowrap">Buy It Now</span>
                   </button>
 
                   {/* WhatsApp icon — real WhatsApp logo, hover transition (scale + shadow). */}
@@ -865,7 +862,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 hover:bg-emerald-100 hover:scale-110 hover:shadow-md flex items-center justify-center transition-all duration-300 shadow-sm"
+                    className="w-10 sm:w-12 shrink-0 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 hover:bg-emerald-100 hover:scale-110 hover:shadow-md flex items-center justify-center transition-all duration-300 shadow-sm"
                     aria-label="Order on WhatsApp"
                     title="Order on WhatsApp"
                   >
