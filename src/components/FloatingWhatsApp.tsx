@@ -92,10 +92,10 @@ export const FloatingWhatsApp: React.FC = () => {
           }`}
           aria-live="polite"
         >
-          <div className="relative w-[330px] max-w-[calc(100vw-2rem)]">
+          <div className="relative w-[272px] max-w-[calc(100vw-2rem)]">
             <Link
               href={`/product/${purchase.slug}`}
-              className="relative overflow-hidden flex items-start gap-3 rounded-2xl bg-white shadow-2xl ring-1 ring-gray-200 p-3.5 transition-shadow hover:ring-red-300"
+              className="relative overflow-hidden flex items-start gap-2.5 rounded-2xl bg-white shadow-2xl ring-1 ring-gray-200 p-2.5 transition-shadow hover:ring-red-300"
             >
               {purchaseVisible && (
                 <span className="absolute top-0 left-0 right-0 h-[3px] bg-amber-500/15 z-10" aria-hidden="true">
@@ -106,26 +106,26 @@ export const FloatingWhatsApp: React.FC = () => {
                   />
                 </span>
               )}
-              <div className="relative w-16 h-16 shrink-0 rounded-xl overflow-hidden bg-gray-100">
+              <div className="relative w-11 h-11 shrink-0 rounded-lg overflow-hidden bg-gray-100">
                 <Image
                   src={purchase.image}
                   alt={purchase.product}
                   fill
-                  sizes="64px"
+                  sizes="44px"
                   className="object-cover"
                 />
               </div>
-              <div className="min-w-0 flex-1 pr-5">
-                <p className="text-xs text-gray-600 leading-snug">
+              <div className="min-w-0 flex-1 pr-4">
+                <p className="text-[11px] text-gray-600 leading-snug">
                   <span className="font-bold text-gray-900">{purchase.name}</span>, {purchase.city} purchased
                 </p>
-                <p className="text-[13px] font-bold text-gray-900 leading-snug line-clamp-2 mt-0.5">
+                <p className="text-xs font-bold text-gray-900 leading-snug line-clamp-2 mt-0.5">
                   {purchase.product}
                 </p>
-                <p className="text-[11px] text-gray-500 mt-1 flex items-center gap-1">
+                <p className="text-[10px] text-gray-500 mt-0.5 flex items-center gap-1">
                   {purchase.minutesAgo} minutes ago
                   <span className="inline-flex items-center gap-0.5 text-emerald-600 font-semibold">
-                    <BadgeCheck className="w-3.5 h-3.5" />
+                    <BadgeCheck className="w-3 h-3" />
                     Verified
                   </span>
                 </p>
