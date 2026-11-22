@@ -51,8 +51,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
   const specChips = isLed ? getProductSpecChips(product) : [];
   const cardShell =
     variant === "novsight" || isLed
-      ? "bg-white dark:bg-[#0d131f] border-gray-200 dark:border-gray-800/80 hover:border-red-600/40 dark:hover:border-cyan-500/50 hover:shadow-red-600/10 dark:hover:shadow-cyan-950/40"
-      : "bg-white dark:bg-[#0d131f] border-gray-200 dark:border-gray-800 hover:border-red-600/40 dark:hover:border-cyan-500/40";
+      ? "bg-white dark:bg-[#0d131f] border-gray-200 dark:border-gray-800/80 hover:border-red-600/40 dark:hover:border-red-500/50 hover:shadow-red-600/10 dark:hover:shadow-red-950/40"
+      : "bg-white dark:bg-[#0d131f] border-gray-200 dark:border-gray-800 hover:border-red-600/40 dark:hover:border-red-500/40";
 
   return (
     <div
@@ -139,7 +139,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
       <div className="p-3.5 sm:p-4 flex flex-col flex-1 gap-2 bg-white dark:bg-[#0e1422]">
         {/* Category & Sockets */}
         <div className="flex items-center justify-between gap-1">
-          <span className="text-[10px] font-bold text-red-600 dark:text-cyan-400 uppercase tracking-wider">
+          <span className="text-[10px] font-bold text-red-600 uppercase tracking-wider">
             {product.subcategory || product.category.replace(/-/g, " ")}
           </span>
           <span className="text-[10px] text-gray-500 dark:text-gray-400 font-mono bg-gray-100 dark:bg-black/40 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-800">
@@ -149,7 +149,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
 
         {/* Title */}
         <Link href={`/product/${product.slug}`}>
-          <h3 className="text-sm font-black text-gray-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-cyan-400 transition-colors line-clamp-2 leading-snug">
+          <h3 className="text-sm font-black text-gray-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-600 transition-colors line-clamp-2 leading-snug">
             {product.name}
           </h3>
         </Link>
@@ -173,7 +173,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
             {specChips.map((chip) => (
               <span
                 key={chip}
-                className="px-2 py-0.5 rounded bg-red-50 dark:bg-[#162032] border border-red-200 dark:border-cyan-500/20 text-[9px] font-bold text-red-600 dark:text-cyan-300 uppercase tracking-tight"
+                className="px-2 py-0.5 rounded bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/25 text-[9px] font-bold text-red-600 dark:text-red-400 uppercase tracking-tight"
               >
                 {chip}
               </span>
@@ -186,7 +186,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView, 
           <div>
             <div className="flex items-baseline gap-1.5">
               <span className="text-base font-black text-gray-900 dark:text-white">
-                <span className="text-xs text-red-600 dark:text-cyan-400 mr-0.5">Rs.</span>
+                <span className="text-xs text-red-600 mr-0.5">Rs.</span>
                 {currentPrice.toLocaleString()}
               </span>
               {product.originalPrice && (
