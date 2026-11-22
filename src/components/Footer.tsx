@@ -116,27 +116,10 @@ export const Footer: React.FC = () => {
                   1st Floor, Azhar Shaheed Auto Market, Kashmir Road, Saddar, Rawalpindi
                 </span>
               </div>
-              <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-red-brand shrink-0" />
-                <a href={`tel:${BUSINESS_CONFIG.phoneRaw}`} className="hover:text-gray-900 dark:hover:text-white font-medium">
-                  {BUSINESS_CONFIG.phone}
-                </a>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-whatsapp shrink-0" aria-hidden="true"><path d={WHATSAPP_PATH} /></svg>
-                <a
-                  href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-whatsapp hover:underline font-bold"
-                >
-                  WhatsApp: {BUSINESS_CONFIG.whatsapp}
-                </a>
-              </div>
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col gap-2 pt-1">
+            <div className="flex flex-col gap-2">
               <a
                 id="footer-whatsapp-now"
                 href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}`}
