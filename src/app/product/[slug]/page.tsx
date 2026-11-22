@@ -880,7 +880,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   <button
                     type="button"
                     onClick={() => addToCart(product, quantity, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, baseUnitPrice, fitment)}
-                    className="flex-1 min-w-0 py-2.5 px-2 sm:px-4 rounded-xl bg-lime-400 hover:bg-lime-300 text-neutral-900 font-black text-[10px] sm:text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 sm:gap-2 border border-lime-400 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                    className="flex-1 min-w-0 py-2.5 px-2 sm:px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-black text-[10px] sm:text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 sm:gap-2 border border-red-600 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
                     <ShoppingBag className="w-4 h-4 hidden sm:block" />
                     <span className="whitespace-nowrap">Add To Cart</span>
@@ -1263,7 +1263,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               <button
                 type="button"
                 onClick={() => addToCart(product, quantity, product.isSeatCover ? `${selectedQuality.label} | ${selectedColor.color}` : selectedVariant, baseUnitPrice, fitment)}
-                className="py-2.5 px-4 sm:px-6 rounded-xl bg-lime-400 hover:bg-lime-300 text-neutral-900 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-lime-400 transition-all duration-300 hover:shadow-md shrink-0"
+                className="py-2.5 px-4 sm:px-6 rounded-xl bg-red-600 hover:bg-red-700 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-red-600 transition-all duration-300 hover:shadow-md shrink-0"
               >
                 <ShoppingBag className="w-4 h-4" />
                 <span>Add To Cart</span>
