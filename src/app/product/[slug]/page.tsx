@@ -91,7 +91,7 @@ function DescriptionBlock({ text }: { text: string }) {
       blocks.push(
         <ul key={k++} className="space-y-1.5">
           {items.map((b, i) => (
-            <li key={i} className="flex items-start gap-2 text-sm text-gray-600 leading-relaxed">
+            <li key={i} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
               <span className="text-red-brand font-black mt-0.5">•</span>
               <span>{b}</span>
             </li>
@@ -103,11 +103,11 @@ function DescriptionBlock({ text }: { text: string }) {
     if (rows.length) {
       const rs = rows;
       blocks.push(
-        <div key={k++} className="rounded-xl border border-gray-200 overflow-hidden">
+        <div key={k++} className="rounded-xl border border-gray-200 dark:border-white/10 overflow-hidden">
           {rs.map(([label, value], i) => (
-            <div key={i} className={`flex items-start justify-between gap-3 px-3 py-2 text-xs ${i % 2 ? "bg-white" : "bg-gray-50"}`}>
-              <span className="font-bold text-gray-700">{label}</span>
-              <span className="text-gray-600 text-right">{value}</span>
+            <div key={i} className={`flex items-start justify-between gap-3 px-3 py-2 text-xs ${i % 2 ? "bg-white dark:bg-carbon-900" : "bg-gray-50 dark:bg-carbon-850"}`}>
+              <span className="font-bold text-gray-700 dark:text-gray-200">{label}</span>
+              <span className="text-gray-600 dark:text-gray-300 text-right">{value}</span>
             </div>
           ))}
         </div>
@@ -137,9 +137,9 @@ function DescriptionBlock({ text }: { text: string }) {
       clean.endsWith("?") ||
       (clean.length <= 90 && /[A-Z]/.test(clean) && clean === clean.toUpperCase());
     if (isHeading) {
-      blocks.push(<h4 key={k++} className="text-sm font-black text-gray-900 pt-1.5">{clean}</h4>);
+      blocks.push(<h4 key={k++} className="text-sm font-black text-gray-900 dark:text-white pt-1.5">{clean}</h4>);
     } else {
-      blocks.push(<p key={k++} className="text-sm text-gray-600 leading-relaxed">{clean}</p>);
+      blocks.push(<p key={k++} className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{clean}</p>);
     }
   }
   flush();
@@ -158,14 +158,14 @@ function PolicyAccordion({
   children: React.ReactNode;
 }) {
   return (
-    <div className="border-b border-gray-200">
+    <div className="border-b border-gray-200 dark:border-white/10">
       <button
         type="button"
         onClick={onToggle}
         className="w-full flex items-center justify-between py-3.5 text-left"
         aria-expanded={open}
       >
-        <span className="text-xs font-black uppercase tracking-widest text-gray-900">{title}</span>
+        <span className="text-xs font-black uppercase tracking-widest text-gray-900 dark:text-white">{title}</span>
         <Plus className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${open ? "rotate-45" : ""}`} />
       </button>
       {open && <div className="pb-4">{children}</div>}
@@ -450,15 +450,15 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
       />
 
       {/* 2026-11-17 (sumair): product page background dark → white, like the JS Auto product view. */}
-      <div className="w-full bg-white min-h-screen py-8 sm:py-12 pb-28 lg:pb-16 text-gray-900">
+      <div className="w-full bg-white dark:bg-carbon-950 min-h-screen py-8 sm:py-12 pb-28 lg:pb-16 text-gray-900 dark:text-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb Navigation */}
-          <nav className="mb-6 flex items-center gap-2 text-xs text-gray-500">
-            <Link href="/" className="hover:text-gray-900 transition-colors">Home</Link>
+          <nav className="mb-6 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 dark:text-gray-400">
+            <Link href="/" className="hover:text-gray-900 dark:hover:text-white transition-colors">Home</Link>
             <ChevronRight className="w-3.5 h-3.5 text-gray-400" />
-            <Link href="/shop" className="hover:text-gray-900 transition-colors">Shop</Link>
+            <Link href="/shop" className="hover:text-gray-900 dark:hover:text-white transition-colors">Shop</Link>
             <ChevronRight className="w-3.5 h-3.5 text-gray-400" />
-            <Link href={`/shop?category=${product.category}`} className="hover:text-gray-900 capitalize transition-colors">
+            <Link href={`/shop?category=${product.category}`} className="hover:text-gray-900 dark:hover:text-white capitalize transition-colors">
               {product.category.replace("-", " ")}
             </Link>
             <ChevronRight className="w-3.5 h-3.5 text-gray-400" />
@@ -469,7 +469,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-16">
             {/* Left Column: Image Gallery */}
             <div className="lg:col-span-7 space-y-4 lg:sticky lg:top-[128px]">
-              <div className="group relative aspect-[4/3] sm:aspect-[16/11] w-full rounded-3xl overflow-hidden bg-gray-50 border border-gray-200 shadow-xl">
+              <div className="group relative aspect-[4/3] sm:aspect-[16/11] w-full rounded-3xl overflow-hidden bg-gray-50 dark:bg-carbon-900 border border-gray-200 dark:border-white/10 shadow-xl">
                 {/* Smart carousel slider — AuxLEDs style (2026-11-20, sumair):
                     a real sliding track, not a fade swap. */}
                 <div
@@ -572,7 +572,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                       className={`relative w-20 h-20 rounded-2xl overflow-hidden border transition-all ${
                         activeImageIndex === sIdx
                           ? "border-red-500 ring-2 ring-red-500/50 scale-105"
-                          : "border-gray-200 opacity-70 hover:opacity-100"
+                          : "border-gray-200 dark:border-white/10 opacity-70 hover:opacity-100"
                       }`}
                     >
                       {slide.kind === "video" ? (
@@ -591,10 +591,10 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               )}
 
               {/* Fitment Status Notification */}
-              <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2">
+              <div className="p-4 rounded-2xl bg-gray-50 dark:bg-carbon-900 border border-gray-200 dark:border-white/10 space-y-2">
                 <div className="flex items-center gap-2">
                   <Car className="w-5 h-5 text-red-brand" />
-                  <span className="text-xs font-black text-gray-900 uppercase tracking-wider">
+                  <span className="text-xs font-black text-gray-900 dark:text-white uppercase tracking-wider">
                     Vehicle Compatibility Guide
                   </span>
                 </div>
@@ -609,7 +609,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   )}
                 </div>
                 {product.vehicleCompatibility?.note && (
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
                     {product.vehicleCompatibility.note}
                   </p>
                 )}
@@ -623,7 +623,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   <Sparkles className="w-3.5 h-3.5 text-red-brand" />
                   <span>{product.brand || "Hasnain Auto"} • {product.subcategory || product.category}</span>
                 </div>
-                <h1 className={`${archivo.className} text-lg sm:text-xl text-gray-900 leading-tight uppercase`}>
+                <h1 className={`${archivo.className} text-lg sm:text-xl text-gray-900 dark:text-white leading-tight uppercase`}>
                   {product.name}
                 </h1>
 
@@ -633,11 +633,11 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-amber-brand" />
                     ))}
-                    <span className="text-xs font-black text-gray-900 ml-1">
+                    <span className="text-xs font-black text-gray-900 dark:text-white ml-1">
                       {product.rating.toFixed(1)}
                     </span>
                   </div>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
                     ({product.reviewCount} verified reviews)
                   </span>
                   <span className="text-xs text-emerald-600 font-semibold">• In Stock</span>
@@ -645,21 +645,21 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               </div>
 
               {/* Price Block with Breakdown — 2026-11-17 (sumair): made smaller + hover transition. */}
-              <div className="p-3 rounded-xl bg-gray-50 border border-red-500/20 shadow-sm transition-all duration-300 hover:shadow-md hover:border-red-500/40 hover:-translate-y-0.5">
+              <div className="p-3 rounded-xl bg-gray-50 dark:bg-carbon-900 border border-red-500/20 shadow-sm transition-all duration-300 hover:shadow-md hover:border-red-500/40 hover:-translate-y-0.5">
                 <div className="flex items-baseline justify-between">
                   <div>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-lg font-black text-gray-900">
+                      <span className="text-lg font-black text-gray-900 dark:text-white">
                         {BUSINESS_CONFIG.currency.symbol} {currentTotalPrice.toLocaleString()}
                       </span>
                       {product.originalPrice && (product.originalPrice > currentTotalPrice) && (
-                        <span className="text-sm text-gray-500 line-through">
+                        <span className="text-sm text-gray-500 dark:text-gray-400 line-through">
                           {BUSINESS_CONFIG.currency.symbol}{" "}
                           {(product.originalPrice).toLocaleString()}
                         </span>
                       )}
                     </div>
-                    <div className="text-[11px] text-gray-500 mt-1">
+                    <div className="text-[11px] text-gray-500 dark:text-gray-400 mt-1">
                       {product.isSeatCover
                         ? `Unit Price: ${BUSINESS_CONFIG.currency.symbol} ${baseUnitPrice.toLocaleString()} (Tailored for ${selectedVehicle ? selectedVehicle.model : "Standard Car"})`
                         : "Includes standard fitting hardware"}
@@ -669,16 +669,16 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                     <span className="text-xs text-emerald-600 font-bold block">
                       Direct WhatsApp Dispatch
                     </span>
-                    <span className="text-[10px] text-gray-500">Saddar, Rawalpindi</span>
+                    <span className="text-[10px] text-gray-500 dark:text-gray-400">Saddar, Rawalpindi</span>
                   </div>
                 </div>
 
                 {/* Seat cover pricing formula indicator */}
                 {product.isSeatCover && (
-                  <div className="mt-3 pt-3 border-t border-gray-200 text-[11px] text-gray-500 space-y-1 bg-white p-2.5 rounded-xl">
+                  <div className="mt-3 pt-3 border-t border-gray-200 dark:border-white/10 text-[11px] text-gray-500 dark:text-gray-400 space-y-1 bg-white dark:bg-carbon-850 p-2.5 rounded-xl">
                     <div className="flex justify-between">
                       <span>Quality Grade Base ({selectedQuality.label}):</span>
-                      <span className="text-gray-900 font-semibold">Rs. {selectedQuality.basePrice.toLocaleString()}</span>
+                      <span className="text-gray-900 dark:text-white font-semibold">Rs. {selectedQuality.basePrice.toLocaleString()}</span>
                     </div>
                     {vehicleMultiplier !== 1 && (
                       <div className="flex justify-between text-amber-brand">
@@ -698,11 +698,11 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
 
               {/* SEAT COVER CONFIGURATOR (Quality & Colors) */}
               {product.isSeatCover && (
-                <div className="space-y-4 p-4 rounded-2xl bg-gray-50 border border-gray-200">
+                <div className="space-y-4 p-4 rounded-2xl bg-gray-50 dark:bg-carbon-900 border border-gray-200 dark:border-white/10">
                   {/* Quality Grades */}
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <label className="text-xs font-bold text-gray-600 uppercase tracking-wider flex items-center gap-1.5">
+                      <label className="text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
                         <Layers className="w-3.5 h-3.5 text-red-brand" />
                         <span>Select Material Grade:</span>
                       </label>
@@ -722,13 +722,13 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                               : "bg-white border-gray-200 hover:border-gray-300"
                           }`}
                         >
-                          <div className="text-xs font-bold text-gray-900 flex items-center justify-between">
+                          <div className="text-xs font-bold text-gray-900 dark:text-white flex items-center justify-between">
                             <span>{grade.label}</span>
                             {selectedQuality.id === grade.id && (
                               <CheckCircle2 className="w-3 h-3 text-red-brand" />
                             )}
                           </div>
-                          <div className="text-[10px] text-gray-500 leading-tight mt-0.5">
+                          <div className="text-[10px] text-gray-500 dark:text-gray-400 leading-tight mt-0.5">
                             {grade.description}
                           </div>
                           <div className="text-[11px] font-black text-red-accent mt-1">
@@ -742,11 +742,11 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   {/* Colors Swatches */}
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <label className="text-xs font-bold text-gray-600 uppercase tracking-wider flex items-center gap-1.5">
+                      <label className="text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
                         <Palette className="w-3.5 h-3.5 text-red-brand" />
                         <span>Select Leather Color:</span>
                       </label>
-                      <span className="text-xs font-semibold text-gray-900">
+                      <span className="text-xs font-semibold text-gray-900 dark:text-white">
                         {selectedColor.color}
                         {selectedColor.surcharge > 0 && ` (+Rs. ${selectedColor.surcharge})`}
                       </span>
@@ -764,7 +764,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                           }`}
                         >
                           <span
-                            className="w-3.5 h-3.5 rounded-full border border-gray-300"
+                            className="w-3.5 h-3.5 rounded-full border border-gray-300 dark:border-white/20"
                             style={{ backgroundColor: c.hex }}
                           />
                           <span>{c.color}</span>
@@ -781,7 +781,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               {/* Standard Variant Selector (for non-seat covers) */}
               {!product.isSeatCover && product.variants && product.variants.length > 0 && (
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-gray-600 uppercase tracking-wider block">
+                  <label className="text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider block">
                     Choose {product.variants[0].name}:
                   </label>
                   <div className="flex flex-wrap gap-2">
@@ -805,9 +805,9 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
 
               {/* Beam position + direct socket selectors — 2026-11-20 (sumair) */}
               {defaultSocket && (
-                <div className="space-y-3 rounded-2xl border border-gray-200 bg-gray-50/60 p-3.5">
+                <div className="space-y-3 rounded-2xl border border-gray-200 dark:border-white/10 bg-gray-50/60 dark:bg-carbon-900 p-3.5">
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-gray-600 uppercase tracking-wider block">
+                    <label className="text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider block">
                       Beam Position:
                     </label>
                     <div className="flex flex-wrap gap-2">
@@ -819,7 +819,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
                             selectedBeam === beam
                               ? "bg-red-600 text-white border-red-500 shadow-red-glow-sm"
-                              : "bg-white text-gray-700 border-gray-200 hover:text-gray-900"
+                              : "bg-white dark:bg-carbon-850 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-white/10 hover:text-gray-900 dark:hover:text-white"
                           }`}
                         >
                           {beam}
@@ -828,7 +828,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-gray-600 uppercase tracking-wider block">
+                    <label className="text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider block">
                       Socket — Select Directly:
                     </label>
                     <div className="flex flex-wrap gap-2">
@@ -840,7 +840,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
                             selectedSocket === sk
                               ? "bg-red-600 text-white border-red-500 shadow-red-glow-sm"
-                              : "bg-white text-gray-700 border-gray-200 hover:text-gray-900"
+                              : "bg-white dark:bg-carbon-850 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-white/10 hover:text-gray-900 dark:hover:text-white"
                           }`}
                         >
                           {sk}
@@ -856,21 +856,21 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               <div className="pt-2">
                 <div className="flex items-stretch gap-2 sm:gap-2.5">
                   {/* Quantity stepper */}
-                  <div className="flex items-center rounded-xl border border-gray-300 bg-white overflow-hidden shrink-0">
+                  <div className="flex items-center rounded-xl border border-gray-300 dark:border-white/10 bg-white dark:bg-carbon-900 overflow-hidden shrink-0">
                     <button
                       type="button"
                       onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                      className="w-7 sm:w-9 h-full flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors disabled:opacity-40"
+                      className="w-7 sm:w-9 h-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors disabled:opacity-40"
                       disabled={quantity <= 1}
                       aria-label="Decrease quantity"
                     >
                       <Minus className="w-4 h-4" />
                     </button>
-                    <span className="w-6 sm:w-8 text-center text-xs sm:text-sm font-black text-gray-900">{quantity}</span>
+                    <span className="w-6 sm:w-8 text-center text-xs sm:text-sm font-black text-gray-900 dark:text-white">{quantity}</span>
                     <button
                       type="button"
                       onClick={() => setQuantity((q) => Math.min(99, q + 1))}
-                      className="w-7 sm:w-9 h-full flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                      className="w-7 sm:w-9 h-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
                       aria-label="Increase quantity"
                     >
                       <Plus className="w-4 h-4" />
@@ -889,7 +889,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   <button
                     type="button"
                     onClick={handleBuyNow}
-                    className="flex-1 min-w-0 py-2.5 px-2 sm:px-4 rounded-xl bg-white hover:bg-gray-50 text-gray-900 font-black text-[10px] sm:text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 sm:gap-2 border border-gray-900 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                    className="flex-1 min-w-0 py-2.5 px-2 sm:px-4 rounded-xl bg-white dark:bg-carbon-900 hover:bg-gray-50 dark:hover:bg-carbon-850 text-gray-900 dark:text-white font-black text-[10px] sm:text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 sm:gap-2 border border-gray-900 dark:border-white/40 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                   >
                     <Zap className="w-4 h-4 hidden sm:block" />
                     <span className="whitespace-nowrap">Buy It Now</span>
@@ -917,14 +917,14 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               {/* DESCRIPTION — AuxLEDs position: in the right column, under
                   the fitment box (2026-11-20 rebuild, sumair). */}
               <div className="space-y-3">
-                <h2 className="text-xs font-black uppercase tracking-widest text-gray-900">
+                <h2 className="text-xs font-black uppercase tracking-widest text-gray-900 dark:text-white">
                   Description
                 </h2>
                 <DescriptionBlock text={product.description} />
               </div>
 
               {/* Warranty / Return accordions — AuxLEDs (2026-11-20 rebuild) */}
-              <div className="border-t border-gray-200">
+              <div className="border-t border-gray-200 dark:border-white/10">
                 <PolicyAccordion
                   title="Warranty Policy"
                   open={openAccordion === "warranty"}
@@ -932,7 +932,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 >
                   <ol className="list-decimal pl-5 space-y-1.5">
                     {WARRANTY_POINTS.map((point, i) => (
-                      <li key={i} className="text-xs text-gray-600 leading-relaxed">{point}</li>
+                      <li key={i} className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">{point}</li>
                     ))}
                   </ol>
                 </PolicyAccordion>
@@ -943,7 +943,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 >
                   <ul className="space-y-1.5">
                     {RETURN_POINTS.map((point, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs text-gray-600 leading-relaxed">
+                      <li key={i} className="flex items-start gap-2 text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
                         <span className="text-red-brand font-black mt-0.5">•</span>
                         <span>{point}</span>
                       </li>
@@ -957,15 +957,15 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           {/* Detailed Tabs / Specifications */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16">
             {/* Description & Features — 2026-11-17 (sumair): the "Order Through WhatsApp" sidebar box is removed; the WhatsApp icon button next to Add to Cart already covers it, so the box is redundant on every product page. */}
-            <div className="md:col-span-12 space-y-6 p-6 sm:p-8 rounded-3xl bg-white border border-gray-200 shadow-sm">
+            <div className="md:col-span-12 space-y-6 p-6 sm:p-8 rounded-3xl bg-white dark:bg-carbon-900 border border-gray-200 dark:border-white/10 shadow-sm">
               {/* Key Specifications & Features — 2026-11-17 (sumair): hover transition on this box + each feature row. */}
-              <div className="rounded-2xl bg-gray-50 border border-gray-200 p-4 transition-all duration-300 hover:shadow-md hover:border-gray-300 hover:-translate-y-1">
-                <h3 className="text-base font-black text-gray-900 uppercase tracking-wider mb-3">
+              <div className="rounded-2xl bg-gray-50 dark:bg-carbon-900 border border-gray-200 dark:border-white/10 p-4 transition-all duration-300 hover:shadow-md hover:border-gray-300 dark:hover:border-white/20 hover:-translate-y-1">
+                <h3 className="text-base font-black text-gray-900 dark:text-white uppercase tracking-wider mb-3">
                   Key Specifications & Features
                 </h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {product.features.map((feat, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-xs text-gray-600 rounded-lg p-2 transition-all duration-300 hover:bg-white hover:shadow-sm">
+                    <li key={i} className="flex items-start gap-2.5 text-xs text-gray-600 dark:text-gray-300 rounded-lg p-2 transition-all duration-300 hover:bg-white dark:hover:bg-carbon-850 hover:shadow-sm">
                       <CheckCircle2 className="w-4 h-4 text-red-brand shrink-0 mt-0.5" />
                       <span>{feat}</span>
                     </li>
@@ -974,12 +974,12 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               </div>
 
               {/* Installation Notice — 2026-11-17 (sumair): hover transition on this box. */}
-              <div className="pt-4 border-t border-gray-200 p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-gray-300">
+              <div className="pt-4 border-t border-gray-200 dark:border-white/10 p-4 rounded-2xl bg-gray-50 dark:bg-carbon-900 border border-gray-200 dark:border-white/10 space-y-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-gray-300 dark:hover:border-white/20">
                 <h4 className="text-xs font-bold text-red-accent uppercase tracking-wider flex items-center gap-1.5">
                   <Wrench className="w-4 h-4 text-red-brand" />
                   <span>Workshop Installation Available</span>
                 </h4>
-                <p className="text-xs text-gray-500 leading-relaxed">
+                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
                   Professional fitting available at our shop: <strong>{BUSINESS_CONFIG.address.full}</strong>. 
                   Experienced master craftsmen for seats, mats, lighting & accessories.
                 </p>
@@ -992,7 +992,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               centred, 5 lime outline stars, WRITE A REVIEW opens a small
               form that sends the review to the shop on WhatsApp. */}
           <div className="space-y-4 mb-16 text-center">
-            <h2 className={`${archivo.className} text-2xl text-gray-900 uppercase tracking-tight`}>
+            <h2 className={`${archivo.className} text-2xl text-gray-900 dark:text-white uppercase tracking-tight`}>
               Customer Reviews
             </h2>
             <div className="flex items-center justify-center gap-1">
@@ -1003,7 +1003,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 />
               ))}
             </div>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               {product.reviewCount > 0
                 ? `${product.reviewCount} verified review${product.reviewCount === 1 ? "" : "s"} — ${product.rating.toFixed(1)} out of 5`
                 : "Be the first to write a review"}
@@ -1011,14 +1011,14 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
             <button
               type="button"
               onClick={() => setReviewOpen((o) => !o)}
-              className="px-6 py-2.5 rounded-xl bg-white border border-gray-900 text-gray-900 font-black text-xs uppercase tracking-wider transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+              className="px-6 py-2.5 rounded-xl bg-white dark:bg-carbon-900 border border-gray-900 dark:border-white/40 text-gray-900 dark:text-white font-black text-xs uppercase tracking-wider transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
             >
               Write A Review
             </button>
             {reviewOpen && (
-              <div className="max-w-md mx-auto text-left space-y-3 rounded-2xl border border-gray-200 bg-gray-50/60 p-4">
+              <div className="max-w-md mx-auto text-left space-y-3 rounded-2xl border border-gray-200 dark:border-white/10 bg-gray-50/60 dark:bg-carbon-900 p-4">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-bold text-gray-600 mr-1">Your rating:</span>
+                  <span className="text-xs font-bold text-gray-600 dark:text-gray-300 mr-1">Your rating:</span>
                   {[1, 2, 3, 4, 5].map((n) => (
                     <button key={n} type="button" onClick={() => setReviewRating(n)} aria-label={`${n} star${n === 1 ? "" : "s"}`}>
                       <Star className={`w-6 h-6 text-lime-500 ${reviewRating >= n ? "fill-lime-400" : ""}`} />
@@ -1030,14 +1030,14 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                   value={reviewName}
                   onChange={(e) => setReviewName(e.target.value)}
                   placeholder="Your name"
-                  className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-red-500"
+                  className="w-full rounded-xl border border-gray-300 dark:border-white/10 bg-white dark:bg-carbon-950 px-3 py-2 text-sm text-gray-900 dark:text-white outline-none focus:border-red-500"
                 />
                 <textarea
                   value={reviewText}
                   onChange={(e) => setReviewText(e.target.value)}
                   placeholder="How is this product? Brightness, fitting, quality..."
                   rows={3}
-                  className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-red-500"
+                  className="w-full rounded-xl border border-gray-300 dark:border-white/10 bg-white dark:bg-carbon-950 px-3 py-2 text-sm text-gray-900 dark:text-white outline-none focus:border-red-500"
                 />
                 <a
                   href={reviewWhatsAppUrl}
@@ -1058,7 +1058,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           {/* PEOPLE ALSO BOUGHT (related products) */}
           {relatedProducts.length > 0 && (
             <div className="space-y-6">
-              <h2 className={`${archivo.className} text-2xl text-gray-900 uppercase tracking-tight`}>
+              <h2 className={`${archivo.className} text-2xl text-gray-900 dark:text-white uppercase tracking-tight`}>
                 PEOPLE ALSO BOUGHT
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1072,7 +1072,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           {/* RECENTLY VIEWED — this browser's history (2026-11-20 rebuild) */}
           {recentProducts.length > 0 && (
             <div className="space-y-6 mt-16">
-              <h2 className={`${archivo.className} text-2xl text-gray-900 uppercase tracking-tight`}>
+              <h2 className={`${archivo.className} text-2xl text-gray-900 dark:text-white uppercase tracking-tight`}>
                 RECENTLY VIEWED
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1220,11 +1220,11 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
           >
             <ChevronUp className="w-5 h-5" />
           </button>
-          <div className={`fixed bottom-16 lg:bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-t border-gray-200 shadow-[0_-4px_24px_rgba(0,0,0,0.12)] transition-all duration-500 ${
+          <div className={`fixed bottom-16 lg:bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-carbon-900/95 backdrop-blur-xl border-t border-gray-200 dark:border-white/10 shadow-[0_-4px_24px_rgba(0,0,0,0.12)] transition-all duration-500 ${
             barVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
           }`}>
             <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center gap-3">
-              <div className="relative w-11 h-11 rounded-full overflow-hidden bg-gray-100 border border-gray-200 shrink-0 hidden sm:block shadow-sm">
+              <div className="relative w-11 h-11 rounded-full overflow-hidden bg-gray-100 dark:bg-carbon-800 border border-gray-200 dark:border-white/10 shrink-0 hidden sm:block shadow-sm">
                 <Image
                   src={product.images[0]}
                   alt={product.name}
@@ -1234,27 +1234,27 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
                 />
               </div>
               <div className="min-w-0 flex-1 hidden md:block">
-                <p className={`${archivo.className} text-xs text-gray-900 truncate uppercase`}>{product.name}</p>
-                <p className="text-[10px] text-gray-500">{product.brand || "Hasnain Auto"}</p>
+                <p className={`${archivo.className} text-xs text-gray-900 dark:text-white truncate uppercase`}>{product.name}</p>
+                <p className="text-[10px] text-gray-500 dark:text-gray-400">{product.brand || "Hasnain Auto"}</p>
               </div>
-              <span className="px-3 py-2 rounded-lg border border-gray-300 bg-white text-sm font-black text-gray-900 shrink-0 shadow-sm">
+              <span className="px-3 py-2 rounded-lg border border-gray-300 dark:border-white/10 bg-white dark:bg-carbon-850 text-sm font-black text-gray-900 dark:text-white shrink-0 shadow-sm">
                 {BUSINESS_CONFIG.currency.symbol} {currentTotalPrice.toLocaleString()}
               </span>
-              <div className="hidden sm:flex items-center rounded-lg border border-gray-300 bg-white overflow-hidden shrink-0">
+              <div className="hidden sm:flex items-center rounded-lg border border-gray-300 dark:border-white/10 bg-white dark:bg-carbon-900 overflow-hidden shrink-0">
                 <button
                   type="button"
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="w-8 h-9 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors disabled:opacity-40"
+                  className="w-8 h-9 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors disabled:opacity-40"
                   disabled={quantity <= 1}
                   aria-label="Decrease quantity"
                 >
                   <Minus className="w-3.5 h-3.5" />
                 </button>
-                <span className="w-7 text-center text-xs font-black text-gray-900">{quantity}</span>
+                <span className="w-7 text-center text-xs font-black text-gray-900 dark:text-white">{quantity}</span>
                 <button
                   type="button"
                   onClick={() => setQuantity((q) => Math.min(99, q + 1))}
-                  className="w-8 h-9 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                  className="w-8 h-9 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
                   aria-label="Increase quantity"
                 >
                   <Plus className="w-3.5 h-3.5" />

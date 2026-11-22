@@ -35,7 +35,7 @@ type Verdict =
 const selectClass =
   "w-full bg-neutral-700 text-white text-xs font-semibold rounded-md px-2.5 py-2 focus:outline-none focus:ring-2 focus:ring-red-600/50 disabled:opacity-50 appearance-none cursor-pointer";
 const labelClass =
-  "block text-[10px] font-bold uppercase tracking-wider text-neutral-600 mb-1";
+  "block text-[10px] font-bold uppercase tracking-wider text-neutral-600 dark:text-gray-400 mb-1";
 
 /**
  * Small "Verify fitment with your vehicle" box for the product page —
@@ -106,8 +106,8 @@ export const ProductFitmentVerifier: React.FC<{ product: Product }> = ({
   )}`;
 
   return (
-    <div className="rounded-xl bg-neutral-200/80 border border-neutral-300 p-3.5">
-      <h3 className="text-[13px] font-bold text-neutral-900 mb-2.5">
+    <div className="rounded-xl bg-neutral-200/80 dark:bg-carbon-800 border border-neutral-300 dark:border-white/10 p-3.5">
+      <h3 className="text-[13px] font-bold text-neutral-900 dark:text-white mb-2.5">
         Verify fitment with your vehicle
       </h3>
 
@@ -191,7 +191,7 @@ export const ProductFitmentVerifier: React.FC<{ product: Product }> = ({
             <button
               type="button"
               onClick={handleClear}
-              className="flex-1 py-2 rounded-md bg-white border border-neutral-300 text-neutral-700 text-xs font-bold transition hover:bg-neutral-50"
+              className="flex-1 py-2 rounded-md bg-white dark:bg-carbon-900 border border-neutral-300 dark:border-white/10 text-neutral-700 dark:text-gray-200 text-xs font-bold transition hover:bg-neutral-50 dark:hover:bg-carbon-850"
             >
               Clear filters
             </button>
@@ -201,25 +201,25 @@ export const ProductFitmentVerifier: React.FC<{ product: Product }> = ({
 
       {verdict?.kind === "fits" && (
         <div>
-          <div className="rounded-lg bg-emerald-50 border border-emerald-300 p-3">
-            <div className="flex items-center gap-1.5 text-emerald-700">
+          <div className="rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-300 dark:border-emerald-500/30 p-3">
+            <div className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400">
               <CheckCircle2 className="w-4 h-4 shrink-0" />
               <span className="text-xs font-black uppercase tracking-wider">
                 Fits your:
               </span>
             </div>
-            <p className="text-sm font-bold text-gray-900 mt-1">
+            <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
               {vehicleLabel}{" "}
               <button
                 type="button"
                 onClick={() => setVerdict(null)}
-                className="text-xs font-semibold text-neutral-500 underline underline-offset-2 hover:text-red-600"
+                className="text-xs font-semibold text-neutral-500 dark:text-gray-400 underline underline-offset-2 hover:text-red-600"
               >
                 (Change vehicle)
               </button>
             </p>
             {verdict.universalNote && (
-              <p className="text-[11px] text-emerald-700 font-semibold mt-1">
+              <p className="text-[11px] text-emerald-700 dark:text-emerald-400 font-semibold mt-1">
                 {verdict.universalNote}
               </p>
             )}
@@ -229,24 +229,24 @@ export const ProductFitmentVerifier: React.FC<{ product: Product }> = ({
 
       {verdict?.kind === "nofit" && (
         <div>
-          <div className="rounded-lg bg-red-50 border border-red-300 p-3">
-            <div className="flex items-center gap-1.5 text-red-700">
+          <div className="rounded-lg bg-red-50 dark:bg-red-500/10 border border-red-300 dark:border-red-500/30 p-3">
+            <div className="flex items-center gap-1.5 text-red-700 dark:text-red-400">
               <XCircle className="w-4 h-4 shrink-0" />
               <span className="text-xs font-black uppercase tracking-wider">
                 Does not fit your:
               </span>
             </div>
-            <p className="text-sm font-bold text-gray-900 mt-1">
+            <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
               {vehicleLabel}{" "}
               <button
                 type="button"
                 onClick={() => setVerdict(null)}
-                className="text-xs font-semibold text-neutral-500 underline underline-offset-2 hover:text-red-600"
+                className="text-xs font-semibold text-neutral-500 dark:text-gray-400 underline underline-offset-2 hover:text-red-600"
               >
                 (Change vehicle)
               </button>
             </p>
-            <p className="text-[11px] text-red-700 font-semibold mt-1">
+            <p className="text-[11px] text-red-700 dark:text-red-400 font-semibold mt-1">
               This product is {product.specifications?.Socket} — your car
               needs {verdict.match.headlight}
             </p>
@@ -255,9 +255,9 @@ export const ProductFitmentVerifier: React.FC<{ product: Product }> = ({
       )}
 
       {verdict?.kind === "norecord" && (
-        <div className="rounded-lg bg-white border border-neutral-300 p-3">
-          <p className="text-xs font-bold text-gray-900">{vehicleLabel}</p>
-          <p className="text-[11px] text-gray-500 mt-1 leading-relaxed">
+        <div className="rounded-lg bg-white dark:bg-carbon-900 border border-neutral-300 dark:border-white/10 p-3">
+          <p className="text-xs font-bold text-gray-900 dark:text-white">{vehicleLabel}</p>
+          <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
             We don&apos;t have an exact socket record for this model yet.
             Confirm on WhatsApp and we will tell you the right fit.
           </p>
@@ -281,7 +281,7 @@ export const ProductFitmentVerifier: React.FC<{ product: Product }> = ({
             <button
               type="button"
               onClick={() => setVerdict(null)}
-              className="text-xs font-semibold text-neutral-500 underline underline-offset-2 hover:text-red-600"
+              className="text-xs font-semibold text-neutral-500 dark:text-gray-400 underline underline-offset-2 hover:text-red-600"
             >
               (Change vehicle)
             </button>
