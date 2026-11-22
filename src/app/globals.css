@@ -105,3 +105,16 @@
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
 }
+
+/* Social-proof pop-up vs sticky buy bar (2026-11-23, sumair): while the
+   product page's sticky buy bar is visible, the pop-up lifts above it
+   instead of overlapping; it settles back down when the bar hides. The
+   pop-up wrapper already transitions all properties, so the lift is
+   smooth. Desktop bar is ~65px tall at the very bottom; on mobile it
+   floats above the bottom nav (~121px from the bottom edge). */
+@media (max-width: 1023px) {
+  body.ha-stickybar-visible .ha-popup { bottom: 8.25rem; }
+}
+@media (min-width: 1024px) {
+  body.ha-stickybar-visible .ha-popup { bottom: 5rem; }
+}

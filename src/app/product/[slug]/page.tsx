@@ -400,6 +400,15 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
 
   const barVisible = barEntered && showSticky && !footerVisible && !lightboxOpen;
 
+  // While the sticky bar shows, the social-proof pop-up lifts above it
+  // (2026-11-23, sumair: the two were overlapping and it looked bad).
+  // FloatingWhatsApp's pop-up reads this body class; globals.css holds
+  // the lifted positions. Cleaned up on unmount / when the bar hides.
+  useEffect(() => {
+    document.body.classList.toggle("ha-stickybar-visible", barVisible);
+    return () => document.body.classList.remove("ha-stickybar-visible");
+  }, [barVisible]);
+
   // Related products from the same category or recommendations
   const relatedProducts = PRODUCTS_DATA.filter((p) => {
     if (p.id === product.id) return false;

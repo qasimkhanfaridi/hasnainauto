@@ -85,7 +85,7 @@ export const FloatingWhatsApp: React.FC = () => {
       {/* Social-proof pop-up — bottom-left, never covers the WhatsApp button */}
       {!purchaseDismissed && (
         <div
-          className={`fixed bottom-20 lg:bottom-6 left-4 z-40 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`ha-popup fixed bottom-20 lg:bottom-6 left-4 z-40 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             purchaseVisible
               ? "translate-x-0 opacity-100 scale-100"
               : "-translate-x-[110%] opacity-0 scale-95 pointer-events-none"
