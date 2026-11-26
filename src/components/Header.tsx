@@ -71,11 +71,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
   return (
     <>
       {/* ─── Top Info Bar (Novsight & Auxleds High-Converting Style) ─── */}
-      <div className="bg-red-brand text-white py-2 px-4 border-b border-white/10 text-xs">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-1.5 md:gap-4">
-          <div className="flex items-center gap-3 sm:gap-6 text-white text-[11px] sm:text-xs">
-            <span className="flex items-center gap-1.5 text-white font-bold">
-              <Zap className="w-3.5 h-3.5 fill-white" />
+      <div className="bg-red-brand text-white py-1.5 px-1.5 sm:px-4 border-b border-white/10 text-[9px] min-[390px]:text-[10px] sm:text-xs leading-none">
+        <div className="max-w-7xl mx-auto flex flex-row flex-nowrap items-center justify-center md:justify-between gap-1 sm:gap-4 whitespace-nowrap">
+          <div className="flex items-center gap-1.5 sm:gap-6 text-white text-[9px] min-[390px]:text-[10px] sm:text-xs min-w-0">
+            <span className="flex items-center gap-1 sm:gap-1.5 text-white font-bold whitespace-nowrap">
+              <Zap className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-white shrink-0" />
               <span>1-Year Replacement Warranty</span>
             </span>
             <span className="hidden sm:inline text-white/70">•</span>
@@ -83,22 +83,22 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
             <span className="hidden lg:inline text-white/70">•</span>
             <span className="hidden lg:inline">📍 Azhar Shaheed Market, Saddar Rawalpindi</span>
           </div>
-          <div className="flex items-center gap-4 text-[11px] sm:text-xs">
+          <div className="flex items-center gap-1 sm:gap-4 text-[9px] min-[390px]:text-[10px] sm:text-xs shrink-0">
             <a
               href={`https://wa.me/${BUSINESS_CONFIG.whatsappRaw}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 text-white hover:text-white transition-colors font-bold"
+              className="flex items-center gap-1 text-white hover:text-white transition-colors font-bold whitespace-nowrap"
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden="true"><path d={WHATSAPP_PATH} /></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" aria-hidden="true"><path d={WHATSAPP_PATH} /></svg>
               <span>WhatsApp: 0312-5127096</span>
             </a>
-            <span className="text-white/50">|</span>
+            <span className="hidden sm:inline text-white/50">|</span>
             <a
               href={`tel:${BUSINESS_CONFIG.phoneRaw}`}
-              className="flex items-center gap-1 text-white hover:text-white transition-colors font-medium"
+              className="flex items-center gap-1 text-white hover:text-white transition-colors font-medium whitespace-nowrap"
             >
-              <Phone className="w-3 h-3 text-white" />
+              <Phone className="w-3 h-3 text-white shrink-0" />
               <span>Call Now</span>
             </a>
           </div>
