@@ -1,0 +1,61 @@
+name: Deploy to GitHub Pages (hasnainauto.com)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # The AI image studio (/admin/studio + /api/ai-studio) needs a server and
+      # API keys, so it is left out of the static site. It still works locally.
+      - name: Drop server-only routes
+        run: rm -rf src/app/api src/app/admin
+
+      - name: Build static site
+        run: npm run build
+        env:
+          STATIC_EXPORT: "1"
+          NEXT_PUBLIC_SITE_URL: https://hasnainauto.com
+          NEXT_TELEMETRY_DISABLED: "1"
+
+      - name: Add CNAME and old /products links
+        run: |
+          echo "hasnainauto.com" > out/CNAME
+          touch out/.nojekyll
+          mkdir -p out/products
+          printf '<!doctype html><meta charset="utf-8"><title>Shop</title><link rel="canonical" href="/shop/"><meta http-equiv="refresh" content="0; url=/shop/"><a href="/shop/">Go to the shop</a>' > out/products/index.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

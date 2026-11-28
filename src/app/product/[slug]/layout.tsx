@@ -6,6 +6,11 @@ type ProductLayoutProps = {
   params: { slug: string };
 };
 
+// Pre-render every product page at build time (needed for the static export).
+export function generateStaticParams() {
+  return PRODUCTS_DATA.map((p) => ({ slug: p.slug }));
+}
+
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const product = PRODUCTS_DATA.find((p) => p.slug === params.slug);
 
